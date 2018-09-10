@@ -8,30 +8,30 @@ const verticalScaleRegex = /^(\d+(\.\d{1,2})?)@vs$/;
 const moderateScaleRegex = /^(\d+(\.\d{1,2})?)@ms(\d+(\.\d{1,2})?)?$/;
 
 const scaleByAnnotation = (value) => {
-    if (!validScaleSheetRegex.test(value)) {
-        return value;
-    }
-    const size = parseFloat(value.split('@')[0]);
+  if (!validScaleSheetRegex.test(value)) {
+    return value;
+  }
+  const size = parseFloat(value.split('@')[0]);
 
-    if (scaleRegex.test(value)) {
-        return scale(size);
-    }
+  if (scaleRegex.test(value)) {
+    return scale(size);
+  }
 
-    if (verticalScaleRegex.test(value)) {
-        return verticalScale(size);
-    }
+  if (verticalScaleRegex.test(value)) {
+    return verticalScale(size);
+  }
 
-    if (moderateScaleRegex.test(value)) {
-        const scaleFactor = value.split('ms')[1];
-        if (scaleFactor) {
-            return moderateScale(size, parseFloat(scaleFactor));
-        }
-        return moderateScale(size);
+  if (moderateScaleRegex.test(value)) {
+    const scaleFactor = value.split('ms')[1];
+    if (scaleFactor) {
+      return moderateScale(size, parseFloat(scaleFactor));
     }
+    return moderateScale(size);
+  }
 };
 
 const ScaledSheet = {
-    create: styleSheet => StyleSheet.create(deepMap(styleSheet, scaleByAnnotation))
+  create: styleSheet => StyleSheet.create(deepMap(styleSheet, scaleByAnnotation)),
 };
 
 export default ScaledSheet;

@@ -7,6 +7,12 @@ export default {
     restoreAccount: 'Restore Account',
   },
   signin: {
-
+    title: 'Sign In',
+    forgotPassword: 'Forgot password',
+  },
+  send: {
+    title: 'Send',
+    walletAddress: 'Wallet Address',
+    continue: 'Continue',
   },
 };

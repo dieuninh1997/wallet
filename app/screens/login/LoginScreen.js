@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
-import BackButton from '../common/BackButton';
+import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import GlobalButton from '../common/GlobalButton';
+import MangoGradientButton from '../common/MangoGradientButton';
 
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <BackButton navigation={navigation} />,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('signin.title'),
     headerTitleStyle: styles.headerTitle,
     headerRight: (<View />),
@@ -65,13 +65,11 @@ class LoginScreen extends Component {
   )
 
   _renderBtnLogin = () => (
-    <View>
-      <GlobalButton
-        title={I18n.t('signin.title')}
-        btnStyle={styles.btnSigninContainer}
-        btnTextStyle={styles.btnSigninText}
-      />
-    </View>
+    <MangoGradientButton
+      btnText={I18n.t('signin.title')}
+      btnStyle={styles.btnSigninContainer}
+      onPress={() => true}
+    />
   )
 
   render() {
@@ -163,19 +161,5 @@ const styles = ScaledSheet.create({
 
   btnSigninContainer: {
     width: '220@s',
-    height: '50@s',
-    backgroundColor: '#FFC537',
-    borderColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '25@s',
-    marginBottom: '24@s',
-    elevation: 2,
-  },
-
-  btnSigninText: {
-    color: '#000',
-    fontWeight: '400',
-    fontSize: '22@s',
   },
 });

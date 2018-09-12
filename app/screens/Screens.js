@@ -1,11 +1,9 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
+import MainScreen from './main/MainScreen';
 
 export default {
-  LandingScreen: {
-    screen: LandingScreen,
-  },
-  LoginScreen: {
-    screen: LoginScreen,
-  },
+  MainScreen: { screen: MainScreen, },
+  LandingScreen: { screen: LandingScreen, },
+  LoginScreen: { screen: LoginScreen, },
 };

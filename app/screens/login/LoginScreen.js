@@ -2,47 +2,47 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
   ScrollView,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-
+import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('signin.title'),
-    headerTitleStyle: styles.headerTitle,
-    headerRight: (<View />),
+    headerTitleStyle: CommonStyles.headerTitle,
+    headerStyle: CommonStyles.header,
   })
 
   _renderFormLogin = () => (
     <View style={styles.formLoginContainer}>
-      <View style={styles.inputWalletContainer}>
-        <MaterialCommunityIcons
-          name="watermark"
-          style={styles.inputIcon}
+      <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
+        <Image
+          source={require('../../../assets/wallet/wallet-login.png')}
+          style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder="Wallet ID"
+          placeholder={I18n.t('signin.inputWalletId')}
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
         />
       </View>
 
-      <View style={styles.inputPasswordContainer}>
-        <MaterialCommunityIcons
-          name="key-variant"
-          style={styles.inputIcon}
+      <View style={styles.inputContainer}>
+        <Image
+          source={require('../../../assets/password/key.png')}
+          style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder="Password"
+          placeholder={I18n.t('signin.inputPassword')}
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
@@ -56,8 +56,9 @@ class LoginScreen extends Component {
       <TouchableOpacity
         style={styles.btnForgotPass}
       >
-        <MaterialCommunityIcons
-          name="key-variant"
+        <Image
+          source={require('../../../assets/forgot-password/forgot-password.png')}
+          style={styles.inputImageIcon}
         />
         <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
@@ -87,49 +88,39 @@ class LoginScreen extends Component {
 export default LoginScreen;
 
 const styles = ScaledSheet.create({
-  headerTitle: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: '400',
-  },
-
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5F7FA',
+    backgroundColor: CommonColors.screenBgColor,
   },
 
   formLoginContainer: {
-    marginTop: '34@s',
-    height: '120@s',
+    marginTop: '46@s',
+    height: '130@s',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: CommonColors.headerBarBgColor,
     borderRadius: '25@s',
     borderWidth: 1,
-    borderColor: '#DEE3E9',
+    borderColor: CommonColors.customBorderColor,
   },
 
-  inputWalletContainer: {
+  inputContainer: {
     flex: 1,
     width: '340@s',
     flexDirection: 'row',
+    paddingHorizontal: '20@s',
+    alignItems: 'center',
+  },
+
+  inputWalletIdContainer: {
     borderBottomWidth: 1,
-    borderColor: '#DEE3E9',
-    paddingHorizontal: '20@s',
-    alignItems: 'center',
+    borderColor: CommonColors.customBorderColor,
   },
 
-  inputPasswordContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '340@s',
-    paddingHorizontal: '20@s',
-    alignItems: 'center',
-  },
-
-  inputIcon: {
-    flex: 1,
-    fontSize: '22@s',
+  inputImageIcon: {
+    width: '24@s',
+    height: '24@s',
+    marginRight: '10@s',
   },
 
   inputText: {
@@ -139,24 +130,22 @@ const styles = ScaledSheet.create({
   },
 
   btnForgotPassContainer: {
-    marginTop: '15@s',
+    marginTop: '18@s',
     alignItems: 'flex-end',
   },
 
   btnForgotPass: {
     flexDirection: 'row',
-    width: '160@s',
-    height: '34@s',
-    backgroundColor: '#E5EAF1',
-    borderColor: '#000',
+    width: '180@s',
+    height: '36@s',
+    borderRadius: '18@s',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '17@s',
+    backgroundColor: '#E5EAF1',
   },
 
   btnForgotPassText: {
     color: '#5F7AC7',
-    marginLeft: '10@s',
   },
 
   btnSigninContainer: {

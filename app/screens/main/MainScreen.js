@@ -4,54 +4,89 @@ import TransactionScreen from "../transactions/TransactionScreen";
 import RequestScreen from "../request/RequestScreen";
 import SendScreen from "../send/SendScreen";
 import DashboardScreen from "../dashboard/DashboardScreen";
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import { scale } from "../../libs/reactSizeMatter/scalingUtils";
 import MangoTabImages from "../common/MangoTabImages";
+import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
+import MangoHeader from "../common/MangoHeader";
 
 let MangoTabNavigator;
 
+const plusViewFocused = <View style={{ width: 126,
+  height: 55,
+  backgroundColor: 'red',
+  borderTopLeftRadius: 108,
+  borderTopRightRadius: 108,
+  borderBottomLeftRadius: 95,
+  borderBottomRightRadius: 95}}>
+  <Text>Focused</Text>
+</View>;
+
 class MainScreen extends React.PureComponent {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoHeader navigation={navigation} />,
+  });
+
   _initTabNavigator() {
     return createBottomTabNavigator(
       {
-        DashboardScreen: { screen: DashboardScreen },
-        RequestScreen: { screen: RequestScreen },
-        SendScreen: { screen: SendScreen },
-        TransactionScreen: { screen: TransactionScreen },
+        DashboardScreen: {
+          screen: DashboardScreen,
+          navigationOptions: () => ({
+            tabBarIcon: ({ focused }) => (
+              <View style={styles.tabFocused}>
+                <Image
+                  source={focused ? MangoTabImages.dashboardTabFocused : MangoTabImages.dashboardTab}
+                />
+              </View>
+            )
+          })
+        },
+        RequestScreen: {
+          screen: RequestScreen,
+          navigationOptions: () => ({
+            tabBarIcon: ({ focused }) => (
+              <View>
+                {focused ? plusViewFocused : null}
+                <Image
+                  source={focused ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
+                />
+              </View>
+
+            )
+          })
+        },
+        SendScreen: {
+          screen: SendScreen,
+          navigationOptions: () => ({
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused ? MangoTabImages.sendTabFocused : MangoTabImages.sendTab}
+              />
+            )
+          })
+        },
+        TransactionScreen: {
+          screen: TransactionScreen,
+          navigationOptions: () => ({
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused ? MangoTabImages.transactionTabFocused : MangoTabImages.transactionTab}
+              />
+            )
+          })
+        },
       },
       {
-        navigationOptions: ({ navigation }) => ({
-          tabBarIcon: ({ focused, tintColor }) => {
-            const { routeName } = navigation.state;
-            let iconName;
-
-            if (routeName === 'DashboardScreen') {
-              iconName = MangoTabImages.dashboardTab;
-            } else if (routeName === 'RequestScreen') {
-              iconName = MangoTabImages.requestTab;
-            } else if (routeName === 'SendScreen') {
-              iconName = MangoTabImages.sendTab;
-            } else if (routeName === 'TransactionScreen') {
-              iconName = MangoTabImages.transactionTab;
-            }
-
-            const styleFocused = { width: scale(35), height: scale(35), marginTop: scale(5) };
-            const styleUnFocused = { width: scale(15), height: scale(15), marginTop: scale(5) };
-
-            return <Image resizeMode={'contain'} style={focused ?  styleFocused : styleUnFocused }
-                          source={iconName}/>
-          },
-          gesturesEnabled: false
-        }),
         tabBarOptions: {
           activeTintColor: '#FFF',
           inactiveTintColor: '#FFF',
-          activeBackgroundColor: '#0f2d6b',
+          activeBackgroundColor: '#FFD72F',
           showLabel: false,
           style: {
             backgroundColor: '#FFD72F',
-            height: scale(50),
-
+            borderTopStartRadius: scale(20),
+            height: scale(80),
           },
           labelStyle: {
             fontSize: scale(11),
@@ -71,11 +106,18 @@ class MainScreen extends React.PureComponent {
 
   render() {
     return (
-      <View>
         <MangoTabNavigator/>
-      </View>
     )
   }
 }
 
 export default MainScreen;
+
+const styles = ScaledSheet.create({
+  viewFocused: {
+    // backgroundColor: 'red',
+    width: '100@s',
+    height: '50@s'
+  }
+});
+

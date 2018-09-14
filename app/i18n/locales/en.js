@@ -12,5 +12,9 @@ export default {
   },
   createWallet: {
     signin: 'Sign In',
+  send: {
+    title: 'Send',
+    walletAddress: 'Wallet Address',
+    continue: 'Continue',
   },
 };

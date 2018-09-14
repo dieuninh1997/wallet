@@ -6,7 +6,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
-class BackButton extends Component {
+class MangoBackButton extends Component {
   _onBack = () => {
     const { navigation } = this.props;
     navigation.goBack();
@@ -29,7 +29,7 @@ class BackButton extends Component {
     );
   }
 }
-export default BackButton;
+export default MangoBackButton;
 
 const styles = ScaledSheet.create({
   btnContainer: {

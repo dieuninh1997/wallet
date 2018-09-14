@@ -3,8 +3,12 @@ import LoginScreen from './login/LoginScreen';
 import CreateWalletScreen from './createwallet/CreateWalletScreen';
 import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
 import SettingScreen from './setting/SettingScreen';
+import SendScreen from './send/SendScreen';
 
 export default {
+  SendScreen: {
+    screen: SendScreen,
+  },
   LandingScreen: {
     screen: LandingScreen,
   },

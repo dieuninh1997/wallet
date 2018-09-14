@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-class GlobalButton extends Component {
+class MangoButton extends Component {
   render() {
     const {
       title, btnStyle, btnTextStyle, onPressBtn,
@@ -20,4 +20,4 @@ class GlobalButton extends Component {
   }
 }
 
-export default GlobalButton;
+export default MangoButton;

@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
-
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import GlobalButton from '../common/GlobalButton';
+import CreateWalletScreen from '../createwallet/CreateWalletScreen';
 
 class LandingScreen extends Component {
   static navigationOptions = () => ({
@@ -18,6 +18,11 @@ class LandingScreen extends Component {
   _navigateLogin = () => {
     const { navigation } = this.props;
     navigation.navigate('LoginScreen');
+  }
+
+  _navigateCreate = () => {
+    const { navigation } = this.props;
+    navigation.navigate('CreateWalletScreen');
   }
 
   _renderSelectLanguage() {
@@ -55,6 +60,7 @@ class LandingScreen extends Component {
           title={I18n.t('landing.createWallet')}
           btnStyle={styles.btnCreateWalletContainer}
           btnTextStyle={styles.btnTextCreateWalletStyle}
+          onPressBtn={this._navigateCreate}
         />
         <GlobalButton
           title={I18n.t('landing.signin')}

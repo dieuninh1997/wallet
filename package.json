@@ -7,16 +7,18 @@
     "test": "jest"
   },
   "dependencies": {
+    "babel-preset-react-native": "^2.1.0",
     "react": "16.4.1",
-    "react-native": "0.56.0",
+    "react-native": "^0.55.4",
+    "react-native-elements": "^0.19.1",
     "react-native-i18n": "2.0.15",
+    "react-native-phone-input": "^0.2.1",
     "react-native-vector-icons": "5.0.0",
     "react-navigation": "2.13.0"
   },
   "devDependencies": {
     "babel-eslint": "9.0.0",
     "babel-jest": "23.4.2",
-    "babel-preset-react-native": "^5",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",

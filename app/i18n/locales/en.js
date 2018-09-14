@@ -10,4 +10,7 @@ export default {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
   },
+  createWallet: {
+    signin: 'Sign In',
+  },
 };

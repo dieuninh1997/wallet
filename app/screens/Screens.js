@@ -1,5 +1,8 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
+import CreateWalletScreen from './createwallet/CreateWalletScreen';
+import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
+import SettingScreen from './setting/SettingScreen';
 
 export default {
   LandingScreen: {
@@ -7,5 +10,14 @@ export default {
   },
   LoginScreen: {
     screen: LoginScreen,
+  },
+  CreateWalletScreen: {
+    screen: CreateWalletScreen,
+  },
+  CreateWalletPhoneNumberScreen: {
+    screen: CreateWalletPhoneNumberScreen,
+  },
+  SettingScreen: {
+    screen: SettingScreen,
   },
 };

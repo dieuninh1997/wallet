@@ -7,8 +7,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import GlobalButton from '../common/GlobalButton';
-import CreateWalletScreen from '../createwallet/CreateWalletScreen';
+// import CreateWalletScreen from '../createwallet/CreateWalletScreen';
 import MangoButton from '../common/MangoButton';
 
 class LandingScreen extends Component {
@@ -26,20 +25,6 @@ class LandingScreen extends Component {
     navigation.navigate('CreateWalletScreen');
   }
 
-  _renderSelectLanguage() {
-    return (
-      <View style={styles.selectLanguageContainer}>
-        <View style={styles.selectLanguageContent}>
-          <MaterialCommunityIcons
-            style={styles.dropdownIcon}
-            name="google-translate"
-          />
-          <Text style={styles.textLanguage}>Eng</Text>
-          <MaterialCommunityIcons
-            style={styles.dropdownIcon}
-            name="chevron-down"
-          />
-        </View>
   _renderSelectLanguage = () => (
     <View style={styles.selectLanguageContainer}>
       <View style={styles.selectLanguageContent}>
@@ -55,6 +40,24 @@ class LandingScreen extends Component {
       </View>
     </View>
   )
+
+  _renderSelectLanguage() {
+    return (
+      <View style={styles.selectLanguageContainer}>
+        <View style={styles.selectLanguageContent}>
+          <MaterialCommunityIcons
+            style={styles.dropdownIcon}
+            name="google-translate"
+          />
+          <Text style={styles.textLanguage}>Eng</Text>
+          <MaterialCommunityIcons
+            style={styles.dropdownIcon}
+            name="chevron-down"
+          />
+        </View>
+      </View>
+    );
+  }
 
   _renderLogoGroup() {
     return (

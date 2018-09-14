@@ -1,22 +1,24 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import BackButton from '../common/BackButton';
+import React, { Component } from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
-export default class SettingScreen extends Component{
-  static navigationOptions = ({navigation}) =>({
-    headerLeft: <BackButton navigation={navigation}></BackButton>,
+export default class SettingScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: 'Settings',
     headerTitleStyle: styles.headerTitle,
     headerRight: (<View />),
   })
 
-  render(){
-    return(
+  render() {
+    return (
       <View>
-        <Text>asnjas</Text>
+        <ScrollView>
+          <Text>PROFILE</Text>
+        </ScrollView>
       </View>
-    )
+    );
   }
 }
 
@@ -26,4 +28,4 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     fontWeight: '400',
   },
-})
+});

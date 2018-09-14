@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   TextInput,
+  Image,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
@@ -24,9 +25,9 @@ class SendScreen extends Component {
   _renderFormSend = () => (
     <View style={styles.formSendContainer}>
       <View style={styles.inputAddressContainer}>
-        <MaterialCommunityIcons
-          name="watermark"
-          style={styles.inputIcon}
+        <Image
+          source={require('../../../assets/wallet/wallet.png')}
+          style={styles.imageWallet}
         />
         <TextInput
           editable
@@ -145,13 +146,14 @@ const styles = ScaledSheet.create({
     backgroundColor: '#FFF',
   },
 
-  inputIcon: {
-    flex: 1,
-    fontSize: '22@s',
+  imageWallet: {
+    width: '24@s',
+    height: '24@s',
+    marginRight: '5@s',
   },
 
   inputText: {
-    flex: 7,
+    width: '92%',
     fontSize: '18@s',
     fontWeight: '100',
   },
@@ -178,6 +180,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFF',
   },
+
   inputTextLabel: {
     fontSize: '17@s',
     color: '#000',

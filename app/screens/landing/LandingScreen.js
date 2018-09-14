@@ -8,7 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import I18n from '../../i18n/i18n';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import GlobalButton from '../common/GlobalButton';
+import MangoButton from '../common/MangoButton';
 
 class LandingScreen extends Component {
   static navigationOptions = () => ({
@@ -20,23 +20,21 @@ class LandingScreen extends Component {
     navigation.navigate('LoginScreen');
   }
 
-  _renderSelectLanguage() {
-    return (
-      <View style={styles.selectLanguageContainer}>
-        <View style={styles.selectLanguageContent}>
-          <MaterialCommunityIcons
-            style={styles.dropdownIcon}
-            name="google-translate"
-          />
-          <Text style={styles.textLanguage}>Eng</Text>
-          <MaterialCommunityIcons
-            style={styles.dropdownIcon}
-            name="chevron-down"
-          />
-        </View>
+  _renderSelectLanguage = () => (
+    <View style={styles.selectLanguageContainer}>
+      <View style={styles.selectLanguageContent}>
+        <MaterialCommunityIcons
+          style={styles.dropdownIcon}
+          name="google-translate"
+        />
+        <Text style={styles.textLanguage}>Eng</Text>
+        <MaterialCommunityIcons
+          style={styles.dropdownIcon}
+          name="chevron-down"
+        />
       </View>
-    );
-  }
+    </View>
+  )
 
   _renderLogoGroup() {
     return (
@@ -51,18 +49,18 @@ class LandingScreen extends Component {
   _renderButtonGroup() {
     return (
       <View style={styles.btnGroupContainer}>
-        <GlobalButton
+        <MangoButton
           title={I18n.t('landing.createWallet')}
           btnStyle={styles.btnCreateWalletContainer}
           btnTextStyle={styles.btnTextCreateWalletStyle}
         />
-        <GlobalButton
+        <MangoButton
           title={I18n.t('landing.signin')}
           btnStyle={styles.btnAuthContainer}
           btnTextStyle={styles.btnTextAuthStyle}
           onPressBtn={this._navigateLogin}
         />
-        <GlobalButton
+        <MangoButton
           title={I18n.t('landing.restoreAccount')}
           btnStyle={styles.btnAuthContainer}
           btnTextStyle={styles.btnTextAuthStyle}
@@ -154,6 +152,7 @@ const styles = ScaledSheet.create({
 
   btnTextCreateWalletStyle: {
     color: '#1F42B3',
+    fontSize: '20@s',
   },
 
   btnAuthContainer: {
@@ -169,5 +168,6 @@ const styles = ScaledSheet.create({
 
   btnTextAuthStyle: {
     color: '#FFF',
+    fontSize: '18@s',
   },
 });

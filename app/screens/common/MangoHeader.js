@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
+import { View, Text, Image, TouchableWithoutFeedback, findNodeHandle } from "react-native";
 import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
 import Modal from "react-native-modal";
 
-class MangoHeader extends React.PureComponent {
+class MangoHeader extends React.Component {
   state = {
-    isShowMenu: false
+    isShowMenu: false,
   };
 
   _toggleMenu() {
@@ -123,5 +123,9 @@ const styles = ScaledSheet.create({
   itemMenuGroup: {
     flexDirection: 'row',
     flex: 1
-  }
+  },
+  absolute: {
+    position: "absolute",
+    top: 0, left: 0, bottom: 0, right: 0,
+  },
 });

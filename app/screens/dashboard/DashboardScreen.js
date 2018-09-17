@@ -54,11 +54,12 @@ class DashboardScreen extends React.PureComponent {
     )
   }
 
-
   render() {
     const { series, sliceColor, chart_wh, sumSerires } = this.state;
     return (
-      <View style={styles.dashboardScreen}>
+      <View style={styles.dashboardScreen}
+            ref={ref => this._viewScreen = ref}
+            onLayout={() => this.props.navigation.setParams({viewRef: this._viewScreen})}>
         <PieChart
           chart_wh={chart_wh}
           series={series}

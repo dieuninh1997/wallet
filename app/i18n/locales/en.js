@@ -9,10 +9,19 @@ export default {
   signin: {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
+    inputWalletId: 'Wallet ID',
+    inputPassword: 'Password',
   },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
     continue: 'Continue',
+  },
+  request: {
+    title: 'Request',
+    copyAddress: 'Copy Address',
+  },
+  transactions: {
+    title: 'Transactions',
   },
 };

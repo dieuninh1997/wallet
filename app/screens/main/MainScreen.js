@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator, BottomTabBar } from 'react-navigation-tabs';
-import TransactionScreen from "../transactions/TransactionScreen";
+import TransactionsScreen from "../transactions/TransactionsScreen";
 import RequestScreen from "../request/RequestScreen";
 import SendScreen from "../send/SendScreen";
 import DashboardScreen from "../dashboard/DashboardScreen";
@@ -9,6 +9,7 @@ import { scale } from "../../libs/reactSizeMatter/scalingUtils";
 import MangoTabImages from "../common/MangoTabImages";
 import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
 import MangoHeader from "../common/MangoHeader";
+import { CommonStyles } from "../../utils/CommonStyles";
 
 let MangoTabNavigator;
 
@@ -24,14 +25,15 @@ const plusViewFocused = <View style={{ width: 126,
 
 class MainScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoHeader navigation={navigation} />,
+    headerLeft: <MangoHeader navigation={navigation} viewRef={navigation.getParam('viewRef')} oke={"oke"} />,
+    headerStyle: CommonStyles.header,
   });
 
   _initTabNavigator() {
     return createBottomTabNavigator(
       {
         DashboardScreen: {
-          screen: DashboardScreen,
+          screen: props =>  <DashboardScreen {...props}/>,
           navigationOptions: () => ({
             tabBarIcon: ({ focused }) => (
               <View style={styles.tabFocused}>
@@ -67,7 +69,7 @@ class MainScreen extends React.PureComponent {
           })
         },
         TransactionScreen: {
-          screen: TransactionScreen,
+          screen: TransactionsScreen,
           navigationOptions: () => ({
             tabBarIcon: ({ focused }) => (
               <Image
@@ -106,7 +108,7 @@ class MainScreen extends React.PureComponent {
 
   render() {
     return (
-        <MangoTabNavigator/>
+        <MangoTabNavigator />
     )
   }
 }

@@ -191,7 +191,7 @@ const styles = ScaledSheet.create({
     paddingVertical: '5@s',
     alignItems: 'center',
     paddingHorizontal: '10@s',
-    borderRadius: '2@s',
+    borderRadius: '8@s',
   },
   activeCoin: {
     backgroundColor: '#dee3e9',
@@ -218,7 +218,6 @@ const styles = ScaledSheet.create({
     top: '66@s',
     left: '60@s',
     width: '220@s',
-    height: '130@s',
     borderRadius: '8@s',
     backgroundColor: CommonColors.headerBarBgColor,
   },

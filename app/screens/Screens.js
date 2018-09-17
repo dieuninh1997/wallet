@@ -3,8 +3,12 @@ import LoginScreen from './login/LoginScreen';
 import SendScreen from './send/SendScreen';
 import RequestScreen from './request/RequestScreen';
 import TransactionsScreen from './transactions/TransactionsScreen';
+import AuthScreen from './auth/AuthScreen';
 
 export default {
+  AuthScreen: {
+    screen: AuthScreen,
+  },
   TransactionsScreen: {
     screen: TransactionsScreen,
   },

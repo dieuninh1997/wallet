@@ -18,23 +18,20 @@ class MangoDropdown extends Component {
     super(props);
     const listCoin = [
       {
-        image: require('../../../assets/logo/logo.png'),
+        image: require('../../../assets/bitcoin/bitcoin.png'),
         name: 'Mango Coin',
       },
       {
-        image: require('../../../assets/logo/logo.png'),
-        name: 'BTC',
+        image: require('../../../assets/bitcoin/bitcoin.png'),
+        name: 'Bitcoin',
       },
       {
-        image: require('../../../assets/logo/logo.png'),
-        name: 'ETH',
+        image: require('../../../assets/eth/ethereum.png'),
+        name: 'Ethereum',
       },
     ];
     this.state = {
-      coinSelected: {
-        image: require('../../../assets/logo/logo.png'),
-        name: 'Mango Coin',
-      },
+      coinSelected: listCoin[0],
       listCoin,
       isShowListCoin: false,
     };
@@ -61,7 +58,7 @@ class MangoDropdown extends Component {
   }
 
   _renderListCoin() {
-    const { listCoin, isShowListCoin } = this.state;
+    const { listCoin, isShowListCoin, coinSelected } = this.state;
 
     return (
       <Modal
@@ -70,33 +67,29 @@ class MangoDropdown extends Component {
         isVisible={isShowListCoin}
         avoidKeyboard
         useNativeDriver
-        // backdropColor="#FFF"
-        // backdropOpacity={0.8}
         onBackButtonPress={() => this._hideModalListCoin()}
         onBackdropPress={() => this._hideModalListCoin()}
-        style={styles.modalListCoin}
+
       >
-        {listCoin.map((item, index) => this._renderItemCoin(item, index))}
+        <View style={styles.modalListCoin}>
+          {listCoin.map((item, index) => this._renderItemCoin(item, index, coinSelected))}
+        </View>
       </Modal>
     );
   }
 
-  _renderItemCoin(item, index) {
+  _renderItemCoin(item, index, coinSelected) {
     return (
       <TouchableOpacity
         onPress={() => this._selectCoin(item)}
         key={index}
       >
-        <View style={styles.itemCoin}>
+        <View style={[styles.listSelectItemCoin, item.name === coinSelected.name ? styles.activeCoin : null]}>
           <Image
             source={item.image}
-            style={styles.imageCoin}
+            style={styles.imageSelectItemCoin}
           />
-          <Text>{item.name}</Text>
-          <MaterialCommunityIcons
-            style={styles.selectCoinIcon}
-            name="chevron-down"
-          />
+          <Text style={styles.textSelectItemCoin}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -150,7 +143,7 @@ const styles = ScaledSheet.create({
 
   // Section select coin
   selectCoinContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: CommonColors.headerBarBgColor,
     width: '100%',
     alignItems: 'center',
     paddingBottom: '10@s',
@@ -169,18 +162,18 @@ const styles = ScaledSheet.create({
   },
 
   textCoin: {
-    color: '#FFF',
+    color: CommonColors.headerBarBgColor,
     fontSize: '18@s',
     marginHorizontal: '15@s',
   },
 
   coinIcon: {
-    color: '#FFF',
+    color: CommonColors.headerBarBgColor,
     fontSize: '30@s',
   },
 
   selectCoinIcon: {
-    color: '#FFF',
+    color: CommonColors.headerBarBgColor,
     fontSize: '18@s',
   },
 
@@ -189,9 +182,19 @@ const styles = ScaledSheet.create({
     fontSize: '24@s',
   },
 
-  //
   itemCoin: {
     flexDirection: 'row',
+  },
+
+  listSelectItemCoin: {
+    flexDirection: 'row',
+    paddingVertical: '5@s',
+    alignItems: 'center',
+    paddingHorizontal: '10@s',
+    borderRadius: '2@s',
+  },
+  activeCoin: {
+    backgroundColor: '#dee3e9',
   },
 
   imageCoin: {
@@ -199,18 +202,24 @@ const styles = ScaledSheet.create({
     height: '30@s',
   },
 
-  modalListCoin: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '100@s',
-    height: '100@s',
+  imageSelectItemCoin: {
+    width: '30@s',
+    height: '30@s',
+    marginRight: '8@s',
   },
 
-  absolute: {
+  textSelectItemCoin: {
+    fontSize: '18@s',
+  },
+
+  modalListCoin: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    justifyContent: 'center',
+    top: '66@s',
+    left: '60@s',
+    width: '220@s',
+    height: '130@s',
+    borderRadius: '8@s',
+    backgroundColor: CommonColors.headerBarBgColor,
   },
 });

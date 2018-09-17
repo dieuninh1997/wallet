@@ -22,6 +22,8 @@ class CommonColors {
   static startGradientBlue = '#3773D6';
 
   static endGradientBlue = '#2046B6';
+
+  static customBorderColor = '#DEE3E9';
 }
 
 class CommonSize {
@@ -41,12 +43,19 @@ const CommonStyles = {
     flex: 1,
     backgroundColor: CommonColors.screenBgColor,
   },
+
   header: {
+    backgroundColor: CommonColors.headerBarBgColor,
+    height: CommonSize.headerHeight,
+  },
+
+  headerWithDropdown: {
     backgroundColor: CommonColors.headerBarBgColor,
     elevation: 0,
     height: CommonSize.headerHeight,
     borderBottomWidth: 0,
   },
+
   headerTitle: {
     flexGrow: 0.8,
     textAlign: 'center',
@@ -57,12 +66,12 @@ const CommonStyles = {
 
   // Section select coin
   selectCoinContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: CommonColors.headerBarBgColor,
     width: '100%',
     alignItems: 'center',
     paddingBottom: '10@s',
     borderBottomWidth: 1,
-    borderColor: '#DEE3E9',
+    borderColor: CommonColors.customBorderColor,
   },
 
   selectCoinContent: {

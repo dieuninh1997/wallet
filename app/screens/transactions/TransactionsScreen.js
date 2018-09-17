@@ -8,7 +8,7 @@ import {
 import I18n from '../../i18n/i18n';
 import MangoMenuButton from '../common/MangoMenuButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class TransactionsScreen extends Component {
@@ -16,7 +16,7 @@ class TransactionsScreen extends Component {
     headerLeft: <MangoMenuButton navigation={navigation} />,
     title: I18n.t('transactions.title'),
     headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.header,
+    headerStyle: CommonStyles.headerWithDropdown,
   })
 
   constructor(props) {
@@ -113,6 +113,7 @@ class TransactionsScreen extends Component {
         <Text>{item.time}</Text>
         <Text
           numberOfLines={1}
+          ellipsizeMode="middle"
           style={styles.addressInfo}
         >
           {item.address}
@@ -131,7 +132,7 @@ class TransactionsScreen extends Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -148,7 +149,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: CommonColors.headerBarBgColor,
   },
 
   transactionsContainer: {
@@ -157,25 +158,23 @@ const styles = ScaledSheet.create({
   },
 
   textYearContainer: {
-    flex: 1,
     width: '360@s',
     borderBottomWidth: 1,
-    borderBottomColor: '#DEE3E9',
+    borderBottomColor: CommonColors.customBorderColor,
     paddingVertical: '10@s',
   },
 
   textYear: {
     fontWeight: 'bold',
-    fontSize: '24@s',
-    color: '#000',
+    fontSize: '28@s',
+    color: CommonColors.headerTitleColor,
   },
 
   transactionItemContainer: {
-    flex: 1,
-    width: '340@s',
     flexDirection: 'row',
+    width: '340@s',
     borderBottomWidth: 1,
-    borderBottomColor: '#DEE3E9',
+    borderBottomColor: CommonColors.customBorderColor,
     paddingVertical: '12@s',
   },
 
@@ -192,11 +191,11 @@ const styles = ScaledSheet.create({
 
   transactionInfoContainer: {
     marginRight: '10@s',
-    width: '180@s',
+    width: '170@s',
   },
 
   addressInfo: {
-    color: '#000',
+    color: CommonColors.headerTitleColor,
   },
 
   transactionValueItem: {
@@ -206,6 +205,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#F2F5FA',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 'auto',
   },
 
   textCoinValue: {

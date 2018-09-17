@@ -10,6 +10,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import { CommonColors } from '../../utils/CommonStyles';
+
 
 class MangoDropdown extends Component {
   constructor(props) {
@@ -21,11 +23,11 @@ class MangoDropdown extends Component {
       },
       {
         image: require('../../../assets/logo/logo.png'),
-        name: 'Manh Pro',
+        name: 'BTC',
       },
       {
         image: require('../../../assets/logo/logo.png'),
-        name: 'Thang Oc',
+        name: 'ETH',
       },
     ];
     this.state = {
@@ -68,8 +70,8 @@ class MangoDropdown extends Component {
         isVisible={isShowListCoin}
         avoidKeyboard
         useNativeDriver
-        backdropColor="#FFF"
-        backdropOpacity={0.8}
+        // backdropColor="#FFF"
+        // backdropOpacity={0.8}
         onBackButtonPress={() => this._hideModalListCoin()}
         onBackdropPress={() => this._hideModalListCoin()}
         style={styles.modalListCoin}
@@ -77,12 +79,6 @@ class MangoDropdown extends Component {
         {listCoin.map((item, index) => this._renderItemCoin(item, index))}
       </Modal>
     );
-  }
-
-  _checkStatusModal() {
-    const { isShowListCoin } = this.state;
-
-    return isShowListCoin;
   }
 
   _renderItemCoin(item, index) {
@@ -102,7 +98,6 @@ class MangoDropdown extends Component {
             name="chevron-down"
           />
         </View>
-
       </TouchableOpacity>
     );
   }
@@ -160,7 +155,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     paddingBottom: '10@s',
     borderBottomWidth: 1,
-    borderColor: '#DEE3E9',
+    borderColor: CommonColors.customBorderColor,
   },
 
   selectCoinContent: {
@@ -190,7 +185,7 @@ const styles = ScaledSheet.create({
   },
 
   selectFeeIcon: {
-    color: '#DEE3E9',
+    color: CommonColors.customBorderColor,
     fontSize: '24@s',
   },
 
@@ -203,10 +198,14 @@ const styles = ScaledSheet.create({
     width: '30@s',
     height: '30@s',
   },
+
   modalListCoin: {
     alignItems: 'center',
     justifyContent: 'flex-start',
+    width: '100@s',
+    height: '100@s',
   },
+
   absolute: {
     position: 'absolute',
     top: 0,

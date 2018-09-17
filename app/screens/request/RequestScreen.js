@@ -9,7 +9,7 @@ import I18n from '../../i18n/i18n';
 import MangoMenuButton from '../common/MangoMenuButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class RequestScreen extends Component {
@@ -17,7 +17,7 @@ class RequestScreen extends Component {
     headerLeft: <MangoMenuButton navigation={navigation} />,
     title: I18n.t('request.title'),
     headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.header,
+    headerStyle: CommonStyles.headerWithDropdown,
   })
 
   _renderQrCodeSection = () => (
@@ -29,7 +29,7 @@ class RequestScreen extends Component {
         />
       </View>
       <View style={styles.addressContainer}>
-        <Text>0x05daf345gt34fdfgy546gegegt34trgrgerg35</Text>
+        <Text>0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855</Text>
       </View>
     </View>
   )
@@ -55,7 +55,7 @@ class RequestScreen extends Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <MangoDropdown />
         {this._renderQrCodeSection()}
         {this._renderBtnSection()}
@@ -77,7 +77,6 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '10@s',
-
   },
 
   qrCodeContainer: {
@@ -86,20 +85,20 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
-    backgroundColor: '#FFF',
-    elevation: 5,
+    backgroundColor: CommonColors.headerBarBgColor,
+    elevation: 4,
   },
 
   qrCodeImage: {
-    width: '250@s',
-    height: '250@s',
+    width: '260@s',
+    height: '260@s',
   },
 
   addressContainer: {
     width: '280@s',
     borderBottomLeftRadius: '8@s',
     borderBottomRightRadius: '8@s',
-    paddingHorizontal: '20@s',
+    paddingHorizontal: '16@s',
     paddingVertical: '14@s',
     backgroundColor: '#E4E9F1',
     marginBottom: '30@s',
@@ -116,7 +115,7 @@ const styles = ScaledSheet.create({
     borderRadius: '25@s',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFF',
+    backgroundColor: CommonColors.headerBarBgColor,
     elevation: 5,
   },
 

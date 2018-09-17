@@ -9,6 +9,8 @@ export default {
   signin: {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
+    inputWalletId: 'Wallet ID',
+    inputPassword: 'Password',
   },
   send: {
     title: 'Send',

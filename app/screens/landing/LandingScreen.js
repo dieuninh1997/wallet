@@ -4,11 +4,11 @@ import {
   Text,
   Image,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 // import CreateWalletScreen from '../createwallet/CreateWalletScreen';
 import MangoButton from '../common/MangoButton';
+import { CommonColors } from '../../utils/CommonStyles';
 
 class LandingScreen extends Component {
   static navigationOptions = () => ({
@@ -28,14 +28,14 @@ class LandingScreen extends Component {
   _renderSelectLanguage = () => (
     <View style={styles.selectLanguageContainer}>
       <View style={styles.selectLanguageContent}>
-        <MaterialCommunityIcons
-          style={styles.dropdownIcon}
-          name="google-translate"
+        <Image
+          source={require('../../../assets/language/language-blue.png')}
+          style={styles.imageSelectLanguage}
         />
         <Text style={styles.textLanguage}>Eng</Text>
-        <MaterialCommunityIcons
-          style={styles.dropdownIcon}
-          name="chevron-down"
+        <Image
+          source={require('../../../assets/arrow-down/down-arrow-blue.png')}
+          style={styles.imageSelectLanguage}
         />
       </View>
     </View>
@@ -113,31 +113,28 @@ const styles = ScaledSheet.create({
   },
 
   selectLanguageContainer: {
-    flex: 1,
     marginTop: '10@s',
   },
 
   selectLanguageContent: {
     flexDirection: 'row',
+    width: '124@s',
+    height: '36@s',
+    borderRadius: '18@s',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '120@s',
-    height: '40@s',
-    borderRadius: '20@s',
-    borderColor: '#C9D1EA',
-    borderWidth: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: CommonColors.headerBarBgColor,
   },
 
   textLanguage: {
-    color: '#6EBFFA',
+    color: '#006AEB',
     fontSize: '18@s',
-    marginHorizontal: '5@s',
+    marginHorizontal: '8@s',
   },
 
-  dropdownIcon: {
-    color: '#6EBFFA',
-    fontSize: '22@s',
+  imageSelectLanguage: {
+    width: '18@s',
+    height: '18@s',
   },
 
   logoGroupContainer: {
@@ -165,11 +162,11 @@ const styles = ScaledSheet.create({
   btnCreateWalletContainer: {
     width: '290@s',
     height: '56@s',
-    backgroundColor: '#FFF',
-    borderColor: '#000',
+    borderRadius: '28@s',
+    backgroundColor: CommonColors.headerBarBgColor,
+    borderColor: CommonColors.headerTitleColor,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '28@s',
     marginVertical: '2@s',
     elevation: 4,
   },
@@ -182,16 +179,16 @@ const styles = ScaledSheet.create({
   btnAuthContainer: {
     width: '210@s',
     height: '36@s',
+    borderRadius: '20@s',
     backgroundColor: '#DBA92F',
-    borderColor: '#000',
+    borderColor: CommonColors.headerTitleColor,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: '20@s',
     marginTop: '20@s',
   },
 
   btnTextAuthStyle: {
-    color: '#FFF',
+    color: CommonColors.headerBarBgColor,
     fontSize: '18@s',
   },
 });

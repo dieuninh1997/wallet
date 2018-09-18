@@ -9,6 +9,8 @@ export default {
   signin: {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
+    inputWalletId: 'Wallet ID',
+    inputPassword: 'Password',
   },
   createWallet: {
     signin: 'Sign In',
@@ -49,5 +51,12 @@ export default {
     unverified: 'Unverified',
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
+  },
+  request: {
+    title: 'Request',
+    copyAddress: 'Copy Address',
+  },
+  transactions: {
+    title: 'Transactions',
   },
 };

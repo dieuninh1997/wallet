@@ -1,105 +1,109 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import {
+  View, Text, TouchableOpacity, TextInput,
+} from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import MangoBackButton from '../common/MangoBackButton';
 import PhoneInput from 'react-native-phone-input';
-import SettingScreen from '../setting/SettingScreen';
+import CountryPicker from 'react-native-country-picker-modal';
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import MangoBackButton from '../common/MangoBackButton';
+import I18n from '../../i18n/i18n';
 
 export default class CreateWalletPhoneNumberScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} />,
+    title: I18n.t('createByPhoneNumber.title'),
+    headerTitleStyle: styles.headerTitle,
+    headerRight: (<View />),
+  })
+
   constructor() {
     super();
+    this.onPressFlag = this.onPressFlag.bind(this);
+    this.selectCountry = this.selectCountry.bind(this);
     this.state = {
-      valid: "",
-      type: "",
-      value: "",
+      cca2: 'vn',
     };
-    this.updateInfo = this.updateInfo.bind(this);
-    this.renderInfo = this.renderInfo.bind(this);
   }
 
-  updateInfo() {
+  componentDidMount() {
     this.setState({
-      valid: this.phone.isValidNumber(),
-      type: this.phone.getNumberType(),
-      value: this.phone.getValue()
+      pickerData: this.phone.getPickerData(),
     });
   }
 
-  renderInfo() {
-    if (this.state.value) {
-      return (
-        <View>
-          <Text>
-            Is Valid:{" "}
-            <Text style={{ fontWeight: "bold" }}>
-              {this.state.valid.toString()}
-            </Text>
-          </Text>
-          <Text>
-            Type: <Text style={{ fontWeight: "bold" }}>{this.state.type}</Text>
-          </Text>
-          <Text>
-            Value:{" "}
-            <Text style={{ fontWeight: "bold" }}>{this.state.value}</Text>
-          </Text>
-        </View>
-      );
-    }
+  onPressFlag() {
+    this.countryPicker.openModal();
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
-    title: 'Create by Phone Number',
-    headerTitleStyle: styles.headerTitle,
-  })
+  _onClickCreateWallet =() => {
+  }
 
-  _onClickCreateWallet() {
+  selectCountry(country) {
+    this.phone.selectCountry(country.cca2.toLowerCase());
+    this.setState({ cca2: country.cca2 });
   }
 
   render() {
     return (
-      <View style={styles.imageview}>
+      <View style={styles.container}>
         <View style={styles.inputTextNumber}>
           <View style={styles.country}>
-            <PhoneInput ref={ref => { this.phone = ref }}></PhoneInput>
-            <TouchableOpacity onPress={this.updateInfo} style={styles.codeCountry}>
-            </TouchableOpacity>
-            {this.renderInfo()}
+            <PhoneInput
+              ref={(ref) => { this.phone = ref; }}
+              onPressFlag={this.onPressFlag}
+            />
+            <CountryPicker
+              ref={(ref) => {
+                this.countryPicker = ref;
+              }}
+              onChange={value => this.selectCountry(value)}
+              translation="eng"
+              cca2={this.state.cca2}
+            >
+              <View />
+            </CountryPicker>
           </View>
-          <TextInput style={styles.phoneNumber}
-            underlineColorAndroid='transparent'
-            placeholder="Phone number"></TextInput>
+          <TextInput
+            style={styles.phoneNumber}
+            underlineColorAndroid="transparent"
+            placeholder="Phone number"
+          />
         </View>
 
         <View>
           <CheckBox
             containerStyle={styles.checkboxs}
-            title='I accept the terms and conditions' />
+            title={I18n.t('createByPhoneNumber.iAccept')}
+          />
         </View>
         <View style={styles.viewcreate}>
           <TouchableOpacity
             style={styles.createWallet}
-            onPress={this._onClickCreateWallet.bind(this)}>
-            <Text style={styles.textCreate}>Create Wallet</Text>
+            onPress={() => this._onClickCreateWallet()}
+          >
+            <Text style={styles.textCreate}>
+              {I18n.t('createByPhoneNumber.createWallet')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
-};
+}
 
 const styles = ScaledSheet.create({
-  imageview: {
+  container: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#F5F7FA'
+    backgroundColor: '#F5F7FA',
   },
   headerTitle: {
     flex: 1,
     textAlign: 'center',
     fontWeight: '400',
+    fontSize: '20@s',
   },
   inputTextNumber: {
     borderRadius: '24@s',
@@ -113,8 +117,8 @@ const styles = ScaledSheet.create({
   },
   checkboxs: {
     alignItems: 'center',
-    backgroundColor: 'transparent',
-    borderWidth: 0
+    backgroundColor: '#F5F7FA',
+    borderWidth: 0,
   },
   createWallet: {
     borderRadius: '20@s',
@@ -142,7 +146,7 @@ const styles = ScaledSheet.create({
     borderTopLeftRadius: '23@s',
     borderBottomLeftRadius: '23@s',
     paddingLeft: '20@s',
-    borderColor: "#7F7F7F",
+    borderColor: '#7F7F7F',
     backgroundColor: '#FFFFFF',
     width: '100@s',
     height: '55@s',
@@ -151,7 +155,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderTopRightRadius: '23@s',
     borderBottomRightRadius: '23@s',
-    borderColor: "#7F7F7F",
+    borderColor: '#7F7F7F',
     width: '215@s',
     backgroundColor: '#FFFFFF',
     fontSize: '20@s',
@@ -159,5 +163,8 @@ const styles = ScaledSheet.create({
   },
   codeCountry: {
     width: '30@s',
-  }
+  },
+  textCountry: {
+    fontWeight: 'bold',
+  },
 });

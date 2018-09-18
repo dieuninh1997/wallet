@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import {
   View, Text, Image, TouchableOpacity,
 } from 'react-native';
-// import I18n from '../../i18n/i18n';
+import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class CreateWalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: 'Create A Wallet',
+    title: I18n.t('createWallet.title'),
     headerTitleStyle: styles.headerTitle,
     headerRight: (<Text>Sign In</Text>),
   })
@@ -22,32 +22,40 @@ export default class CreateWalletScreen extends Component {
 
   render() {
     return (
-      <View style={styles.createBase}>
+      <View style={styles.container}>
         <View style={styles.createBaseIcon}>
           <Image style={styles.iconWallet} source={require('../../../assets/createwalet/wallet.png')} />
         </View>
-        <View style={styles.createBase}>
+        <View style={styles.container}>
           <TouchableOpacity
             style={styles.viewItem}
             onPress={() => this._onClickCreatePhoneNumber()}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
-            <Text style={styles.textCreate}>Phone number</Text>
+            <Text style={styles.textCreate}>
+              {I18n.t('createWallet.phoneNumber')}
+            </Text>
           </TouchableOpacity>
 
           <View style={styles.viewItem}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/email.png')} />
-            <Text style={styles.textCreate}>Email Address</Text>
+            <Text style={styles.textCreate}>
+              {I18n.t('createWallet.emailAddress')}
+            </Text>
           </View>
 
           <View style={styles.viewItem}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
-            <Text style={styles.textCreate}>Passport Number</Text>
+            <Text style={styles.textCreate}>
+              {I18n.t('createWallet.passportNumber')}
+            </Text>
           </View>
 
           <View style={styles.viewItem}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/FacebookIcon.png')} />
-            <Text style={styles.textCreate}>Facebook</Text>
+            <Text style={styles.textCreate}>
+              {I18n.t('createWallet.facebook')}
+            </Text>
           </View>
         </View>
       </View>
@@ -56,7 +64,7 @@ export default class CreateWalletScreen extends Component {
 }
 
 const styles = ScaledSheet.create({
-  createBase: {
+  container: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#F5F7FA',
@@ -94,16 +102,10 @@ const styles = ScaledSheet.create({
     width: '30@s',
     height: '30@s',
     marginLeft: '25@s',
-    color: '#C6E2FF',
   },
   textCreate: {
     fontSize: '20@s',
     marginLeft: '15@s',
     color: '#0066CC',
-  },
-  titleHeader: {
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    textAlign: 'center',
   },
 });

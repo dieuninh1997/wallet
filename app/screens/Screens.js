@@ -6,14 +6,11 @@ import SettingScreen from './setting/SettingScreen';
 import SendScreen from './send/SendScreen';
 
 export default {
-  CreateWalletPhoneNumberScreen: {
-    screen: CreateWalletPhoneNumberScreen,
-  },
-  SettingScreen: {
-    screen: SettingScreen,
-  },
   LandingScreen: {
     screen: LandingScreen,
+  },
+  CreateWalletPhoneNumberScreen: {
+    screen: CreateWalletPhoneNumberScreen,
   },
   LoginScreen: {
     screen: LoginScreen,
@@ -21,9 +18,10 @@ export default {
   CreateWalletScreen: {
     screen: CreateWalletScreen,
   },
-  
- 
   SendScreen: {
     screen: SendScreen,
+  },
+  SettingScreen: {
+    screen: SettingScreen,
   },
 };

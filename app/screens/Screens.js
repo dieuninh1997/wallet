@@ -9,6 +9,9 @@ import TransactionsScreen from './transactions/TransactionsScreen';
 import AuthScreen from './auth/AuthScreen';
 
 export default {
+  SettingScreen: {
+    screen: SettingScreen,
+  },
   AuthScreen: {
     screen: AuthScreen,
   },
@@ -32,8 +35,5 @@ export default {
   },
   SendScreen: {
     screen: SendScreen,
-  },
-  SettingScreen: {
-    screen: SettingScreen,
   },
 };

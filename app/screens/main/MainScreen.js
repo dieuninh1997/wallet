@@ -11,107 +11,117 @@ import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
 import MangoHeader from "../common/MangoHeader";
 import { CommonStyles } from "../../utils/CommonStyles";
 
-let MangoTabNavigator;
-
-const plusViewFocused = <View style={{ width: 126,
+const plusViewFocused = <View style={{
+  width: 126,
   height: 55,
   backgroundColor: 'red',
   borderTopLeftRadius: 108,
   borderTopRightRadius: 108,
   borderBottomLeftRadius: 95,
-  borderBottomRightRadius: 95}}>
+  borderBottomRightRadius: 95
+}}>
   <Text>Focused</Text>
 </View>;
 
-class MainScreen extends React.PureComponent {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoHeader navigation={navigation} viewRef={navigation.getParam('viewRef')} oke={"oke"} />,
-    headerStyle: CommonStyles.header,
-  });
+const MainScreen = createBottomTabNavigator(
+  {
+    DashboardScreen: {
+      screen: props => <DashboardScreen {...props}/>,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <View style={styles.tabFocused}>
+            <Image
+              source={focused ? MangoTabImages.dashboardTabFocused : MangoTabImages.dashboardTab}
+            />
+          </View>
+        ),
+      })
+    },
+    RequestScreen: {
+      screen: RequestScreen,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <View>
+            {focused ? plusViewFocused : null}
+            <Image
+              source={focused ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
+            />
+          </View>
 
-  _initTabNavigator() {
-    return createBottomTabNavigator(
-      {
-        DashboardScreen: {
-          screen: props =>  <DashboardScreen {...props}/>,
-          navigationOptions: () => ({
-            tabBarIcon: ({ focused }) => (
-              <View style={styles.tabFocused}>
-                <Image
-                  source={focused ? MangoTabImages.dashboardTabFocused : MangoTabImages.dashboardTab}
-                />
-              </View>
-            )
-          })
-        },
-        RequestScreen: {
-          screen: RequestScreen,
-          navigationOptions: () => ({
-            tabBarIcon: ({ focused }) => (
-              <View>
-                {focused ? plusViewFocused : null}
-                <Image
-                  source={focused ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
-                />
-              </View>
-
-            )
-          })
-        },
-        SendScreen: {
-          screen: SendScreen,
-          navigationOptions: () => ({
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={focused ? MangoTabImages.sendTabFocused : MangoTabImages.sendTab}
-              />
-            )
-          })
-        },
-        TransactionScreen: {
-          screen: TransactionsScreen,
-          navigationOptions: () => ({
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={focused ? MangoTabImages.transactionTabFocused : MangoTabImages.transactionTab}
-              />
-            )
-          })
-        },
+        )
+      })
+    },
+    SendScreen: {
+      screen: SendScreen,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Image
+            source={focused ? MangoTabImages.sendTabFocused : MangoTabImages.sendTab}
+          />
+        )
+      })
+    },
+    TransactionScreen: {
+      screen: TransactionsScreen,
+      navigationOptions: () => ({
+        tabBarIcon: ({ focused }) => (
+          <Image
+            source={focused ? MangoTabImages.transactionTabFocused : MangoTabImages.transactionTab}
+          />
+        )
+      })
+    },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: '#FFF',
+      inactiveTintColor: '#FFF',
+      activeBackgroundColor: '#FFD72F',
+      showLabel: false,
+      style: {
+        backgroundColor: '#FFD72F',
+        borderTopStartRadius: scale(20),
+        height: scale(80),
       },
-      {
-        tabBarOptions: {
-          activeTintColor: '#FFF',
-          inactiveTintColor: '#FFF',
-          activeBackgroundColor: '#FFD72F',
-          showLabel: false,
-          style: {
-            backgroundColor: '#FFD72F',
-            borderTopStartRadius: scale(20),
-            height: scale(80),
-          },
-          labelStyle: {
-            fontSize: scale(11),
-            paddingBottom: scale(5)
-          }
-        },
-        animationEnabled: false,
-        swipeEnabled: false,
+      labelStyle: {
+        fontSize: scale(11),
+        paddingBottom: scale(5)
       }
-    )
+    },
+    animationEnabled: false,
+    swipeEnabled: false,
+  }
+);
+
+MainScreen.navigationOptions = ({ navigation }) => {
+  let { routeName } = navigation.state.routes[navigation.state.index];
+  let headerTitle;
+  let headerStyle = CommonStyles.headerWithDropdown;
+
+  switch (routeName) {
+    case  'RequestScreen':
+      headerTitle = 'Request';
+      break;
+    case  'SendScreen':
+      headerTitle = 'Send';
+      break;
+    case  'TransactionScreen':
+      headerTitle = 'Transactions';
+      break;
+    default:
+      headerTitle = 'DashBoard';
+      headerStyle = CommonStyles.header;
+      break;
   }
 
-  constructor(props) {
-    super(props);
-    MangoTabNavigator = this._initTabNavigator();
-  }
-
-  render() {
-    return (
-        <MangoTabNavigator />
-    )
-  }
-}
+  return {
+    headerTitle,
+    headerStyle,
+    headerTitleStyle: CommonStyles.headerTitle,
+    headerLeft: <MangoHeader/>,
+    headerRight: <View/>,
+  };
+};
 
 export default MainScreen;
 

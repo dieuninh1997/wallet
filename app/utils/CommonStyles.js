@@ -47,6 +47,9 @@ const CommonStyles = {
   header: {
     backgroundColor: CommonColors.headerBarBgColor,
     height: CommonSize.headerHeight,
+    elevation: 0,
+    borderBottomWidth: scale(1),
+    borderBottomColor: '#E7E7E9'
   },
 
   headerWithDropdown: {

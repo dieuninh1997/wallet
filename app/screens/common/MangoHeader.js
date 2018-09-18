@@ -88,7 +88,10 @@ class MangoHeader extends React.Component {
 export default MangoHeader;
 
 const styles = ScaledSheet.create({
-  mangoHeader: {},
+  mangoHeader: {
+    position: 'relative',
+    top: '10@s'
+  },
   imgMenu: {
     width: '20@s',
     height: '20@s',

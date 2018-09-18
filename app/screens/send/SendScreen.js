@@ -14,13 +14,6 @@ import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class SendScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoMenuButton navigation={navigation} />,
-    title: I18n.t('send.title'),
-    headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.headerWithDropdown,
-  })
-
   _renderFormSend = () => (
     <View style={styles.formSendContainer}>
       <View style={styles.inputAddressContainer}>

@@ -3,9 +3,9 @@ import { View, Text } from "react-native";
 import PieChart from 'react-native-pie-chart';
 import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
 import MangoHeader from "../common/MangoHeader";
+import { CommonStyles } from "../../utils/CommonStyles";
 
-class DashboardScreen extends React.PureComponent {
-
+class DashboardScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -57,9 +57,7 @@ class DashboardScreen extends React.PureComponent {
   render() {
     const { series, sliceColor, chart_wh, sumSerires } = this.state;
     return (
-      <View style={styles.dashboardScreen}
-            ref={ref => this._viewScreen = ref}
-            onLayout={() => this.props.navigation.setParams({viewRef: this._viewScreen})}>
+      <View style={styles.dashboardScreen}>
         <PieChart
           chart_wh={chart_wh}
           series={series}

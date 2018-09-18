@@ -62,7 +62,7 @@ const CommonStyles = {
   headerTitle: {
     flexGrow: 0.8,
     textAlign: 'center',
-    fontSize: scale(22),
+    fontSize: scale(18),
     fontWeight: '200',
     color: CommonColors.headerTitleColor,
   },

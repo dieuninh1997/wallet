@@ -61,7 +61,7 @@ class MangoHeader extends React.Component {
         isVisible={isShowMenu}
         avoidKeyboard={true}
         useNativeDriver={true}
-        backdropColor='transparent'
+        // backdropColor='transparent'
         onBackButtonPress={() => this._hideMenu()}
         onBackdropPress={() => this._hideMenu()}
         style={styles.modalListCoin}
@@ -77,7 +77,7 @@ class MangoHeader extends React.Component {
     const { isShowMenu } = this.state;
 
     return (
-      <View style={styles.mangoHeader}>
+      <View>
         {this._renderIconToggleMenu()}
         {isShowMenu ? this._renderMenuOptions() : null}
       </View>
@@ -88,8 +88,6 @@ class MangoHeader extends React.Component {
 export default MangoHeader;
 
 const styles = ScaledSheet.create({
-  mangoHeader: {
-  },
   imgMenu: {
     width: '20@s',
     height: '20@s',

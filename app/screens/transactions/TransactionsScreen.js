@@ -12,13 +12,6 @@ import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class TransactionsScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoMenuButton navigation={navigation} />,
-    title: I18n.t('transactions.title'),
-    headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.headerWithDropdown,
-  })
-
   constructor(props) {
     super(props);
     const listTranasctions = [

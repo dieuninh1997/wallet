@@ -47,6 +47,9 @@ const CommonStyles = {
   header: {
     backgroundColor: CommonColors.headerBarBgColor,
     height: CommonSize.headerHeight,
+    elevation: 0,
+    borderBottomWidth: scale(1),
+    borderBottomColor: '#E7E7E9'
   },
 
   headerWithDropdown: {
@@ -59,7 +62,7 @@ const CommonStyles = {
   headerTitle: {
     flexGrow: 0.8,
     textAlign: 'center',
-    fontSize: scale(22),
+    fontSize: scale(18),
     fontWeight: '200',
     color: CommonColors.headerTitleColor,
   },

@@ -89,8 +89,6 @@ export default MangoHeader;
 
 const styles = ScaledSheet.create({
   mangoHeader: {
-    position: 'relative',
-    top: '10@s'
   },
   imgMenu: {
     width: '20@s',

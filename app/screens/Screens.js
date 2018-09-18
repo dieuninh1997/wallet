@@ -1,13 +1,17 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
 import MainScreen from './main/MainScreen';
-import SendScreen from "./send/SendScreen";
 import AuthScreen from './auth/AuthScreen';
+import CreateWalletScreen from './createwallet/CreateWalletScreen';
+import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
+import SettingScreen from './setting/SettingScreen';
 
 export default {
   MainScreen: { screen: MainScreen },
-  SendScreen: { screen: SendScreen },
+  SettingScreen: { screen: SettingScreen },
+  AuthScreen: { screen: AuthScreen },
   LandingScreen: { screen: LandingScreen },
+  CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   LoginScreen: { screen: LoginScreen },
-  AuthScreen: {screen: AuthScreen },
+  CreateWalletScreen: { screen: CreateWalletScreen },
 };

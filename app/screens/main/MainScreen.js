@@ -118,7 +118,7 @@ MainScreen.navigationOptions = ({ navigation }) => {
     headerTitle,
     headerStyle,
     headerTitleStyle: CommonStyles.headerTitle,
-    headerLeft: <MangoHeader/>,
+    headerLeft: <MangoHeader navigation={navigation}/>,
     headerRight: <View/>,
   };
 };

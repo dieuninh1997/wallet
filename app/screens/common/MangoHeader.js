@@ -18,6 +18,11 @@ class MangoHeader extends React.Component {
     this.setState({ isShowMenu: false });
   }
 
+_navigateSetting() {
+  this.setState({ isShowMenu: false });
+  this.props.navigation.navigate('SettingScreen')
+}
+
   _renderIconToggleMenu() {
     return (
       <TouchableWithoutFeedback onPress={() => this._toggleMenu()}>
@@ -30,10 +35,12 @@ class MangoHeader extends React.Component {
 
   _renderItemMenu(item) {
     return (
-      <View style={styles.itemMenuGroup} key={item.source}>
-        <Image source={item.source} style={styles.imgMenuOption}/>
-        <Text style={styles.contentMenuOption}>{item.title}</Text>
-      </View>
+      <TouchableWithoutFeedback onPress={() => this._navigateSetting()}>
+        <View style={styles.itemMenuGroup} key={item.source} >
+          <Image source={item.source} style={styles.imgMenuOption}/>
+          <Text style={styles.contentMenuOption}>{item.title}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 

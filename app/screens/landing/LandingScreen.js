@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+// import CreateWalletScreen from '../createwallet/CreateWalletScreen';
 import MangoButton from '../common/MangoButton';
 import { CommonColors } from '../../utils/CommonStyles';
 
@@ -17,6 +18,11 @@ class LandingScreen extends Component {
   _navigateLogin = () => {
     const { navigation } = this.props;
     navigation.navigate('LoginScreen');
+  }
+
+  _navigateCreate = () => {
+    const { navigation } = this.props;
+    navigation.navigate('CreateWalletScreen');
   }
 
   _renderSelectLanguage = () => (
@@ -35,6 +41,24 @@ class LandingScreen extends Component {
     </View>
   )
 
+  _renderSelectLanguage() {
+    return (
+      <View style={styles.selectLanguageContainer}>
+        <View style={styles.selectLanguageContent}>
+          <MaterialCommunityIcons
+            style={styles.dropdownIcon}
+            name="google-translate"
+          />
+          <Text style={styles.textLanguage}>Eng</Text>
+          <MaterialCommunityIcons
+            style={styles.dropdownIcon}
+            name="chevron-down"
+          />
+        </View>
+      </View>
+    );
+  }
+
   _renderLogoGroup() {
     return (
       <View style={styles.logoGroupContainer}>
@@ -52,6 +76,7 @@ class LandingScreen extends Component {
           title={I18n.t('landing.createWallet')}
           btnStyle={styles.btnCreateWalletContainer}
           btnTextStyle={styles.btnTextCreateWalletStyle}
+          onPressBtn={this._navigateCreate}
         />
         <MangoButton
           title={I18n.t('landing.signin')}

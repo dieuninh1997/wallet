@@ -42,7 +42,6 @@ const styles = ScaledSheet.create({
     borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '24@s',
     elevation: 2,
   },
   buttonText: {

@@ -3,22 +3,29 @@ import {
   View,
   Text,
   Image,
+  ScrollView,
+  Clipboard,
   TouchableOpacity,
 } from 'react-native';
+import Toast from 'react-native-root-toast';
 import I18n from '../../i18n/i18n';
-import MangoMenuButton from '../common/MangoMenuButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class RequestScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoMenuButton navigation={navigation} />,
-    title: I18n.t('request.title'),
-    headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.headerWithDropdown,
-  })
+  _handleCopyAddress = (address) => {
+    Clipboard.setString(address);
+    Toast.show('Copied', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.CENTER,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+  }
 
   _renderQrCodeSection = () => (
     <View style={styles.qrCodeSectionContainer}>
@@ -29,7 +36,7 @@ class RequestScreen extends Component {
         />
       </View>
       <View style={styles.addressContainer}>
-        <Text>0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855</Text>
+        <Text>0xb162e0cd09724b0296894eef352c16815cd610fb</Text>
       </View>
     </View>
   )
@@ -48,7 +55,7 @@ class RequestScreen extends Component {
       <MangoGradientButton
         btnText={I18n.t('request.copyAddress')}
         btnStyle={styles.btnCopyAddress}
-        onPress={() => true}
+        onPress={() => this._handleCopyAddress('0xb162e0cd09724b0296894eef352c16815cd610fb')}
       />
     </View>
   )
@@ -57,8 +64,14 @@ class RequestScreen extends Component {
     return (
       <View style={styles.container}>
         <MangoDropdown />
-        {this._renderQrCodeSection()}
-        {this._renderBtnSection()}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.contentContainer}>
+            {this._renderQrCodeSection()}
+            {this._renderBtnSection()}
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -72,11 +85,14 @@ const styles = ScaledSheet.create({
     backgroundColor: '#F5F7FA',
   },
 
+  contentContainer: {
+    padding: '10@s',
+  },
+
   // Section qrCode
   qrCodeSectionContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '10@s',
   },
 
   qrCodeContainer: {
@@ -101,22 +117,24 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     paddingVertical: '14@s',
     backgroundColor: '#E4E9F1',
-    marginBottom: '30@s',
+    marginBottom: '24@s',
   },
 
   // Section button
   groupBtnContainer: {
     flexDirection: 'row',
+    width: '320@s',
+    justifyContent: 'space-between',
   },
 
   btnUpContainer: {
-    height: '50@s',
     width: '70@s',
+    height: '50@s',
     borderRadius: '25@s',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: CommonColors.headerBarBgColor,
-    elevation: 5,
+    elevation: 4,
   },
 
   btnUpImage: {
@@ -126,6 +144,7 @@ const styles = ScaledSheet.create({
 
   btnCopyAddress: {
     width: '220@s',
-    marginLeft: '18@s',
+    marginBottom: '4@s',
+    marginRight: '4@s',
   },
 });

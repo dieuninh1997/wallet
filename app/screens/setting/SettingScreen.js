@@ -7,16 +7,16 @@ import { Switch } from 'react-native-switch';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
-import { CommonColors, CommonStyles } from "../../utils/CommonStyles";
-import { scale } from "../../libs/reactSizeMatter/scalingUtils";
+import { CommonStyles } from '../../utils/CommonStyles';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation}/>,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('setting.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: (<View/>),
+    headerRight: (<View />),
   });
 
   static TITLE_SWITCH = {
@@ -25,22 +25,23 @@ export default class SettingScreen extends Component {
     swipeReceive: 'swipeReceive',
   };
 
-  state = {
-    payload: {
-      emailNotification: false,
-      faceId: false,
-      swipeReceive: false,
-    }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      payload: {
+        emailNotification: false,
+        faceId: false,
+        swipeReceive: false,
+      },
+    };
+  }
 
 
-
-  _onChangeSwitch = (value, title) => {
+  _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
     payload[`${title}`] = !payload[`${title}`];
-
-    this.setState({payload});
+    this.setState({ payload });
   }
 
   _renderProfile() {
@@ -64,7 +65,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <View style={[styles.borderElement, {paddingTop: scale(2)}]}>
+          <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
             <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
             <View style={styles.activiRightGroup}>
               <Text style={styles.textUnVerified}>{I18n.t('setting.unverified')}</Text>
@@ -75,7 +76,7 @@ export default class SettingScreen extends Component {
             </View>
           </View>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -85,7 +86,7 @@ export default class SettingScreen extends Component {
           </View>
         </View>
       </View>
-    )
+    );
   }
 
   _renderReference() {
@@ -96,19 +97,19 @@ export default class SettingScreen extends Component {
         <Text style={styles.titleTable}>{I18n.t('setting.perferences')}</Text>
         <View style={styles.borderTable}>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.emailNotification')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.emailNotification')}</Text>
             <Switch
               containerStyle={styles.switchBorder}
               backgroundActive="#16ec7e"
               backgroundInactive="#fff"
               value={payload.emailNotification}
               innerCircleStyle={styles.innerCircle}
-              changeValueImmediately={true}
-              onValueChange={(value) => this._onChangeSwitch(value, SettingScreen.TITLE_SWITCH.emailNotification)}
+              changeValueImmediately
+              onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
             />
           </View>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
             <View style={styles.activiRightGroup}>
               <Text>U.S Dollar ($)</Text>
               <MaterialCommunityIcons
@@ -119,7 +120,7 @@ export default class SettingScreen extends Component {
           </View>
         </View>
       </View>
-    )
+    );
   }
 
   _renderSecurity() {
@@ -142,7 +143,7 @@ export default class SettingScreen extends Component {
             </View>
           </View>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -151,7 +152,7 @@ export default class SettingScreen extends Component {
             </View>
           </View>
           <View style={styles.borderElement}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
             <View style={styles.activiRightGroup}>
               <Text style={styles.textUnVerified}>
                 {I18n.t('setting.unconfirmed')}
@@ -163,7 +164,7 @@ export default class SettingScreen extends Component {
             </View>
           </View>
           <View style={styles.borderElement}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -172,7 +173,7 @@ export default class SettingScreen extends Component {
             </View>
           </View>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
             <View style={styles.activiRightGroup}>
               <Switch
                 containerStyle={styles.switchBorder}
@@ -180,13 +181,13 @@ export default class SettingScreen extends Component {
                 backgroundInactive="#fff"
                 value={payload.faceId}
                 innerCircleStyle={styles.innerCircle}
-                changeValueImmediately={true}
-                onValueChange={(value) => this._onChangeSwitch(value, SettingScreen.TITLE_SWITCH.faceId)}
+                changeValueImmediately
+                onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.faceId)}
               />
             </View>
           </View>
           <View style={styles.borderElementBottom}>
-            <Text  style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
+            <Text style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
             <View style={styles.activiRightGroup}>
               <Switch
                 containerStyle={styles.switchBorder}
@@ -194,14 +195,14 @@ export default class SettingScreen extends Component {
                 backgroundInactive="#fff"
                 innerCircleStyle={styles.innerCircle}
                 value={payload.swipeReceive}
-                changeValueImmediately={true}
-                onValueChange={(value) => this._onChangeSwitch(value, SettingScreen.TITLE_SWITCH.swipeReceive)}
+                changeValueImmediately
+                onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.swipeReceive)}
               />
             </View>
           </View>
         </View>
       </View>
-    )
+    );
   }
 
   render() {
@@ -223,7 +224,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     padding: '14@s',
-    backgroundColor: '#f5f7fa'
+    backgroundColor: '#f5f7fa',
   },
   headerTitle: {
     flex: 1,
@@ -247,7 +248,7 @@ const styles = ScaledSheet.create({
   borderWalletId: {
     borderBottomWidth: '1@s',
     padding: '10@s',
-    borderColor: '#ced4dd'
+    borderColor: '#ced4dd',
   },
   borderElement: {
     borderBottomWidth: '1@s',
@@ -255,7 +256,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderColor: '#ced4dd'
+    borderColor: '#ced4dd',
   },
   borderElementBottom: {
     padding: '10@s',
@@ -286,18 +287,18 @@ const styles = ScaledSheet.create({
   },
   innerCircle: {
     borderColor: '#e0e4eb',
-    borderWidth: '1@s'
+    borderWidth: '1@s',
   },
   titleSetting: {
     fontSize: '13@s',
-    color: '#26304d'
+    color: '#26304d',
   },
   walletID: {
     color: '#9298aa',
-    fontSize: '13@s'
+    fontSize: '13@s',
   },
   walletAddress: {
     fontSize: '12@s',
-    color: '#293350'
-  }
+    color: '#293350',
+  },
 });

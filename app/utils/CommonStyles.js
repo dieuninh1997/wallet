@@ -49,7 +49,7 @@ const CommonStyles = {
     height: CommonSize.headerHeight,
     elevation: 0,
     borderBottomWidth: scale(1),
-    borderBottomColor: '#E7E7E9'
+    borderBottomColor: '#E7E7E9',
   },
 
   headerWithDropdown: {
@@ -60,7 +60,7 @@ const CommonStyles = {
   },
 
   headerTitle: {
-    flexGrow: 0.8,
+    flexGrow: 0.9,
     textAlign: 'center',
     fontSize: scale(18),
     fontWeight: '200',

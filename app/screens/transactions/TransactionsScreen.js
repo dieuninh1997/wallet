@@ -5,10 +5,9 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import I18n from '../../i18n/i18n';
-import MangoMenuButton from '../common/MangoMenuButton';
+// import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class TransactionsScreen extends Component {

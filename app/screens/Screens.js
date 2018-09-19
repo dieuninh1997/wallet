@@ -7,11 +7,11 @@ import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumbe
 import SettingScreen from './setting/SettingScreen';
 
 export default {
+  LandingScreen: { screen: LandingScreen },
+  CreateWalletScreen: { screen: CreateWalletScreen },
   MainScreen: { screen: MainScreen },
   SettingScreen: { screen: SettingScreen },
   AuthScreen: { screen: AuthScreen },
-  LandingScreen: { screen: LandingScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   LoginScreen: { screen: LoginScreen },
-  CreateWalletScreen: { screen: CreateWalletScreen },
 };

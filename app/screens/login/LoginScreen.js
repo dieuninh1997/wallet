@@ -19,7 +19,14 @@ class LoginScreen extends Component {
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
+    headerRight: <View />,
   })
+
+  _handleClickLogin = () => {
+    const { navigation } = this.props;
+
+    navigation.navigate('MainScreen');
+  }
 
   _renderFormLogin = () => (
     <View style={styles.formLoginContainer}>
@@ -69,7 +76,7 @@ class LoginScreen extends Component {
     <MangoGradientButton
       btnText={I18n.t('signin.title')}
       btnStyle={styles.btnSigninContainer}
-      onPress={() => true}
+      onPress={() => this._handleClickLogin()}
     />
   )
 
@@ -150,5 +157,6 @@ const styles = ScaledSheet.create({
 
   btnSigninContainer: {
     width: '220@s',
+    marginBottom: '24@s',
   },
 });

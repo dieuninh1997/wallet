@@ -1,22 +1,27 @@
 import React from 'react';
-import { View, Text } from "react-native";
+import { View, Text } from 'react-native';
 import PieChart from 'react-native-pie-chart';
-import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
-import MangoHeader from "../common/MangoHeader";
-import { CommonStyles } from "../../utils/CommonStyles";
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 class DashboardScreen extends React.Component {
   constructor(props) {
     super(props);
 
     const data = [
-      { id: 0, count: 2754.55, color: '#FFD82F', countCoin: '587.00 MGC' },
-      { id: 1, count: 2054.58, color: '#2650BF', countCoin: '0.0578 BTC' },
-      { id: 2, count: 2054.58, color: '#FFA034', countCoin: '0.0578 ETH' }
+      {
+        id: 0, count: 2754.55, color: '#FFD82F', countCoin: '587.00 MGC',
+      },
+      {
+        id: 1, count: 2054.58, color: '#2650BF', countCoin: '0.0578 BTC',
+      },
+      {
+        id: 2, count: 2054.58, color: '#FFA034', countCoin: '0.0578 ETH',
+      },
     ];
-    let series = [], sliceColor = [];
+    const series = [];
+    const sliceColor = [];
 
-    data.map(d => {
+    data.map((d) => {
       series.push(d.count);
       sliceColor.push(d.count);
     });
@@ -27,7 +32,7 @@ class DashboardScreen extends React.Component {
       data,
       series,
       sliceColor: ['#FFD82F', '#2650BF', '#FFA034'],
-      chart_wh: 220,
+      chartWh: 220,
       sumSerires,
     };
   }
@@ -35,11 +40,11 @@ class DashboardScreen extends React.Component {
   _renderItemInforData(item) {
     return (
       <View style={styles.itemGroup} key={item.id}>
-        <View style={[{ backgroundColor: item.color }, styles.itemColor]}></View>
-        <Text style={styles.itemCount}>{'$ ' + item.count}</Text>
+        <View style={[{ backgroundColor: item.color }, styles.itemColor]} />
+        <Text style={styles.itemCount}>{`$ ${item.count}`}</Text>
         <Text style={styles.itemCountCoin}>{item.countCoin}</Text>
       </View>
-    )
+    );
   }
 
   _renderInforData() {
@@ -47,35 +52,36 @@ class DashboardScreen extends React.Component {
 
     return (
       <View style={styles.inforGroup}>
-        {data.map(d => {
-          return this._renderItemInforData(d)
-        })}
+        {data.map(d => this._renderItemInforData(d))}
       </View>
-    )
+    );
   }
 
   render() {
-    const { series, sliceColor, chart_wh, sumSerires } = this.state;
+    const {
+      series, sliceColor, chartWh, sumSerires,
+    } = this.state;
+
     return (
       <View style={styles.dashboardScreen}>
         <PieChart
-          chart_wh={chart_wh}
+          chart_wh={chartWh}
           series={series}
-          doughnut={true}
+          doughnut
           style={styles.pieChart}
           sliceColor={sliceColor}
           radius={200}
-          coverFill={'#FFF'}
+          coverFill="#FFF"
         />
 
         <View style={styles.sumSeriresGroup}>
           <Text style={styles.titleBalance}>Balance</Text>
-          <Text style={styles.sumSerires}>{'$ ' + sumSerires}</Text>
+          <Text style={styles.sumSerires}>{`$ ${sumSerires}`}</Text>
         </View>
 
         {this._renderInforData()}
       </View>
-    )
+    );
   }
 }
 
@@ -85,7 +91,7 @@ const styles = ScaledSheet.create({
   dashboardScreen: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ECEEF3'
+    backgroundColor: '#ECEEF3',
   },
   pieChart: {
     marginTop: '15@s',
@@ -95,29 +101,29 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: '95@s',
-    zIndex: 3
+    zIndex: 3,
   },
   sumSerires: {
     color: '#1D42B4',
-    fontSize: '24@s'
+    fontSize: '24@s',
   },
   titleBalance: {
     color: '#A1A6B5',
-    fontSize: '15@s'
+    fontSize: '15@s',
   },
   inforGroup: {
     flexDirection: 'row',
-    marginTop: '10@s'
+    marginTop: '10@s',
   },
   itemGroup: {
     flexDirection: 'column',
     alignItems: 'center',
-    flex: 1
+    flex: 1,
   },
   itemColor: {
     width: '20@s',
     height: '20@s',
-    borderRadius: '10@s'
+    borderRadius: '10@s',
   },
   itemCount: {
     color: '#2A334D',
@@ -127,6 +133,6 @@ const styles = ScaledSheet.create({
   },
   itemCountCoin: {
     color: '#474F66',
-    fontSize: '15@s'
-  }
+    fontSize: '15@s',
+  },
 });

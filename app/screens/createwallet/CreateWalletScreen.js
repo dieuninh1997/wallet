@@ -5,53 +5,56 @@ import {
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import { CommonStyles } from '../../utils/CommonStyles';
 
 export default class CreateWalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('createWallet.title'),
-    headerTitleStyle: styles.headerTitle,
-    headerRight: (<Text>Sign In</Text>),
+    headerTitleStyle: CommonStyles.headerTitle,
+    headerRight: <View />,
   })
 
 
-  _onClickCreatePhoneNumber = () => {
+  _handleClickCreatePhoneNumber = () => {
     const { navigation } = this.props;
+
     navigation.navigate('CreateWalletPhoneNumberScreen');
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.createBaseIcon}>
-          <Image style={styles.iconWallet} source={require('../../../assets/createwalet/wallet.png')} />
+        <View style={styles.imageWalletContainer}>
+          <Image style={styles.imageWallet} source={require('../../../assets/createwalet/wallet.png')} />
         </View>
-        <View style={styles.container}>
+
+        <View style={styles.groupBtnContainer}>
           <TouchableOpacity
-            style={styles.viewItem}
-            onPress={() => this._onClickCreatePhoneNumber()}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateByPhone]}
+            onPress={() => this._handleClickCreatePhoneNumber()}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
-            <Text style={styles.textCreate}>
+            <Text style={styles.textCreateByPhone}>
               {I18n.t('createWallet.phoneNumber')}
             </Text>
           </TouchableOpacity>
 
-          <View style={styles.viewItem}>
+          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/email.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.emailAddress')}
             </Text>
           </View>
 
-          <View style={styles.viewItem}>
+          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.passportNumber')}
             </Text>
           </View>
 
-          <View style={styles.viewItem}>
+          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/FacebookIcon.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.facebook')}
@@ -66,46 +69,60 @@ export default class CreateWalletScreen extends Component {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#F5F7FA',
   },
-  headerTitle: {
+
+  imageWalletContainer: {
     flex: 1,
-    textAlign: 'center',
-    fontWeight: '400',
-  },
-  createBaseIcon: {
-    flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  viewItem: {
+
+  imageWallet: {
+    width: '150@s',
+    height: '150@s',
+  },
+
+  groupBtnContainer: {
     flex: 1,
+  },
+
+  btnCreateWalletContainer: {
     flexDirection: 'row',
     marginBottom: '20@s',
-    borderRadius: '20@s',
-    marginRight: '40@s',
-    marginLeft: '40@s',
-    borderColor: '#fff',
-    backgroundColor: '#fff',
+    marginHorizontal: '40@s',
     alignItems: 'center',
+  },
+
+  btnCreateByPhone: {
+    height: '56@s',
+    borderRadius: '28@s',
+    backgroundColor: '#FFFFFF',
     elevation: 4,
   },
-  iconWallet: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '200@s',
-    height: '200@s',
+
+  btnCreateDisable: {
+    height: '48@s',
+    borderRadius: '24@s',
+    backgroundColor: '#e6ebf2',
   },
+
   iconCreate: {
-    width: '30@s',
-    height: '30@s',
+    width: '36@s',
+    height: '36@s',
     marginLeft: '25@s',
   },
-  textCreate: {
+
+  textCreateByPhone: {
     fontSize: '20@s',
     marginLeft: '15@s',
-    color: '#0066CC',
+    color: '#1c43b8',
+    fontWeight: '300',
+  },
+  textCreate: {
+    fontSize: '18@s',
+    marginLeft: '15@s',
+    color: '#526fc7',
+    fontWeight: '100',
   },
 });

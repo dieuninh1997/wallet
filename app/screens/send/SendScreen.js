@@ -7,13 +7,31 @@ import {
   Image,
 } from 'react-native';
 import I18n from '../../i18n/i18n';
-import MangoMenuButton from '../common/MangoMenuButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 
 class SendScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isForcusInput: false,
+    };
+  }
+
+  _handleForcusTextInput = () => {
+    this.setState({
+      isForcusInput: true,
+    });
+  }
+
+  _handleBlurTextInput = () => {
+    this.setState({
+      isForcusInput: false,
+    });
+  }
+
   _renderFormSend = () => (
     <View style={styles.formSendContainer}>
       <View style={styles.inputAddressContainer}>
@@ -25,6 +43,8 @@ class SendScreen extends Component {
           editable
           placeholder={I18n.t('send.walletAddress')}
           underlineColorAndroid="transparent"
+          onFocus={() => this._handleForcusTextInput()}
+          onBlur={() => this._handleBlurTextInput()}
           style={styles.inputText}
         />
       </View>
@@ -33,6 +53,9 @@ class SendScreen extends Component {
         <View style={styles.inputCoinValue}>
           <Text style={styles.inputTextLabel}>MGC</Text>
           <TextInput
+            onFocus={() => this._handleForcusTextInput()}
+            onBlur={() => this._handleBlurTextInput()}
+            keyboardType="numeric"
             editable
             placeholder="0.0000"
             underlineColorAndroid="transparent"
@@ -47,7 +70,10 @@ class SendScreen extends Component {
         >
           <Text style={styles.inputTextLabel}>USD</Text>
           <TextInput
+            onFocus={() => this._handleForcusTextInput()}
+            onBlur={() => this._handleBlurTextInput()}
             editable
+            keyboardType="numeric"
             placeholder="0.0000"
             underlineColorAndroid="transparent"
             style={styles.inputText}
@@ -58,6 +84,8 @@ class SendScreen extends Component {
       <View style={styles.inputFeeContainer}>
         <Text style={styles.inputTextLabel}>FEE</Text>
         <TextInput
+          onFocus={() => this._handleForcusTextInput()}
+          onBlur={() => this._handleBlurTextInput()}
           editable
           placeholder="Regular"
           placeholderTextColor="#000"
@@ -81,13 +109,14 @@ class SendScreen extends Component {
   )
 
   render() {
+    const { isForcusInput } = this.state;
     return (
       <View style={[styles.container]}>
         <MangoDropdown />
         <ScrollView>
           {this._renderFormSend()}
         </ScrollView>
-        {this._renderBtnContinue()}
+        { isForcusInput ? null : this._renderBtnContinue()}
       </View>
     );
   }
@@ -178,5 +207,9 @@ const styles = ScaledSheet.create({
   // Section button continue
   btnContinue: {
     width: '260@s',
+    marginBottom: '24@s',
+  },
+  btnContinueWhenInputForcus: {
+    display: 'none',
   },
 });

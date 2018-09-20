@@ -1,7 +1,9 @@
-import React from "react";
-import { View, Text, Image, TouchableWithoutFeedback, findNodeHandle } from "react-native";
-import ScaledSheet from "../../libs/reactSizeMatter/ScaledSheet";
-import Modal from "react-native-modal";
+import React from 'react';
+import {
+  View, Text, Image, TouchableWithoutFeedback,
+} from 'react-native';
+import Modal from 'react-native-modal';
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 class MangoHeader extends React.Component {
   state = {
@@ -18,30 +20,35 @@ class MangoHeader extends React.Component {
     this.setState({ isShowMenu: false });
   }
 
-_navigateSetting() {
-  this.setState({ isShowMenu: false });
-  this.props.navigation.navigate('SettingScreen')
-}
+  _navigateSetting(routerName) {
+    const { navigation } = this.props;
+
+    this.setState({ isShowMenu: false });
+    navigation.navigate(routerName);
+  }
 
   _renderIconToggleMenu() {
     return (
       <TouchableWithoutFeedback onPress={() => this._toggleMenu()}>
         <View>
-          <Image source={require('../../../assets/menu/menu.png')} style={styles.imgMenu}/>
+          <Image source={require('../../../assets/menu/menu.png')} style={styles.imgMenu} />
         </View>
       </TouchableWithoutFeedback>
-    )
+    );
   }
 
-  _renderItemMenu(item) {
+  _renderItemMenu(item, index) {
     return (
-      <TouchableWithoutFeedback onPress={() => this._navigateSetting()}>
-        <View style={styles.itemMenuGroup} key={item.source} >
-          <Image source={item.source} style={styles.imgMenuOption}/>
+      <TouchableWithoutFeedback
+        onPress={() => this._navigateSetting(item.routerName)}
+        key={index}
+      >
+        <View style={styles.itemMenuGroup} key={item.source}>
+          <Image source={item.source} style={styles.imgMenuOption} />
           <Text style={styles.contentMenuOption}>{item.title}</Text>
         </View>
       </TouchableWithoutFeedback>
-    )
+    );
   }
 
   _renderMenuOptions() {
@@ -49,35 +56,37 @@ _navigateSetting() {
     const menus = [
       {
         source: require('../../../assets/setting/settings.png'),
-        title: 'Settings'
+        title: 'Settings',
+        routerName: 'SettingScreen',
       },
       {
         source: require('../../../assets/question/question.png'),
-        title: 'Support'
+        title: 'Support',
+        routerName: 'SupportScreen',
       },
       {
         source: require('../../../assets/sing-out/logout.png'),
-        title: 'Sign out'
-      }
+        title: 'Sign out',
+        routerName: 'LandingScreen',
+      },
     ];
 
     return (
       <Modal
-        animationIn={'fadeIn'}
-        animationOut={'fadeOut'}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
         isVisible={isShowMenu}
-        avoidKeyboard={true}
-        useNativeDriver={true}
-        // backdropColor='transparent'
+        avoidKeyboard
+        useNativeDriver
         onBackButtonPress={() => this._hideMenu()}
         onBackdropPress={() => this._hideMenu()}
         style={styles.modalListCoin}
       >
         <View style={styles.menuGroup}>
-          {menus.map(menu => this._renderItemMenu(menu))}
+          {menus.map((menu, index) => this._renderItemMenu(menu, index))}
         </View>
       </Modal>
-    )
+    );
   }
 
   render() {
@@ -88,7 +97,7 @@ _navigateSetting() {
         {this._renderIconToggleMenu()}
         {isShowMenu ? this._renderMenuOptions() : null}
       </View>
-    )
+    );
   }
 }
 
@@ -98,7 +107,7 @@ const styles = ScaledSheet.create({
   imgMenu: {
     width: '20@s',
     height: '20@s',
-    marginLeft: '10@s'
+    marginLeft: '10@s',
   },
   menuGroup: {
     flexDirection: 'column',
@@ -111,16 +120,16 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     top: '20@s',
     backgroundColor: '#FFFFFF',
-    borderRadius: '10@s'
+    borderRadius: '10@s',
   },
   imgGroup: {
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
   contentMenuOption: {
     color: '#000000',
     fontSize: '15@s',
-    marginLeft: '15@s'
+    marginLeft: '15@s',
   },
   imgMenuOption: {
     width: '20@s',
@@ -128,10 +137,13 @@ const styles = ScaledSheet.create({
   },
   itemMenuGroup: {
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
   },
   absolute: {
-    position: "absolute",
-    top: 0, left: 0, bottom: 0, right: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 });

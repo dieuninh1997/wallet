@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -34,6 +35,7 @@ class MangoGradientButton extends Component {
 
 export default MangoGradientButton;
 
+
 const styles = ScaledSheet.create({
   container: {
     height: '50@s',
@@ -42,7 +44,17 @@ const styles = ScaledSheet.create({
     borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   buttonText: {
     color: '#000',

@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import I18n from '../../i18n/i18n';
@@ -148,12 +149,15 @@ class LandingScreen extends Component {
   render() {
     const { isShowListLanguage } = this.state;
     return (
-      <View style={styles.container}>
-        { this._renderSelectLanguage() }
-        {isShowListLanguage ? this._renderListSelectLanguage() : null}
-        { this._renderLogoGroup() }
-        { this._renderButtonGroup() }
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={{ alignItems: 'center' }}>
+          { this._renderSelectLanguage() }
+          {isShowListLanguage ? this._renderListSelectLanguage() : null}
+          { this._renderLogoGroup() }
+          { this._renderButtonGroup() }
+        </View>
+      </SafeAreaView>
+
     );
   }
 }

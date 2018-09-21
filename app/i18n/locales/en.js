@@ -22,7 +22,8 @@ export default {
   },
   createByPhoneNumber: {
     title: 'Create by Phone Number',
-    iAccept: 'I accept the terms and conditions',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
   },
   send: {

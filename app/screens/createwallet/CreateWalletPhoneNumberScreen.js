@@ -25,7 +25,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
     this.selectCountry = this.selectCountry.bind(this);
     this.state = {
       cca2: 'vn',
-      isCheckboxChecked: true,
+      isChecked: true,
     };
   }
 
@@ -40,24 +40,29 @@ export default class CreateWalletPhoneNumberScreen extends Component {
   }
 
   _handleToggleCheckBox = () => {
-    const { isCheckboxChecked } = this.state;
+    const { isChecked } = this.state;
+
     this.setState({
-      isCheckboxChecked: !isCheckboxChecked,
+      isChecked: !isChecked,
     });
   }
 
   _onClickCreateWallet =() => {
     const { navigation } = this.props;
+
     navigation.navigate('MainScreen');
   }
 
   selectCountry(country) {
-    this.phone.selectCountry(country.cca2.toLowerCase());
+    const parseCountry = country.cca2.toLowerCase();
+
+    this.phone.selectCountry(parseCountry);
     this.setState({ cca2: country.cca2 });
   }
 
   render() {
-    const { isCheckboxChecked } = this.state;
+    const { isChecked } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={styles.inputTextNumber}>
@@ -88,7 +93,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
         <View style={styles.checkBoxAccept}>
           <CheckBox
             containerStyle={styles.checkboxs}
-            checked={isCheckboxChecked}
+            checked={isChecked}
             checkedIcon="check-square"
             uncheckedIcon="square"
             checkedColor="#1c43b8"

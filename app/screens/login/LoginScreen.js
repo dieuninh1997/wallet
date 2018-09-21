@@ -12,6 +12,8 @@ import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import UserRequest from '../../requests/UserRequest';
+
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,10 +24,39 @@ class LoginScreen extends Component {
     headerRight: <View />,
   })
 
-  _handleClickLogin = () => {
-    const { navigation } = this.props;
+  static LOGIN_INFO = {
+    EMAIL: 'email',
+    PASSWORD: 'password',
+  }
 
-    navigation.navigate('MainScreen');
+  constructor(props) {
+    super(props);
+    this.state = {
+      loginInfo: {
+        email: null,
+        password: null,
+      },
+    };
+  }
+
+  _handleClickLogin = async () => {
+    const { loginInfo } = this.state;
+    try {
+      // const loginResponse = await UserRequest.login(loginInfo.email, loginInfo.password);
+      const loginResponse = await UserRequest.testLog();
+      console.log('loginResponse', loginResponse);
+    } catch (error) {
+      console.log('LoginRequest._error: ', error);
+    }
+  }
+
+  _handleChangeInput = (typeInput, value) => {
+    const { loginInfo } = this.state;
+    loginInfo[typeInput] = value;
+    console.log('loginInfo', loginInfo);
+    this.setState({
+      loginInfo,
+    });
   }
 
   _renderFormLogin = () => (
@@ -40,6 +71,7 @@ class LoginScreen extends Component {
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
+          onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, value)}
         />
       </View>
 
@@ -53,6 +85,7 @@ class LoginScreen extends Component {
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
+          onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.PASSWORD, value)}
         />
       </View>
     </View>

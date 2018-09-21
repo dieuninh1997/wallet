@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 
 class DashboardScreen extends React.Component {
   constructor(props) {
@@ -39,8 +40,8 @@ class DashboardScreen extends React.Component {
     ];
 
     const options = {
-      width: 350,
-      height: 350,
+      width: scale(350),
+      height: scale(350),
       animate: {
         enabled: false,
       },
@@ -53,8 +54,8 @@ class DashboardScreen extends React.Component {
           data={data}
           options={options}
           accessorKey="population"
-          r={120}
-          R={150}
+          r={scale(120)}
+          R={scale(150)}
         />
       </View>
     );

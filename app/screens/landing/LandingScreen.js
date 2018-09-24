@@ -4,9 +4,11 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  AsyncStorage,
   SafeAreaView,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import RNRestart from 'react-native-restart';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoButton from '../common/MangoButton';
@@ -17,14 +19,22 @@ class LandingScreen extends Component {
     header: null,
   })
 
+  static LIST_LANGUAGE = ['en', 'vi', 'jp'];
+
   constructor(props) {
     super(props);
-    const listLanguage = ['Eng', 'Vn', 'Jp'];
+    const listLanguage = LandingScreen.LIST_LANGUAGE;
+    const languageSelected = '';
+
     this.state = {
-      languageSelected: listLanguage[0],
+      languageSelected,
       listLanguage,
       isShowListLanguage: false,
     };
+  }
+
+  async componentWillMount() {
+    this._getLanguage();
   }
 
   _handleShowListLanguage = () => {
@@ -39,11 +49,18 @@ class LandingScreen extends Component {
     });
   }
 
+  _changeLanguageLayout = (locale) => {
+    I18n.locale = locale;
+    AsyncStorage.setItem('user_locale', locale);
+    RNRestart.Restart();
+  }
+
   _handleSelectLanguage = (item) => {
     this.setState({
       languageSelected: item,
       isShowListLanguage: false,
     });
+    this._changeLanguageLayout(item);
   }
 
   _renderListSelectLanguage = () => {
@@ -66,6 +83,7 @@ class LandingScreen extends Component {
       </Modal>
     );
   }
+
 
   _renderListLanguageItem = (item, index) => (
     <TouchableWithoutFeedback
@@ -110,6 +128,26 @@ class LandingScreen extends Component {
         </View>
       </TouchableWithoutFeedback>
     );
+  }
+
+  async _getLanguage() {
+    let value = await AsyncStorage.getItem('user_locale');
+    switch (value) {
+    case 'en':
+      value = 'Eng';
+      break;
+    case 'vi':
+      value = 'Vn';
+      break;
+    case 'jp':
+      value = 'Jp';
+      break;
+    default:
+      break;
+    }
+    this.setState({
+      languageSelected: value,
+    });
   }
 
   _renderLogoGroup() {

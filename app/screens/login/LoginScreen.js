@@ -48,7 +48,7 @@ class LoginScreen extends Component {
 
     try {
       await login(email, password);
-      navigation.navigate('SettingScreen');
+      navigation.navigate('MainScreen');
     } catch (error) {
       Toast.show(error.message, {
         duration: Toast.durations.SHORT,

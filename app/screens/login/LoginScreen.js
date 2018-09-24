@@ -7,21 +7,21 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import Toast from 'react-native-root-toast';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
-import Toast from 'react-native-root-toast';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation}/>,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: <View/>,
+    headerRight: <View />,
   });
 
   static LOGIN_INFO = {
@@ -39,12 +39,11 @@ class LoginScreen extends Component {
     };
   }
 
-  async _handleClickLogin() {
+  _handleClickLogin = async () => {
     const { loginInfo } = this.state;
     const { navigation } = this.props;
 
-    const email = loginInfo.email;
-    const password = loginInfo.password;
+    const { email, password } = loginInfo;
 
     try {
       await login(email, password);
@@ -95,7 +94,7 @@ class LoginScreen extends Component {
         <TextInput
           placeholder={I18n.t('signin.inputPassword')}
           editable
-          secureTextEntry={true}
+          secureTextEntry
           underlineColorAndroid="transparent"
           style={styles.inputText}
           onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.PASSWORD, value)}

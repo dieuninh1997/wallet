@@ -93,6 +93,7 @@ const MainScreen = createBottomTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false,
+    initialRouteName: 'DashboardScreen'
   },
 );
 

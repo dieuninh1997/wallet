@@ -69,6 +69,64 @@ class TransactionsScreen extends Component {
     };
   }
 
+  componentDidMount() {
+    const socketEventHandlers = this.getSocketEventHandlers();
+    for (let event in socketEventHandlers) {
+      let handler = socketEventHandlers[event];
+      window.GlobalSocket.bind(event, handler);
+    }
+
+    const dataEventHandlers = this.getDataEventHandlers();
+    for (let event in dataEventHandlers) {
+      let handler = dataEventHandlers[event];
+      window.EventBus.bind(event, handler);
+    }
+
+    // if (Platform.OS === 'android' && this.props.navigation) {
+    //   this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload => {
+    //     //console.log("payload willBlur", payload)
+    //     return BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid.bind(this))
+    //   }
+    //   );
+    // }
+  }
+
+  componentWillUnmount() {
+    const socketEventHandlers = this.getSocketEventHandlers();
+    for (let event in socketEventHandlers) {
+      let handler = socketEventHandlers[event];
+      window.GlobalSocket.unbind(event, handler);
+    }
+
+    const dataEventHandlers = this.getDataEventHandlers();
+    for (let event in dataEventHandlers) {
+      let handler = dataEventHandlers[event];
+      window.EventBus.unbind(event, handler);
+    }
+  }
+
+  getSocketEventHandlers() {
+    return {
+      TransactionCreated: this.onTransactionCreated.bind(this)
+    }
+  }
+
+  onTransactionCreated(data) {
+    console.log("data ok men:", data)
+    // const { transactions } = this.state;
+    //
+    // transactions.push(data);
+    // this.setState({transactions});
+  }
+
+  getDataEventHandlers() {
+    return {};
+  }
+
+  notify(event, data) {
+    window.EventBus.notify(event, data);
+  }
+
 
   _renderTransactonsList = () => {
     const { listTranasctions } = this.state;
@@ -125,7 +183,7 @@ class TransactionsScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MangoDropdown />
+        <MangoDropdown/>
         <ScrollView
           showsVerticalScrollIndicator={false}
         >
@@ -135,6 +193,7 @@ class TransactionsScreen extends Component {
     );
   }
 }
+
 export default TransactionsScreen;
 
 const styles = ScaledSheet.create({

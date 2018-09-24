@@ -45,7 +45,6 @@ const MainScreen = createBottomTabNavigator(
       navigationOptions: () => ({
         tabBarIcon: ({ focused }) => (
           <View>
-            {focused ? plusViewFocused : null}
             <Image
               source={focused ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
             />
@@ -79,11 +78,9 @@ const MainScreen = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: '#FFF',
       inactiveTintColor: '#FFF',
-      activeBackgroundColor: '#FFD72F',
       showLabel: false,
       style: {
-        backgroundColor: '#FFD72F',
-        borderTopStartRadius: scale(20),
+        backgroundColor: 'red',
         height: scale(80),
       },
       labelStyle: {

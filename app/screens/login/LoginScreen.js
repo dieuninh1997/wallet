@@ -12,20 +12,63 @@ import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { login } from '../../api/user/UserRequest';
+import Toast from 'react-native-root-toast';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
+    headerLeft: <MangoBackButton navigation={navigation}/>,
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: <View />,
-  })
+    headerRight: <View/>,
+  });
 
-  _handleClickLogin = () => {
+  static LOGIN_INFO = {
+    EMAIL: 'email',
+    PASSWORD: 'password',
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loginInfo: {
+        email: null,
+        password: null,
+      },
+    };
+  }
+
+  async _handleClickLogin() {
+    const { loginInfo } = this.state;
     const { navigation } = this.props;
 
-    navigation.navigate('MainScreen');
+    const email = loginInfo.email;
+    const password = loginInfo.password;
+
+    try {
+      await login(email, password);
+      navigation.navigate('MainScreen');
+    } catch (error) {
+      Toast.show(error.message, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.CENTER,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+      console.log('LoginRequest._error: ', error);
+    }
+  }
+
+  _handleChangeInput = (typeInput, value) => {
+    const { loginInfo } = this.state;
+
+    loginInfo[typeInput] = value;
+    this.setState({
+      loginInfo,
+    });
   }
 
   _renderFormLogin = () => (
@@ -40,6 +83,7 @@ class LoginScreen extends Component {
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
+          onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, value)}
         />
       </View>
 
@@ -51,8 +95,10 @@ class LoginScreen extends Component {
         <TextInput
           placeholder={I18n.t('signin.inputPassword')}
           editable
+          secureTextEntry={true}
           underlineColorAndroid="transparent"
           style={styles.inputText}
+          onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.PASSWORD, value)}
         />
       </View>
     </View>
@@ -92,6 +138,7 @@ class LoginScreen extends Component {
     );
   }
 }
+
 export default LoginScreen;
 
 const styles = ScaledSheet.create({

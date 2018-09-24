@@ -10,10 +10,10 @@ import SplashScreen from './SplashScreen';
 export default {
   SplashScreen: { screen: SplashScreen },
   LandingScreen: { screen: LandingScreen },
-  CreateWalletScreen: { screen: CreateWalletScreen },
+  LoginScreen: { screen: LoginScreen },
   MainScreen: { screen: MainScreen },
+  CreateWalletScreen: { screen: CreateWalletScreen },
   SettingScreen: { screen: SettingScreen },
   AuthScreen: { screen: AuthScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
-  LoginScreen: { screen: LoginScreen },
 };

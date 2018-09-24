@@ -1,6 +1,6 @@
 export default {
   landing: {
-    coinName: 'Mango Coin vn',
+    coinName: 'Mango Coin VI',
     coinDescription: 'Make a better future',
     createWallet: 'CREATE A WALLET',
     signin: 'Sign In',
@@ -9,10 +9,55 @@ export default {
   signin: {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
+    inputWalletId: 'Wallet ID',
+    inputPassword: 'Password',
+  },
+  createWallet: {
+    signin: 'Sign In',
+    title: 'Create A Wallet',
+    phoneNumber: 'Phone number',
+    emailAddress: 'Email Address',
+    passportNumber: 'Passport Number',
+    facebook: 'Facebook',
+  },
+  createByPhoneNumber: {
+    title: 'Create by Phone Number',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
+    createWallet: 'Create Wallet',
   },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
     continue: 'Continue',
+  },
+  setting: {
+    title: 'Settings',
+    profile: 'PROFILE',
+    walletId: 'Wallet ID',
+    email: 'Email',
+    mobileNumber: 'Mobile Number',
+    logIntoWebWallet: 'Log in to Web Wallet',
+    perferences: 'Perferences',
+    emailNotification: 'Email Notification',
+    localCurrency: 'Local Currency',
+    security: 'Security',
+    verification: '2-step Verification',
+    changePassword: 'Change Password',
+    recoveryPhrase: 'Recovery Phrase',
+    changePin: 'Change PIN',
+    useFaceIdAsPin: 'Use Face ID as PIN',
+    swipeToReceive: 'Swipe to Receive',
+    verified: 'Verified',
+    unverified: 'Unverified',
+    disabled: 'Disabled',
+    unconfirmed: 'Unconfirmed',
+  },
+  request: {
+    title: 'Request',
+    copyAddress: 'Copy Address',
+  },
+  transactions: {
+    title: 'Transactions',
   },
 };

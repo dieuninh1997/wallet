@@ -11,21 +11,6 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoHeader from '../common/MangoHeader';
 import { CommonStyles } from '../../utils/CommonStyles';
 
-const plusViewFocused = (
-  <View style={{
-    width: 126,
-    height: 55,
-    backgroundColor: 'red',
-    borderTopLeftRadius: 108,
-    borderTopRightRadius: 108,
-    borderBottomLeftRadius: 95,
-    borderBottomRightRadius: 95,
-  }}
-  >
-    <Text>Focused</Text>
-  </View>
-);
-
 const MainScreen = createBottomTabNavigator(
   {
     DashboardScreen: {
@@ -90,7 +75,7 @@ const MainScreen = createBottomTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false,
-    initialRouteName: 'DashboardScreen'
+    initialRouteName: 'DashboardScreen',
   },
 );
 

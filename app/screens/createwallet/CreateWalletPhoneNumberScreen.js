@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback,
+  View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback, AsyncStorage,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
+import Toast from 'react-native-root-toast';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
+import Erc20Service from '../../services/mango/mango';
+
 
 export default class CreateWalletPhoneNumberScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,23 +22,15 @@ export default class CreateWalletPhoneNumberScreen extends Component {
     headerRight: (<View />),
   })
 
-  constructor() {
-    super();
-    this.onPressFlag = this.onPressFlag.bind(this);
-    this.selectCountry = this.selectCountry.bind(this);
+  constructor(props) {
+    super(props);
     this.state = {
       cca2: 'vn',
       isChecked: true,
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      pickerData: this.phone.getPickerData(),
-    });
-  }
-
-  onPressFlag() {
+  _handlePressFlag = () => {
     this.countryPicker.openModal();
   }
 
@@ -47,13 +42,28 @@ export default class CreateWalletPhoneNumberScreen extends Component {
     });
   }
 
-  _onClickCreateWallet =() => {
+  _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
 
-    navigation.navigate('MainScreen');
+    try {
+      const wallet = await Erc20Service.generateWallet();
+      console.log('walletAddress', wallet);
+      await AsyncStorage.setItem('walletAddress', wallet.address);
+      const address = await AsyncStorage.getItem('walletAddress');
+      navigation.navigate('MainScreen');
+    } catch (error) {
+      Toast.show(error.message, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.CENTER,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+    }
   }
 
-  selectCountry(country) {
+  selectCountry = (country) => {
     const parseCountry = country.cca2.toLowerCase();
 
     this.phone.selectCountry(parseCountry);
@@ -61,7 +71,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
   }
 
   render() {
-    const { isChecked } = this.state;
+    const { isChecked, cca2 } = this.state;
 
     return (
       <View style={styles.container}>
@@ -69,7 +79,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
           <View style={styles.country}>
             <PhoneInput
               ref={(ref) => { this.phone = ref; }}
-              onPressFlag={this.onPressFlag}
+              onPressFlag={this._handlePressFlag}
             />
             <CountryPicker
               ref={(ref) => {
@@ -77,7 +87,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
               }}
               onChange={value => this.selectCountry(value)}
               translation="eng"
-              cca2={this.state.cca2}
+              cca2={cca2}
             >
               <View />
             </CountryPicker>
@@ -114,7 +124,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
         <View style={styles.viewcreate}>
           <TouchableOpacity
             style={styles.createWallet}
-            onPress={() => this._onClickCreateWallet()}
+            onPress={() => this._handleClickCreateWallet()}
           >
             <Text style={styles.textCreate}>
               {I18n.t('createByPhoneNumber.createWallet')}

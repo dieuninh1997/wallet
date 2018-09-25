@@ -33,7 +33,10 @@ async function initI18n() {
 async function initMasterdata() {
   const credentials = await AppPreferences.getAccessToken();
 
-  AppConfig.ACCESS_TOKEN = credentials.password;
+  const access_token = credentials.password;
+  const parseAccessToken = access_token ? access_token.includes('access_token') ? JSON.parse(access_token).access_token : access_token : undefined;
+
+  AppConfig.ACCESS_TOKEN = parseAccessToken;
   window.GlobalSocket = new GlobalSocket();
 
   if (__DEV__) {

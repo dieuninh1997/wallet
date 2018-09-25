@@ -8,8 +8,20 @@ export default class AppPreferences {
   }
 
   static async saveCodePin(code) {
-    const username = 'code-pin';
-    await Keychain.setGenericPassword(username, code);
+    try {
+      const responseGet = await this.getGeneric();
+
+      const username = { userName: responseGet.username, codePin: 'code-pin' };
+      const password = { access_token: responseGet.password, pin: code };
+
+      await Keychain.setGenericPassword(JSON.stringify(username), JSON.stringify(password));
+    } catch (err) {
+      console.log("SaveCodePin._error:", err)
+    }
+  }
+
+  static async getGeneric() {
+    return await Keychain.getGenericPassword();
   }
 
   static async getLocale() {

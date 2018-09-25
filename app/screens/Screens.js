@@ -10,12 +10,12 @@ import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from "./pin/AddPinScreen";
 
 export default {
-  LoginUsePinScreen: { screen: LoginUsePinScreen },
   SplashScreen: { screen: SplashScreen },
   LandingScreen: { screen: LandingScreen },
   LoginScreen: { screen: LoginScreen },
   MainScreen: { screen: MainScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
+  LoginUsePinScreen: { screen: LoginUsePinScreen },
   SettingScreen: { screen: SettingScreen },
   AuthScreen: { screen: AuthScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },

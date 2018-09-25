@@ -1,26 +1,48 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { initApp } from '../../App';
-import { CommonColors } from '../utils/CommonStyles';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
 import AppConfig from '../utils/AppConfig';
+import AppPreferences from "../utils/AppPreferences";
 
 export default class SplashScreen extends Component {
+  state = {
+    isCodePin: false
+  };
+
   static navigationOptions = () => ({
     header: null,
   })
 
   async componentWillMount() {
+    await this._checkStatusPin();
     await this._initMangoApp();
+  }
+
+  async _checkStatusPin() {
+    try {
+      const checkCodePin = await AppPreferences.getGeneric();
+      const isCodePin = checkCodePin && checkCodePin.password.includes('pin');
+
+      this.setState({ isCodePin });
+    } catch (err) {
+      console.log("CheckStatusPin._error:", err)
+    }
   }
 
   async _initMangoApp() {
     const { navigation } = this.props;
+    const { isCodePin } = this.state;
 
     await initApp();
 
     if (AppConfig.ACCESS_TOKEN) {
+      if (isCodePin) {
+        navigation.navigate('LoginUsePinScreen');
+        return;
+      }
+
       navigation.navigate('MainScreen');
     } else {
       navigation.navigate('LandingScreen');

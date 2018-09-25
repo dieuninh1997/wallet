@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ScrollView,
+  View, Text, ScrollView, TouchableWithoutFeedback
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';

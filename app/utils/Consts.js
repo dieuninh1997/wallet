@@ -53,5 +53,8 @@ export default class Consts {
   static DEFAULT_USER_ORDER_BOOK = {
     buy: [],
     sell: [],
-  }
+  };
+
+  static PIN = 'pin';
+  static ACCESS_TOKEN_TITLE = 'access_token';
 }

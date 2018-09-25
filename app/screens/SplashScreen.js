@@ -5,6 +5,7 @@ import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
 import AppConfig from '../utils/AppConfig';
 import AppPreferences from "../utils/AppPreferences";
+import Consts from "../utils/Consts";
 
 export default class SplashScreen extends Component {
   state = {
@@ -23,7 +24,7 @@ export default class SplashScreen extends Component {
   async _checkStatusPin() {
     try {
       const checkCodePin = await AppPreferences.getGeneric();
-      const isCodePin = checkCodePin && checkCodePin.password.includes('pin');
+      const isCodePin = checkCodePin && checkCodePin.password.includes(Consts.PIN);
 
       this.setState({ isCodePin });
     } catch (err) {

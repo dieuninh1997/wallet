@@ -10,8 +10,10 @@
     "axios": "0.18.0",
     "core-js": "^2.5.7",
     "crypto-js": "3.1.9-1",
+    "laravel-echo": "^1.4.0",
+    "lodash": "^4.17.11",
+    "microevent": "^1.0.0",
     "ethers": "3.0.29",
-    "lodash": "4.17.11",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-blur": "^3.2.2",
@@ -32,6 +34,7 @@
     "react-native-vector-icons": "5.0.0",
     "react-navigation": "2.16.0",
     "redux": "4.0.0",
+    "socket.io-client": "^2.1.1",
     "url-join": "4.0.0"
   },
   "devDependencies": {

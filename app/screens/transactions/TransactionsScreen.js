@@ -118,7 +118,6 @@ class TransactionsScreen extends Component {
   }
 
   getSocketEventHandlers() {
-    console.log("getSocketEventHandlers")
     return {
       TransactionCreated: this.onTransactionCreated.bind(this),
       OrderListUpdated: this._onOpenOrderUpdated.bind(this)
@@ -126,7 +125,6 @@ class TransactionsScreen extends Component {
   }
 
   onTransactionCreated(data) {
-    console.log("data ok men:", data)
     // const { transactions } = this.state;
     //
     // transactions.push(data);
@@ -135,7 +133,7 @@ class TransactionsScreen extends Component {
 
   _onOpenOrderUpdated(data) {
     const { currency } = this.props;
-    console.log("Open Order Updated")
+
     if (data.currency !== currency) {
       return;
     }

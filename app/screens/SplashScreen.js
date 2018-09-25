@@ -4,6 +4,7 @@ import { initApp } from '../../App';
 import { CommonColors } from '../utils/CommonStyles';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
+import AppConfig from '../utils/AppConfig';
 
 export default class SplashScreen extends Component {
   static navigationOptions = () => ({
@@ -16,14 +17,20 @@ export default class SplashScreen extends Component {
 
   async _initMangoApp() {
     const { navigation } = this.props;
+
     await initApp();
-    navigation.navigate('LandingScreen');
+
+    if (AppConfig.ACCESS_TOKEN) {
+      navigation.navigate('MainScreen');
+    } else {
+      navigation.navigate('LandingScreen');
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../../assets/logo/logo.png')} />
+        <Image source={require('../../assets/logo/logo.png')}/>
         <Text style={styles.logoContent}>{I18n.t('landing.coinName')}</Text>
         <Text style={styles.logoDescription}>{I18n.t('landing.coinDescription')}</Text>
       </View>

@@ -11,3 +11,8 @@ export function saveTransactionHistory(params) {
 
   return post(url, params);
 }
+
+export function getOrdersPending(params) {
+  let url = '/orders/pending';
+  return get(url, params);
+}

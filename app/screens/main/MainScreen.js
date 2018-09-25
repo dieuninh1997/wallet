@@ -11,41 +11,40 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoHeader from '../common/MangoHeader';
 import { CommonStyles } from '../../utils/CommonStyles';
 
-const plusViewFocused = (
-  <View style={{
-    width: 126,
-    height: 55,
-    backgroundColor: 'red',
-    borderTopLeftRadius: 108,
-    borderTopRightRadius: 108,
-    borderBottomLeftRadius: 95,
-    borderBottomRightRadius: 95,
-  }}
-  >
-    <Text>Focused</Text>
-  </View>
-);
-
 const MainScreen = createBottomTabNavigator(
   {
     DashboardScreen: {
       screen: props => <DashboardScreen {...props} />,
       navigationOptions: () => ({
+        tabBarLabel: ({ focused }) => (
+          <Text style={focused ? styles.titleTabFocused :styles.titleTab}>
+            Dashboard
+          </Text>
+        ),
         tabBarIcon: ({ focused }) => (
           <View style={styles.tabFocused}>
             <Image
+              style={styles.iconTab}
               source={focused ? MangoTabImages.dashboardTabFocused : MangoTabImages.dashboardTab}
             />
           </View>
         ),
+
+
       }),
     },
     RequestScreen: {
       screen: RequestScreen,
       navigationOptions: () => ({
+        tabBarLabel: ({ focused }) => (
+          <Text style={focused ? styles.titleTabFocused :styles.titleTab}>
+            Request
+          </Text>
+        ),
         tabBarIcon: ({ focused }) => (
           <View>
             <Image
+              style={styles.iconTab}
               source={focused ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
             />
           </View>
@@ -56,8 +55,14 @@ const MainScreen = createBottomTabNavigator(
     SendScreen: {
       screen: SendScreen,
       navigationOptions: () => ({
+        tabBarLabel: ({ focused }) => (
+          <Text style={focused ? styles.titleTabFocused :styles.titleTab}>
+            Send
+          </Text>
+        ),
         tabBarIcon: ({ focused }) => (
           <Image
+            style={styles.iconTab}
             source={focused ? MangoTabImages.sendTabFocused : MangoTabImages.sendTab}
           />
         ),
@@ -66,8 +71,14 @@ const MainScreen = createBottomTabNavigator(
     TransactionScreen: {
       screen: TransactionsScreen,
       navigationOptions: () => ({
+        tabBarLabel: ({ focused }) => (
+          <Text style={focused ? styles.titleTabFocused :styles.titleTab}>
+            Transactions
+          </Text>
+        ),
         tabBarIcon: ({ focused }) => (
           <Image
+            style={styles.iconTab}
             source={focused ? MangoTabImages.transactionTabFocused : MangoTabImages.transactionTab}
           />
         ),
@@ -78,10 +89,10 @@ const MainScreen = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: '#FFF',
       inactiveTintColor: '#FFF',
-      showLabel: false,
+      showLabel: true,
       style: {
-        backgroundColor: 'red',
-        height: scale(80),
+        backgroundColor: '#f3f5fa',
+        height: scale(60),
       },
       labelStyle: {
         fontSize: scale(11),
@@ -90,7 +101,7 @@ const MainScreen = createBottomTabNavigator(
     },
     animationEnabled: false,
     swipeEnabled: false,
-    initialRouteName: 'DashboardScreen'
+    initialRouteName: 'DashboardScreen',
   },
 );
 
@@ -100,27 +111,27 @@ MainScreen.navigationOptions = ({ navigation }) => {
   let headerStyle = CommonStyles.headerWithDropdown;
 
   switch (routeName) {
-  case 'RequestScreen':
-    headerTitle = 'Request';
-    break;
-  case 'SendScreen':
-    headerTitle = 'Send';
-    break;
-  case 'TransactionScreen':
-    headerTitle = 'Transactions';
-    break;
-  default:
-    headerTitle = 'DashBoard';
-    headerStyle = CommonStyles.header;
-    break;
+    case 'RequestScreen':
+      headerTitle = 'Request';
+      break;
+    case 'SendScreen':
+      headerTitle = 'Send';
+      break;
+    case 'TransactionScreen':
+      headerTitle = 'Transactions';
+      break;
+    default:
+      headerTitle = 'DashBoard';
+      headerStyle = CommonStyles.header;
+      break;
   }
 
   return {
     headerTitle,
     headerStyle,
     headerTitleStyle: CommonStyles.headerTitle,
-    headerLeft: <MangoHeader navigation={navigation} />,
-    headerRight: <View />,
+    headerLeft: <MangoHeader navigation={navigation}/>,
+    headerRight: <View/>,
   };
 };
 
@@ -132,4 +143,17 @@ const styles = ScaledSheet.create({
     width: '100@s',
     height: '50@s',
   },
+  titleTab: {
+    fontSize: '12@s',
+    textAlign: 'center'
+  },
+  titleTabFocused: {
+    fontSize: '12@s',
+    textAlign: 'center',
+    color: '#F5C400'
+  },
+  iconTab: {
+    width: '30@s',
+    height: '30@s',
+  }
 });

@@ -24,8 +24,7 @@ export async function post(url, params = {}) {
   });
 
   _logRequest('POST', url, params);
-  const responsePost = await _processResponse(response);
-  return responsePost;
+  return await _processResponse(response);
 }
 
 export async function put(url, params = {}) {
@@ -36,8 +35,7 @@ export async function put(url, params = {}) {
   });
 
   _logRequest('PUT', url, params);
-  const responsePut = await _processResponse(response);
-  return responsePut;
+  return await _processResponse(response);
 }
 
 export async function del(url, params = {}) {
@@ -48,8 +46,7 @@ export async function del(url, params = {}) {
   });
 
   _logRequest('DELETE', url, params);
-  const responseDel = await _processResponse(response);
-  return responseDel;
+  return await _processResponse(response);
 }
 
 function _getFullUrl(url) {

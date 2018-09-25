@@ -6,15 +6,39 @@ import {
   ScrollView,
   Clipboard,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import Toast from 'react-native-root-toast';
+import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 
 class RequestScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      walletAddress: null,
+    };
+  }
+
+  async componentDidMount() {
+    const walletAddress = await this._getWalletAddress();
+    console.log('walletAddress', walletAddress);
+
+    this.setState({
+      walletAddress,
+    });
+  }
+
+  _getWalletAddress = async () => {
+    const walletAddress = await AsyncStorage.getItem('walletAddress');
+    return walletAddress;
+  }
+
   _handleCopyAddress = (address) => {
     Clipboard.setString(address);
     Toast.show('Copied', {
@@ -27,19 +51,30 @@ class RequestScreen extends Component {
     });
   }
 
-  _renderQrCodeSection = () => (
-    <View style={styles.qrCodeSectionContainer}>
-      <View style={styles.qrCodeContainer}>
-        <Image
-          source={require('../../../assets/qrcode/qr-code.png')}
-          style={styles.qrCodeImage}
-        />
+  _renderQrCodeSection = () => {
+    const { walletAddress } = this.state;
+    console.log('type', typeof walletAddress);
+
+    return (
+      <View style={styles.qrCodeSectionContainer}>
+        <View style={styles.qrCodeContainer}>
+          {/* <Image
+            source={require('../../../assets/qrcode/qr-code.png')}
+            style={styles.qrCodeImage}
+          /> */}
+          {!walletAddress ? null : (
+            <QRCode
+              value={walletAddress}
+              size={scale(260)}
+            />
+          ) }
+        </View>
+        <View style={styles.addressContainer}>
+          <Text>{walletAddress}</Text>
+        </View>
       </View>
-      <View style={styles.addressContainer}>
-        <Text>0xb162e0cd09724b0296894eef352c16815cd610fb</Text>
-      </View>
-    </View>
-  )
+    );
+  }
 
   _renderBtnSection = () => (
     <View style={styles.groupBtnContainer}>

@@ -33,3 +33,23 @@ export function register(email, password, referralId = '') {
   return post('/users', params);
 }
 
+export function getCurrentUser(useCache = true, params) {
+  if (this.user && useCache) {
+    return new Promise((resolve, reject) => {
+      resolve(this.user);
+    });
+  }
+  return new Promise((resolve, reject) => {
+    let url = '/user';
+    let self = this;
+
+    get(url, params)
+      .then(function (user) {
+        self.user = user;
+        resolve(user);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
+}

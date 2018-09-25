@@ -24,7 +24,7 @@ class LandingScreen extends Component {
   constructor(props) {
     super(props);
     const listLanguage = LandingScreen.LIST_LANGUAGE;
-    const languageSelected = '';
+    const languageSelected = 'en';
 
     this.state = {
       languageSelected,
@@ -133,9 +133,6 @@ class LandingScreen extends Component {
   async _getLanguage() {
     let value = await AsyncStorage.getItem('user_locale');
     switch (value) {
-    case 'en':
-      value = 'Eng';
-      break;
     case 'vi':
       value = 'Vn';
       break;
@@ -143,6 +140,7 @@ class LandingScreen extends Component {
       value = 'Jp';
       break;
     default:
+      value = 'Eng';
       break;
     }
     this.setState({

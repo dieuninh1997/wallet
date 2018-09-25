@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import AppPreferences from "../../utils/AppPreferences";
+import RNRestart from 'react-native-restart';
 
 class MangoHeader extends React.Component {
   state = {
@@ -24,7 +26,14 @@ class MangoHeader extends React.Component {
     const { navigation } = this.props;
 
     this.setState({ isShowMenu: false });
-    navigation.navigate(routerName);
+
+    if(routerName === 'LandingScreen') {
+      AppPreferences.removeAccessToken();
+      window.GlobalSocket.disconnect();
+      RNRestart.Restart();
+    } else {
+      navigation.navigate(routerName);
+    }
   }
 
   _renderIconToggleMenu() {

@@ -7,11 +7,10 @@ export default class AppPreferences {
     AsyncStorage.setItem('user_locale', locale);
   }
 
-  static async saceCodePin(code) {
-    const username = 'ok';
+  static async saveCodePin(code) {
+    const username = 'code-pin';
     await Keychain.setGenericPassword(username, code);
   }
-
 
   static async getLocale() {
     return await AsyncStorage.getItem('user_locale');

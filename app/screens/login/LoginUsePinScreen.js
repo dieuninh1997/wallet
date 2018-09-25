@@ -23,6 +23,7 @@ export default class LoginUsePinScreen extends Component {
          <PINCode
            titleConfirmFailed="sai cmnr"
            status="enter"
+           storePin={value => {console.log("ma pin:", value)}}
            timeLocked={10000}
            finishProcess={() => this._SuccessInputCodePin()}
          />

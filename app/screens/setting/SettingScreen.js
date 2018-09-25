@@ -163,15 +163,18 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <View style={styles.borderElement}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
-            <View style={styles.activiRightGroup}>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('AddPinScreen')}>
+            <View style={styles.borderElement}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
+
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
             <View style={styles.activiRightGroup}>

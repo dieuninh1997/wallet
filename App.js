@@ -14,8 +14,8 @@ MicroEvent.mixin(GlobalSocket);
 MicroEvent.mixin(EventBus);
 
 async function initApp() {
-  MicroEvent.mixin(TransactionsScreen);
   MicroEvent.mixin(LoginScreen);
+  MicroEvent.mixin(TransactionsScreen);
   await initI18n();
   window.EventBus = new EventBus();
   return await initMasterdata();

@@ -14,6 +14,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
+import AppPreferences from "../../utils/AppPreferences";
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -46,7 +47,10 @@ class LoginScreen extends Component {
     const { email, password } = loginInfo;
 
     try {
-      await login(email, password);
+      const responseUser = await login(email, password);
+
+      AppPreferences.saveAccessToken(responseUser.access_token);
+      window.GlobalSocket.connect();
       navigation.navigate('MainScreen');
     } catch (error) {
       Toast.show(error.message, {

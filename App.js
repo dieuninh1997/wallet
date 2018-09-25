@@ -8,12 +8,14 @@ import GlobalSocket from "./app/socket/GlobalSocket";
 import EventBus from "./app/socket/EventBus";
 import TransactionsScreen from "./app/screens/transactions/TransactionsScreen";
 import AppConfig from "./app/utils/AppConfig";
+import LoginScreen from "./app/screens/login/LoginScreen";
 
 MicroEvent.mixin(GlobalSocket);
 MicroEvent.mixin(EventBus);
 
 async function initApp() {
   MicroEvent.mixin(TransactionsScreen);
+  MicroEvent.mixin(LoginScreen);
   await initI18n();
   window.EventBus = new EventBus();
   return await initMasterdata();

@@ -52,6 +52,7 @@ export default class GlobalSocket {
         .then(res => {
           let userId = res.data.id;
           this.listenForTransaction(userId);
+          this.listenForOrderList(userId);
         })
         .catch(error => {
           console.log(error);
@@ -63,6 +64,13 @@ export default class GlobalSocket {
     window.Echo.private('App.User.' + userId)
       .listen('TransactionCreated', (transaction) => {
         this.trigger('TransactionCreated', transaction.data);
+      });
+  }
+
+  listenForOrderList(userId) {
+    window.Echo.private('App.User.' + userId)
+      .listen('OrderListUpdated', (data) => {
+        this.trigger('OrderListUpdated', data.data);
       });
   }
   //

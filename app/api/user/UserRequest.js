@@ -42,7 +42,8 @@ export function getCurrentUser(useCache = true, params) {
   return new Promise((resolve, reject) => {
     let url = '/user';
     let self = this;
-    this.get(url, params)
+
+    get(url, params)
       .then(function (user) {
         self.user = user;
         resolve(user);

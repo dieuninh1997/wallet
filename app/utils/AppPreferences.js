@@ -16,7 +16,7 @@ export default class AppPreferences {
 
       await Keychain.setGenericPassword(JSON.stringify(username), JSON.stringify(password));
     } catch (err) {
-      console.log("SaveCodePin._error:", err)
+      console.log('SaveCodePin._error:', err);
     }
   }
 

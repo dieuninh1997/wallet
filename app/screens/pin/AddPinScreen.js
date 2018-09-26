@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import * as Keychain from 'react-native-keychain';
+import Toast from 'react-native-root-toast';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
-import Toast from "react-native-root-toast";
 
 export default class AddPinScreen extends Component {
   static navigationOptions = () => ({
@@ -12,7 +12,8 @@ export default class AddPinScreen extends Component {
   });
 
   state = {
-    codePin: null
+    codePin: null,
+    isShowChanePin: false,
   };
 
   async componentDidMount() {
@@ -22,11 +23,11 @@ export default class AddPinScreen extends Component {
   async _getCodePin() {
     try {
       const responsePin = await AppPreferences.getGeneric();
-      const codePin = JSON.parse(responsePin.password).pin;
-
+      const codePin = responsePin.password.includes('pin') ? JSON.parse(responsePin.password).pin : null;
+      console.log('====================sss', codePin);
       this.setState({ codePin });
     } catch (err) {
-      console.log("CheckStatusPin._error:", err)
+      console.log('CheckStatusPin._error:', err);
     }
   }
 
@@ -35,25 +36,48 @@ export default class AddPinScreen extends Component {
     navigation.navigate('LandingScreen');
   }
 
+  _renderChangePin = () => (
+    <PINCode
+      titleConfirmFailed="Confirm Pin Code"
+      status="choose"
+      storePin={value => this._saveCodePin(value)}
+      timeLocked={10000}
+    />
+  )
+
+  _checkCodePin(value) {
+    const { codePin } = this.state;
+
+    if (codePin === value) {
+      this.setState({ isShowChanePin: true });
+    }
+  }
+
+  _renderCheckPinCode() {
+    return (
+      <PINCode
+        titleConfirmFailed="Confirm Pin Code"
+        status="enter"
+        timeLocked={10000}
+        handleResultEnterPin={value => this._checkCodePin(value)}
+      />
+    );
+  }
+
   async _saveCodePin(codePin) {
     try {
       await AppPreferences.saveCodePin(codePin);
     } catch (err) {
-      console.log("SaveCodePin._error:", err);
+      console.log('SaveCodePin._error:', err);
     }
   }
 
   render() {
-    const { codePin } = this.state;
+    const { codePin, isShowChanePin } = this.state;
     return (
       <View style={styles.container}>
-        <PINCode
-          titleConfirmFailed="Confirm Pin Code"
-          status={`${codePin ? 'enter' : 'choose'}`}
-          storePin={value => this._saveCodePin(value)}
-          timeLocked={10000}
-          finishProcess={() => this._successInputCodePin()}
-        />
+        {codePin && !isShowChanePin ? this._renderCheckPinCode() : null}
+        {!codePin || isShowChanePin ? this._renderChangePin() : null}
       </View>
     );
   }

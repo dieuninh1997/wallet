@@ -4,12 +4,12 @@ import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
 import AppConfig from '../utils/AppConfig';
-import AppPreferences from "../utils/AppPreferences";
-import Consts from "../utils/Consts";
+import AppPreferences from '../utils/AppPreferences';
+import Consts from '../utils/Consts';
 
 export default class SplashScreen extends Component {
   state = {
-    isCodePin: false
+    isCodePin: false,
   };
 
   static navigationOptions = () => ({
@@ -28,7 +28,7 @@ export default class SplashScreen extends Component {
 
       this.setState({ isCodePin });
     } catch (err) {
-      console.log("CheckStatusPin._error:", err)
+      console.log('CheckStatusPin._error:', err);
     }
   }
 
@@ -53,7 +53,7 @@ export default class SplashScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../../assets/logo/logo.png')}/>
+        <Image source={require('../../assets/logo/logo.png')} />
         <Text style={styles.logoContent}>{I18n.t('landing.coinName')}</Text>
         <Text style={styles.logoDescription}>{I18n.t('landing.coinDescription')}</Text>
       </View>

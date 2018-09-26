@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
+import Toast from 'react-native-root-toast';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
-import Toast from "react-native-root-toast";
 
 
 export default class LoginUsePinScreen extends Component {
@@ -12,7 +12,7 @@ export default class LoginUsePinScreen extends Component {
   });
 
   state = {
-    codePin: null
+    codePin: null,
   };
 
   async componentDidMount() {
@@ -23,7 +23,7 @@ export default class LoginUsePinScreen extends Component {
     const { codePin } = this.state;
     const { navigation } = this.props;
 
-    if(codePin === value) {
+    if (codePin === value) {
       navigation.navigate('MainScreen');
     } else {
       Toast.show('Error Code Pin!', {
@@ -44,23 +44,23 @@ export default class LoginUsePinScreen extends Component {
 
       this.setState({ codePin });
     } catch (err) {
-      console.log("CheckStatusPin._error:", err)
+      console.log('CheckStatusPin._error:', err);
     }
   }
 
 
-   render() {
-     return (
-       <View style={styles.container}>
-         <PINCode
-           status="enter"
-           storePin={value => {console.log("ma pin:", value)}}
-           handleResultEnterPin={(value) => this._checkValuePin(value)}
-           timeLocked={10000}
-         />
-       </View>
-     );
-   }
+  render() {
+    return (
+      <View style={styles.container}>
+        <PINCode
+          status="enter"
+          storePin={(value) => { console.log('ma pin:', value); }}
+          handleResultEnterPin={value => this._checkValuePin(value)}
+          timeLocked={10000}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = ScaledSheet.create({

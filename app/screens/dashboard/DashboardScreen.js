@@ -3,6 +3,18 @@ import { View, Text } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { getWallet } from '../../api/common/BaseRequest';
+
+const COINS = [
+  {
+    symbol: 'BTC',
+    fullName: 'Bitcoin'
+  },
+  {
+    symbol: 'ETH',
+    fullName: 'Etherium'
+  },
+];
 
 class DashboardScreen extends React.Component {
   constructor(props) {
@@ -21,7 +33,27 @@ class DashboardScreen extends React.Component {
     ];
     this.state = {
       data,
+      prices: []
     };
+  }
+
+  async componentDidMount() {
+    await this._loadData();
+  }
+
+  async _loadData() {
+    const coinString = COINS.map(coin => coin.symbol);
+    const prices = [];
+    const linkString = coinString.reduce((a, b) => a + ',' + b);
+    const response = await getWallet(linkString);
+
+    for(let res in response) {
+      const findLabel = COINS.find(coin => coin.symbol === res);
+
+      prices.push({...response[res].USD, FULLNAME: findLabel.fullName });
+    }
+
+    this.setState({ prices });
   }
 
   _renderPieChart = () => {
@@ -64,11 +96,27 @@ class DashboardScreen extends React.Component {
   _renderItemInforData(item) {
     return (
       <View style={styles.itemGroup} key={item.id}>
-        <View style={[{ backgroundColor: item.color }, styles.itemColor]} />
+        <View style={[{ backgroundColor: item.color }, styles.itemColor]}/>
         <Text style={styles.itemCount}>{`$ ${item.count}`}</Text>
         <Text style={styles.itemCountCoin}>{item.countCoin}</Text>
       </View>
     );
+  }
+
+  _renderCoinList() {
+    const { prices } = this.state;
+
+    return (
+      <View>
+        {prices.map(price =>
+          <View>
+            <Text>{price.FULLNAME}</Text>
+            <Text>{price.PRICE}</Text>
+            <Text>{price.CHANGEPCT24HOUR}</Text>
+          </View>
+        )}
+      </View>
+    )
   }
 
   _renderInforData() {
@@ -91,6 +139,7 @@ class DashboardScreen extends React.Component {
         </View>
 
         {this._renderInforData()}
+        {this._renderCoinList()}
       </View>
     );
   }

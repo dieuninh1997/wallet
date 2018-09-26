@@ -52,6 +52,7 @@ export default class AddPinScreen extends Component {
     <PINCode
       titleConfirmFailed="Confirm Pin Code"
       status="choose"
+      passwordLength={6}
       storePin={value => this._saveCodePin(value)}
       timeLocked={10000}
     />
@@ -61,6 +62,7 @@ export default class AddPinScreen extends Component {
     return (
       <PINCode
         status="enter"
+        passwordLength={6}
         pinStatus={this.state.isShowError ? "failure" : "initial"}
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}

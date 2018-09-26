@@ -54,6 +54,7 @@ export default class LoginUsePinScreen extends Component {
       <View style={styles.container}>
         <PINCode
           status="enter"
+          passwordLength={6}
           storePin={(value) => { console.log('ma pin:', value); }}
           handleResultEnterPin={value => this._checkValuePin(value)}
           timeLocked={10000}

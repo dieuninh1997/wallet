@@ -6,91 +6,52 @@ import {
   ScrollView,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
+import moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
-import { getOrdersPending } from "../../api/transaction-history/TransactionRequest";
+import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
+import Erc20Service from '../../services/mango/mango';
 
 class TransactionsScreen extends Component {
   constructor(props) {
     super(props);
-    const listTranasctions = [
-      {
-        type: 'recieved',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'recieved',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'send',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'recieved',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'pendding',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'recieved',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-      {
-        type: 'recieved',
-        time: 'Aug 31 22:53',
-        address: '0xb162e0cd09724b0296894eef352c16815cd610fb5870c334ec73bbe5dcea3855',
-        value: '0.00321',
-        coin: 'MGC',
-      },
-    ];
     this.state = {
-      listTranasctions,
+      transactions: [],
+      address: '0x56C0280a484caC78C6FF8ab73b0B37c92C4a9aFe',
     };
   }
 
-  async _loadData() {
+  _loadData = async () => {
     try {
       const params = { currency: 'tenge', page: 1, limit: 20 };
 
       const responseOrder = await getOrdersPending(params);
-      console.log("getOrderPending", responseOrder)
+      console.log('getOrderPending', responseOrder);
     } catch (err) {
-      console.log("LoadDatas._error:", err)
+      console.log('LoadDatas._error:', err);
     }
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
+    const { address } = this.state;
+    try {
+      const transactions = await Erc20Service.getAddressTransactions(address);
+      this.setState({
+        transactions,
+      });
+    } catch (error) {
+      console.log('TransactionsScreen._error: ', error);
+    }
     const socketEventHandlers = this.getSocketEventHandlers();
-    for (let event in socketEventHandlers) {
-      let handler = socketEventHandlers[event];
+    for (const event in socketEventHandlers) {
+      const handler = socketEventHandlers[event];
       window.GlobalSocket.bind(event, handler);
     }
 
     const dataEventHandlers = this.getDataEventHandlers();
-    for (let event in dataEventHandlers) {
-      let handler = dataEventHandlers[event];
+    for (const event in dataEventHandlers) {
+      const handler = dataEventHandlers[event];
       window.EventBus.bind(event, handler);
     }
     this._loadData();
@@ -103,35 +64,30 @@ class TransactionsScreen extends Component {
     // }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     const socketEventHandlers = this.getSocketEventHandlers();
-    for (let event in socketEventHandlers) {
-      let handler = socketEventHandlers[event];
+    for (const event in socketEventHandlers) {
+      const handler = socketEventHandlers[event];
       window.GlobalSocket.unbind(event, handler);
     }
 
     const dataEventHandlers = this.getDataEventHandlers();
-    for (let event in dataEventHandlers) {
-      let handler = dataEventHandlers[event];
+    for (const event in dataEventHandlers) {
+      const handler = dataEventHandlers[event];
       window.EventBus.unbind(event, handler);
     }
   }
 
-  getSocketEventHandlers() {
-    return {
-      TransactionCreated: this.onTransactionCreated.bind(this),
-      OrderListUpdated: this._onOpenOrderUpdated.bind(this)
-    }
+  getSocketEventHandlers = () => ({
+    TransactionCreated: this.onTransactionCreated.bind(this),
+    OrderListUpdated: this._onOpenOrderUpdated.bind(this),
+  })
+
+  onTransactionCreated = (data) => {
+    console.log('data', data);
   }
 
-  onTransactionCreated(data) {
-    // const { transactions } = this.state;
-    //
-    // transactions.push(data);
-    // this.setState({transactions});
-  }
-
-  _onOpenOrderUpdated(data) {
+  _onOpenOrderUpdated = (data) => {
     const { currency } = this.props;
 
     if (data.currency !== currency) {
@@ -141,17 +97,15 @@ class TransactionsScreen extends Component {
     this._loadData();
   }
 
-  getDataEventHandlers() {
-    return {};
-  }
+  getDataEventHandlers = () => ({})
 
-  notify(event, data) {
+  notify = (event, data) => {
     window.EventBus.notify(event, data);
   }
 
 
   _renderTransactonsList = () => {
-    const { listTranasctions } = this.state;
+    const { transactions, address } = this.state;
     const images = [
       require('../../../assets/send/right-arrow.png'),
       require('../../../assets/recieved/left-arrow.png'),
@@ -160,56 +114,49 @@ class TransactionsScreen extends Component {
 
     return (
       <View style={styles.transactionsContainer}>
-        <View style={styles.textYearContainer}>
-          <Text style={styles.textYear}>2018</Text>
-        </View>
-        {listTranasctions.map((item, index) => this._renderTransactonsItem(item, index, images))}
-
-        <View style={styles.textYearContainer}>
-          <Text style={styles.textYear}>2017</Text>
-        </View>
-        {listTranasctions.map((item, index) => this._renderTransactonsItem(item, index, images))}
+        {transactions.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
       </View>
     );
   }
 
-  _renderTransactonsItem = (item, index, images) => (
+  _renderTransactonsItem = (transaction, index, images, address) => (
     <View key={index} style={styles.transactionItemContainer}>
       <View style={styles.transactionImageContainer}>
         <Image
-          source={item.type === 'recieved' ? images[1] : images[0]}
+          source={transaction.to === address.toLowerCase() ? images[1] : images[0]}
           style={styles.transactionImageItem}
         />
       </View>
       <View style={styles.transactionInfoContainer}>
-        <Text>{item.time}</Text>
+        <Text>{ moment.unix(transaction.timestamp).format('lll') }</Text>
         <Text
           numberOfLines={1}
           ellipsizeMode="middle"
           style={styles.addressInfo}
         >
-          {item.address}
+          {transaction.hash}
         </Text>
       </View>
       <View style={styles.transactionValueItem}>
-        <Text style={[styles.textCoinValue, item.type === 'recieved' ? styles.textRecieved : styles.textSend]}>
-          {item.type === 'recieved' ? '+' : '-'}
-          {item.value}
+        <Text style={[styles.textCoinValue, transaction.to === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
+          {transaction.to === address.toLowerCase() ? '+' : '-'}
+          {transaction.value}
           {' '}
-          {item.coin}
+          {'ETH'}
         </Text>
       </View>
     </View>
   )
 
   render() {
+    const { transactions } = this.state;
     return (
       <View style={styles.container}>
-        <MangoDropdown/>
+        <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
         >
-          {this._renderTransactonsList()}
+          {transactions && transactions.length ? this._renderTransactonsList() : null}
         </ScrollView>
       </View>
     );

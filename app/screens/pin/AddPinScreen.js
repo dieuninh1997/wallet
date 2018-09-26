@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
-import * as Keychain from 'react-native-keychain';
-import Toast from 'react-native-root-toast';
+import { View, Text } from 'react-native';
+import PINCode from '@haskkor/react-native-pincode';
 import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
@@ -16,6 +14,7 @@ export default class AddPinScreen extends Component {
   state = {
     codePin: null,
     isShowChanePin: false,
+    isShowError: false,
   };
 
   async componentDidMount() {
@@ -39,6 +38,8 @@ export default class AddPinScreen extends Component {
 
     if (codePin === value) {
       this.setState({ isShowChanePin: true });
+    } else {
+      this.setState({isShowError: true});
     }
   }
 
@@ -60,6 +61,7 @@ export default class AddPinScreen extends Component {
     return (
       <PINCode
         status="enter"
+        pinStatus={this.state.isShowError ? "failure" : "initial"}
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}
       />
@@ -77,7 +79,7 @@ export default class AddPinScreen extends Component {
   }
 
   render() {
-    const { codePin, isShowChanePin } = this.state;
+    const { codePin, isShowChanePin, isShowError } = this.state;
     return (
       <View style={styles.container}>
         {codePin && !isShowChanePin ? this._renderCheckPinCode() : null}

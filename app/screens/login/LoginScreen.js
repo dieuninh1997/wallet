@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import I18n from '../../i18n/i18n';
@@ -14,7 +15,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
-import AppPreferences from "../../utils/AppPreferences";
+import AppPreferences from '../../utils/AppPreferences';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -51,6 +52,7 @@ class LoginScreen extends Component {
 
       AppPreferences.saveAccessToken(responseUser.access_token);
       window.GlobalSocket.connect();
+      Keyboard.dismiss();
       navigation.navigate('MainScreen');
     } catch (error) {
       Toast.show(error.message, {

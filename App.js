@@ -1,15 +1,16 @@
 import { createStackNavigator } from 'react-navigation';
 import { AsyncStorage } from 'react-native';
+import MicroEvent from 'microevent';
 import Screens from './app/screens/Screens';
 import AppPreferences from './app/utils/AppPreferences';
 import I18n from './app/i18n/i18n';
-import MicroEvent from "microevent";
-import GlobalSocket from "./app/socket/GlobalSocket";
-import EventBus from "./app/socket/EventBus";
-import TransactionsScreen from "./app/screens/transactions/TransactionsScreen";
-import AppConfig from "./app/utils/AppConfig";
-import LoginScreen from "./app/screens/login/LoginScreen";
-import Consts from "./app/utils/Consts";
+import GlobalSocket from './app/socket/GlobalSocket';
+import EventBus from './app/socket/EventBus';
+import TransactionsScreen from './app/screens/transactions/TransactionsScreen';
+import AppConfig from './app/utils/AppConfig';
+import LoginScreen from './app/screens/login/LoginScreen';
+import Consts from './app/utils/Consts';
+
 
 MicroEvent.mixin(GlobalSocket);
 MicroEvent.mixin(EventBus);
@@ -41,11 +42,9 @@ async function initMasterdata() {
   window.GlobalSocket = new GlobalSocket();
 
   if (__DEV__) {
-    console.log('API Server: ' + AppConfig.getApiServer());
-    console.log('ACCESS_TOKEN: ' + AppConfig.ACCESS_TOKEN);
+    console.log(`API Server: ${AppConfig.getApiServer()}`);
+    console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
   }
-
-  return;
 }
 
 const App = createStackNavigator(Screens, {

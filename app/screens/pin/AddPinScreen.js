@@ -3,8 +3,10 @@ import { View } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import * as Keychain from 'react-native-keychain';
 import Toast from 'react-native-root-toast';
+import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
+import Consts from '../../utils/Consts';
 
 export default class AddPinScreen extends Component {
   static navigationOptions = () => ({
@@ -23,11 +25,20 @@ export default class AddPinScreen extends Component {
   async _getCodePin() {
     try {
       const responsePin = await AppPreferences.getGeneric();
-      const codePin = responsePin.password.includes('pin') ? JSON.parse(responsePin.password).pin : null;
-      console.log('====================sss', codePin);
+      const codePin = responsePin.password.includes(Consts.PIN) ? JSON.parse(responsePin.password).pin : null;
+
       this.setState({ codePin });
     } catch (err) {
       console.log('CheckStatusPin._error:', err);
+    }
+  }
+
+
+  _checkCodePin(value) {
+    const { codePin } = this.state;
+
+    if (codePin === value) {
+      this.setState({ isShowChanePin: true });
     }
   }
 
@@ -45,18 +56,9 @@ export default class AddPinScreen extends Component {
     />
   )
 
-  _checkCodePin(value) {
-    const { codePin } = this.state;
-
-    if (codePin === value) {
-      this.setState({ isShowChanePin: true });
-    }
-  }
-
   _renderCheckPinCode() {
     return (
       <PINCode
-        titleConfirmFailed="Confirm Pin Code"
         status="enter"
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}
@@ -67,6 +69,8 @@ export default class AddPinScreen extends Component {
   async _saveCodePin(codePin) {
     try {
       await AppPreferences.saveCodePin(codePin);
+
+      RNRestart.Restart();
     } catch (err) {
       console.log('SaveCodePin._error:', err);
     }

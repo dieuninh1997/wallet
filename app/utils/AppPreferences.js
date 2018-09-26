@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import AppConfig from './AppConfig';
+import Consts from './Consts';
 
 export default class AppPreferences {
   static saveLocale(locale) {
@@ -9,10 +10,8 @@ export default class AppPreferences {
 
   static async saveCodePin(code) {
     try {
-      const responseGet = await this.getGeneric();
-
-      const username = { userName: responseGet.username, codePin: 'code-pin' };
-      const password = { access_token: responseGet.password, pin: code };
+      const username = { userName: Consts.ACCESS_TOKEN_TITLE, codePin: Consts.CODE_PIN };
+      const password = { access_token: AppConfig.ACCESS_TOKEN, pin: code };
 
       await Keychain.setGenericPassword(JSON.stringify(username), JSON.stringify(password));
     } catch (err) {

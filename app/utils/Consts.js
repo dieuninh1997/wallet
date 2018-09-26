@@ -56,5 +56,8 @@ export default class Consts {
   };
 
   static PIN = 'pin';
+
   static ACCESS_TOKEN_TITLE = 'access_token';
+
+  static CODE_PIN = 'code_pin';
 }

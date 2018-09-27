@@ -35,22 +35,16 @@ export default class AddPinScreen extends Component {
 
   _checkCodePin(value) {
     const { codePin } = this.state;
-
     if (codePin === value) {
       this.setState({ isShowChanePin: true });
     } else {
-      this.setState({isShowError: true});
+      this.setState({ isShowError: true });
     }
-  }
-
-  _successInputCodePin = () => {
-    const { navigation } = this.props;
-    navigation.navigate('LandingScreen');
+    setTimeout(() => this.setState({ isShowError: false }), 1000);
   }
 
   _renderChangePin = () => (
     <PINCode
-      titleConfirmFailed="Confirm Pin Code"
       status="choose"
       passwordLength={6}
       storePin={value => this._saveCodePin(value)}
@@ -63,7 +57,7 @@ export default class AddPinScreen extends Component {
       <PINCode
         status="enter"
         passwordLength={6}
-        pinStatus={this.state.isShowError ? "failure" : "initial"}
+        pinStatus={this.state.isShowError ? 'failure' : 'initial'}
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}
       />
@@ -81,7 +75,7 @@ export default class AddPinScreen extends Component {
   }
 
   render() {
-    const { codePin, isShowChanePin, isShowError } = this.state;
+    const { codePin, isShowChanePin } = this.state;
     return (
       <View style={styles.container}>
         {codePin && !isShowChanePin ? this._renderCheckPinCode() : null}

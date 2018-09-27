@@ -8,13 +8,19 @@
   },
   "dependencies": {
     "@haskkor/react-native-pincode": "^1.6.4",
-    "axios": "^0.18.0",
+    "react-native": "0.56.0",
+    "axios": "0.18.0",
+    "babel-polyfill": "6.26.0",
+    "bip39": "https://github.com/Sotatek-NhuanHoang/bip39",
+    "browserify": "16.2.3",
     "core-js": "^2.5.7",
     "crypto-js": "3.1.9-1",
     "ethers": "3.0.29",
+    "hdkey": "1.1.0",
     "laravel-echo": "^1.4.0",
     "microevent": "^1.0.0",
     "moment": "2.22.2",
+    "node-libs-react-native": "https://github.com/Sotatek-NhuanHoang/node-libs-react-native",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-blur": "^3.2.2",
@@ -27,15 +33,22 @@
     "react-native-modal": "6.5.0",
     "react-native-pathjs-charts": "0.0.34",
     "react-native-phone-input": "^0.2.1",
-    "react-native-qrcode-svg": "^5.1.1",
+    "react-native-qrcode-svg": "5.1.1",
+    "react-native-randombytes": "3.5.1",
     "react-native-restart": "0.0.7",
     "react-native-root-toast": "3.0.1",
     "react-native-switch": "^1.5.0",
     "react-native-touch-id": "4.0.5",
     "react-native-vector-icons": "5.0.0",
     "react-navigation": "2.16.0",
+    "readable-stream": "3.0.3",
     "redux": "4.0.0",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "stream-browserify": "2.0.1",
+    "url-join": "4.0.0",
+    "validate.js": "0.12.0",
+    "vm-browserify": "1.1.0",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
@@ -50,5 +63,23 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "react-native": {
+    "stream": "stream-browserify",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "vm": "vm-browserify"
+  },
+  "browser": {
+    "stream": "stream-browserify",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "vm": "vm-browserify"
   }
 }

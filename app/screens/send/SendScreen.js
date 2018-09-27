@@ -5,12 +5,14 @@ import {
   ScrollView,
   TextInput,
   Image,
+  AsyncStorage,
 } from 'react-native';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
+import WalletService from '../../services/wallet';
 
 class SendScreen extends Component {
   constructor(props) {
@@ -30,6 +32,16 @@ class SendScreen extends Component {
     this.setState({
       isForcusInput: false,
     });
+  }
+
+  _handleSendCoin = async () => {
+    const walletAddress = await AsyncStorage.getItem('address');
+    const privateKey = await AsyncStorage.getItem('privateKey');
+    console.log('walletAddress', walletAddress);
+    console.log('privateKey', privateKey);
+
+    const transaction = await WalletService.sendTransaction('nanj', '0x5C7738b67a3403F349782244E59E776DdB3581c3', walletAddress, 'C5CB8DAB4FAC56FE48C830BE9F2912D1189E6C0EBA9CA278A85124CF195A997D', 0, 0.0005);
+    console.log('SendScreen.transaction', transaction);
   }
 
   _renderFormSend = () => (
@@ -104,7 +116,7 @@ class SendScreen extends Component {
     <MangoGradientButton
       btnText={I18n.t('send.continue')}
       btnStyle={styles.btnContinue}
-      onPress={() => true}
+      onPress={() => this._handleSendCoin()}
     />
   )
 

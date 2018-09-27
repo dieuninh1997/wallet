@@ -217,7 +217,8 @@ const styles = ScaledSheet.create({
     fontSize: '15@s',
   },
   listWallet: {
-    marginTop: '10@s'
+    marginTop: '10@s',
+    marginBottom: '10@s',
   },
   walletContainer: {
     width: width - scale(20),

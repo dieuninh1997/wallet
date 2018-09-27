@@ -106,8 +106,8 @@ class DashboardScreen extends React.Component {
 
   _renderItemWallet(price, index) {
     return (
-      <View style={styles.walletContainer}>
-        <View style={styles.walletGroup} key={index}>
+      <View style={styles.walletContainer}  key={index}>
+        <View style={styles.walletGroup}>
           <Text style={styles.walletFullname}>{price.FULLNAME}</Text>
           <Text style={styles.walletPrice}>{price.PRICE}</Text>
 

@@ -26,17 +26,10 @@ class RequestScreen extends Component {
   }
 
   async componentDidMount() {
-    const walletAddress = await this._getWalletAddress();
-    console.log('walletAddress', walletAddress);
-
+    const walletAddress = await AsyncStorage.getItem('address');
     this.setState({
       walletAddress,
     });
-  }
-
-  _getWalletAddress = async () => {
-    const walletAddress = await AsyncStorage.getItem('walletAddress');
-    return walletAddress;
   }
 
   _handleCopyAddress = (address) => {

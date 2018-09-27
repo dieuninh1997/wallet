@@ -6,12 +6,13 @@ import { CheckBox } from 'react-native-elements';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
 import Toast from 'react-native-root-toast';
+import bip39 from 'bip39';
+import hdkey from 'hdkey';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import Erc20Service from '../../services/mango/mango';
-
+import WalletService from '../../services/wallet';
 
 export default class CreateWalletPhoneNumberScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -44,12 +45,23 @@ export default class CreateWalletPhoneNumberScreen extends Component {
 
   _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
+    console.log('hahah');
 
     try {
-      const wallet = await Erc20Service.generateWallet();
-      console.log('walletAddress', wallet);
-      await AsyncStorage.setItem('walletAddress', wallet.address);
-      const address = await AsyncStorage.getItem('walletAddress');
+      const generatedMnemonic = bip39.generateMnemonic();
+      const seed = bip39.mnemonicToSeedHex(generatedMnemonic);
+      const generatedPrivateKey = hdkey.fromMasterSeed(seed).privateKey.toString('hex');
+
+      const {
+        privateKey, address, mnemonic, keystore,
+      } = await WalletService.importWalletFromPrivateKey('nanj', generatedPrivateKey, generatedMnemonic, '123456');
+      console.log('address', address);
+
+      await AsyncStorage.setItem('address', address);
+      await AsyncStorage.setItem('privateKey', privateKey);
+      await AsyncStorage.setItem('mnemonic', mnemonic);
+      await AsyncStorage.setItem('keystore', keystore);
+
       navigation.navigate('MainScreen');
     } catch (error) {
       Toast.show(error.message, {

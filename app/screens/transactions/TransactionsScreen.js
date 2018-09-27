@@ -11,14 +11,14 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
-import Erc20Service from '../../services/mango/mango';
+import EthService from '../../services/wallet/eth';
 
 class TransactionsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       transactions: [],
-      address: '0x56C0280a484caC78C6FF8ab73b0B37c92C4a9aFe',
+      address: '0x7B151C18e31DC382683A6b57bF9f89302D1a2C73',
     };
   }
 
@@ -36,7 +36,9 @@ class TransactionsScreen extends Component {
   componentDidMount = async () => {
     const { address } = this.state;
     try {
-      const transactions = await Erc20Service.getAddressTransactions(address);
+      const transactions = await EthService.getTransactions(address);
+      console.log('TransactionsScreen: ', transactions);
+
       this.setState({
         transactions,
       });
@@ -123,23 +125,23 @@ class TransactionsScreen extends Component {
     <View key={index} style={styles.transactionItemContainer}>
       <View style={styles.transactionImageContainer}>
         <Image
-          source={transaction.to === address.toLowerCase() ? images[1] : images[0]}
+          source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
           style={styles.transactionImageItem}
         />
       </View>
       <View style={styles.transactionInfoContainer}>
-        <Text>{ moment.unix(transaction.timestamp).format('lll') }</Text>
+        <Text>{ transaction.time }</Text>
         <Text
           numberOfLines={1}
           ellipsizeMode="middle"
           style={styles.addressInfo}
         >
-          {transaction.hash}
+          {transaction.id}
         </Text>
       </View>
       <View style={styles.transactionValueItem}>
-        <Text style={[styles.textCoinValue, transaction.to === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
-          {transaction.to === address.toLowerCase() ? '+' : '-'}
+        <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
+          {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
           {transaction.value}
           {' '}
           {'ETH'}

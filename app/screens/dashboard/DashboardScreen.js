@@ -1,8 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { getWallet } from '../../api/common/BaseRequest';
+
+const { width } = Dimensions.get('window');
+const COINS = [
+  {
+    symbol: 'BTC',
+    fullName: 'Bitcoin'
+  },
+  {
+    symbol: 'ETH',
+    fullName: 'Etherium'
+  },
+];
 
 class DashboardScreen extends React.Component {
   constructor(props) {
@@ -21,7 +34,27 @@ class DashboardScreen extends React.Component {
     ];
     this.state = {
       data,
+      prices: []
     };
+  }
+
+  async componentDidMount() {
+    await this._loadData();
+  }
+
+  async _loadData() {
+    const coinString = COINS.map(coin => coin.symbol);
+    const prices = [];
+    const linkString = coinString.reduce((a, b) => a + ',' + b);
+    const response = await getWallet(linkString);
+
+    for (let res in response) {
+      const findLabel = COINS.find(coin => coin.symbol === res);
+
+      prices.push({ ...response[res].USD, FULLNAME: findLabel.fullName });
+    }
+
+    this.setState({ prices });
   }
 
   _renderPieChart = () => {
@@ -64,11 +97,43 @@ class DashboardScreen extends React.Component {
   _renderItemInforData(item) {
     return (
       <View style={styles.itemGroup} key={item.id}>
-        <View style={[{ backgroundColor: item.color }, styles.itemColor]} />
+        <View style={[{ backgroundColor: item.color }, styles.itemColor]}/>
         <Text style={styles.itemCount}>{`$ ${item.count}`}</Text>
         <Text style={styles.itemCountCoin}>{item.countCoin}</Text>
       </View>
     );
+  }
+
+  _renderItemWallet(price, index) {
+    return (
+      <View style={styles.walletContainer}>
+        <View style={styles.walletGroup} key={index}>
+          <Text style={styles.walletFullname}>{price.FULLNAME}</Text>
+          <Text style={styles.walletPrice}>{price.PRICE}</Text>
+
+          <View style={styles.changeGroup}>
+            <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice}/>
+            <Text style={styles.walletChange}>{price.CHANGEPCT24HOUR}</Text>
+          </View>
+        </View>
+
+        <View>
+          <Image source={require('../../../assets/right-arrow/right-arrow.png')} style={styles.imgArrowRight}/>
+        </View>
+      </View>
+    )
+  }
+
+  _renderListWallet() {
+    const { prices } = this.state;
+
+    return (
+      <View style={styles.listWallet}>
+        {prices.map((price, index) =>
+          this._renderItemWallet(price, index)
+        )}
+      </View>
+    )
   }
 
   _renderInforData() {
@@ -81,17 +146,23 @@ class DashboardScreen extends React.Component {
     );
   }
 
+  _renderSumSerires() {
+    return (
+      <View style={styles.sumSeriresGroup}>
+        <Text style={styles.titleBalance}>Balance</Text>
+        <Text style={styles.sumSerires}>$ 6,877.57</Text>
+      </View>
+    )
+  }
+
   render() {
     return (
-      <View style={styles.dashboardScreen}>
+      <ScrollView contentContainerStyle={styles.dashboardScreen}>
         {this._renderPieChart()}
-        <View style={styles.sumSeriresGroup}>
-          <Text style={styles.titleBalance}>Balance</Text>
-          <Text style={styles.sumSerires}>$ 6,877.57</Text>
-        </View>
-
+        {this._renderSumSerires()}
         {this._renderInforData()}
-      </View>
+        {this._renderListWallet()}
+      </ScrollView>
     );
   }
 }
@@ -145,4 +216,48 @@ const styles = ScaledSheet.create({
     color: '#474F66',
     fontSize: '15@s',
   },
+  listWallet: {
+    marginTop: '10@s',
+    marginBottom: '10@s',
+  },
+  walletContainer: {
+    width: width - scale(20),
+    backgroundColor: '#FFF',
+    height: '80@s',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: '5@s',
+    paddingLeft: '20@s',
+    paddingRight: '20@s',
+    marginTop: '20@s',
+    justifyContent: 'space-between'
+  },
+  walletGroup: {
+    flexDirection: 'column',
+  },
+  walletFullname: {
+    color: '#707688',
+    fontSize: '13@s'
+  },
+  walletPrice: {
+    color: '#2A334D',
+    fontSize: '17@s'
+  },
+  walletChange: {
+    color: '#7DBF44',
+    fontSize: '11@s',
+    marginLeft: '7@s'
+  },
+  changeGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imgChangePrice: {
+    width: '11@s',
+    height: '11@s',
+  },
+  imgArrowRight: {
+    width: '30@s',
+    height: '30@s',
+  }
 });

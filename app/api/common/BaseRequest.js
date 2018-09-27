@@ -1,5 +1,6 @@
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
+import axios from "axios";
 
 export async function get(url, params = {}) {
   const query = Object.keys(params)
@@ -111,5 +112,17 @@ function _logRequest(method, url, params) {
 function _logResponse(responseCode, data) {
   if (__DEV__) {
     console.log(responseCode, data);
+  }
+}
+
+export async function getWallet(coin) {
+  try {
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY`;
+    const response = await axios.get(url);
+    const coinList = response.data.DISPLAY;
+
+    return coinList;
+  } catch (error) {
+    console.log("LoadWalletAPI._error:", error)
   }
 }

@@ -60,4 +60,6 @@ export default class Consts {
   static ACCESS_TOKEN_TITLE = 'access_token';
 
   static CODE_PIN = 'code_pin';
+
+  static FINGER_PRINT = 'finger_print'
 }

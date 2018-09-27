@@ -26,6 +26,15 @@ export default {
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
   },
+  createByEmailAddress: {
+    title: 'Create by Email Address',
+    inputEmail: 'Email Address',
+    inputPassword: 'Passwords',
+    inputPasswordConfirm: 'Confirm Passwords',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
+    createWallet: 'Create Wallet',
+  },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',

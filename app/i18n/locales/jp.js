@@ -1,6 +1,6 @@
 export default {
   landing: {
-    coinName: 'Mango Coin JP',
+    coinName: 'Mango Coin',
     coinDescription: 'Make a better future',
     createWallet: 'CREATE A WALLET',
     signin: 'Sign In',
@@ -22,6 +22,15 @@ export default {
   },
   createByPhoneNumber: {
     title: 'Create by Phone Number',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
+    createWallet: 'Create Wallet',
+  },
+  createByEmailAddress: {
+    title: 'Create by Email Address',
+    inputEmail: 'Email Address',
+    inputPassword: 'Passwords',
+    inputPasswordConfirm: 'Confirm Passwords',
     iAccept: 'I accept the',
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',

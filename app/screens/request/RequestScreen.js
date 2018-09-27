@@ -32,8 +32,9 @@ class RequestScreen extends Component {
     });
   }
 
-  _handleCopyAddress = (address) => {
-    Clipboard.setString(address);
+  _handleCopyAddress = () => {
+    const { walletAddress } = this.state;
+    Clipboard.setString(walletAddress);
     Toast.show('Copied', {
       duration: Toast.durations.SHORT,
       position: Toast.positions.CENTER,
@@ -46,15 +47,10 @@ class RequestScreen extends Component {
 
   _renderQrCodeSection = () => {
     const { walletAddress } = this.state;
-    console.log('type', typeof walletAddress);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
         <View style={styles.qrCodeContainer}>
-          {/* <Image
-            source={require('../../../assets/qrcode/qr-code.png')}
-            style={styles.qrCodeImage}
-          /> */}
           {!walletAddress ? null : (
             <QRCode
               value={walletAddress}
@@ -83,7 +79,7 @@ class RequestScreen extends Component {
       <MangoGradientButton
         btnText={I18n.t('request.copyAddress')}
         btnStyle={styles.btnCopyAddress}
-        onPress={() => this._handleCopyAddress('0xb162e0cd09724b0296894eef352c16815cd610fb')}
+        onPress={() => this._handleCopyAddress()}
       />
     </View>
   )

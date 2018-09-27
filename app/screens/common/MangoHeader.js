@@ -3,9 +3,9 @@ import {
   View, Text, Image, TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import AppPreferences from "../../utils/AppPreferences";
 import RNRestart from 'react-native-restart';
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import AppPreferences from '../../utils/AppPreferences';
 
 class MangoHeader extends React.Component {
   state = {
@@ -27,7 +27,7 @@ class MangoHeader extends React.Component {
 
     this.setState({ isShowMenu: false });
 
-    if(routerName === 'LandingScreen') {
+    if (routerName === 'LandingScreen') {
       AppPreferences.removeAccessToken();
       window.GlobalSocket.disconnect();
       RNRestart.Restart();
@@ -68,11 +68,11 @@ class MangoHeader extends React.Component {
         title: 'Settings',
         routerName: 'SettingScreen',
       },
-      {
-        source: require('../../../assets/question/question.png'),
-        title: 'Support',
-        routerName: 'SupportScreen',
-      },
+      // {
+      //   source: require('../../../assets/question/question.png'),
+      //   title: 'Support',
+      //   routerName: 'SupportScreen',
+      // },
       {
         source: require('../../../assets/sing-out/logout.png'),
         title: 'Sign out',
@@ -124,7 +124,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingTop: '20@s',
     paddingRight: '20@s',
-    height: '140@s',
+    height: '100@s',
     width: '140@s',
     position: 'absolute',
     top: '20@s',

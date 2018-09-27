@@ -57,10 +57,10 @@ export default class CreateWalletPhoneNumberScreen extends Component {
       } = await WalletService.importWalletFromPrivateKey('nanj', generatedPrivateKey, generatedMnemonic, '123456');
       console.log('address', address);
 
-      await AsyncStorage.setItem('address', address);
-      await AsyncStorage.setItem('privateKey', privateKey);
-      await AsyncStorage.setItem('mnemonic', mnemonic);
-      await AsyncStorage.setItem('keystore', keystore);
+      AsyncStorage.setItem('address', address);
+      AsyncStorage.setItem('privateKey', privateKey);
+      AsyncStorage.setItem('mnemonic', mnemonic);
+      AsyncStorage.setItem('keystore', keystore);
 
       navigation.navigate('MainScreen');
     } catch (error) {

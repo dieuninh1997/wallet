@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  AsyncStorage,
+} from 'react-native';
 import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
@@ -8,43 +13,57 @@ import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
 
 export default class SplashScreen extends Component {
-  state = {
-    isCodePin: false,
-  };
-
   static navigationOptions = () => ({
     header: null,
   })
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEnableFingerPrint: false,
+      isEnableCodePin: false,
+    };
+  }
 
   async componentWillMount() {
     await this._checkStatusPin();
     await this._initMangoApp();
   }
 
-  async _checkStatusPin() {
+  _checkStatusPin = async () => {
     try {
       const checkCodePin = await AppPreferences.getGeneric();
-      const isCodePin = checkCodePin && checkCodePin.password.includes(Consts.PIN);
+      const isEnableCodePin = checkCodePin && checkCodePin.password.includes(Consts.PIN);
 
-      this.setState({ isCodePin });
+      this.setState({ isEnableCodePin });
     } catch (err) {
       console.log('CheckStatusPin._error:', err);
     }
   }
 
+  _checkStatusFingerPrint = async () => {
+    try {
+      const isEnableFingerPrint = await AsyncStorage.getItem('isEnableFingerPrint');
+
+      this.setState({ isEnableFingerPrint });
+    } catch (err) {
+      console.log('CheckStatusFingerPrint._error:', err);
+    }
+  }
+
   async _initMangoApp() {
     const { navigation } = this.props;
-    const { isCodePin } = this.state;
+    const { isEnableCodePin } = this.state;
 
     await initApp();
 
     if (AppConfig.ACCESS_TOKEN) {
-      if (isCodePin) {
+      if (isEnableCodePin) {
         navigation.navigate('LoginUsePinScreen');
         return;
       }
 
-      navigation.navigate('MainScreen');
+      navigation.navigate('LoginScreen');
     } else {
       navigation.navigate('LandingScreen');
     }

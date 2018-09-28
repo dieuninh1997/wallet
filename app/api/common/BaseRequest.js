@@ -120,7 +120,7 @@ export async function getWallet(coin) {
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY`;
     const response = await axios.get(url);
     const coinList = response.data.DISPLAY;
-
+    console.log("data:", coinList)
     return coinList;
   } catch (error) {
     console.log("LoadWalletAPI._error:", error)

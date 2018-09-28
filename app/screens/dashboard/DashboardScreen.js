@@ -4,6 +4,15 @@ import { Pie } from 'react-native-pathjs-charts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getWallet } from '../../api/common/BaseRequest';
+import SocketIOClient from 'socket.io-client'
+
+const socket = SocketIOClient('https://streamer.cryptocompare.com/');
+const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
+socket.emit('SubAdd', { subs: subscription });
+socket.on("m", function(message) {
+  const newValue = message.split('~');
+  DashboardScreen._updateCoinValue(newValue)
+});
 
 const { width } = Dimensions.get('window');
 const COINS = [
@@ -40,6 +49,10 @@ class DashboardScreen extends React.Component {
 
   async componentDidMount() {
     await this._loadData();
+  }
+
+  static _updateCoinValue = (newValue = []) => {
+    console.log(newValue)
   }
 
   async _loadData() {
@@ -106,7 +119,7 @@ class DashboardScreen extends React.Component {
 
   _renderItemWallet(price, index) {
     return (
-      <View style={styles.walletContainer}  key={index}>
+      <View style={styles.walletContainer} key={index}>
         <View style={styles.walletGroup}>
           <Text style={styles.walletFullname}>{price.FULLNAME}</Text>
           <Text style={styles.walletPrice}>{price.PRICE}</Text>

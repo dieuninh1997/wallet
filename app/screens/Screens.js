@@ -11,11 +11,11 @@ import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
 
 export default {
-  CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   SplashScreen: { screen: SplashScreen },
+  MainScreen: { screen: MainScreen },
+  CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   LandingScreen: { screen: LandingScreen },
   LoginScreen: { screen: LoginScreen },
-  MainScreen: { screen: MainScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   SettingScreen: { screen: SettingScreen },

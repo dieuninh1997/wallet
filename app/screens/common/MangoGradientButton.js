@@ -14,21 +14,19 @@ class MangoGradientButton extends Component {
       btnText, btnStyle, onPress,
     } = this.props;
     return (
-      <View>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={onPress}
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={onPress}
+      >
+        <LinearGradient
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 0 }}
+          colors={['#FFDD3B', '#FFCF38', '#FFC136']}
+          style={[styles.container, btnStyle]}
         >
-          <LinearGradient
-            start={{ x: 1, y: 0 }}
-            end={{ x: 0, y: 0 }}
-            colors={['#FFDD3B', '#FFCF38', '#FFC136']}
-            style={[styles.container, btnStyle]}
-          >
-            <Text style={styles.buttonText}>{btnText}</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+          <Text style={styles.buttonText}>{btnText}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
     );
   }
 }
@@ -52,7 +50,7 @@ const styles = ScaledSheet.create({
         shadowRadius: 2,
       },
       android: {
-        elevation: 2,
+        elevation: 4,
       },
     }),
   },

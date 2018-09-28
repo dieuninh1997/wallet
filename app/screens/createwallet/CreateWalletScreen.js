@@ -15,11 +15,15 @@ export default class CreateWalletScreen extends Component {
     headerRight: <View />,
   })
 
+  static SCREEN = {
+    CREATE_BY_EMAIL: 'CreateWalletByEmailScreen',
+    CREATE_BY_PHONE: 'CreateWalletPhoneNumberScreen',
+  }
 
-  _handleClickCreatePhoneNumber = () => {
+  _handleClickCreateWallet = (screen) => {
     const { navigation } = this.props;
 
-    navigation.navigate('CreateWalletPhoneNumberScreen');
+    navigation.navigate(screen);
   }
 
   render() {
@@ -32,7 +36,7 @@ export default class CreateWalletScreen extends Component {
         <View style={styles.groupBtnContainer}>
           <TouchableOpacity
             style={[styles.btnCreateWalletContainer, styles.btnCreateByPhone]}
-            onPress={() => this._handleClickCreatePhoneNumber()}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
             <Text style={styles.textCreateByPhone}>
@@ -40,26 +44,36 @@ export default class CreateWalletScreen extends Component {
             </Text>
           </TouchableOpacity>
 
-          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
+          <TouchableOpacity
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+          >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/email.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.emailAddress')}
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
+
+          <TouchableOpacity
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+          >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.passportNumber')}
             </Text>
-          </View>
+          </TouchableOpacity>
 
-          <View style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}>
+          <TouchableOpacity
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+          >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/FacebookIcon.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.facebook')}
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

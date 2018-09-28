@@ -29,8 +29,6 @@ const MainScreen = createBottomTabNavigator(
             />
           </View>
         ),
-
-
       }),
     },
     RequestScreen: {

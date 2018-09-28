@@ -3,18 +3,10 @@ import {
   View, Text, ScrollView, Dimensions, Image,
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
+import SocketIOClient from 'socket.io-client';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getWallet } from '../../api/common/BaseRequest';
-import SocketIOClient from 'socket.io-client'
-
-const socket = SocketIOClient('https://streamer.cryptocompare.com/');
-const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
-socket.emit('SubAdd', { subs: subscription });
-socket.on("m", function(message) {
-  const newValue = message.split('~');
-  DashboardScreen._updateCoinValue(newValue)
-});
 
 const { width } = Dimensions.get('window');
 const COINS = [
@@ -29,6 +21,10 @@ const COINS = [
 ];
 
 class DashboardScreen extends React.Component {
+  static _updateCoinValue = (newValue = []) => {
+    // console.log('DashboardScreen', newValue);
+  }
+
   constructor(props) {
     super(props);
 
@@ -51,13 +47,16 @@ class DashboardScreen extends React.Component {
 
   async componentDidMount() {
     await this._loadData();
+    const socket = SocketIOClient('https://streamer.cryptocompare.com/');
+    const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
+    socket.emit('SubAdd', { subs: subscription });
+    socket.on('m', (message) => {
+      const newValue = message.split('~');
+      DashboardScreen._updateCoinValue(newValue);
+    });
   }
 
-  static _updateCoinValue = (newValue = []) => {
-    console.log(newValue)
-  }
-
-  async _loadData() {
+  _loadData = async () => {
     const coinString = COINS.map(coin => coin.symbol);
     const prices = [];
     const linkString = coinString.reduce((a, b) => `${a},${b}`);

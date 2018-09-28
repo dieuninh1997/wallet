@@ -172,6 +172,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#F5F7FA',
     borderWidth: 0,
     width: '50@s',
+    borderRadius: 0,
   },
   createWallet: {
     borderRadius: '25@s',

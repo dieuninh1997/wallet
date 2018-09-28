@@ -6,19 +6,18 @@ import {
   ScrollView,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
-import moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
-import EthService from '../../services/wallet/eth';
+import WalletService from '../../services/wallet';
 
 class TransactionsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       transactions: [],
-      address: '0x7B151C18e31DC382683A6b57bF9f89302D1a2C73',
+      address: '0x5C7738b67a3403F349782244E59E776DdB3581c3',
     };
   }
 
@@ -36,7 +35,7 @@ class TransactionsScreen extends Component {
   componentDidMount = async () => {
     const { address } = this.state;
     try {
-      const transactions = await EthService.getTransactions(address);
+      const transactions = await WalletService.getTransactions('nanj', address, 1, 10);
       console.log('TransactionsScreen: ', transactions);
 
       this.setState({

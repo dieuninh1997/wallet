@@ -17,6 +17,7 @@
     "ethers": "3.0.29",
     "hdkey": "1.1.0",
     "laravel-echo": "^1.4.0",
+    "lodash": "4.17.11",
     "microevent": "^1.0.0",
     "moment": "2.22.2",
     "node-libs-react-native": "https://github.com/Sotatek-NhuanHoang/node-libs-react-native",

@@ -7,8 +7,10 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
+  Alert,
 } from 'react-native';
 import Toast from 'react-native-root-toast';
+import TouchID from 'react-native-touch-id';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -16,10 +18,11 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
+import AppConfig from '../../utils/AppConfig';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
+    headerLeft: AppConfig.ACCESS_TOKEN ? <View /> : <MangoBackButton navigation={navigation} />,
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -76,6 +79,26 @@ class LoginScreen extends Component {
     });
   }
 
+  _handlerLoginWithTouchId = () => {
+    const { navigation } = this.props;
+    const optionalConfigObject = {
+      title: 'Authentication Required', // Android
+      color: '#e00606', // Android
+      sensorDescription: 'Open', // Android
+      cancelText: 'Cancel', // Android
+      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+      unifiedErrors: false, // use unified error messages (default false)
+    };
+
+    TouchID.authenticate('Touch to unlock you phone', optionalConfigObject)
+      .then((success) => {
+        navigation.navigate('DashboardScreen');
+      })
+      .catch((error) => {
+        Alert.alert('Authentication Failed');
+      });
+  }
+
   _renderFormLogin = () => (
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
@@ -123,6 +146,19 @@ class LoginScreen extends Component {
     </View>
   )
 
+  _renderBtnLoginWithTouchId = () => (
+    <View style={{ marginLeft: 10 }}>
+      <TouchableOpacity
+        onPress={() => this._handlerLoginWithTouchId()}
+      >
+        <Image
+          source={require('../../../assets/fingerprint/fingerprint.png')}
+          style={styles.fingerPrintImage}
+        />
+      </TouchableOpacity>
+    </View>
+  )
+
   _renderBtnLogin = () => (
     <MangoGradientButton
       btnText={I18n.t('signin.title')}
@@ -138,7 +174,10 @@ class LoginScreen extends Component {
           {this._renderFormLogin()}
           {this._renderBtnForgotPassword()}
         </ScrollView>
-        {this._renderBtnLogin()}
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          {this._renderBtnLogin()}
+          { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null }
+        </View>
       </View>
     );
   }
@@ -182,6 +221,11 @@ const styles = ScaledSheet.create({
     marginRight: '10@s',
   },
 
+  fingerPrintImage: {
+    width: '32@s',
+    height: '32@s',
+  },
+
   inputText: {
     flex: 7,
     fontSize: '18@s',
@@ -209,6 +253,5 @@ const styles = ScaledSheet.create({
 
   btnSigninContainer: {
     width: '220@s',
-    marginBottom: '24@s',
   },
 });

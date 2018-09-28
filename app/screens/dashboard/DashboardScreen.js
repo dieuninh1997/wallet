@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, ScrollView, Dimensions, Image } from 'react-native';
+import {
+  View, Text, ScrollView, Dimensions, Image,
+} from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
@@ -18,11 +20,11 @@ const { width } = Dimensions.get('window');
 const COINS = [
   {
     symbol: 'BTC',
-    fullName: 'Bitcoin'
+    fullName: 'Bitcoin',
   },
   {
     symbol: 'ETH',
-    fullName: 'Etherium'
+    fullName: 'Etherium',
   },
 ];
 
@@ -43,7 +45,7 @@ class DashboardScreen extends React.Component {
     ];
     this.state = {
       data,
-      prices: []
+      prices: [],
     };
   }
 
@@ -58,10 +60,10 @@ class DashboardScreen extends React.Component {
   async _loadData() {
     const coinString = COINS.map(coin => coin.symbol);
     const prices = [];
-    const linkString = coinString.reduce((a, b) => a + ',' + b);
+    const linkString = coinString.reduce((a, b) => `${a},${b}`);
     const response = await getWallet(linkString);
 
-    for (let res in response) {
+    for (const res in response) {
       const findLabel = COINS.find(coin => coin.symbol === res);
 
       prices.push({ ...response[res].USD, FULLNAME: findLabel.fullName });
@@ -110,7 +112,7 @@ class DashboardScreen extends React.Component {
   _renderItemInforData(item) {
     return (
       <View style={styles.itemGroup} key={item.id}>
-        <View style={[{ backgroundColor: item.color }, styles.itemColor]}/>
+        <View style={[{ backgroundColor: item.color }, styles.itemColor]} />
         <Text style={styles.itemCount}>{`$ ${item.count}`}</Text>
         <Text style={styles.itemCountCoin}>{item.countCoin}</Text>
       </View>
@@ -125,16 +127,16 @@ class DashboardScreen extends React.Component {
           <Text style={styles.walletPrice}>{price.PRICE}</Text>
 
           <View style={styles.changeGroup}>
-            <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice}/>
+            <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice} />
             <Text style={styles.walletChange}>{price.CHANGEPCT24HOUR}</Text>
           </View>
         </View>
 
         <View>
-          <Image source={require('../../../assets/right-arrow/right-arrow.png')} style={styles.imgArrowRight}/>
+          <Image source={require('../../../assets/right-arrow/right-arrow.png')} style={styles.imgArrowRight} />
         </View>
       </View>
-    )
+    );
   }
 
   _renderListWallet() {
@@ -142,11 +144,9 @@ class DashboardScreen extends React.Component {
 
     return (
       <View style={styles.listWallet}>
-        {prices.map((price, index) =>
-          this._renderItemWallet(price, index)
-        )}
+        {prices.map((price, index) => this._renderItemWallet(price, index))}
       </View>
-    )
+    );
   }
 
   _renderInforData() {
@@ -165,7 +165,7 @@ class DashboardScreen extends React.Component {
         <Text style={styles.titleBalance}>Balance</Text>
         <Text style={styles.sumSerires}>$ 6,877.57</Text>
       </View>
-    )
+    );
   }
 
   render() {
@@ -243,23 +243,23 @@ const styles = ScaledSheet.create({
     paddingLeft: '20@s',
     paddingRight: '20@s',
     marginTop: '20@s',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   walletGroup: {
     flexDirection: 'column',
   },
   walletFullname: {
     color: '#707688',
-    fontSize: '13@s'
+    fontSize: '13@s',
   },
   walletPrice: {
     color: '#2A334D',
-    fontSize: '17@s'
+    fontSize: '17@s',
   },
   walletChange: {
     color: '#7DBF44',
     fontSize: '11@s',
-    marginLeft: '7@s'
+    marginLeft: '7@s',
   },
   changeGroup: {
     flexDirection: 'row',
@@ -272,5 +272,5 @@ const styles = ScaledSheet.create({
   imgArrowRight: {
     width: '30@s',
     height: '30@s',
-  }
+  },
 });

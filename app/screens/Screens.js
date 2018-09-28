@@ -11,7 +11,6 @@ import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
 
 export default {
-  CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   SplashScreen: { screen: SplashScreen },
   LandingScreen: { screen: LandingScreen },
   LoginScreen: { screen: LoginScreen },
@@ -19,6 +18,7 @@ export default {
   CreateWalletScreen: { screen: CreateWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   SettingScreen: { screen: SettingScreen },
+  CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   AddPinScreen: { screen: AddPinScreen },
   AuthScreen: { screen: AuthScreen },

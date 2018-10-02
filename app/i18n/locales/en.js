@@ -76,5 +76,7 @@ export default {
     confirmNewPassword: 'Confirm New Password',
     cancel: 'Cancel',
     update: 'Update',
+    toastEnterFullInfo: 'Please enter full information',
+    toastConfirmPassword: 'Confirm password is incorrect',
   }
 };

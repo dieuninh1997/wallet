@@ -24,11 +24,13 @@ class ChangePasswordScreen extends Component {
 		navigation.navigate('SettingScreen');
 	}
 
-	_onClickUpdate = () => {
+	_onClickUpdate = async () => {
 		const { currenPassword, newPassword, confirmNewPassword } = this.state;
+		const { navigation } = this.props;
+
 		console.log('change-password', currenPassword, newPassword, confirmNewPassword);
 		if (!currenPassword || !newPassword || !confirmNewPassword) {
-			Toast.show("nhap vao", {
+			Toast.show(I18n.t('changePassword.toastEnterFullInfo'), {
 				duration: Toast.durations.SHORT,
 				position: Toast.positions.CENTER,
 				shadow: true,
@@ -39,7 +41,7 @@ class ChangePasswordScreen extends Component {
 			return;
 		}
 		if (newPassword !== confirmNewPassword) {
-			Toast.show("nhap sai", {
+			Toast.show(I18n.t('changePassword.toastConfirmPassword'), {
 				duration: Toast.durations.SHORT,
 				position: Toast.positions.CENTER,
 				shadow: true,
@@ -50,10 +52,24 @@ class ChangePasswordScreen extends Component {
 			return;
 		}
 
-		// const respon = changePassword(currenPassword, newPassword, '99999');
-
 		try {
-			const respon = changePassword(currenPassword, newPassword, '0');
+			const responChangePass = await changePassword(currenPassword, newPassword, '0');
+			const getMessage = responChangePass.message;
+
+			Toast.show(responChangePass.message , {
+				duration: Toast.durations.SHORT,
+				position: Toast.positions.CENTER,
+				shadow: true,
+				animation: true,
+				hideOnPress: true,
+				delay: 0,
+			});
+			console.log('>>>>>>>>>>>>>> ');
+			if(!getMessage.includes('Change password success')){
+				return;
+			}
+
+			navigation.navigate('SettingScreen');
 		} catch (error) {
 			Toast.show(error.message, {
 				duration: Toast.durations.SHORT,
@@ -63,7 +79,7 @@ class ChangePasswordScreen extends Component {
 				hideOnPress: true,
 				delay: 0,
 			});
-			console.log('LoginRequest._error: ', error);
+			console.log('changePassword._error: ', error);
 		}
 
 	}

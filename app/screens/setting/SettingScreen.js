@@ -41,8 +41,8 @@ export default class SettingScreen extends Component {
     try {
       const walletId = await AsyncStorage.getItem('address');
       this.setState({
-        walletId
-      })
+        walletId,
+      });
     } catch (error) {
       console.log('error', error);
     }
@@ -138,6 +138,7 @@ export default class SettingScreen extends Component {
 
   _renderSecurity() {
     const { payload } = this.state;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.textPerferences}>
@@ -160,9 +161,9 @@ export default class SettingScreen extends Component {
               <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
               <View style={styles.activiRightGroup}>
                 <MaterialCommunityIcons
-                 style={styles.iconChevronRight}
-                 name="chevron-right"
-              />
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -178,7 +179,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('AddPinScreen')}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('AddPinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
               <View style={styles.activiRightGroup}>

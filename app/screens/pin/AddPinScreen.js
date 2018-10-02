@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
 import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -53,13 +53,16 @@ export default class AddPinScreen extends Component {
   )
 
   _renderCheckPinCode() {
+    const { isShowError } = this.state;
+
     return (
       <PINCode
         status="enter"
         passwordLength={6}
-        pinStatus={this.state.isShowError ? 'failure' : 'initial'}
+        pinStatus={isShowError ? 'failure' : 'initial'}
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}
+        touchIDDisabled
       />
     );
   }

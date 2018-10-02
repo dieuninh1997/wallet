@@ -56,3 +56,13 @@ export function getCurrentUser(useCache = true, params) {
       });
   });
 }
+
+export function changePassword(password, new_password, otp){
+  let url = '/change-password';
+  let params = {
+    password,
+    new_password,
+    otp
+  }
+  return post(url, params);
+}

@@ -9,6 +9,7 @@ import SettingScreen from './setting/SettingScreen';
 import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
+import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -23,4 +24,5 @@ export default {
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   AddPinScreen: { screen: AddPinScreen },
   AuthScreen: { screen: AuthScreen },
+  ChangePasswordScreen: { screen: ChangePasswordScreen },
 };

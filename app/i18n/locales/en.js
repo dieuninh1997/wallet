@@ -69,4 +69,14 @@ export default {
   transactions: {
     title: 'Transactions',
   },
+  changePassword: {
+    title: 'Change Password',
+    curentPassword: 'Current Password',
+    newPassword: 'New Password',
+    confirmNewPassword: 'Confirm New Password',
+    cancel: 'Cancel',
+    update: 'Update',
+    toastEnterFullInfo: 'Please enter full information',
+    toastConfirmPassword: 'Confirm password is incorrect',
+  }
 };

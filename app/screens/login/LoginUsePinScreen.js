@@ -52,7 +52,7 @@ export default class LoginUsePinScreen extends Component {
       <View style={styles.container}>
         <PINCode
           status="enter"
-          passwordLength={6}
+          passwordLength={4}
           pinStatus={isShowError ? 'failure' : 'initial'}
           storePin={(value) => { console.log('ma pin:', value); }}
           handleResultEnterPin={value => this._checkValuePin(value)}

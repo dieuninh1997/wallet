@@ -34,6 +34,7 @@ export function register(registerInfo = {}) {
     mnemonic: registerInfo.mnemonic,
     keystore: registerInfo.keystore,
     login_type: registerInfo.login_type,
+    eth_address: registerInfo.eth_address,
   };
   console.log('params', params);
 

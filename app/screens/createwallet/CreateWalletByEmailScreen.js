@@ -7,6 +7,7 @@ import {
   AsyncStorage,
   Image,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import bip39 from 'bip39';
@@ -103,24 +104,25 @@ export default class CreateWalletByEmailScreen extends Component {
         password: createWalletInfo.password,
         password_confirmation: createWalletInfo.passwordConfirm,
         mnemonic: mnemonicHash,
-        keystore,
+        keystore: JSON.stringify(keystore),
         login_type: 1,
+        eth_address: address,
       };
 
       await register(registerInfo);
 
-      // const loginInfo = await login(registerInfo.email, registerInfo.password);
-      // console.log('loginInfo', loginInfo);
-      // AppPreferences.saveAccessToken(responseUser.access_token);
-      // window.GlobalSocket.connect();
-      // Keyboard.dismiss();
+      const loginInfo = await login(registerInfo.email, registerInfo.password);
+      console.log('loginInfo', loginInfo);
+      AppPreferences.saveAccessToken(loginInfo.access_token);
+      window.GlobalSocket.connect();
+      Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', address);
 
       AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
       setTimeout(() => {
         navigation.navigate('AddPinScreen');
-      }, 2000);
+      }, 1000);
     } catch (error) {
       AppPreferences.showToastMessage(error.message);
     }
@@ -204,7 +206,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
   _renderButtonCreate = () => (
     <MangoGradientButton
-      btnText={I18n.t('signin.title')}
+      btnText={I18n.t('createWalletByEmailScreen.createWallet')}
       btnStyle={styles.btnCreateWalletContainer}
       onPress={() => this._handleClickCreateWallet()}
     />
@@ -301,6 +303,7 @@ const styles = ScaledSheet.create({
 
   btnCreateWalletContainer: {
     width: '220@s',
-    marginBottom: '24@s',
+    marginBottom: '20@s',
+    marginHorizontal: '5@s',
   },
 });

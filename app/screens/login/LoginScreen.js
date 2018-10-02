@@ -255,5 +255,7 @@ const styles = ScaledSheet.create({
 
   btnSigninContainer: {
     width: '220@s',
+    marginBottom: '20@s',
+    marginHorizontal: '5@s',
   },
 });

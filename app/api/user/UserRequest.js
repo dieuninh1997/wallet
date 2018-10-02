@@ -1,7 +1,9 @@
 import AppConfig from '../../utils/AppConfig';
-import { get, post, put, del} from '../common/BaseRequest';
+import {
+  get, post,
+} from '../common/BaseRequest';
 
-export function login(email, password, otp = '') {
+export function login(email, password, otp = '', login_type = 1) {
   const params = {
     grant_type: 'password',
     client_id: AppConfig.getClientId(),
@@ -10,24 +12,25 @@ export function login(email, password, otp = '') {
     password,
     scope: '*',
     otp,
+    login_type,
   };
   return post('/oauth/token', params);
 }
 
 export function ressetPassword(email) {
-  let url = '/reset-password';
-  let params = { email };
+  const url = '/reset-password';
+  const params = { email };
 
   return post(url, params);
 }
 
 export function register(email, password, referralId = '') {
-  let params = {
+  const params = {
     email,
     password,
     password_confirmation: password,
     agree_term: 1,
-    referrer_code: referralId
+    referrer_code: referralId,
   };
 
   return post('/users', params);
@@ -35,20 +38,20 @@ export function register(email, password, referralId = '') {
 
 export function getCurrentUser(useCache = true, params) {
   if (this.user && useCache) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(this.user);
     });
   }
   return new Promise((resolve, reject) => {
-    let url = '/user';
-    let self = this;
+    const url = '/user';
+    const self = this;
 
     get(url, params)
-      .then(function (user) {
+      .then((user) => {
         self.user = user;
         resolve(user);
       })
-      .catch(function (error) {
+      .catch((error) => {
         reject(error);
       });
   });

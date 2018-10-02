@@ -6,8 +6,8 @@ import moment from 'moment';
 
 import coinList from '../../configs/coinList';
 
-const bip39 = require('bip39');
-const hdkey = require('hdkey');
+// const bip39 = require('bip39');
+// const hdkey = require('hdkey');
 
 const ethers = require('ethers');
 

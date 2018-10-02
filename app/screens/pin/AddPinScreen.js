@@ -22,7 +22,7 @@ export default class AddPinScreen extends Component {
     await this._getCodePin();
   }
 
-  async _getCodePin() {
+  _getCodePin = async () => {
     try {
       const responsePin = await AppPreferences.getGeneric();
       const codePin = responsePin.password.includes(Consts.PIN) ? JSON.parse(responsePin.password).pin : null;
@@ -34,7 +34,7 @@ export default class AddPinScreen extends Component {
   }
 
 
-  _checkCodePin(value) {
+  _checkCodePin = (value) => {
     const { codePin } = this.state;
 
     if (codePin === value) {

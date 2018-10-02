@@ -8,21 +8,23 @@ import {
 } from 'react-native-dotenv';
 
 export default class AppConfig {
-  static API_SERVER = 'https://bitkoex.com';
+  static API_SERVER = 'http://mango.sotatek.com';
 
   static API_VERSION = 'v1';
 
   static SOCKET_SERVER = 'wss://socket.bitkoex.com:6001';
 
-  static ASSET_SERVER = 'https://bitkoex.com';
+  static ASSET_SERVER = 'http://mango.sotatek.com';
 
-  static CLIENT_ID='2';
+  static CLIENT_ID='1';
 
-  static CLIENT_SECRET = '4ZgDKFUAuC06xfMK2HsjEBOx7BYcMFG8jNKmyHZA';
+  static CLIENT_SECRET = 'StlCjFYGWaqV6A1z3Rd01K2aEM2bsD5cVCBK7xhF';
 
   static ACCESS_TOKEN = '';
 
   static SIGN_UP_URL = '/webview/sign_up';
+
+  static A = '';
 
   static dev() {
     return __DEV__ && JSON.parse(DEV);

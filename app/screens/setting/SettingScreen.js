@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ScrollView, TouchableWithoutFeedback
+  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
@@ -33,9 +33,16 @@ export default class SettingScreen extends Component {
         faceId: false,
         swipeReceive: false,
       },
+      walletId: null,
     };
   }
 
+  componentDidMount = async () => {
+    const walletId = await AsyncStorage.getItem('address');
+    this.setState({
+      walletId,
+    });
+  }
 
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
@@ -44,14 +51,16 @@ export default class SettingScreen extends Component {
     this.setState({ payload });
   }
 
-  _renderProfile() {
+  _renderProfile = () => {
+    const { walletId } = this.state;
+
     return (
       <View>
         <Text style={styles.titleTable}>{I18n.t('setting.profile')}</Text>
         <View style={styles.borderTable}>
           <View style={styles.borderWalletId}>
             <Text style={styles.walletID}>{I18n.t('setting.walletId')}</Text>
-            <Text style={styles.walletAddress}>jasjasjdjbjbkdkbdskvjhdasdas</Text>
+            <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>

@@ -55,7 +55,6 @@ function _getFullUrl(url) {
 }
 
 function _getHeader() {
-  console.log('author', AppConfig.ACCESS_TOKEN);
   return {
     Accept: 'application/json',
     'Content-Type': 'application/json',

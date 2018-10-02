@@ -64,7 +64,7 @@ class ChangePasswordScreen extends Component {
 				hideOnPress: true,
 				delay: 0,
 			});
-			console.log('>>>>>>>>>>>>>> ');
+			
 			if(!getMessage.includes('Change password success')){
 				return;
 			}

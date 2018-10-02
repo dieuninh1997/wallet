@@ -38,10 +38,14 @@ export default class SettingScreen extends Component {
   }
 
   componentDidMount = async () => {
-    const walletId = await AsyncStorage.getItem('address');
-    this.setState({
-      walletId,
-    });
+    try {
+      const walletId = await AsyncStorage.getItem('address');
+      this.setState({
+        walletId
+      })
+    } catch (error) {
+      console.log('error', error);
+    }
   }
 
   _onChangeSwitch = (title) => {
@@ -151,15 +155,17 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
-            <View style={styles.activiRightGroup}>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                 style={styles.iconChevronRight}
+                 name="chevron-right"
               />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           <View style={styles.borderElement}>
             <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
             <View style={styles.activiRightGroup}>

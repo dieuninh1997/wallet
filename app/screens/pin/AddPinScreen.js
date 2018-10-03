@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
-import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
+import I18n from '../../i18n/i18n';
 
 export default class AddPinScreen extends Component {
   static navigationOptions = () => ({
@@ -13,7 +13,7 @@ export default class AddPinScreen extends Component {
 
   state = {
     codePin: null,
-    isShowChanePin: false,
+    isShowChangePin: false,
     isShowError: false,
   };
 
@@ -36,7 +36,7 @@ export default class AddPinScreen extends Component {
   _checkCodePin = (value) => {
     const { codePin } = this.state;
     if (codePin === value) {
-      this.setState({ isShowChanePin: true });
+      this.setState({ isShowChangePin: true });
     } else {
       this.setState({ isShowError: true });
     }
@@ -46,7 +46,7 @@ export default class AddPinScreen extends Component {
   _renderChangePin = () => (
     <PINCode
       status="choose"
-      passwordLength={6}
+      passwordLength={4}
       storePin={value => this._saveCodePin(value)}
       timeLocked={10000}
     />
@@ -58,7 +58,7 @@ export default class AddPinScreen extends Component {
     return (
       <PINCode
         status="enter"
-        passwordLength={6}
+        passwordLength={4}
         pinStatus={isShowError ? 'failure' : 'initial'}
         timeLocked={10000}
         handleResultEnterPin={value => this._checkCodePin(value)}
@@ -69,20 +69,24 @@ export default class AddPinScreen extends Component {
 
   async _saveCodePin(codePin) {
     try {
-      await AppPreferences.saveCodePin(codePin);
+      const { navigation } = this.props;
 
-      RNRestart.Restart();
+      await AppPreferences.saveCodePin(codePin);
+      AppPreferences.showToastMessage(I18n.t('addPinScreen.createPinSuccess'));
+      setTimeout(() => {
+        navigation.navigate('MainScreen');
+      }, 1000);
     } catch (err) {
       console.log('SaveCodePin._error:', err);
     }
   }
 
   render() {
-    const { codePin, isShowChanePin } = this.state;
+    const { codePin, isShowChangePin } = this.state;
     return (
       <View style={styles.container}>
-        {codePin && !isShowChanePin ? this._renderCheckPinCode() : null}
-        {!codePin || isShowChanePin ? this._renderChangePin() : null}
+        {codePin && !isShowChangePin ? this._renderCheckPinCode() : null}
+        {!codePin || isShowChangePin ? this._renderChangePin() : null}
       </View>
     );
   }

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   AsyncStorage,
 } from 'react-native';
-import Toast from 'react-native-root-toast';
 import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -16,6 +15,8 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import AppPreferences from '../../utils/AppPreferences';
+
 
 class RequestScreen extends Component {
   constructor(props) {
@@ -34,15 +35,9 @@ class RequestScreen extends Component {
 
   _handleCopyAddress = () => {
     const { walletAddress } = this.state;
+
     Clipboard.setString(walletAddress);
-    Toast.show('Copied', {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
+    AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
   _renderQrCodeSection = () => {

@@ -14,6 +14,7 @@ export default class AddPinScreen extends Component {
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
+    headerStyle: CommonStyles.header,
     headerRight: <View />,
   });
 
@@ -175,7 +176,7 @@ const styles = ScaledSheet.create({
   },
   containerPassword: {
     width: '100%',
-    height: '190@s',
+    height: '195@s',
     position: 'absolute',
     backgroundColor: '#fcd800',
   },
@@ -185,7 +186,7 @@ const styles = ScaledSheet.create({
     height: '60@s',
     backgroundColor: '#ffffff',
     borderRadius: '30@s',
-    marginTop: '113@s',
+    marginTop: '115@s',
     borderWidth: '12@s',
     borderColor: '#f1cf00',
   },

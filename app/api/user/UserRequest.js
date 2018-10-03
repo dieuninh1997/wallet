@@ -71,3 +71,11 @@ export function changePassword(password, new_password, otp) {
   };
   return post(url, params);
 }
+
+export function sendVerificationEmail(email) {
+  const url = '/send-email-verification';
+  const params = {
+    email
+  };
+  return post(url, params);
+}

@@ -63,6 +63,14 @@ export default {
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
   },
+  emailVerification: {
+    title: 'Email Verification',
+    content: 'Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.',
+    emailAddress: 'Email Address',
+    resend: 'Resend',
+    cancel: 'Cancel',
+    update: 'Update'
+  },
   request: {
     title: 'Request',
     copyAddress: 'Copy Address',

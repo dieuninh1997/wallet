@@ -5,6 +5,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
 import MangoBackButton from '../common/MangoBackButton';
+import EmailVerificationModal from './EmailVerificationModal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
@@ -66,18 +67,20 @@ export default class SettingScreen extends Component {
             <Text style={styles.walletID}>{I18n.t('setting.walletId')}</Text>
             <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text style={styles.textVerified}>
-                {I18n.t('setting.verified')}
-              </Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this._emailModal.setModalVisible(true)}>
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
+              <View style={styles.activiRightGroup}>
+                <Text style={styles.textVerified}>
+                  {I18n.t('setting.verified')}
+                </Text>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
             <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
             <View style={styles.activiRightGroup}>
@@ -227,6 +230,7 @@ export default class SettingScreen extends Component {
   render() {
     return (
       <View>
+        <EmailVerificationModal ref={ref => this._emailModal = ref}/>
         <ScrollView>
           <View style={styles.container}>
             {this._renderProfile()}

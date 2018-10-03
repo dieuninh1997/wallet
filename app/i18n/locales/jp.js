@@ -63,6 +63,14 @@ export default {
     disabled: '無効',
     unconfirmed: '未確認',
   },
+  emailVerification: {
+    title: 'Email Verification',
+    content: 'この確認済みメールアドレスは、不正な動作が確認された際、認証コードの送付に使用されます。また、サインインIDの通知や、資金を受領した際の確認にも使用されます。',
+    emailAddress: 'メールアドレス',
+    resend: '再送する',
+    cancel: 'キャンセル',
+    update: '更新する'
+  },
   request: {
     title: 'リクエスト',
     copyAddress: 'アドレスのコピー',

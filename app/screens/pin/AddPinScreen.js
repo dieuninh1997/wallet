@@ -9,7 +9,7 @@ import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = (navigation) => ({
+  static navigationOptions = navigation => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
@@ -51,8 +51,8 @@ export default class AddPinScreen extends Component {
 
   _renderChangePin = () => (
     <View style={styles.container}>
-      <View style={styles.containerPassword}></View>
-      <View style={styles.borderPassword}></View>
+      <View style={styles.containerPassword} />
+      <View style={styles.borderPassword} />
       <PINCode
         status="choose"
         passwordLength={4}
@@ -80,8 +80,8 @@ export default class AddPinScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.containerPassword}></View>
-        <View style={styles.borderPassword}></View>
+        <View style={styles.containerPassword} />
+        <View style={styles.borderPassword} />
         <PINCode
           status="enter"
           passwordLength={4}

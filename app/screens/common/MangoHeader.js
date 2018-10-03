@@ -68,11 +68,6 @@ class MangoHeader extends React.Component {
         title: 'Settings',
         routerName: 'SettingScreen',
       },
-      // {
-      //   source: require('../../../assets/question/question.png'),
-      //   title: 'Support',
-      //   routerName: 'SupportScreen',
-      // },
       {
         source: require('../../../assets/sing-out/logout.png'),
         title: 'Sign out',

@@ -27,12 +27,13 @@ export function ressetPassword(email) {
 export function register(registerInfo = {}) {
   const params = {
     email: registerInfo.email,
+    passport_number: registerInfo.passport_number,
     password: registerInfo.password,
     password_confirmation: registerInfo.password_confirmation,
     agree_term: 1,
     referrer_code: 1,
     mnemonic: registerInfo.mnemonic,
-    keystore: registerInfo.keystore,
+    // keystore: registerInfo.keystore,
     login_type: registerInfo.login_type,
     eth_address: registerInfo.eth_address,
   };

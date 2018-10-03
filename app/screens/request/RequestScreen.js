@@ -9,6 +9,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import Share from 'react-native-share';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -31,6 +32,16 @@ class RequestScreen extends Component {
     this.setState({
       walletAddress,
     });
+  }
+
+  _onSharePress() {
+    const { walletAddress } = this.state;
+    const options = {
+      message: walletAddress
+    }
+    Share.open(options)
+      .then((res) => {})
+      .catch((err) => {});
   }
 
   _handleCopyAddress = () => {
@@ -65,6 +76,7 @@ class RequestScreen extends Component {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.btnUpContainer}
+        onPress={this._onSharePress.bind(this)}
       >
         <Image
           source={require('../../../assets/up/up-arrow.png')}

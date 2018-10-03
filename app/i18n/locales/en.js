@@ -82,6 +82,7 @@ export default {
     toastConfirmPassword: 'Confirm password is incorrect',
   },
   addPinScreen: {
+    title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
   },
 };

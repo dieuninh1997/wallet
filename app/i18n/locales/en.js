@@ -66,6 +66,7 @@ export default {
   request: {
     title: 'Request',
     copyAddress: 'Copy Address',
+    copied: 'Copied success',
   },
   transactions: {
     title: 'Transactions',
@@ -79,5 +80,9 @@ export default {
     update: 'Update',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Confirm password is incorrect',
-  }
+  },
+  addPinScreen: {
+    title: 'Change PIN',
+    createPinSuccess: 'Create pin code success',
+  },
 };

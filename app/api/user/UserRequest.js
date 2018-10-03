@@ -24,14 +24,19 @@ export function ressetPassword(email) {
   return post(url, params);
 }
 
-export function register(email, password, referralId = '') {
+export function register(registerInfo = {}) {
   const params = {
-    email,
-    password,
-    password_confirmation: password,
+    email: registerInfo.email,
+    password: registerInfo.password,
+    password_confirmation: registerInfo.password_confirmation,
     agree_term: 1,
-    referrer_code: referralId,
+    referrer_code: 1,
+    mnemonic: registerInfo.mnemonic,
+    keystore: registerInfo.keystore,
+    login_type: registerInfo.login_type,
+    eth_address: registerInfo.eth_address,
   };
+  console.log('params', params);
 
   return post('/users', params);
 }
@@ -57,12 +62,12 @@ export function getCurrentUser(useCache = true, params) {
   });
 }
 
-export function changePassword(password, new_password, otp){
-  let url = '/change-password';
-  let params = {
+export function changePassword(password, new_password, otp) {
+  const url = '/change-password';
+  const params = {
     password,
     new_password,
-    otp
-  }
+    otp,
+  };
   return post(url, params);
 }

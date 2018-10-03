@@ -7,11 +7,12 @@ import {
   AsyncStorage,
   Image,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import Toast from 'react-native-root-toast';
 import bip39 from 'bip39';
 import hdkey from 'hdkey';
+import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
@@ -19,11 +20,13 @@ import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import WalletService from '../../services/wallet';
 import MangoGradientButton from '../common/MangoGradientButton';
+import { register, login } from '../../api/user/UserRequest';
+import AppPreferences from '../../utils/AppPreferences';
 
 export default class CreateWalletByEmailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('createByEmailAddress.title'),
+    title: I18n.t('createWalletByEmailScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: (<View />),
@@ -74,16 +77,16 @@ export default class CreateWalletByEmailScreen extends Component {
     const { isChecked, createWalletInfo } = this.state;
 
     try {
-      if (!isChecked) {
-        throw new Error('Please read and accept terms and conditions!');
-      }
+      // if (!isChecked) {
+      //   throw new Error('Please read and accept terms and conditions!');
+      // }
 
-      if (!this.validateEmail(createWalletInfo.email)) {
-        throw new Error('Email is not valid!');
-      }
-      if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
-        throw new Error('Password must match password confirmation!');
-      }
+      // if (!this.validateEmail(createWalletInfo.email)) {
+      //   throw new Error('Email is not valid!');
+      // }
+      // if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
+      //   throw new Error('Password must match password confirmation!');
+      // }
 
       const generatedMnemonic = bip39.generateMnemonic();
       const seed = bip39.mnemonicToSeedHex(generatedMnemonic);
@@ -92,23 +95,36 @@ export default class CreateWalletByEmailScreen extends Component {
       const {
         privateKey, address, mnemonic, keystore,
       } = await WalletService.importWalletFromPrivateKey('nanj', generatedPrivateKey, generatedMnemonic, createWalletInfo.password);
+      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
+        .update(createWalletInfo.password)
+        .digest('hex');
+
+      const registerInfo = {
+        email: createWalletInfo.email,
+        password: createWalletInfo.password,
+        password_confirmation: createWalletInfo.passwordConfirm,
+        mnemonic: mnemonicHash,
+        keystore: JSON.stringify(keystore),
+        login_type: 1,
+        eth_address: address,
+      };
+
+      await register(registerInfo);
+
+      const loginInfo = await login(registerInfo.email, registerInfo.password);
+      console.log('loginInfo', loginInfo);
+      AppPreferences.saveAccessToken(loginInfo.access_token);
+      window.GlobalSocket.connect();
+      Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', address);
-      await AsyncStorage.setItem('privateKey', privateKey);
-      await AsyncStorage.setItem('mnemonic', mnemonic);
-      await AsyncStorage.setItem('keystore', keystore);
-      console.log('keystore', keystore);
 
-      navigation.navigate('MainScreen');
+      AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
+      setTimeout(() => {
+        navigation.navigate('AddPinScreen');
+      }, 1000);
     } catch (error) {
-      Toast.show(error.message, {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
+      AppPreferences.showToastMessage(error.message);
     }
   }
 
@@ -120,7 +136,7 @@ export default class CreateWalletByEmailScreen extends Component {
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createByEmailAddress.inputEmail')}
+          placeholder={I18n.t('createWalletByEmailScreen.inputEmail')}
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
@@ -134,7 +150,7 @@ export default class CreateWalletByEmailScreen extends Component {
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createByEmailAddress.inputPassword')}
+          placeholder={I18n.t('createWalletByEmailScreen.inputPassword')}
           editable
           secureTextEntry
           underlineColorAndroid="transparent"
@@ -149,7 +165,7 @@ export default class CreateWalletByEmailScreen extends Component {
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createByEmailAddress.inputPasswordConfirm')}
+          placeholder={I18n.t('createWalletByEmailScreen.inputPasswordConfirm')}
           editable
           secureTextEntry
           underlineColorAndroid="transparent"
@@ -190,7 +206,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
   _renderButtonCreate = () => (
     <MangoGradientButton
-      btnText={I18n.t('signin.title')}
+      btnText={I18n.t('createWalletByEmailScreen.createWallet')}
       btnStyle={styles.btnCreateWalletContainer}
       onPress={() => this._handleClickCreateWallet()}
     />
@@ -287,6 +303,7 @@ const styles = ScaledSheet.create({
 
   btnCreateWalletContainer: {
     width: '220@s',
-    marginBottom: '24@s',
+    marginBottom: '20@s',
+    marginHorizontal: '5@s',
   },
 });

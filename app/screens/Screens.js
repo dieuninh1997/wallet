@@ -1,7 +1,6 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
 import MainScreen from './main/MainScreen';
-import AuthScreen from './auth/AuthScreen';
 import CreateWalletScreen from './createwallet/CreateWalletScreen';
 import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
 import CreateWalletByEmailScreen from './createwallet/CreateWalletByEmailScreen';
@@ -20,9 +19,7 @@ export default {
   LoginScreen: { screen: LoginScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
   SettingScreen: { screen: SettingScreen },
-  CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   AddPinScreen: { screen: AddPinScreen },
-  AuthScreen: { screen: AuthScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
 };

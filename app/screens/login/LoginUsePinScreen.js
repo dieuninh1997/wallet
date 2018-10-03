@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native';
-import PINCode from '@haskkor/react-native-pincode';
-import Toast from 'react-native-root-toast';
+import { View } from 'react-native';
+import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
 
@@ -17,6 +16,7 @@ export default class LoginUsePinScreen extends Component {
   };
 
   async componentDidMount() {
+    await hasUserSetPinCode();
     await this._getCodePin();
   }
 
@@ -28,6 +28,7 @@ export default class LoginUsePinScreen extends Component {
       navigation.navigate('MainScreen');
     } else {
       this.setState({ isShowError: true });
+      AppPreferences.showToastMessage('Error Code Pin!');
     }
     setTimeout(() => this.setState({ isShowError: false }), 1000);
   } 
@@ -47,6 +48,8 @@ export default class LoginUsePinScreen extends Component {
 
 
   render() {
+    const { isShowError } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={styles.containerPassword}></View>

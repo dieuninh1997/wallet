@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
-import RNRestart from 'react-native-restart';
 import MangoBackButton from '../common/MangoBackButton';
-import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import Consts from '../../utils/Consts';
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
   static navigationOptions = (navigation) => ({
@@ -20,7 +19,7 @@ export default class AddPinScreen extends Component {
 
   state = {
     codePin: null,
-    isShowChanePin: false,
+    isShowChangePin: false,
     isShowError: false,
   };
 
@@ -43,7 +42,7 @@ export default class AddPinScreen extends Component {
   _checkCodePin = (value) => {
     const { codePin } = this.state;
     if (codePin === value) {
-      this.setState({ isShowChanePin: true });
+      this.setState({ isShowChangePin: true });
     } else {
       this.setState({ isShowError: true });
     }
@@ -77,6 +76,8 @@ export default class AddPinScreen extends Component {
   )
 
   _renderCheckPinCode() {
+    const { isShowError } = this.state;
+
     return (
       <View style={styles.container}>
         <View style={styles.containerPassword}></View>
@@ -107,20 +108,24 @@ export default class AddPinScreen extends Component {
 
   async _saveCodePin(codePin) {
     try {
-      await AppPreferences.saveCodePin(codePin);
+      const { navigation } = this.props;
 
-      RNRestart.Restart();
+      await AppPreferences.saveCodePin(codePin);
+      AppPreferences.showToastMessage(I18n.t('addPinScreen.createPinSuccess'));
+      setTimeout(() => {
+        navigation.navigate('MainScreen');
+      }, 1000);
     } catch (err) {
       console.log('SaveCodePin._error:', err);
     }
   }
 
   render() {
-    const { codePin, isShowChanePin } = this.state;
+    const { codePin, isShowChangePin } = this.state;
     return (
       <View style={styles.main}>
-        {codePin && !isShowChanePin ? this._renderCheckPinCode() : null}
-        {!codePin || isShowChanePin ? this._renderChangePin() : null}
+        {codePin && !isShowChangePin ? this._renderCheckPinCode() : null}
+        {!codePin || isShowChangePin ? this._renderChangePin() : null}
       </View>
     );
   }

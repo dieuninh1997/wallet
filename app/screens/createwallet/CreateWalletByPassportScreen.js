@@ -10,32 +10,29 @@ import {
   Keyboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import bip39 from 'bip39';
-import hdkey from 'hdkey';
 import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import WalletService from '../../services/wallet';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { register, login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';
 
-export default class CreateWalletByEmailScreen extends Component {
+export default class CreateWalletByPassportScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('createWalletByEmailScreen.title'),
+    title: I18n.t('createWalletByPassportScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,
   })
 
   static WALLET_INFO = {
-    EMAIL: 'email',
+    PASSPORT: 'passport',
     PASSWORD: 'password',
     PASSWORD_CONFIRM: 'passwordConfirm',
   };
@@ -45,7 +42,7 @@ export default class CreateWalletByEmailScreen extends Component {
     this.state = {
       isChecked: false,
       createWalletInfo: {
-        email: null,
+        passport: null,
         password: null,
         passwordConfirm: null,
       },
@@ -69,11 +66,6 @@ export default class CreateWalletByEmailScreen extends Component {
     });
   }
 
-  validateEmail = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
   _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
     const { isChecked, createWalletInfo } = this.state;
@@ -83,9 +75,6 @@ export default class CreateWalletByEmailScreen extends Component {
       //   throw new Error('Please read and accept terms and conditions!');
       // }
 
-      // if (!this.validateEmail(createWalletInfo.email)) {
-      //   throw new Error('Email is not valid!');
-      // }
       // if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
       //   throw new Error('Password must match password confirmation!');
       // }
@@ -97,25 +86,26 @@ export default class CreateWalletByEmailScreen extends Component {
         .digest('hex');
 
       const registerInfo = {
-        email: createWalletInfo.email,
+        passport_number: createWalletInfo.passport,
         password: createWalletInfo.password,
         password_confirmation: createWalletInfo.passwordConfirm,
         mnemonic: mnemonicHash,
-        login_type: 1,
+        login_type: 2,
         eth_address: address,
       };
 
       await register(registerInfo);
+      const loginInfo = await login(registerInfo.passport_number, registerInfo.password, '', 2);
 
-      const loginInfo = await login(registerInfo.email, registerInfo.password);
-      await AppPreferences.saveAccessToken(loginInfo.access_token);
-      await AppPreferences.savePrivateKey(privateKey);
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
-      await AsyncStorage.setItem('address', address);
+      await AppPreferences.saveAccessToken(loginInfo.access_token);
+      await AppPreferences.savePrivateKey(privateKey);
 
-      AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
+      await AsyncStorage.setItem('address', address);
+      AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
+
       setTimeout(() => {
         navigation.navigate('AddPinScreen');
       }, 1000);
@@ -124,19 +114,19 @@ export default class CreateWalletByEmailScreen extends Component {
     }
   }
 
-  _renderFormCreateByEmail = () => (
+  _renderFormCreateByPassport = () => (
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer]}>
         <Image
-          source={require('../../../assets/wallet/wallet-login.png')}
+          source={require('../../../assets/passport/passport.png')}
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createWalletByEmailScreen.inputEmail')}
+          placeholder={I18n.t('createWalletByPassportScreen.inputEmail')}
           editable
           underlineColorAndroid="transparent"
           style={styles.inputText}
-          onChangeText={value => this._handleChangeInput(CreateWalletByEmailScreen.WALLET_INFO.EMAIL, value)}
+          onChangeText={value => this._handleChangeInput(CreateWalletByPassportScreen.WALLET_INFO.PASSPORT, value)}
         />
       </View>
 
@@ -146,12 +136,12 @@ export default class CreateWalletByEmailScreen extends Component {
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createWalletByEmailScreen.inputPassword')}
+          placeholder={I18n.t('createWalletByPassportScreen.inputPassword')}
           editable
           secureTextEntry
           underlineColorAndroid="transparent"
           style={styles.inputText}
-          onChangeText={value => this._handleChangeInput(CreateWalletByEmailScreen.WALLET_INFO.PASSWORD, value)}
+          onChangeText={value => this._handleChangeInput(CreateWalletByPassportScreen.WALLET_INFO.PASSWORD, value)}
         />
       </View>
 
@@ -161,12 +151,12 @@ export default class CreateWalletByEmailScreen extends Component {
           style={styles.inputImageIcon}
         />
         <TextInput
-          placeholder={I18n.t('createWalletByEmailScreen.inputPasswordConfirm')}
+          placeholder={I18n.t('createWalletByPassportScreen.inputPasswordConfirm')}
           editable
           secureTextEntry
           underlineColorAndroid="transparent"
           style={styles.inputText}
-          onChangeText={value => this._handleChangeInput(CreateWalletByEmailScreen.WALLET_INFO.PASSWORD_CONFIRM, value)}
+          onChangeText={value => this._handleChangeInput(CreateWalletByPassportScreen.WALLET_INFO.PASSWORD_CONFIRM, value)}
         />
       </View>
     </View>
@@ -202,7 +192,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
   _renderButtonCreate = () => (
     <MangoGradientButton
-      btnText={I18n.t('createWalletByEmailScreen.createWallet')}
+      btnText={I18n.t('createWalletByPassportScreen.createWallet')}
       btnStyle={styles.btnCreateWalletContainer}
       onPress={() => this._handleClickCreateWallet()}
     />
@@ -212,7 +202,7 @@ export default class CreateWalletByEmailScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          {this._renderFormCreateByEmail()}
+          {this._renderFormCreateByPassport()}
           {this._renderTermsAndConditions()}
         </ScrollView>
         {this._renderButtonCreate()}

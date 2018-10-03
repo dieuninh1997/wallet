@@ -19,7 +19,6 @@ export default class SplashScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // isEnableFingerPrint: false,
       isEnableCodePin: false,
     };
   }
@@ -39,16 +38,6 @@ export default class SplashScreen extends Component {
       console.log('CheckStatusPin._error:', err);
     }
   }
-
-  // _checkStatusFingerPrint = async () => {
-  //   try {
-  //     const isEnableFingerPrint = await AsyncStorage.getItem('isEnableFingerPrint');
-
-  //     this.setState({ isEnableFingerPrint });
-  //   } catch (err) {
-  //     console.log('CheckStatusFingerPrint._error:', err);
-  //   }
-  // }
 
   async _initMangoApp() {
     const { navigation } = this.props;

@@ -25,14 +25,14 @@ EthService.generateWallet = () => {
   return wallet;
 };
 
-EthService.importWalletFromPrivateKey = async (userPrivateKey, mnemonic, password) => {
+EthService.importWalletFromPrivateKey = async (userPrivateKey) => {
   const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'));
-  const keystore = await wallet.encrypt(password);
+  // const keystore = await wallet.encrypt(password);
   return {
     privateKey: userPrivateKey,
     address: wallet.address,
-    mnemonic,
-    keystore,
+    // mnemonic,
+    // keystore,
   };
 };
 

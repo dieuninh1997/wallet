@@ -2,7 +2,6 @@ import { AsyncStorage } from 'react-native';
 import * as Keychain from 'react-native-keychain';
 import Toast from 'react-native-root-toast';
 import AppConfig from './AppConfig';
-import Consts from './Consts';
 
 export default class AppPreferences {
   static saveLocale(locale) {
@@ -11,10 +10,12 @@ export default class AppPreferences {
 
   static async saveCodePin(code) {
     try {
-      const username = { userName: Consts.ACCESS_TOKEN_TITLE, codePin: Consts.CODE_PIN };
-      const password = { access_token: AppConfig.ACCESS_TOKEN, pin: code };
+      const keychain = await Keychain.getGenericPassword();
+      const keychainJson = keychain ? JSON.parse(keychain.password) : {};
 
-      await Keychain.setGenericPassword(JSON.stringify(username), JSON.stringify(password));
+      keychainJson.pin = code;
+      console.log('keychainJson', keychainJson);
+      await Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson));
     } catch (err) {
       console.log('SaveCodePin._error:', err);
     }
@@ -28,18 +29,36 @@ export default class AppPreferences {
     return await AsyncStorage.getItem('user_locale');
   }
 
-  static saveAccessToken(token) {
-    AppConfig.ACCESS_TOKEN = token;
-    Keychain.setGenericPassword('access_token', token, { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
-    AsyncStorage.setItem('token_saved', 'true');
+  static async saveAccessToken(token) {
+    try {
+      const keychain = await Keychain.getGenericPassword();
+      const keychainJson = keychain ? JSON.parse(keychain.password) : {};
+
+      keychainJson.access_token = token;
+
+      console.log('keychainJson', keychainJson);
+      Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson), { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+
+      AppConfig.ACCESS_TOKEN = token;
+    } catch (error) {
+      console.log('AppPreferences.saveAccessToken._error: ', error);
+    }
   }
 
-  static async getAccessToken() {
-    const tokenSaved = await AsyncStorage.getItem('token_saved');
-    if (tokenSaved) {
-      return await Keychain.getGenericPassword();
+  static async savePrivateKey(privateKey) {
+    try {
+      const keychain = await Keychain.getGenericPassword();
+      const keychainJson = keychain ? JSON.parse(keychain.password) : {};
+
+      keychainJson.private_key = privateKey;
+
+      console.log('keychainJson', keychainJson);
+      Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson), { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+
+      AppConfig.PRIVATE_KEY = privateKey;
+    } catch (error) {
+      console.log('AppPreferences.saveAccessToken._error: ', error);
     }
-    return Promise.resolve({});
   }
 
   static removeAccessToken() {

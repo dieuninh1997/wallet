@@ -79,6 +79,11 @@ class LoginScreen extends Component {
     });
   }
 
+  _handleForgotPassword = (typeInput, value) => {
+    const { navigation } = this.props;
+    navigation.navigate('ForgotPasswordScreen');
+  }
+
   _handlerLoginWithTouchId = () => {
     const { navigation } = this.props;
     const optionalConfigObject = {
@@ -141,7 +146,7 @@ class LoginScreen extends Component {
           source={require('../../../assets/forgot-password/forgot-password.png')}
           style={styles.inputImageIcon}
         />
-        <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
+        <Text onPress={() => this._handleForgotPassword()} style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
     </View>
   )

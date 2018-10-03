@@ -9,11 +9,12 @@ import SettingScreen from './setting/SettingScreen';
 import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
+import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 
 export default {
+  LoginScreen: { screen: LoginScreen },
   SplashScreen: { screen: SplashScreen },
   LandingScreen: { screen: LandingScreen },
-  LoginScreen: { screen: LoginScreen },
   MainScreen: { screen: MainScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
@@ -22,4 +23,5 @@ export default {
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   AddPinScreen: { screen: AddPinScreen },
   AuthScreen: { screen: AuthScreen },
+  ForgotPasswordScreen: { screen: ForgotPasswordScreen },
 };

@@ -13,12 +13,12 @@ import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
+  LoginUsePinScreen: { screen: LoginUsePinScreen },
   MainScreen: { screen: MainScreen },
   CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   LandingScreen: { screen: LandingScreen },
   LoginScreen: { screen: LoginScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
-  LoginUsePinScreen: { screen: LoginUsePinScreen },
   SettingScreen: { screen: SettingScreen },
   CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },

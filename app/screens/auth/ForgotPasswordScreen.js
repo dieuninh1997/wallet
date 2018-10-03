@@ -7,6 +7,7 @@ import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import I18n from '../../i18n/i18n';
 import { ressetPassword } from '../../api/user/UserRequest';
+import AppPreferences from '../../utils/AppPreferences';
 
 export default class ForgotPasswordScreen extends Component {
 
@@ -22,6 +23,7 @@ export default class ForgotPasswordScreen extends Component {
     super(props);
     this.state = {
       email: null,
+      isSubmitSuccess: false,
     };
   }
 
@@ -35,34 +37,46 @@ export default class ForgotPasswordScreen extends Component {
     try {
       const responseUser = await ressetPassword(this.state.email);
       console.log('===================> success', responseUser);
+      this.setState({
+        isSubmitSuccess: true,
+      });
     } catch (error) {
       console.log('===================> error', error);
+      this.setState({
+        isSubmitSuccess: false,
+      });
+      AppPreferences.showToastMessage(error.message);
     }
   }
 
   render() {
-    return (
-        <View style={styles.forgotPassword}>
-          <View style={styles.inputContainer}>
-            <Image
-              source={require('../../../assets/createwalet/email.png')}
-              style={styles.emailIcon}
-            />
-            <TextInput
-              placeholder="Email Address"
-              editable
-              underlineColorAndroid="transparent"
-              style={styles.inputText}
-              onChangeText={value => this._handleChangeInputEmail(value)}
-            />
-          </View>
-          <MangoGradientButton
-            btnText="Reset Password"
-            btnStyle={styles.btnResetPassword}
-            onPress={() => this._handleResetPassword()}
+    const isSuccess = this.state.isSubmitSuccess;
+    let contentShow;
+    if (!isSuccess) {
+      contentShow = <View style={styles.forgotPassword}><View style={styles.inputContainer}>
+          <Image
+            source={require('../../../assets/createwalet/email.png')}
+            style={styles.emailIcon}
+          />
+          <TextInput
+            placeholder="Email Address"
+            editable
+            underlineColorAndroid="transparent"
+            style={styles.inputText}
+            onChangeText={value => this._handleChangeInputEmail(value)}
           />
         </View>
-    );
+        <MangoGradientButton
+          btnText="Reset Password"
+          btnStyle={styles.btnResetPassword}
+          onPress={() => this._handleResetPassword()}
+        />
+      </View>
+    } else {
+      contentShow = <View style={styles.forgotPassword}><Text style={styles.messageSuccess}>Reset password link was sent to your email/phone number. Please follow the instruction to reset password.</Text></View>
+    }
+
+    return (contentShow);
   }
 }
 
@@ -95,4 +109,8 @@ const styles = ScaledSheet.create({
     marginTop: '50@s',
     width: '220@s',
   },
+  messageSuccess: {
+    width: '90%',
+    marginTop: '50@s',
+  }
 });

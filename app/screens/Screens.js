@@ -24,7 +24,6 @@ export default {
   SettingScreen: { screen: SettingScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   AddPinScreen: { screen: AddPinScreen },
-  AuthScreen: { screen: AuthScreen },
   ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
 };

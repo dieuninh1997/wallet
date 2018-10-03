@@ -6,8 +6,6 @@ import ERROR_TYPES from '../../configs/errorTypes';
 import erc20Tokens from '../../configs/eth/erc20_tokens';
 import erc20ABI from '../../configs/eth/erc20_abi';
 import TRANSACTION from '../../configs/Transaction';
-
-
 import coinList from '../../configs/coinList';
 
 const ethers = require('ethers');

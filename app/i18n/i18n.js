@@ -3,8 +3,8 @@ import en from './locales/en';
 import vi from './locales/vi';
 import jp from './locales/jp';
 
-I18n.defaultLocale = 'vi';
-I18n.locale = 'vi';
+I18n.defaultLocale = 'en';
+I18n.locale = 'en';
 I18n.fallbacks = true;
 
 I18n.translations = {

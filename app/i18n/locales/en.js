@@ -26,7 +26,7 @@ export default {
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
   },
-  createByEmailAddress: {
+  createWalletByEmailScreen: {
     title: 'Create by Email Address',
     inputEmail: 'Email Address',
     inputPassword: 'Passwords',
@@ -34,6 +34,7 @@ export default {
     iAccept: 'I accept the',
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
+    createWaletSuccess: 'Create wallet success',
   },
   send: {
     title: 'Send',
@@ -69,4 +70,14 @@ export default {
   transactions: {
     title: 'Transactions',
   },
+  changePassword: {
+    title: 'Change Password',
+    curentPassword: 'Current Password',
+    newPassword: 'New Password',
+    confirmNewPassword: 'Confirm New Password',
+    cancel: 'Cancel',
+    update: 'Update',
+    toastEnterFullInfo: 'Please enter full information',
+    toastConfirmPassword: 'Confirm password is incorrect',
+  }
 };

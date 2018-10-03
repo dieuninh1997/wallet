@@ -1,10 +1,9 @@
 import Echo from 'laravel-echo';
 import { merge } from 'lodash';
 import AppConfig from '../utils/AppConfig';
-import { getCurrentUser } from "../api/user/UserRequest";
+import { getCurrentUser } from '../api/user/UserRequest';
 
 export default class GlobalSocket {
-
   constructor(publicChannelsOnly) {
     this.connect(publicChannelsOnly);
   }
@@ -36,39 +35,39 @@ export default class GlobalSocket {
       client: require('socket.io-client'),
       auth: {
         headers: {
-          'Authorization': 'Bearer ' + AppConfig.ACCESS_TOKEN,
+          Authorization: `Bearer ${AppConfig.ACCESS_TOKEN}`,
         },
       },
     });
   }
 
   listenEvents(publicChannelsOnly) {
-    //public channels
+    // public channels
     // this.listenForOrderTransaction();
 
     if (!publicChannelsOnly) {
-      //user private channels
+      // user private channels
       getCurrentUser()
-        .then(res => {
-          let userId = res.data.id;
+        .then((res) => {
+          const userId = res.data.id;
           this.listenForTransaction(userId);
           this.listenForOrderList(userId);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
   }
 
   listenForTransaction(userId) {
-    window.Echo.private('App.User.' + userId)
+    window.Echo.private(`App.User.${userId}`)
       .listen('TransactionCreated', (transaction) => {
         this.trigger('TransactionCreated', transaction.data);
       });
   }
 
   listenForOrderList(userId) {
-    window.Echo.private('App.User.' + userId)
+    window.Echo.private(`App.User.${userId}`)
       .listen('OrderListUpdated', (data) => {
         this.trigger('OrderListUpdated', data.data);
       });
@@ -80,5 +79,4 @@ export default class GlobalSocket {
   //       this.trigger('OrderTransactionCreated', transaction.data);
   //     });
   // }
-
 }

@@ -52,6 +52,7 @@ class LoginScreen extends Component {
 
     try {
       const responseUser = await login(email, password);
+      console.log('responseUser', responseUser);
 
       AppPreferences.saveAccessToken(responseUser.access_token);
       window.GlobalSocket.connect();
@@ -86,13 +87,14 @@ class LoginScreen extends Component {
 
   _handlerLoginWithTouchId = () => {
     const { navigation } = this.props;
+
     const optionalConfigObject = {
-      title: 'Authentication Required', // Android
-      color: '#e00606', // Android
-      sensorDescription: 'Open', // Android
-      cancelText: 'Cancel', // Android
-      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
-      unifiedErrors: false, // use unified error messages (default false)
+      title: 'Authentication Required',
+      color: '#e00606',
+      sensorDescription: 'Open',
+      cancelText: 'Cancel',
+      fallbackLabel: 'Show Passcode',
+      unifiedErrors: false,
     };
 
     TouchID.authenticate('Touch to unlock you phone', optionalConfigObject)
@@ -258,5 +260,7 @@ const styles = ScaledSheet.create({
 
   btnSigninContainer: {
     width: '220@s',
+    marginBottom: '20@s',
+    marginHorizontal: '5@s',
   },
 });

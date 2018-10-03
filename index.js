@@ -9,6 +9,7 @@ import App from './App';
 import { name as appName } from './app.json';
 
 console.disableYellowBox = true;
+console.ignoredYellowBox = ['Setting a timer'];
 // console.ignoredYellowBox = ['Remote debugger'];
 // YellowBox.ignoreWarnings([
 //   'Warning: isMounted(...) is deprecated',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ScrollView, TouchableWithoutFeedback
+  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
@@ -33,9 +33,20 @@ export default class SettingScreen extends Component {
         faceId: false,
         swipeReceive: false,
       },
+      walletId: null,
     };
   }
 
+  componentDidMount = async () => {
+    try {
+      const walletId = await AsyncStorage.getItem('address');
+      this.setState({
+        walletId,
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
 
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
@@ -44,14 +55,16 @@ export default class SettingScreen extends Component {
     this.setState({ payload });
   }
 
-  _renderProfile() {
+  _renderProfile = () => {
+    const { walletId } = this.state;
+
     return (
       <View>
         <Text style={styles.titleTable}>{I18n.t('setting.profile')}</Text>
         <View style={styles.borderTable}>
           <View style={styles.borderWalletId}>
             <Text style={styles.walletID}>{I18n.t('setting.walletId')}</Text>
-            <Text style={styles.walletAddress}>jasjasjdjbjbkdkbdskvjhdasdas</Text>
+            <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
@@ -125,6 +138,7 @@ export default class SettingScreen extends Component {
 
   _renderSecurity() {
     const { payload } = this.state;
+    const { navigation } = this.props;
 
     return (
       <View style={styles.textPerferences}>
@@ -142,15 +156,17 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
-            <View style={styles.activiRightGroup}>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           <View style={styles.borderElement}>
             <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
             <View style={styles.activiRightGroup}>
@@ -163,7 +179,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('AddPinScreen')}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('AddPinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
               <View style={styles.activiRightGroup}>

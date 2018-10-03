@@ -13,6 +13,7 @@ import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import WalletService from '../../services/wallet';
+import AppPreferences from '../../utils/AppPreferences';
 
 export default class CreateWalletPhoneNumberScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -64,14 +65,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
 
       navigation.navigate('MainScreen');
     } catch (error) {
-      Toast.show(error.message, {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
+      AppPreferences.showToastMessage(error.message);
     }
   }
 
@@ -172,6 +166,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#F5F7FA',
     borderWidth: 0,
     width: '50@s',
+    borderRadius: 0,
   },
   createWallet: {
     borderRadius: '25@s',

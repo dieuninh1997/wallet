@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import PINCode from '@haskkor/react-native-pincode';
-import Toast from 'react-native-root-toast';
+import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
 
@@ -13,9 +12,11 @@ export default class LoginUsePinScreen extends Component {
 
   state = {
     codePin: null,
+    isShowError: false,
   };
 
   async componentDidMount() {
+    await hasUserSetPinCode();
     await this._getCodePin();
   }
 
@@ -26,15 +27,10 @@ export default class LoginUsePinScreen extends Component {
     if (codePin === value) {
       navigation.navigate('MainScreen');
     } else {
-      Toast.show('Error Code Pin!', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
+      this.setState({ isShowError: true });
+      AppPreferences.showToastMessage('Error Code Pin!');
     }
+    setTimeout(() => this.setState({ isShowError: false }), 1000);
   }
 
   async _getCodePin() {
@@ -50,13 +46,18 @@ export default class LoginUsePinScreen extends Component {
 
 
   render() {
+    const { isShowError } = this.state;
+
     return (
       <View style={styles.container}>
         <PINCode
           status="enter"
+          passwordLength={6}
+          pinStatus={isShowError ? 'failure' : 'initial'}
           storePin={(value) => { console.log('ma pin:', value); }}
           handleResultEnterPin={value => this._checkValuePin(value)}
           timeLocked={10000}
+          touchIDDisabled
         />
       </View>
     );

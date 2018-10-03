@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  AsyncStorage,
 } from 'react-native';
 import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
@@ -20,7 +19,7 @@ export default class SplashScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEnableFingerPrint: false,
+      // isEnableFingerPrint: false,
       isEnableCodePin: false,
     };
   }
@@ -41,15 +40,15 @@ export default class SplashScreen extends Component {
     }
   }
 
-  _checkStatusFingerPrint = async () => {
-    try {
-      const isEnableFingerPrint = await AsyncStorage.getItem('isEnableFingerPrint');
+  // _checkStatusFingerPrint = async () => {
+  //   try {
+  //     const isEnableFingerPrint = await AsyncStorage.getItem('isEnableFingerPrint');
 
-      this.setState({ isEnableFingerPrint });
-    } catch (err) {
-      console.log('CheckStatusFingerPrint._error:', err);
-    }
-  }
+  //     this.setState({ isEnableFingerPrint });
+  //   } catch (err) {
+  //     console.log('CheckStatusFingerPrint._error:', err);
+  //   }
+  // }
 
   async _initMangoApp() {
     const { navigation } = this.props;
@@ -62,7 +61,6 @@ export default class SplashScreen extends Component {
         navigation.navigate('LoginUsePinScreen');
         return;
       }
-
       navigation.navigate('LoginScreen');
     } else {
       navigation.navigate('LandingScreen');

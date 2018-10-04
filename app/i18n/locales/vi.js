@@ -80,6 +80,7 @@ export default {
     update: 'Update',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Confirm password is incorrect',
+    changeSuccess: 'Change password success',
   },
   addPinScreen: {
     title: 'Change PIN',

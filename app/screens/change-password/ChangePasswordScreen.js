@@ -4,6 +4,7 @@ import Toast from 'react-native-root-toast';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { changePassword } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
+import AppPreferences from '../../utils/AppPreferences';
 
 class ChangePasswordScreen extends Component {
 	static navigationOptions = () => ({
@@ -30,56 +31,30 @@ class ChangePasswordScreen extends Component {
 
 		console.log('change-password', currenPassword, newPassword, confirmNewPassword);
 		if (!currenPassword || !newPassword || !confirmNewPassword) {
-			Toast.show(I18n.t('changePassword.toastEnterFullInfo'), {
-				duration: Toast.durations.SHORT,
-				position: Toast.positions.CENTER,
-				shadow: true,
-				animation: true,
-				hideOnPress: true,
-				delay: 0,
-			});
+			AppPreferences.showToastMessage(I18n.t('changePassword.toastEnterFullInfo'));
 			return;
 		}
 		if (newPassword !== confirmNewPassword) {
-			Toast.show(I18n.t('changePassword.toastConfirmPassword'), {
-				duration: Toast.durations.SHORT,
-				position: Toast.positions.CENTER,
-				shadow: true,
-				animation: true,
-				hideOnPress: true,
-				delay: 0,
-			});
+			AppPreferences.showToastMessage(I18n.t('changePassword.toastConfirmPassword'));
 			return;
 		}
 
 		try {
 			const responChangePass = await changePassword(currenPassword, newPassword, '0');
-			const getMessage = responChangePass.message;
 
-			Toast.show(responChangePass.message , {
-				duration: Toast.durations.SHORT,
-				position: Toast.positions.CENTER,
-				shadow: true,
-				animation: true,
-				hideOnPress: true,
-				delay: 0,
-			});
-			
-			if(!getMessage.includes('Change password success')){
-				return;
-			}
-
+			AppPreferences.showToastMessage(I18n.t('changePassword.changeSuccess'));
 			navigation.navigate('SettingScreen');
 		} catch (error) {
-			Toast.show(error.message, {
-				duration: Toast.durations.SHORT,
-				position: Toast.positions.CENTER,
-				shadow: true,
-				animation: true,
-				hideOnPress: true,
-				delay: 0,
-			});
-			console.log('changePassword._error: ', error);
+			const getError = error.errors;
+			const errorPassword = getError.password;
+			const errorPasswordNew = getError.new_password;
+			if(errorPassword){
+					AppPreferences.showToastMessage(errorPassword);
+					return;
+			}
+			if(errorPasswordNew){
+				AppPreferences.showToastMessage(errorPasswordNew);
+			}
 		}
 
 	}

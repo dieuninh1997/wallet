@@ -148,8 +148,6 @@ Erc20Service.getContractABI = async (contractAddress) => {
 
 Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, amount, fee = 0, coin) => {
   try {
-    privateKey = Buffer.from(privateKey, 'hex');
-
     const wallet = new ethers.Wallet(privateKey);
     wallet.provider = ethers.providers.getDefaultProvider(provider);
 

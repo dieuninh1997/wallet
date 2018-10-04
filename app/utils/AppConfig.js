@@ -28,6 +28,8 @@ export default class AppConfig {
 
   static PRIVATE_KEY = '';
 
+  static MNEMORIC = '';
+
   static dev() {
     return __DEV__ && JSON.parse(DEV);
   }

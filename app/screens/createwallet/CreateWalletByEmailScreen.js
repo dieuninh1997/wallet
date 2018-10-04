@@ -8,17 +8,15 @@ import {
   Image,
   ScrollView,
   Keyboard,
+  Clipboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import bip39 from 'bip39';
-import hdkey from 'hdkey';
 import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import WalletService from '../../services/wallet';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { register, login } from '../../api/user/UserRequest';
@@ -79,16 +77,16 @@ export default class CreateWalletByEmailScreen extends Component {
     const { isChecked, createWalletInfo } = this.state;
 
     try {
-      // if (!isChecked) {
-      //   throw new Error('Please read and accept terms and conditions!');
-      // }
+      if (!isChecked) {
+        throw new Error('Please read and accept terms and conditions!');
+      }
 
-      // if (!this.validateEmail(createWalletInfo.email)) {
-      //   throw new Error('Email is not valid!');
-      // }
-      // if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
-      //   throw new Error('Password must match password confirmation!');
-      // }
+      if (!this.validateEmail(createWalletInfo.email)) {
+        throw new Error('Email is not valid!');
+      }
+      if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
+        throw new Error('Password must match password confirmation!');
+      }
 
       const { privateKey, address, mnemonic } = EthService.generateWallet();
 
@@ -110,6 +108,7 @@ export default class CreateWalletByEmailScreen extends Component {
       const loginInfo = await login(registerInfo.email, registerInfo.password);
       await AppPreferences.saveAccessToken(loginInfo.access_token);
       await AppPreferences.savePrivateKey(privateKey);
+      await AppPreferences.saveMnemoric(mnemonic);
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
@@ -117,7 +116,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
       AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
       setTimeout(() => {
-        navigation.navigate('AddPinScreen');
+        navigation.navigate('BackupPassphraseScreen');
       }, 1000);
     } catch (error) {
       AppPreferences.showToastMessage(error.message);

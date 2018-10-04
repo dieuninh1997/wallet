@@ -45,6 +45,23 @@ export default class AppPreferences {
     }
   }
 
+  static async saveMnemoric(mnemoric) {
+    try {
+      const keychain = await Keychain.getGenericPassword();
+      const keychainJson = keychain ? JSON.parse(keychain.password) : {};
+
+      keychainJson.mnemoric = mnemoric;
+
+      console.log('keychainJson', keychainJson);
+      Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson), { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+
+      AppConfig.MNEMORIC = mnemoric;
+    } catch (error) {
+      console.log('AppPreferences.saveMnemoric._error: ', error);
+    }
+  }
+
+
   static async savePrivateKey(privateKey) {
     try {
       const keychain = await Keychain.getGenericPassword();

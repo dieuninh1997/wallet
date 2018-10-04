@@ -13,35 +13,29 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
+import AppPreferences from '../../utils/AppPreferences';
+import AppConfig from '../../utils/AppConfig';
 
 class SendScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isForcusInput: false,
+      a: false,
     };
   }
 
-  _handleForcusTextInput = () => {
-    this.setState({
-      isForcusInput: true,
-    });
-  }
-
-  _handleBlurTextInput = () => {
-    this.setState({
-      isForcusInput: false,
-    });
-  }
-
   _handleSendCoin = async () => {
-    const walletAddress = await AsyncStorage.getItem('address');
-    const privateKey = await AsyncStorage.getItem('privateKey');
-    console.log('walletAddress', walletAddress);
-    console.log('privateKey', privateKey);
+    try {
+      const walletAddress = await AsyncStorage.getItem('address');
+      const privateKey = AppConfig.PRIVATE_KEY;
+      console.log('walletAddress', walletAddress);
+      console.log('privateKey', privateKey);
 
-    const transaction = await WalletService.sendTransaction('nanj', '0x5C7738b67a3403F349782244E59E776DdB3581c3', walletAddress, 'C5CB8DAB4FAC56FE48C830BE9F2912D1189E6C0EBA9CA278A85124CF195A997D', 0, 0.0005);
-    console.log('SendScreen.transaction', transaction);
+      const transaction = await WalletService.sendTransaction('mgc4', '0x5C7738b67a3403F349782244E59E776DdB3581c3', '0xd007d3be383aa5c890b4728e570ddc9d05bcc021', '0xC5CB8DAB4FAC56FE48C830BE9F2912D1189E6C0EBA9CA278A85124CF195A997D', 0, 0.0005);
+      console.log('SendScreen.transaction: ', transaction);
+    } catch (error) {
+      console.log('SendScreen._error: ', error);
+    }
   }
 
   _renderFormSend = () => (
@@ -55,8 +49,6 @@ class SendScreen extends Component {
           editable
           placeholder={I18n.t('send.walletAddress')}
           underlineColorAndroid="transparent"
-          onFocus={() => this._handleForcusTextInput()}
-          onBlur={() => this._handleBlurTextInput()}
           style={styles.inputText}
         />
       </View>
@@ -96,8 +88,6 @@ class SendScreen extends Component {
       <View style={styles.inputFeeContainer}>
         <Text style={styles.inputTextLabel}>FEE</Text>
         <TextInput
-          onFocus={() => this._handleForcusTextInput()}
-          onBlur={() => this._handleBlurTextInput()}
           editable
           placeholder="Regular"
           placeholderTextColor="#000"
@@ -121,14 +111,13 @@ class SendScreen extends Component {
   )
 
   render() {
-    const { isForcusInput } = this.state;
     return (
       <View style={[styles.container]}>
         <MangoDropdown />
         <ScrollView>
           {this._renderFormSend()}
         </ScrollView>
-        { isForcusInput ? null : this._renderBtnContinue()}
+        {this._renderBtnContinue()}
       </View>
     );
   }
@@ -141,7 +130,6 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
 
-  // Section form send coin
   formSendContainer: {
     marginTop: '30@s',
   },
@@ -220,8 +208,6 @@ const styles = ScaledSheet.create({
   btnContinue: {
     width: '260@s',
     marginBottom: '24@s',
-  },
-  btnContinueWhenInputForcus: {
-    display: 'none',
+    marginHorizontal: '5@s',
   },
 });

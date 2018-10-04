@@ -13,8 +13,8 @@ import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 
 export default {
-  LoginScreen: { screen: LoginScreen },
   SplashScreen: { screen: SplashScreen },
+  LoginScreen: { screen: LoginScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   MainScreen: { screen: MainScreen },
   LandingScreen: { screen: LandingScreen },

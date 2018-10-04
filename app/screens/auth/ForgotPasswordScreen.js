@@ -27,20 +27,22 @@ export default class ForgotPasswordScreen extends Component {
     };
   }
 
-  _handleChangeInputEmail = (value) => {
+  _handleChangeInputEmail = (email) => {
     this.setState({
-      email: value,
+      email,
     });
   }
 
   _backToLogin = () => {
     const { navigation } = this.props;
+	
     navigation.navigate('LoginScreen');
   }
 
   _handleResetPassword = async () => {
     try {
       const responseUser = await ressetPassword(this.state.email);
+	  
       this.setState({
         isSubmitSuccess: true,
       });
@@ -53,9 +55,10 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   render() {
-    const isSuccess = this.state.isSubmitSuccess;
+    const {isSubmitSuccess} = this.state;
     let contentShow;
-    if (!isSuccess) {
+	
+    if (!isSubmitSuccess) {
       contentShow = <View style={styles.forgotPassword}><View style={styles.inputContainer}>
           <Image
             source={require('../../../assets/createwalet/email.png')}

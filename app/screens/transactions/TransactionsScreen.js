@@ -11,6 +11,8 @@ import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
 import WalletService from '../../services/wallet';
+import _ from 'lodash';
+import Moment from 'moment';
 
 class TransactionsScreen extends Component {
   constructor(props) {
@@ -38,8 +40,15 @@ class TransactionsScreen extends Component {
       const transactions = await WalletService.getTransactions('nanj', address, 1, 10);
       console.log('TransactionsScreen: ', transactions);
 
+      const groupedByYear = _.groupBy(transactions, function(item) {
+          const d = new Date(item.time);
+          return d.getFullYear();
+      });
+
       this.setState({
-        transactions,
+        transactions: _.map(groupedByYear, function(value, prop) {
+		  return { year: prop, data: value };
+		}),
       });
     } catch (error) {
       console.log('TransactionsScreen._error: ', error);
@@ -106,7 +115,17 @@ class TransactionsScreen extends Component {
 
 
   _renderTransactonsList = () => {
-    const { transactions, address } = this.state;
+    const { transactions } = this.state;
+
+    return (
+      <View style={styles.transactionsContainer}>
+        {transactions.map((transactions) => this._renderTransactonsYear(transactions))}
+      </View>
+    );
+  }
+
+  _renderTransactonsYear = (transactions) => {
+    const { address } = this.state;
     const images = [
       require('../../../assets/send/right-arrow.png'),
       require('../../../assets/recieved/left-arrow.png'),
@@ -114,8 +133,9 @@ class TransactionsScreen extends Component {
     ];
 
     return (
-      <View style={styles.transactionsContainer}>
-        {transactions.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
+      <View key={transactions.year}>
+        <Text style={styles.textYear}>{ transactions.year }</Text>
+        {transactions.data.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
       </View>
     );
   }
@@ -129,7 +149,7 @@ class TransactionsScreen extends Component {
         />
       </View>
       <View style={styles.transactionInfoContainer}>
-        <Text>{ transaction.time }</Text>
+        <Text>{Moment(transaction.time).format('MMM DD hh:mm')} </Text>
         <Text
           numberOfLines={1}
           ellipsizeMode="middle"

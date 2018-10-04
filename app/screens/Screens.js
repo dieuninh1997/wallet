@@ -12,6 +12,7 @@ import AddPinScreen from './pin/AddPinScreen';
 import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
+import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -28,4 +29,5 @@ export default {
   AddPinScreen: { screen: AddPinScreen },
   ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
+  BackupPassphraseScreen: { screen: BackupPassphraseScreen },
 };

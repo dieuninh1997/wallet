@@ -38,9 +38,12 @@ async function initMasterdata() {
   const keychain = credentials.password;
   const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
   const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;
+  const parseMnemoric = keychain && keychain.includes('mnemoric') ? JSON.parse(keychain).mnemoric : null;
 
   AppConfig.ACCESS_TOKEN = parseAccessToken;
   AppConfig.PRIVATE_KEY = parsePrivateKey;
+  AppConfig.MNEMORIC = parseMnemoric;
+
   window.GlobalSocket = new GlobalSocket();
 
   if (__DEV__) {

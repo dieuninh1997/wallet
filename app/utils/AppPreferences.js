@@ -67,6 +67,10 @@ export default class AppPreferences {
     AsyncStorage.setItem('token_saved', 'false');
   }
 
+  static async getEthAddress() {
+    return await AsyncStorage.getItem('address');
+  }
+
   static showToastMessage(message) {
     Toast.show(message, {
       duration: Toast.durations.SHORT,

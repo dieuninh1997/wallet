@@ -5,22 +5,27 @@ import {
 import { Pie } from 'react-native-pathjs-charts';
 import SocketIOClient from 'socket.io-client';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { getWallet } from '../../api/common/BaseRequest';
+import { getPrices } from '../../api/common/BaseRequest';
+import { formatCoin, getCoinName, getCoinFullName } from '../../utils/Filters';
+import AppPreferences from '../../utils/AppPreferences';
 import WalletService from '../../services/wallet';
 
-
 const { width } = Dimensions.get('window');
-const COINS = [
-  {
-    symbol: 'BTC',
-    fullName: 'Bitcoin',
-  },
-  {
-    symbol: 'ETH',
-    fullName: 'Etherium',
-  },
-];
+const CURRENCY_SYMBOLS = {
+  USD: '$',
+  JPY: '¥',
+  PHP: '₱'
+}
+const COINS = ['BTC', 'ETH'];
+const WALLET_COIN = 'MGC';
+const ALL_COINS = [WALLET_COIN, ...COINS];
+const COIN_COLORS = {
+  [WALLET_COIN]: '#FFD82F',
+  BTC: '#FFA034',
+  ETH: '#2650BF'
+};
 
 class DashboardScreen extends React.Component {
   static _updateCoinValue = (newValue = []) => {
@@ -29,21 +34,10 @@ class DashboardScreen extends React.Component {
 
   constructor(props) {
     super(props);
-
-    const data = [
-      {
-        id: 0, count: 2754.55, color: '#FFD82F', countCoin: '587.00 MGC',
-      },
-      {
-        id: 1, count: 2054.58, color: '#FFA034', countCoin: '0.0578 BTC',
-      },
-      {
-        id: 2, count: 2054.58, color: '#2650BF', countCoin: '0.0578 ETH',
-      },
-    ];
     this.state = {
-      data,
-      prices: [],
+      balances: {},
+      prices: {},
+      currency: 'USD'
     };
   }
 
@@ -59,31 +53,133 @@ class DashboardScreen extends React.Component {
   }
 
   _loadData = async () => {
-    const coinString = COINS.map(coin => coin.symbol);
-    const prices = [];
-    const linkString = coinString.reduce((a, b) => `${a},${b}`);
-    const response = await getWallet(linkString);
+    await Promise.all([
+      this._loadPrices(),
+      this._loadBalances()
+    ]);
+  }
 
-    for (const res in response) {
-      const findLabel = COINS.find(coin => coin.symbol === res);
-
-      prices.push({ ...response[res].USD, FULLNAME: findLabel.fullName });
-    }
-
+  async _loadPrices() {
+    const coinList = COINS.reduce((a, b) => `${a},${b}`);
+    const prices = await getPrices(coinList);
     this.setState({ prices });
   }
 
+  async _loadBalances() {
+    try {
+      let address = await AppPreferences.getEthAddress();
+      const balances = await Promise.all([
+        WalletService.getAddressBalance('mgc', address),
+        WalletService.getAddressBalance('eth', address)
+      ]);
+      this.setState({
+        balances: {
+          MGC: balances[0],
+          ETH: balances[1],
+          BTC: 0
+        }
+      });
+    } catch (e) {
+      console.log('DasgboardScreen._loadBalances', e);
+    }
+  }
+
+  _hasData() {
+    return !!this.state.prices.RAW;
+  }
+
+  _getDisplayObject(coin) {
+    let { currency, prices } = this.state;
+    if (!prices.DISPLAY) return {};
+    if (!prices.DISPLAY[coin]) return {};
+    return prices.DISPLAY[coin][currency] || {};
+  }
+
+  _getDisplayPrice(coin) {
+    if (coin == WALLET_COIN) {
+      let currency = this.state.currency;
+      let price = this._getPrice(coin);
+      if (price) {
+        return this._getCurrencySymbol() + ' ' + formatCoin(price, currency);
+      } else {
+        return price;
+      }
+    }
+    return this._getDisplayObject(coin).PRICE || '';
+  }
+
+  _getDisplayPC(coin) {
+    if (coin == WALLET_COIN) {
+      let pcChange = this._getPrecentChange(coin);
+      if (pcChange) {
+        return formatCoin(pcChange, 'USD', 0);
+      } else {
+        return pcChange;
+      }
+    }
+    return this._getDisplayObject(coin).CHANGEPCT24HOUR || '';
+  }
+
+  _getPrecentChange(coin) {
+    if (coin == WALLET_COIN) {
+      return (this._getPrecentChange('BTC') || 0) * 1.3;
+    }
+    return this._getRawObject(coin).CHANGEPCT24HOUR;
+  }
+
+  _getRawObject(coin) {
+    let { currency, prices } = this.state;
+    if (!prices.RAW) return {};
+    if (!prices.RAW[coin]) return {};
+    return prices.RAW[coin][currency] || {};
+  }
+
+  _getPrice(coin) {
+    if (coin == WALLET_COIN) {
+      let btcPrice = this._getPrice('BTC');
+      if (btcPrice) {
+        return btcPrice * 0.0013;
+      } else {
+        return btcPrice;
+      }
+    }
+    return this._getRawObject(coin).PRICE;
+  }
+
+  _getCurrencySymbol() {
+    return CURRENCY_SYMBOLS[this.state.currency] || '';
+  }
+
+  _getCoinValue(coin) {
+    let currency = this.state.currency;
+    let balance = this.state.balances[coin];
+    let price = this._getPrice(coin);
+    let amount = 0;
+    if (balance && price) {
+      amount = balance * price;
+    }
+    return amount;
+  }
+
   _renderPieChart = () => {
+    let btcValue = this._getCoinValue('BTC');
+    let ethValue = this._getCoinValue('ETH');
+    let mgcValue = this._getCoinValue('MGC');
+    if (!btcValue && !ethValue && !mgcValue) {
+      btcValue = 1;
+      ethValue = 1;
+      mgcValue = 1;
+    }
     const data = [
       {
-        population: 2754.55,
+        population: btcValue,
         color: { r: 255, g: 169, b: 52 },
       },
       {
-        population: 2054.58,
+        population: ethValue,
         color: { r: 38, g: 80, b: 191 },
       }, {
-        population: 2054.58,
+        population: mgcValue,
         color: { r: 255, g: 216, b: 47 },
       },
     ];
@@ -110,27 +206,40 @@ class DashboardScreen extends React.Component {
     );
   }
 
-  _renderItemInforData(item) {
+  _renderItemInforData(coin) {
+    let currency = this.state.currency;
+    let balance = this.state.balances[coin];
+    let amount = '';
+    if (this._hasData()) {
+      amount = this._getCurrencySymbol() + ' ' + formatCoin(this._getCoinValue(coin), currency, 0);
+    }
+
     return (
-      <View style={styles.itemGroup} key={item.id}>
-        <View style={[{ backgroundColor: item.color }, styles.itemColor]} />
-        <Text style={styles.itemCount}>{`$ ${item.count}`}</Text>
-        <Text style={styles.itemCountCoin}>{item.countCoin}</Text>
+      <View style={styles.itemGroup} key={coin}>
+        <View style={[{ backgroundColor: COIN_COLORS[coin] }, styles.itemColor]} />
+        <Text style={styles.itemCount}>{amount}</Text>
+        <Text style={styles.itemCountCoin}>{formatCoin(balance, coin, 0)} {getCoinName(coin)}</Text>
       </View>
     );
   }
 
-  _renderItemWallet(price, index) {
+  _renderItemWallet(coin) {
+    let isPriceDown = this._getPrecentChange(coin) < 0;
     return (
-      <View style={styles.walletContainer} key={index}>
+      <View style={styles.walletContainer} key={coin}>
         <View style={styles.walletGroup}>
-          <Text style={styles.walletFullname}>{price.FULLNAME}</Text>
-          <Text style={styles.walletPrice}>{price.PRICE}</Text>
+          <Text style={styles.walletFullname}>{getCoinFullName(coin)}</Text>
+          <Text style={styles.walletPrice}>{this._getDisplayPrice(coin)}</Text>
 
-          <View style={styles.changeGroup}>
-            <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice} />
-            <Text style={styles.walletChange}>{price.CHANGEPCT24HOUR}</Text>
-          </View>
+          {this._hasData() && <View style={styles.changeGroup}>
+            {isPriceDown
+              ? <Image source={require('../../../assets/icon-change-price/changeDown.png')} style={styles.imgChangePrice} />
+              : <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice} />
+            }
+            <Text style={isPriceDown ? styles.walletPriceDown : styles.walletPriceUp}>
+              {this._getDisplayPC(coin)}
+            </Text>
+          </View>}
         </View>
 
         <View>
@@ -145,7 +254,7 @@ class DashboardScreen extends React.Component {
 
     return (
       <View style={styles.listWallet}>
-        {prices.map((price, index) => this._renderItemWallet(price, index))}
+        {ALL_COINS.map((coin) => this._renderItemWallet(coin))}
       </View>
     );
   }
@@ -155,16 +264,25 @@ class DashboardScreen extends React.Component {
 
     return (
       <View style={styles.inforGroup}>
-        {data.map(d => this._renderItemInforData(d))}
+        {ALL_COINS.map(coin => this._renderItemInforData(coin))}
       </View>
     );
   }
 
   _renderSumSerires() {
+    let currency = this.state.currency;
+    let total = '';
+    if (this._hasData()) {
+      for (let coin of ALL_COINS) {
+        total = (total || 0) + this._getCoinValue(coin);
+      }
+      total = this._getCurrencySymbol() + formatCoin(total, currency, 0);
+    }
+
     return (
       <View style={styles.sumSeriresGroup}>
-        <Text style={styles.titleBalance}>Balance</Text>
-        <Text style={styles.sumSerires}>$ 6,877.57</Text>
+        <Text style={styles.titleBalance}>{I18n.t('dashboard.balance')}</Text>
+        <Text style={styles.sumSerires}>{total}</Text>
       </View>
     );
   }
@@ -257,8 +375,13 @@ const styles = ScaledSheet.create({
     color: '#2A334D',
     fontSize: '17@s',
   },
-  walletChange: {
+  walletPriceUp: {
     color: '#7DBF44',
+    fontSize: '11@s',
+    marginLeft: '7@s',
+  },
+  walletPriceDown: {
+    color: '#D30023',
     fontSize: '11@s',
     marginLeft: '7@s',
   },

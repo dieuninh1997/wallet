@@ -1,4 +1,15 @@
 export default {
+  coin: {
+    MGC: {
+      fullname: 'MangoCoin'
+    },
+    BTC: {
+      fullname: 'Bitcoin'
+    },
+    ETH: {
+      fullname: 'Ethereum'
+    }
+  },
   landing: {
     coinName: 'マンゴーコイン',
     coinDescription: 'より良い未来のために',
@@ -35,6 +46,10 @@ export default {
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
     createWaletSuccess: '完了しました',
+  },
+  dashboard: {
+    title: 'ダッシュボード',
+    balance: '残高'
   },
   send: {
     title: 'Send',

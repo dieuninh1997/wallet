@@ -7,6 +7,8 @@ import SocketIOClient from 'socket.io-client';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getWallet } from '../../api/common/BaseRequest';
+import WalletService from '../../services/wallet';
+
 
 const { width } = Dimensions.get('window');
 const COINS = [

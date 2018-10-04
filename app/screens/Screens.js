@@ -10,9 +10,11 @@ import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
+import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
+  RestoreWalletScreen: { screen: RestoreWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   MainScreen: { screen: MainScreen },
   LandingScreen: { screen: LandingScreen },

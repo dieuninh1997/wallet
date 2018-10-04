@@ -10,7 +10,7 @@ import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,

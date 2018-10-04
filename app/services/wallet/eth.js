@@ -36,6 +36,16 @@ EthService.importWalletFromPrivateKey = async (userPrivateKey) => {
   };
 };
 
+EthService.importWalletFromMnemonic = async (mnemonic) => {
+  try {
+    const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
+
+    return wallet;
+  } catch (error) {
+    throw new Error('Invalid mnemonic');
+  }
+};
+
 EthService.getTransactions = async (address) => {
   try {
     const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=1&offset=100`;

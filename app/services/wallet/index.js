@@ -11,16 +11,23 @@ const WalletService = {};
 const erc20Symbols = _.keys(erc20Tokens);
 
 WalletService.importWalletFromPrivateKey = (coin, privateKey, mnemonic, password) => {
-  console.log('coin', coin);
-  console.log('privateKey', privateKey);
-  console.log('mnemonic', mnemonic);
-  console.log('password', password);
   switch (coin.toLowerCase()) {
   case 'eth':
     return EthService.importWalletFromPrivateKey(privateKey, mnemonic, password);
   default:
     if (_.includes(erc20Symbols, coin)) {
       return Erc20Servcie.importWalletFromPrivateKey(privateKey, mnemonic, password);
+    }
+  }
+};
+
+WalletService.importWalletFromMnemonic = (coin, mnemonic) => {
+  switch (coin.toLowerCase()) {
+  case 'eth':
+    return EthService.importWalletFromMnemonic(mnemonic);
+  default:
+    if (_.includes(erc20Symbols, coin)) {
+      return Erc20Servcie.importWalletFromMnemonic(mnemonic);
     }
   }
 };

@@ -63,12 +63,20 @@ export function getCurrentUser(useCache = true, params) {
   });
 }
 
-export function changePassword(password, new_password, otp) {
+export function changePassword(password, newPassword, otp) {
   const url = '/change-password';
   const params = {
     password,
-    new_password,
+    new_password: newPassword,
     otp,
   };
   return put(url, params);
+}
+
+export function restoreAccount(mnemonic) {
+  const url = '/restore-account';
+  const params = {
+    mnemonic,
+  };
+  return post(url, params);
 }

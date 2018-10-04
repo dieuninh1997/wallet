@@ -86,4 +86,9 @@ export default {
     title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
   },
+  restoreWalletScreen: {
+    title: 'Restore Account',
+    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    inputPlaceholder: 'Backup Phrase',
+  },
 };

@@ -5,11 +5,12 @@ import MangoBackButton from '../common/MangoBackButton';
 import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = navigation => ({
+  static navigationOptions = ({navigation}) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
@@ -62,8 +63,8 @@ export default class AddPinScreen extends Component {
         stylePinCodeMainContainer={styles.pinCodeContainer}
         styleMainContainer={styles.mainContainer}
         colorPassword="#ebedf2"
-        stylePinCodeHiddenPasswordSizeEmpty={20}
-        stylePinCodeHiddenPasswordSizeFull={20}
+        stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
+        stylePinCodeHiddenPasswordSizeFull={scale(20)}
         stylePinCodeButtonCircle={styles.buttonCircle}
         buttonDeleteText
         stylePinCodeColumnDeleteButton={styles.buttonDelete}
@@ -85,7 +86,7 @@ export default class AddPinScreen extends Component {
         <PINCode
           status="enter"
           passwordLength={4}
-          pinStatus={this.state.isShowError ? 'failure' : 'initial'}
+          pinStatus={isShowError ? 'failure' : 'initial'}
           timeLocked={10000}
           handleResultEnterPin={value => this._checkCodePin(value)}
           numbersButtonOverlayColor="#fcd800"
@@ -191,7 +192,7 @@ const styles = ScaledSheet.create({
     height: '60@s',
     backgroundColor: '#ffffff',
     borderRadius: '30@s',
-    marginTop: '115@s',
+    marginTop: '116@s',
     borderWidth: '12@s',
     borderColor: '#f1cf00',
   },

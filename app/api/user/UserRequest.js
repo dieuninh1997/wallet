@@ -1,6 +1,6 @@
 import AppConfig from '../../utils/AppConfig';
 import {
-  get, post,
+  get, post, put,
 } from '../common/BaseRequest';
 
 export function login(email, password, otp = '', login_type = 1) {
@@ -70,5 +70,5 @@ export function changePassword(password, new_password, otp) {
     new_password,
     otp,
   };
-  return post(url, params);
+  return put(url, params);
 }

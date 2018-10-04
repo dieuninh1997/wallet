@@ -33,17 +33,20 @@ async function initI18n() {
 }
 
 async function initMasterdata() {
-  const credentials = await AppPreferences.getAccessToken();
+  const credentials = await AppPreferences.getGeneric();
 
-  const accessToken = credentials.password;
-  const parseAccessToken = accessToken && accessToken.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(accessToken).access_token : accessToken;
+  const keychain = credentials.password;
+  const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
+  const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;
 
   AppConfig.ACCESS_TOKEN = parseAccessToken;
+  AppConfig.PRIVATE_KEY = parsePrivateKey;
   window.GlobalSocket = new GlobalSocket();
 
   if (__DEV__) {
     console.log(`API Server: ${AppConfig.getApiServer()}`);
     console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
+    console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
   }
 }
 

@@ -31,13 +31,13 @@ export default class LoginUsePinScreen extends Component {
       AppPreferences.showToastMessage('Error Code Pin!');
     }
     setTimeout(() => this.setState({ isShowError: false }), 1000);
-  } 
+  }
 
   async _getCodePin() {
     try {
       const responsePin = await AppPreferences.getGeneric();
       console.log('responsePin', responsePin);
-      
+
       const codePin = JSON.parse(responsePin.password).pin;
 
       this.setState({ codePin });
@@ -52,8 +52,8 @@ export default class LoginUsePinScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.containerPassword}></View>
-        <View style={styles.borderPassword}></View>
+        <View style={styles.containerPassword} />
+        <View style={styles.borderPassword} />
         <PINCode
           status="enter"
           passwordLength={4}
@@ -88,7 +88,7 @@ const styles = ScaledSheet.create({
   },
   mainContainer: {
     backgroundColor: 'transparent',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
   },
   pinCodeContainer: {
@@ -98,18 +98,18 @@ const styles = ScaledSheet.create({
     marginBottom: '30@s',
   },
   textTitlePinCode: {
-    fontSize: '20@ms', 
-    fontWeight: '200', 
+    fontSize: '20@ms',
+    fontWeight: '200',
     textAlign: 'center',
     paddingTop: '10@s',
   },
   buttonDelete: {
     backgroundColor: '#ffffff',
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    width: '60@s', 
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60@s',
     paddingTop: '11@s',
-    height: '60@s', 
+    height: '60@s',
     borderRadius: '30@s',
     marginBottom: '10@s',
     marginLeft: '2@s',
@@ -117,35 +117,35 @@ const styles = ScaledSheet.create({
     elevation: '6@s',
   },
   buttonCircle: {
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    width: '60@s', 
-    height: '60@s', 
-    backgroundColor: '#ffffff', 
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60@s',
+    height: '60@s',
+    backgroundColor: '#ffffff',
     borderRadius: '30@s',
     elevation: '6@s',
   },
   containerPassword: {
-     width: '100%',
-     height: '230@s',
-     position: 'absolute',
-     backgroundColor: '#fcd800',
+    width: '100%',
+    height: '230@s',
+    position: 'absolute',
+    backgroundColor: '#fcd800',
   },
   borderPassword: {
-     position: 'absolute',
-     width: '300@s',
-     height: '60@s',
-     backgroundColor: '#ffffff',
-     borderRadius: '30@s',
-     marginTop: '139@s',
-     borderWidth: '12@s',
-     borderColor: '#f1cf00',
+    position: 'absolute',
+    width: '300@s',
+    height: '60@s',
+    backgroundColor: '#ffffff',
+    borderRadius: '30@s',
+    marginTop: '139@s',
+    borderWidth: '12@s',
+    borderColor: '#f1cf00',
   },
   pincodeRowButton: {
     marginTop: '13@s',
   },
   textButtonCircle: {
-    fontSize: '30@ms', 
+    fontSize: '30@ms',
     fontWeight: '400',
     color: '#26304c',
   },

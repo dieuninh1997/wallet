@@ -36,6 +36,16 @@ export default {
     createWallet: 'Create Wallet',
     createWaletSuccess: 'Create wallet success',
   },
+  createWalletByPassportScreen: {
+    title: 'Create by Passport Number',
+    inputEmail: 'Passport Number',
+    inputPassword: 'Passwords',
+    inputPasswordConfirm: 'Confirm Passwords',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
+    createWallet: 'Create Wallet',
+    createWaletSuccess: 'Create wallet success',
+  },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',

@@ -17,15 +17,15 @@ const { provider, broadcastTransactionUrl } = coinList.eth;
 export const Erc20Service = {};
 
 
-Erc20Service.importWalletFromPrivateKey = async (userPrivateKey, mnemonic, password) => {
+Erc20Service.importWalletFromPrivateKey = async (userPrivateKey) => {
   const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'));
-  const keystore = await wallet.encrypt(password);
+  // const keystore = await wallet.encrypt(password);
 
   return {
     privateKey: wallet.privateKey,
     address: wallet.address,
-    mnemonic,
-    keystore,
+    // mnemonic,
+    // keystore,
   };
 };
 

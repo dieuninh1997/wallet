@@ -63,6 +63,7 @@ export default class AddPinScreen extends Component {
         stylePinCodeMainContainer={styles.pinCodeContainer}
         styleMainContainer={styles.mainContainer}
         colorPassword="#ebedf2"
+        stylePinCodeButtonNumber="#000"
         stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
         stylePinCodeHiddenPasswordSizeFull={scale(20)}
         stylePinCodeButtonCircle={styles.buttonCircle}
@@ -93,8 +94,9 @@ export default class AddPinScreen extends Component {
           stylePinCodeMainContainer={styles.pinCodeContainer}
           styleMainContainer={styles.mainContainer}
           colorPassword="#ebedf2"
-          stylePinCodeHiddenPasswordSizeEmpty={20}
-          stylePinCodeHiddenPasswordSizeFull={20}
+          stylePinCodeButtonNumber="#000"
+          stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
+          stylePinCodeHiddenPasswordSizeFull={scale(20)}
           stylePinCodeButtonCircle={styles.buttonCircle}
           buttonDeleteText
           stylePinCodeColumnDeleteButton={styles.buttonDelete}

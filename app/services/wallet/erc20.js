@@ -48,6 +48,16 @@ Erc20Service.importWalletFromKeystore = async (keystore, password) => {
   }
 };
 
+Erc20Service.importWalletFromMnemonic = async (mnemonic) => {
+  try {
+    const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
+
+    return wallet;
+  } catch (error) {
+    throw new Error('Invalid mnemonic');
+  }
+};
+
 
 Erc20Service.getAddressBalance = async (coin, address) => {
   const contractAddress = erc20Tokens[coin].address;

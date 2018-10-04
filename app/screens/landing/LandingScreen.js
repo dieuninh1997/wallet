@@ -104,6 +104,7 @@ class LandingScreen extends Component {
 
   _navigateScreen = (screen) => {
     const { navigation } = this.props;
+
     navigation.navigate(screen);
   }
 
@@ -177,6 +178,7 @@ class LandingScreen extends Component {
           title={I18n.t('landing.restoreAccount')}
           btnStyle={styles.btnAuthContainer}
           btnTextStyle={styles.btnTextAuthStyle}
+          onPressBtn={() => this._navigateScreen('RestoreWalletScreen')}
         />
       </View>
     );

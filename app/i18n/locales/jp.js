@@ -95,8 +95,15 @@ export default {
     update: '更新する',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'パスワードが一致しません',
+    changeSuccess: 'Change password success',
   },
   addPinScreen: {
+    title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
+  },
+  restoreWalletScreen: {
+    title: '  アカウントの復元',
+    titleForm: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
+    inputPlaceholder: 'フレーズのバックアップ',
   },
 };

@@ -95,9 +95,15 @@ export default {
     update: 'Update',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Confirm password is incorrect',
+    changeSuccess: 'Change password success',
   },
   addPinScreen: {
     title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
+  },
+  restoreWalletScreen: {
+    title: 'Restore Account',
+    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    inputPlaceholder: 'Backup Phrase',
   },
 };

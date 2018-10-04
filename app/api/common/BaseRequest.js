@@ -115,11 +115,11 @@ function _logResponse(responseCode, data) {
   }
 }
 
-export async function getWallet(coin) {
+export async function getPrices(coin) {
   try {
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY`;
     const response = await axios.get(url);
-    const coinList = response.data.DISPLAY;
+    const coinList = response.data;
     console.log('data:', coinList);
     return coinList;
   } catch (error) {

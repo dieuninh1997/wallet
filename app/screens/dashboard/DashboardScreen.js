@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, Image,
+  View, Text, ScrollView, Dimensions, Image, RefreshControl
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import SocketIOClient from 'socket.io-client';
@@ -37,8 +37,16 @@ class DashboardScreen extends React.Component {
     this.state = {
       balances: {},
       prices: {},
-      currency: 'USD'
+      currency: 'USD',
+
+      refreshing: false,
     };
+  }
+
+  async _onRefresh() {
+    this.setState({refreshing: true});
+    await this._loadData();
+    this.setState({refreshing: false});
   }
 
   async componentDidMount() {
@@ -289,7 +297,14 @@ class DashboardScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.dashboardScreen}>
+      <ScrollView
+        contentContainerStyle={styles.dashboardScreen}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }>
         {this._renderPieChart()}
         {this._renderSumSerires()}
         {this._renderInforData()}

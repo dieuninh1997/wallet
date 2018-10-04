@@ -1,4 +1,15 @@
 export default {
+  coin: {
+    MGC: {
+      fullname: 'MangoCoin'
+    },
+    BTC: {
+      fullname: 'Bitcoin'
+    },
+    ETH: {
+      fullname: 'Ethereum'
+    }
+  },
   landing: {
     coinName: 'Mango Coin',
     coinDescription: 'Make a better future',
@@ -35,6 +46,10 @@ export default {
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
     createWaletSuccess: 'Create wallet success',
+  },
+  dashboard: {
+    title: 'Tổng quan',
+    balance: 'Số dư'
   },
   send: {
     title: 'Send',
@@ -80,6 +95,7 @@ export default {
     update: 'Update',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Confirm password is incorrect',
+    changeSuccess: 'Change password success',
   },
   addPinScreen: {
     title: 'Change PIN',
@@ -93,5 +109,10 @@ export default {
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  restoreWalletScreen: {
+    title: 'Restore Account',
+    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    inputPlaceholder: 'Backup Phrase',
   },
 };

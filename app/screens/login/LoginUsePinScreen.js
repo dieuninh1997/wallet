@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { CommonSize } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 
 
 export default class LoginUsePinScreen extends Component {
   static navigationOptions = () => ({
-    header: null,
+    headerLeft: <View />,
+    headerStyle: styles.header,
   });
 
   state = {
@@ -57,7 +60,7 @@ export default class LoginUsePinScreen extends Component {
         <PINCode
           status="enter"
           passwordLength={4}
-          pinStatus={this.state.isShowError ? 'failure' : 'initial'}
+          pinStatus={isShowError ? 'failure' : 'initial'}
           storePin={(value) => { console.log('ma pin:', value); }}
           handleResultEnterPin={value => this._checkValuePin(value)}
           timeLocked={10000}
@@ -65,8 +68,9 @@ export default class LoginUsePinScreen extends Component {
           stylePinCodeMainContainer={styles.pinCodeContainer}
           styleMainContainer={styles.mainContainer}
           colorPassword="#ebedf2"
-          stylePinCodeHiddenPasswordSizeEmpty={20}
-          stylePinCodeHiddenPasswordSizeFull={20}
+          stylePinCodeButtonNumber="#000"
+          stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
+          stylePinCodeHiddenPasswordSizeFull={scale(20)}
           stylePinCodeButtonCircle={styles.buttonCircle}
           buttonDeleteText
           stylePinCodeColumnDeleteButton={styles.buttonDelete}
@@ -81,6 +85,12 @@ export default class LoginUsePinScreen extends Component {
 }
 
 const styles = ScaledSheet.create({
+  header: {
+    backgroundColor: '#fcd800',
+    height: CommonSize.headerHeight,
+    elevation: 0,
+    borderBottomColor: '#E7E7E9',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -127,7 +137,7 @@ const styles = ScaledSheet.create({
   },
   containerPassword: {
     width: '100%',
-    height: '230@s',
+    height: '195@s',
     position: 'absolute',
     backgroundColor: '#fcd800',
   },
@@ -137,7 +147,7 @@ const styles = ScaledSheet.create({
     height: '60@s',
     backgroundColor: '#ffffff',
     borderRadius: '30@s',
-    marginTop: '139@s',
+    marginTop: '116@s',
     borderWidth: '12@s',
     borderColor: '#f1cf00',
   },

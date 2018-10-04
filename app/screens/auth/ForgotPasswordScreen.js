@@ -13,7 +13,7 @@ export default class ForgotPasswordScreen extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerLeft: AppConfig.ACCESS_TOKEN ? <View /> : <MangoBackButton navigation={navigation} />,
-    title: 'Forgot Password',
+    title: I18n.t('resetPassword.forgotPassword'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,
@@ -33,15 +33,18 @@ export default class ForgotPasswordScreen extends Component {
     });
   }
 
+  _backToLogin = () => {
+    const { navigation } = this.props;
+    navigation.navigate('LoginScreen');
+  }
+
   _handleResetPassword = async () => {
     try {
       const responseUser = await ressetPassword(this.state.email);
-      console.log('===================> success', responseUser);
       this.setState({
         isSubmitSuccess: true,
       });
     } catch (error) {
-      console.log('===================> error', error);
       this.setState({
         isSubmitSuccess: false,
       });
@@ -59,7 +62,7 @@ export default class ForgotPasswordScreen extends Component {
             style={styles.emailIcon}
           />
           <TextInput
-            placeholder="Email Address"
+            placeholder={I18n.t('resetPassword.emailAddress')}
             editable
             underlineColorAndroid="transparent"
             style={styles.inputText}
@@ -67,13 +70,20 @@ export default class ForgotPasswordScreen extends Component {
           />
         </View>
         <MangoGradientButton
-          btnText="Reset Password"
+          btnText={I18n.t('resetPassword.resetPassword')}
           btnStyle={styles.btnResetPassword}
           onPress={() => this._handleResetPassword()}
         />
       </View>
     } else {
-      contentShow = <View style={styles.forgotPassword}><Text style={styles.messageSuccess}>Reset password link was sent to your email/phone number. Please follow the instruction to reset password.</Text></View>
+      contentShow = <View style={styles.forgotPassword}>
+        <Text style={styles.messageSuccess}>{I18n.t('resetPassword.resetPasswordSuccessMessage')}</Text>
+        <MangoGradientButton
+          btnText={I18n.t('genneralText.back')}
+          btnStyle={styles.btnResetPassword}
+          onPress={() => this._backToLogin()}
+        />
+      </View>
     }
 
     return (contentShow);
@@ -108,6 +118,7 @@ const styles = ScaledSheet.create({
   btnResetPassword: {
     marginTop: '50@s',
     width: '220@s',
+    marginBottom: '20@s',
   },
   messageSuccess: {
     width: '90%',

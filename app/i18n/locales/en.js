@@ -85,4 +85,13 @@ export default {
     title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
   },
+  genneralText: {
+    back: 'Back',
+  },
+  resetPassword: {
+    forgotPassword: 'Forgot Password',
+    emailAddress: 'Email Address',
+    resetPassword: 'Reset Password',
+    resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
 };

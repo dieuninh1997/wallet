@@ -68,6 +68,7 @@ export default class LoginUsePinScreen extends Component {
           stylePinCodeMainContainer={styles.pinCodeContainer}
           styleMainContainer={styles.mainContainer}
           colorPassword="#ebedf2"
+          stylePinCodeButtonNumber="#000"
           stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
           stylePinCodeHiddenPasswordSizeFull={scale(20)}
           stylePinCodeButtonCircle={styles.buttonCircle}

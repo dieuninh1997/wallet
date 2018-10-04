@@ -20,8 +20,6 @@ export default {
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   MainScreen: { screen: MainScreen },
   LandingScreen: { screen: LandingScreen },
-  MainScreen: { screen: MainScreen },
-  LoginScreen: { screen: LoginScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
   SettingScreen: { screen: SettingScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },

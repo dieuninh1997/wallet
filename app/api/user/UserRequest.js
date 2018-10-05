@@ -80,3 +80,16 @@ export function restoreAccount(mnemonic) {
   };
   return post(url, params);
 }
+
+export function getUserSettings(){
+  const url = '/user-settings';
+  const params = {
+
+  };
+  return get(url, params);
+}
+
+export function updateUserSettings(params = {}){
+  const url = '/user-settings';
+  return put(url, params);
+}

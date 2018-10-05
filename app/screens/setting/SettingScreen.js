@@ -9,6 +9,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { getUserSettings } from '../../api/user/UserRequest';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -38,6 +39,13 @@ export default class SettingScreen extends Component {
   }
 
   componentDidMount = async () => {
+    try {
+      const getUserSetting = await getUserSettings();
+      console.log('-------------------', getUserSetting);
+    } catch (error) {
+      console.log("<<<<<<<error<<<<", error.message);
+    }
+
     try {
       const walletId = await AsyncStorage.getItem('address');
       this.setState({
@@ -121,16 +129,18 @@ export default class SettingScreen extends Component {
               onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
             />
           </View>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text>U.S Dollar ($)</Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LocalCurrencyScreen')}>
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
+              <View style={styles.activiRightGroup}>
+                <Text>U.S Dollar ($)</Text>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );

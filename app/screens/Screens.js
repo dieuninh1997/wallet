@@ -16,7 +16,6 @@ import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
 import LocalCurrencyScreen from './localCurrency/LocalCurrencyScreen';
 
 export default {
-  LocalCurrencyScreen: { screen: LocalCurrencyScreen },
   SplashScreen: { screen: SplashScreen },
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },
@@ -32,4 +31,5 @@ export default {
   ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
   BackupPassphraseScreen: { screen: BackupPassphraseScreen },
+  LocalCurrencyScreen: { screen: LocalCurrencyScreen },
 };

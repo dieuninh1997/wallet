@@ -113,12 +113,17 @@ export default {
   },
   genneralText: {
     back: 'Back',
+    recieved: 'Recieved',
+    confirmation: 'Confirmation',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  transactionDetail: {
+    transactionDetail: 'Transaction Detail',
   },
   restoreWalletScreen: {
     title: 'Restore Account',

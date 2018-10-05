@@ -13,6 +13,7 @@ import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
 import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
+import TransactionDetailScreen from './transactions/TransactionDetailScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -30,4 +31,5 @@ export default {
   ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
   BackupPassphraseScreen: { screen: BackupPassphraseScreen },
+  TransactionDetailScreen: { screen: TransactionDetailScreen },
 };

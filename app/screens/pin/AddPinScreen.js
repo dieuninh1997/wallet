@@ -11,7 +11,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
   static navigationOptions = ({navigation}) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
+    headerLeft: <MangoBackButton navigation={navigation} screen={'SettingScreen'}/>,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -53,7 +53,6 @@ export default class AddPinScreen extends Component {
   _renderChangePin = () => (
     <View style={styles.container}>
       <View style={styles.containerPassword} />
-      <View style={styles.borderPassword} />
       <PINCode
         status="choose"
         passwordLength={4}
@@ -72,6 +71,7 @@ export default class AddPinScreen extends Component {
         stylePinCodeTextTitle={styles.textTitlePinCode}
         stylePinCodeRowButtons={styles.pincodeRowButton}
         stylePinCodeTextButtonCircle={styles.textButtonCircle}
+        stylePinCodeHiddenPasswordCircle={styles.borderPassword}
         touchIDDisabled
       />
     </View>
@@ -83,7 +83,6 @@ export default class AddPinScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.containerPassword} />
-        <View style={styles.borderPassword} />
         <PINCode
           status="enter"
           passwordLength={4}
@@ -103,6 +102,7 @@ export default class AddPinScreen extends Component {
           stylePinCodeTextTitle={styles.textTitlePinCode}
           stylePinCodeRowButtons={styles.pincodeRowButton}
           stylePinCodeTextButtonCircle={styles.textButtonCircle}
+          stylePinCodeHiddenPasswordCircle={styles.borderPassword}
           touchIDDisabled
         />
       </View>
@@ -151,7 +151,8 @@ const styles = ScaledSheet.create({
   pinCodeContainer: {
     backgroundColor: 'transparent',
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: '30@s',
   },
   textTitlePinCode: {
@@ -184,19 +185,22 @@ const styles = ScaledSheet.create({
   },
   containerPassword: {
     width: '100%',
-    height: '195@s',
+    height: '175@s',
     position: 'absolute',
     backgroundColor: '#fcd800',
   },
   borderPassword: {
-    position: 'absolute',
-    width: '300@s',
-    height: '60@s',
     backgroundColor: '#ffffff',
-    borderRadius: '30@s',
-    marginTop: '116@s',
+    borderRadius: '40@s',
     borderWidth: '12@s',
     borderColor: '#f1cf00',
+    flexDirection: 'row', 
+    height: '80@s',
+    paddingBottom: '30@s',
+    width: '300@s',
+    marginBottom: '70@s',
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
   pincodeRowButton: {
     marginTop: '13@s',

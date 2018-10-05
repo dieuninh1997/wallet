@@ -44,6 +44,12 @@ class LoginScreen extends Component {
     };
   }
 
+  componentDidMount = () => {
+    if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
+      this._handlerLoginWithTouchId();
+    }
+  }
+
   _handleClickLogin = async () => {
     const { loginInfo } = this.state;
     const { navigation } = this.props;
@@ -57,16 +63,9 @@ class LoginScreen extends Component {
       AppPreferences.saveAccessToken(responseUser.access_token);
       window.GlobalSocket.connect();
       Keyboard.dismiss();
-      navigation.navigate('MainScreen');
+      navigation.navigate('RestoreWalletScreen');
     } catch (error) {
-      Toast.show(error.message, {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
-        shadow: true,
-        animation: true,
-        hideOnPress: true,
-        delay: 0,
-      });
+      AppPreferences.showToastMessage(error.message);
       console.log('LoginRequest._error: ', error);
     }
   }
@@ -78,6 +77,11 @@ class LoginScreen extends Component {
     this.setState({
       loginInfo,
     });
+  }
+
+  _handleForgotPassword = (typeInput, value) => {
+    const { navigation } = this.props;
+    navigation.navigate('ForgotPasswordScreen');
   }
 
   _handlerLoginWithTouchId = () => {
@@ -92,12 +96,12 @@ class LoginScreen extends Component {
       unifiedErrors: false,
     };
 
-    TouchID.authenticate('Touch to unlock you phone', optionalConfigObject)
-      .then((success) => {
+    TouchID.authenticate('Touch to unlock your phone', optionalConfigObject)
+      .then(() => {
         navigation.navigate('DashboardScreen');
       })
-      .catch((error) => {
-        Alert.alert('Authentication Failed');
+      .catch(() => {
+        AppPreferences.showToastMessage('Authentication Failed');
       });
   }
 
@@ -143,7 +147,7 @@ class LoginScreen extends Component {
           source={require('../../../assets/forgot-password/forgot-password.png')}
           style={styles.inputImageIcon}
         />
-        <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
+        <Text onPress={() => this._handleForgotPassword()} style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
     </View>
   )

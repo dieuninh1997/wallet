@@ -6,10 +6,8 @@ import {
   ScrollView,
   Clipboard,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import Share from 'react-native-share';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -17,54 +15,43 @@ import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
+import AppConfig from '../../utils/AppConfig';
 
-class RequestScreen extends Component {
+class BackupPassphraseScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      walletAddress: null,
+      mnemoric: AppConfig.MNEMORIC ? AppConfig.MNEMORIC : null,
     };
-  }
-
-  async componentDidMount() {
-    const walletAddress = await AsyncStorage.getItem('address');
-    this.setState({
-      walletAddress,
-    });
-  }
-
-  _onSharePress() {
-    const { walletAddress } = this.state;
-    const options = {
-      message: walletAddress,
-    };
-    Share.open(options)
-      .then((res) => {})
-      .catch((err) => {});
   }
 
   _handleCopyAddress = () => {
-    const { walletAddress } = this.state;
+    const { mnemoric } = this.state;
 
-    Clipboard.setString(walletAddress);
+    Clipboard.setString(mnemoric);
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
+  _navigateScreen = () => {
+    const { navigation } = this.props;
+    navigation.navigate('AddPinScreen');
+  }
+
   _renderQrCodeSection = () => {
-    const { walletAddress } = this.state;
+    const { mnemoric } = this.state;
 
     return (
       <View style={styles.qrCodeSectionContainer}>
         <View style={styles.qrCodeContainer}>
-          {!walletAddress ? null : (
+          {!mnemoric ? null : (
             <QRCode
-              value={walletAddress}
+              value={mnemoric}
               size={scale(260)}
             />
-          ) }
+          )}
         </View>
         <View style={styles.addressContainer}>
-          <Text>{walletAddress}</Text>
+          <Text>{mnemoric}</Text>
         </View>
       </View>
     );
@@ -75,10 +62,10 @@ class RequestScreen extends Component {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.btnUpContainer}
-        onPress={this._onSharePress.bind(this)}
+        onPress={() => this._navigateScreen()}
       >
         <Image
-          source={require('../../../assets/up/up-arrow.png')}
+          source={require('../../../assets/go-right/go-right.png')}
           style={styles.btnUpImage}
         />
       </TouchableOpacity>
@@ -93,7 +80,6 @@ class RequestScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
         >
@@ -106,7 +92,7 @@ class RequestScreen extends Component {
     );
   }
 }
-export default RequestScreen;
+export default BackupPassphraseScreen;
 
 const styles = ScaledSheet.create({
   container: {

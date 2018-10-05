@@ -6,6 +6,8 @@ import {
   ScrollView,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
+import _ from 'lodash';
+import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
@@ -17,29 +19,34 @@ class TransactionsScreen extends Component {
     super(props);
     this.state = {
       transactions: [],
-      address: '0x5C7738b67a3403F349782244E59E776DdB3581c3',
+      address: '0xd007d3bE383aA5c890B4728e570ddC9D05BcC021',
     };
   }
 
-  _loadData = async () => {
-    try {
-      const params = { currency: 'tenge', page: 1, limit: 20 };
+  // _loadData = async () => {
+  //   try {
+  //     const params = { currency: 'tenge', page: 1, limit: 20 };
 
-      const responseOrder = await getOrdersPending(params);
-      console.log('getOrderPending', responseOrder);
-    } catch (err) {
-      console.log('LoadDatas._error:', err);
-    }
-  }
+  //     const responseOrder = await getOrdersPending(params);
+  //     console.log('getOrderPending', responseOrder);
+  //   } catch (err) {
+  //     console.log('LoadDatas._error:', err);
+  //   }
+  // }
 
   componentDidMount = async () => {
     const { address } = this.state;
     try {
-      const transactions = await WalletService.getTransactions('nanj', address, 1, 10);
+      const transactions = await WalletService.getTransactions('mgc4', address, 1, 20);
       console.log('TransactionsScreen: ', transactions);
 
+      const groupedByYear = _.groupBy(transactions, (item) => {
+        const d = new Date(item.time);
+        return d.getFullYear();
+      });
+
       this.setState({
-        transactions,
+        transactions: _.map(groupedByYear, (value, prop) => ({ year: prop, data: value })),
       });
     } catch (error) {
       console.log('TransactionsScreen._error: ', error);
@@ -55,7 +62,7 @@ class TransactionsScreen extends Component {
       const handler = dataEventHandlers[event];
       window.EventBus.bind(event, handler);
     }
-    this._loadData();
+    // this._loadData();
     // if (Platform.OS === 'android' && this.props.navigation) {
     //   this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload => {
     //     //console.log("payload willBlur", payload)
@@ -92,10 +99,10 @@ class TransactionsScreen extends Component {
     const { currency } = this.props;
 
     if (data.currency !== currency) {
-      return;
+
     }
 
-    this._loadData();
+    // this._loadData();
   }
 
   getDataEventHandlers = () => ({})
@@ -106,7 +113,17 @@ class TransactionsScreen extends Component {
 
 
   _renderTransactonsList = () => {
-    const { transactions, address } = this.state;
+    const { transactions } = this.state;
+
+    return (
+      <View style={styles.transactionsContainer}>
+        {transactions.map(transactions => this._renderTransactonsYear(transactions))}
+      </View>
+    );
+  }
+
+  _renderTransactonsYear = (transactions) => {
+    const { address } = this.state;
     const images = [
       require('../../../assets/send/right-arrow.png'),
       require('../../../assets/recieved/left-arrow.png'),
@@ -114,8 +131,9 @@ class TransactionsScreen extends Component {
     ];
 
     return (
-      <View style={styles.transactionsContainer}>
-        {transactions.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
+      <View key={transactions.year}>
+        <Text style={styles.textYear}>{ transactions.year }</Text>
+        {transactions.data.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
       </View>
     );
   }
@@ -129,7 +147,10 @@ class TransactionsScreen extends Component {
         />
       </View>
       <View style={styles.transactionInfoContainer}>
-        <Text>{ transaction.time }</Text>
+        <Text>
+          {Moment(transaction.time).format('MMM DD hh:mm')}
+          {' '}
+        </Text>
         <Text
           numberOfLines={1}
           ellipsizeMode="middle"

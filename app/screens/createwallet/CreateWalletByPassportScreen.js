@@ -102,12 +102,12 @@ export default class CreateWalletByPassportScreen extends Component {
 
       await AppPreferences.saveAccessToken(loginInfo.access_token);
       await AppPreferences.savePrivateKey(privateKey);
-
+      await AppPreferences.saveMnemoric(mnemonic);
       await AsyncStorage.setItem('address', address);
       AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
 
       setTimeout(() => {
-        navigation.navigate('AddPinScreen');
+        navigation.navigate('BackupPassphraseScreen');
       }, 1000);
     } catch (error) {
       AppPreferences.showToastMessage(error.message);
@@ -124,6 +124,7 @@ export default class CreateWalletByPassportScreen extends Component {
         <TextInput
           placeholder={I18n.t('createWalletByPassportScreen.inputEmail')}
           editable
+          keyboardType="numeric"
           underlineColorAndroid="transparent"
           style={styles.inputText}
           onChangeText={value => this._handleChangeInput(CreateWalletByPassportScreen.WALLET_INFO.PASSPORT, value)}

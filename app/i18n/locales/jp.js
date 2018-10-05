@@ -1,4 +1,15 @@
 export default {
+  coin: {
+    MGC: {
+      fullname: 'MangoCoin'
+    },
+    BTC: {
+      fullname: 'Bitcoin'
+    },
+    ETH: {
+      fullname: 'Ethereum'
+    }
+  },
   landing: {
     coinName: 'マンゴーコイン',
     coinDescription: 'より良い未来のために',
@@ -35,6 +46,10 @@ export default {
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
     createWaletSuccess: '完了しました',
+  },
+  dashboard: {
+    title: 'ダッシュボード',
+    balance: '残高'
   },
   send: {
     title: 'Send',
@@ -85,5 +100,19 @@ export default {
   addPinScreen: {
     title: 'Change PIN',
     createPinSuccess: 'Create pin code success',
+  },
+  genneralText: {
+    back: 'Back',
+  },
+  resetPassword: {
+    forgotPassword: 'Forgot Password',
+    emailAddress: 'Email Address',
+    resetPassword: 'Reset Password',
+    resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  restoreWalletScreen: {
+    title: '  アカウントの復元',
+    titleForm: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
+    inputPlaceholder: 'フレーズのバックアップ',
   },
 };

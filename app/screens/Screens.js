@@ -9,19 +9,25 @@ import SettingScreen from './setting/SettingScreen';
 import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
 import AddPinScreen from './pin/AddPinScreen';
+import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
+import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
+import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
+  LoginScreen: { screen: LoginScreen },
+  RestoreWalletScreen: { screen: RestoreWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   MainScreen: { screen: MainScreen },
   LandingScreen: { screen: LandingScreen },
-  LoginScreen: { screen: LoginScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
   SettingScreen: { screen: SettingScreen },
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   CreateWalletByPassportScreen: { screen: CreateWalletByPassportScreen },
   AddPinScreen: { screen: AddPinScreen },
+  ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
+  BackupPassphraseScreen: { screen: BackupPassphraseScreen },
 };

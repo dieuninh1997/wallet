@@ -12,7 +12,6 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
-import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';

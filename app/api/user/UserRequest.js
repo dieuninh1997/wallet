@@ -79,4 +79,12 @@ export function restoreAccount(mnemonic) {
     mnemonic,
   };
   return post(url, params);
+
+  export function getUserSettings(){
+  const url = '/user-settings';
+  const params = {
+
+  }
+  return get(url, params);
+}
 }

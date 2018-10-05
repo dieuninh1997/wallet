@@ -13,8 +13,10 @@ import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
 import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
+import LocalCurrencyScreen from './localCurrency/LocalCurrencyScreen';
 
 export default {
+  LocalCurrencyScreen: { screen: LocalCurrencyScreen },
   SplashScreen: { screen: SplashScreen },
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },

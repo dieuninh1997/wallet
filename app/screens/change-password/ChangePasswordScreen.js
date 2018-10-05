@@ -125,7 +125,7 @@ const styles = ScaledSheet.create({
 		borderRadius: '10@s',
 		height: '340@s',
 		marginLeft: '20@s',
-		marginTop: '50@s',
+		marginTop: '66@s',
 		marginRight: '20@s',
 		elevation: '10@s',
 		padding: '15@s',

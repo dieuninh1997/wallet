@@ -285,7 +285,7 @@ class DashboardScreen extends BaseScreen {
         </View>
 
         <View>
-          <Image source={require('../../../assets/dash-board-tab/chart.png')} style={styles.chart} />
+          <Image source={require('../../../assets/dashboard/chart.png')} style={styles.chart} />
         </View>
       </View>
     );

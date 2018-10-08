@@ -43,6 +43,10 @@ export default class CreateWalletPhoneNumberScreen extends Component {
     });
   }
 
+  _onBtnTerms = () => {
+    this.props.navigation.navigate("TermsConditionScreen");
+  }
+
   _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
     console.log('hahah');
@@ -120,7 +124,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
           />
           <TouchableWithoutFeedback
             activeOpacity={0.5}
-            onPress={() => this._handleToggleCheckBox()}
+            onPress={() => this._onBtnTerms()}
           >
             <View
               style={styles.touchIAccept}

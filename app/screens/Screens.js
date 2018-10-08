@@ -14,6 +14,7 @@ import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
 import BackupPassphraseScreen from './backup-passphrase/BackupPassphraseScreen';
 import LocalCurrencyScreen from './localCurrency/LocalCurrencyScreen';
+import TermsConditionScreen from './terms/TermsConditionScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -32,4 +33,5 @@ export default {
   ChangePasswordScreen: { screen: ChangePasswordScreen },
   BackupPassphraseScreen: { screen: BackupPassphraseScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
+  TermsConditionScreen: {screen: TermsConditionScreen},
 };

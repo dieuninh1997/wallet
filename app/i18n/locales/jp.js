@@ -105,6 +105,11 @@ export default {
     back: 'Back',
     recieved: 'Recieved',
     confirmation: 'Confirmation',
+    amount: 'Amount',
+    status: 'Status',
+    address: 'Address',
+    txid: 'Txid',
+    date: 'Date',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
@@ -114,6 +119,8 @@ export default {
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
+    copy_txid: 'Copy Txid',
+    check_export: 'Check Export',
   },
   restoreWalletScreen: {
     title: '  アカウントの復元',

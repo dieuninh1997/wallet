@@ -24,11 +24,11 @@ export default class AppConfig {
 
   static SIGN_UP_URL = '/webview/sign_up';
 
-  static A = '';
-
   static PRIVATE_KEY = '';
 
   static MNEMORIC = '';
+
+  static USER_SETTING = null;
 
   static dev() {
     return __DEV__ && JSON.parse(DEV);

@@ -1,8 +1,12 @@
 import axios from 'axios';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
+import I18n from '../../i18n/i18n';
 
 export async function get(url, params = {}) {
+  params.lang = I18n.locale;
+  console.log('params.lang', params.lang);
+
   const query = Object.keys(params)
     .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
     .join('&');
@@ -18,6 +22,9 @@ export async function get(url, params = {}) {
 }
 
 export async function post(url, params = {}) {
+  params.lang = I18n.locale;
+  console.log('params.lang', params.lang);
+
   const response = await fetch(_getFullUrl(url), {
     method: 'POST',
     headers: _getHeader(),
@@ -29,6 +36,9 @@ export async function post(url, params = {}) {
 }
 
 export async function put(url, params = {}) {
+  params.lang = I18n.locale;
+  console.log('params.lang', params.lang);
+
   const response = await fetch(_getFullUrl(url), {
     method: 'PUT',
     headers: _getHeader(),
@@ -40,6 +50,9 @@ export async function put(url, params = {}) {
 }
 
 export async function del(url, params = {}) {
+  params.lang = I18n.locale;
+  console.log('params.lang', params.lang);
+
   const response = await fetch(_getFullUrl(url), {
     method: 'DELETE',
     headers: _getHeader(),
@@ -83,9 +96,9 @@ async function _processResponse(response) {
 async function _checkResponseCode(response) {
   console.log('response:', response);
   if (!response.ok) {
-    if (response.status === 401) {
-      throw new Error(Consts.NOT_LOGIN);
-    }
+    // if (response.status === 401) {
+    //   throw new Error(Consts.NOT_LOGIN);
+    // }
 
     const content = await
     response.text();
@@ -117,7 +130,7 @@ function _logResponse(responseCode, data) {
 
 export async function getPrices(coin) {
   try {
-    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY`;
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY,PHP`;
     const response = await axios.get(url);
     const coinList = response.data;
     console.log('data:', coinList);

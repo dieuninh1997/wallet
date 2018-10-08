@@ -9,6 +9,8 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { getUserSettings } from '../../api/user/UserRequest';
+import AppConfig from '../../utils/AppConfig';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,6 +34,11 @@ export default class SettingScreen extends Component {
         emailNotification: false,
         faceId: false,
         swipeReceive: false,
+        emailVerified: AppConfig.USER_SETTING.email_verified,
+        bankAccountVerified: AppConfig.USER_SETTING.bank_account_verified,
+        identityVerified: AppConfig.USER_SETTING.identity_verified,
+        otpVerified: AppConfig.USER_SETTING.otp_verified,
+        phoneVerified: AppConfig.USER_SETTING.phone_verified,
       },
       walletId: null,
     };
@@ -39,12 +46,19 @@ export default class SettingScreen extends Component {
 
   componentDidMount = async () => {
     try {
+      const getUserSetting = await getUserSettings();
+      console.log('-------------------', getUserSetting);
+    } catch (error) {
+      console.log('<<<<<<<error<<<<', error.message);
+    }
+
+    try {
       const walletId = await AsyncStorage.getItem('address');
       this.setState({
         walletId,
       });
     } catch (error) {
-      console.log('error', error);
+      console.log('SettingScreen._error: ', error);
     }
   }
 
@@ -56,38 +70,58 @@ export default class SettingScreen extends Component {
   }
 
   _renderProfile = () => {
-    const { walletId } = this.state;
+    const { walletId, payload } = this.state;
 
     return (
       <View>
         <Text style={styles.titleTable}>{I18n.t('setting.profile')}</Text>
         <View style={styles.borderTable}>
+
           <View style={styles.borderWalletId}>
             <Text style={styles.walletID}>{I18n.t('setting.walletId')}</Text>
             <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
+
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
             <View style={styles.activiRightGroup}>
-              <Text style={styles.textVerified}>
-                {I18n.t('setting.verified')}
-              </Text>
+              {payload.emailVerified ? (
+                <Text style={styles.textVerified}>
+                  {I18n.t('setting.verified')}
+                </Text>
+              ) : (
+                <Text style={styles.textUnVerified}>
+                  {I18n.t('setting.unverified')}
+                </Text>
+              )}
+
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
                 name="chevron-right"
               />
             </View>
           </View>
+
           <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
             <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
             <View style={styles.activiRightGroup}>
-              <Text style={styles.textUnVerified}>{I18n.t('setting.unverified')}</Text>
+              {payload.phoneVerified ? (
+                <Text style={styles.textVerified}>
+                  {I18n.t('setting.verified')}
+                </Text>
+              ) : (
+                <Text style={styles.textUnVerified}>
+                  {I18n.t('setting.unverified')}
+                </Text>
+              )}
+
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
                 name="chevron-right"
               />
             </View>
           </View>
+
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
             <View style={styles.activiRightGroup}>
@@ -121,16 +155,18 @@ export default class SettingScreen extends Component {
               onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
             />
           </View>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text>U.S Dollar ($)</Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LocalCurrencyScreen')}>
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
+              <View style={styles.activiRightGroup}>
+                <Text>U.S Dollar ($)</Text>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );

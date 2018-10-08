@@ -5,7 +5,6 @@ import {
 import { CheckBox } from 'react-native-elements';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import Toast from 'react-native-root-toast';
 import bip39 from 'bip39';
 import hdkey from 'hdkey';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -65,7 +64,11 @@ export default class CreateWalletPhoneNumberScreen extends Component {
 
       navigation.navigate('MainScreen');
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 

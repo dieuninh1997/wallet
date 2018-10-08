@@ -66,15 +66,20 @@ class RestoreWalletScreen extends Component {
 
       const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
 
-      await AppPreferences.saveAccessToken(restoreAccountInfo.data.accessToken);
-      await AppPreferences.savePrivateKey(wallet.privateKey);
+      await AppPreferences.saveToKeychain('access_token', restoreAccountInfo.data.accessToken);
+      await AppPreferences.saveToKeychain('private_key', wallet.privateKey);
+
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', wallet.address);
       navigation.navigate('MainScreen');
     } catch (error) {
-      console.log('RestoreWalletScreen._error: ', error);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 

@@ -11,12 +11,20 @@ import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonColors } from '../../utils/CommonStyles';
+import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';
 
 class BackupPassphraseScreen extends Component {
+  static navigationOptions = () => ({
+    headerLeft: <View />,
+    title: I18n.t('backupPassphraseScreen.title'),
+    headerTitleStyle: CommonStyles.headerTitle,
+    headerStyle: CommonStyles.header,
+    headerRight: <View />,
+  });
+
   constructor(props) {
     super(props);
     this.state = {

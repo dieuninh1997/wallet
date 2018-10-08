@@ -44,7 +44,6 @@ class DashboardScreen extends BaseScreen {
       balances: {},
       prices: {},
       currency: 'USD',
-
       refreshing: false,
     };
   }
@@ -68,7 +67,7 @@ class DashboardScreen extends BaseScreen {
 
   getDataEventHandlers() {
     return {
-      [Events.ORDER_BOOK_SETTINGS_UPDATED]: this._loadData.bind(this)
+      [Events.ORDER_BOOK_SETTINGS_UPDATED]: this._loadData.bind(this),
     };
   }
 
@@ -84,9 +83,9 @@ class DashboardScreen extends BaseScreen {
     try {
       const response = await getUserSettings();
       const settings = response.data;
-      for (let setting of settings) {
+      for (const setting of settings) {
         if (setting.key == Consts.USER_SETTINGS.CURRENCY) {
-          this.setState({currency: setting.value});
+          this.setState({ currency: setting.value });
           break;
         }
       }
@@ -228,7 +227,7 @@ class DashboardScreen extends BaseScreen {
     };
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <Pie
             style={styles.pieContainer}
@@ -360,7 +359,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#ECEEF3',
   },
   container: {
-    marginTop: '2@s'
+    marginTop: '2@s',
   },
   sumSeriresGroup: {
     alignSelf: 'center',
@@ -373,12 +372,12 @@ const styles = ScaledSheet.create({
   sumSerires: {
     color: '#000',
     fontSize: '32@ms',
-    ...Fonts.Ubuntu_Medium
+    ...Fonts.Ubuntu_Medium,
   },
   titleBalance: {
     color: '#8d93a6',
     fontSize: '18@ms',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
   inforGroup: {
     flexDirection: 'row',
@@ -411,7 +410,7 @@ const styles = ScaledSheet.create({
     alignSelf: 'stretch',
     marginTop: '10@s',
     marginBottom: '10@s',
-    marginLeft: 0
+    marginLeft: 0,
   },
   walletContainer: {
     flex: 1,
@@ -423,7 +422,7 @@ const styles = ScaledSheet.create({
     marginRight: '20@s',
     marginTop: '20@s',
     justifyContent: 'space-between',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   walletGroup: {
     flexDirection: 'column',
@@ -465,6 +464,6 @@ const styles = ScaledSheet.create({
     resizeMode: 'contain',
     marginTop: '12@s',
     marginBottom: '12@s',
-    marginRight: '16@s'
+    marginRight: '16@s',
   },
 });

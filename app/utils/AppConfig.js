@@ -28,7 +28,7 @@ export default class AppConfig {
 
   static MNEMORIC = '';
 
-  static USER_SETTING = null;
+  static USER_SETTING = {};
 
   static dev() {
     return __DEV__ && JSON.parse(DEV);

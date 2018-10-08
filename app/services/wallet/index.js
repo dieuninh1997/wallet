@@ -10,6 +10,17 @@ const WalletService = {};
 
 const erc20Symbols = _.keys(erc20Tokens);
 
+WalletService.isValidAddress = (coin, address) => {
+  switch (coin.toLowerCase()) {
+  case 'eth':
+    return EthService.isValidAddress(address);
+  default:
+    if (_.includes(erc20Symbols, coin)) {
+      return Erc20Servcie.isValidAddress(address);
+    }
+  }
+};
+
 WalletService.importWalletFromPrivateKey = (coin, privateKey, mnemonic, password) => {
   switch (coin.toLowerCase()) {
   case 'eth':
@@ -98,6 +109,21 @@ WalletService.getTransactions = (coin, address, page, perPage) => {
       return Erc20Servcie.getTransactions(coin, address, page, perPage);
     }
     return [];
+  }
+};
+
+WalletService.getCurrentGasPrices = (coin = 'eth') => {
+  try {
+    switch (coin.toLowerCase()) {
+    case 'eth':
+      return EthService.getCurrentGasPrices();
+    default:
+      if (_.includes(erc20Symbols, coin)) {
+        return Erc20Servcie.getCurrentGasPrices();
+      }
+    }
+  } catch (error) {
+    console.log('WalletService.getCurrentGasPrices', error);
   }
 };
 

@@ -115,4 +115,8 @@ export default {
     titleForm: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
     inputPlaceholder: 'フレーズのバックアップ',
   },
+  terms: {
+    title: 'サービス規約',
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
+  },
 };

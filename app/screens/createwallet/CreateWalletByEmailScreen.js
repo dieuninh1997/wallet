@@ -58,6 +58,10 @@ export default class CreateWalletByEmailScreen extends Component {
     });
   }
 
+  _onBtnTerms = () => {
+    this.props.navigation.navigate("TermsConditionScreen");
+  }
+
   _handleChangeInput = (typeInput, value) => {
     const { createWalletInfo } = this.state;
 
@@ -186,7 +190,7 @@ export default class CreateWalletByEmailScreen extends Component {
           onPress={() => this._handleToggleCheckBox()}
         />
         <TouchableWithoutFeedback
-          onPress={() => this._handleToggleCheckBox()}
+          onPress={() => this._onBtnTerms()}
         >
           <View
             style={styles.textTermAndConditions}

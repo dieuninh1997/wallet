@@ -125,4 +125,8 @@ export default {
     titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
     inputPlaceholder: 'Backup Phrase',
   },
+  terms: {
+    title: 'Terms and Conditions',
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
+  },
 };

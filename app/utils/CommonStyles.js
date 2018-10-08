@@ -1,4 +1,5 @@
 import { scale } from '../libs/reactSizeMatter/scalingUtils';
+import { Platform } from 'react-native';
 
 class CommonColors {
   static screenBgColor = '#F5F7FA';
@@ -88,4 +89,36 @@ const CommonStyles = {
   },
 };
 
-export { CommonStyles, CommonColors, CommonSize };
+const iOSFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light'
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium'
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold'
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular'
+  }
+};
+
+const androidFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light'
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium'
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold'
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular'
+  }
+};
+
+const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
+
+export { CommonStyles, CommonColors, CommonSize, Fonts };

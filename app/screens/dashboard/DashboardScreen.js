@@ -14,6 +14,7 @@ import { Fonts } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
 import Events from '../../utils/Events';
+import UIUtils from '../../utils/UIUtils';
 import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
 
@@ -342,6 +343,7 @@ class DashboardScreen extends BaseScreen {
         {this._renderPieChart()}
         {this._renderInforData()}
         {this._renderListWallet()}
+        {UIUtils.createBottomPadding()}
       </ScrollView>
     );
   }

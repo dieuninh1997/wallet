@@ -55,4 +55,8 @@ export default class UIUtils {
   static generatePopupShadow() {
     return UIUtils.generateShadowStyle(8);
   }
+
+  static createBottomPadding() {
+    return (<View style={{width: 0, height: scale(90)}}/>)
+  }
 };

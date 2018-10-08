@@ -11,6 +11,7 @@ import _ from 'lodash';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
+import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
 import WalletService from '../../services/wallet';
@@ -119,6 +120,7 @@ class TransactionsScreen extends Component {
     return (
       <View style={styles.transactionsContainer}>
         {transactions.map(transactions => this._renderTransactonsYear(transactions))}
+        {UIUtils.createBottomPadding()}
       </View>
     );
   }

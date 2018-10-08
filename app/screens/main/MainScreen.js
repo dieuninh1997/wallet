@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, TabNavigator } from 'react-navigation';
 import { View, Image, Text } from 'react-native';
 import TransactionsScreen from '../transactions/TransactionsScreen';
 import RequestScreen from '../request/RequestScreen';
@@ -9,9 +9,10 @@ import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import MangoTabImages from '../common/MangoTabImages';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoHeader from '../common/MangoHeader';
+import MangoTabBar from '../common/MangoTabBar';
 import { CommonStyles } from '../../utils/CommonStyles';
 
-const MainScreen = createBottomTabNavigator(
+const MainScreen = TabNavigator(
   {
     DashboardScreen: {
       screen: props => <DashboardScreen {...props} />,
@@ -100,6 +101,7 @@ const MainScreen = createBottomTabNavigator(
     animationEnabled: false,
     swipeEnabled: false,
     initialRouteName: 'DashboardScreen',
+    tabBarComponent: MangoTabBar,
   },
 );
 

@@ -14,6 +14,8 @@ export function login(email, password, otp = '', login_type = 1) {
     otp,
     login_type,
   };
+  console.log('params', params);
+
   return post('/oauth/token', params);
 }
 
@@ -33,7 +35,6 @@ export function register(registerInfo = {}) {
     agree_term: 1,
     referrer_code: 1,
     mnemonic: registerInfo.mnemonic,
-    // keystore: registerInfo.keystore,
     login_type: registerInfo.login_type,
     eth_address: registerInfo.eth_address,
   };
@@ -81,15 +82,22 @@ export function restoreAccount(mnemonic) {
   return post(url, params);
 }
 
-export function getUserSettings(){
-  const url = '/user-settings';
-  const params = {
 
+export function getUserSecuritySettings() {
+  const url = '/user-security-settings';
+  const params = {
   };
   return get(url, params);
 }
 
-export function updateUserSettings(params = {}){
+export function updateUserSettings(params = {}) {
   const url = '/user-settings';
   return put(url, params);
+}
+
+export function getUserSettings() {
+  const url = '/user-settings';
+  const params = {
+  };
+  return get(url, params);
 }

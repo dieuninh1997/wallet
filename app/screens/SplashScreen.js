@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  AsyncStorage,
 } from 'react-native';
 import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
@@ -10,6 +11,7 @@ import I18n from '../i18n/i18n';
 import AppConfig from '../utils/AppConfig';
 import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
+import { getUserSecuritySettings } from '../api/user/UserRequest';
 
 export default class SplashScreen extends Component {
   static navigationOptions = () => ({
@@ -45,14 +47,27 @@ export default class SplashScreen extends Component {
 
     await initApp();
 
-    if (AppConfig.ACCESS_TOKEN) {
-      if (isEnableCodePin) {
-        navigation.navigate('LoginUsePinScreen');
-        return;
+    try {
+      if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
+        let userSetting = await AsyncStorage.getItem('userSetting');
+        if (!userSetting) {
+          const response = await getUserSecuritySettings();
+          userSetting = response.data;
+          await AsyncStorage.setItem('userSetting', JSON.stringify(userSetting));
+        }
+        AppConfig.USER_SETTING = JSON.parse(userSetting);
+        console.log('userSetting', AppConfig.USER_SETTING);
+
+        if (isEnableCodePin) {
+          navigation.navigate('LoginUsePinScreen');
+          return;
+        }
+        navigation.navigate('LoginScreen');
+      } else {
+        navigation.navigate('LandingScreen');
       }
-      navigation.navigate('LoginScreen');
-    } else {
-      navigation.navigate('LandingScreen');
+    } catch (error) {
+      console.log('SplashScreen._initMangoApp._error: ', error);
     }
   }
 

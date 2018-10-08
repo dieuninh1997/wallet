@@ -7,9 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
-  Alert,
 } from 'react-native';
-import Toast from 'react-native-root-toast';
 import TouchID from 'react-native-touch-id';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
@@ -53,20 +51,22 @@ class LoginScreen extends Component {
   _handleClickLogin = async () => {
     const { loginInfo } = this.state;
     const { navigation } = this.props;
-
     const { email, password } = loginInfo;
 
     try {
       const responseUser = await login(email, password);
       console.log('responseUser', responseUser);
 
-      AppPreferences.saveAccessToken(responseUser.access_token);
+      AppPreferences.saveToKeychain('access_token', responseUser.access_token);
       window.GlobalSocket.connect();
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen');
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
-      console.log('LoginRequest._error: ', error);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 

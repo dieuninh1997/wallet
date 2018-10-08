@@ -26,30 +26,35 @@ async function initApp() {
 async function initI18n() {
   try {
     const result = await AsyncStorage.getItem('user_locale');
-    I18n.locale = result;
+    I18n.locale = result || 'en';
   } catch (error) {
-    console.log('error');
+    console.log('App.initI18n._error: ', error);
   }
 }
 
 async function initMasterdata() {
-  const credentials = await AppPreferences.getGeneric();
+  try {
+    const credentials = await AppPreferences.getGeneric();
 
-  const keychain = credentials.password;
-  const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
-  const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;
-  const parseMnemoric = keychain && keychain.includes('mnemoric') ? JSON.parse(keychain).mnemoric : null;
+    const keychain = credentials.password;
+    const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
+    const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;
+    const parseMnemoric = keychain && keychain.includes('mnemoric') ? JSON.parse(keychain).mnemoric : null;
 
-  AppConfig.ACCESS_TOKEN = parseAccessToken;
-  AppConfig.PRIVATE_KEY = parsePrivateKey;
-  AppConfig.MNEMORIC = parseMnemoric;
+    AppConfig.ACCESS_TOKEN = parseAccessToken;
+    AppConfig.PRIVATE_KEY = parsePrivateKey;
+    AppConfig.MNEMORIC = parseMnemoric;
 
-  window.GlobalSocket = new GlobalSocket();
+    window.GlobalSocket = new GlobalSocket();
 
-  if (__DEV__) {
-    console.log(`API Server: ${AppConfig.getApiServer()}`);
-    console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
-    console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
+    if (__DEV__) {
+      console.log(`API Server: ${AppConfig.getApiServer()}`);
+      console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
+      console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
+      console.log(`MNEMORIC: ${AppConfig.MNEMORIC}`);
+    }
+  } catch (error) {
+    console.log('App.initMasterdata._error: ', error);
   }
 }
 

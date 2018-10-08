@@ -57,8 +57,6 @@ class SendScreen extends Component {
         <View style={styles.inputCoinValue}>
           <Text style={styles.inputTextLabel}>MGC</Text>
           <TextInput
-            onFocus={() => this._handleForcusTextInput()}
-            onBlur={() => this._handleBlurTextInput()}
             keyboardType="numeric"
             editable
             placeholder="0.0000"
@@ -74,8 +72,6 @@ class SendScreen extends Component {
         >
           <Text style={styles.inputTextLabel}>USD</Text>
           <TextInput
-            onFocus={() => this._handleForcusTextInput()}
-            onBlur={() => this._handleBlurTextInput()}
             editable
             keyboardType="numeric"
             placeholder="0.0000"

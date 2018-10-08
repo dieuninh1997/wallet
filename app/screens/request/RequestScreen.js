@@ -33,14 +33,15 @@ class RequestScreen extends Component {
     });
   }
 
-  _onSharePress() {
+  _onSharePress = () => {
     const { walletAddress } = this.state;
     const options = {
       message: walletAddress,
     };
+
     Share.open(options)
-      .then((res) => {})
-      .catch((err) => {});
+      .then(() => {})
+      .catch(() => {});
   }
 
   _handleCopyAddress = () => {
@@ -75,7 +76,7 @@ class RequestScreen extends Component {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.btnUpContainer}
-        onPress={this._onSharePress.bind(this)}
+        onPress={() => this._onSharePress()}
       >
         <Image
           source={require('../../../assets/up/up-arrow.png')}

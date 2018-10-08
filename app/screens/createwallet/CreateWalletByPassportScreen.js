@@ -71,13 +71,13 @@ export default class CreateWalletByPassportScreen extends Component {
     const { isChecked, createWalletInfo } = this.state;
 
     try {
-      // if (!isChecked) {
-      //   throw new Error('Please read and accept terms and conditions!');
-      // }
+      if (!isChecked) {
+        throw new Error('Please read and accept terms and conditions!');
+      }
 
-      // if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
-      //   throw new Error('Password must match password confirmation!');
-      // }
+      if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
+        throw new Error('Password must match password confirmation!');
+      }
 
       const { privateKey, address, mnemonic } = EthService.generateWallet();
 
@@ -100,9 +100,10 @@ export default class CreateWalletByPassportScreen extends Component {
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
-      await AppPreferences.saveAccessToken(loginInfo.access_token);
-      await AppPreferences.savePrivateKey(privateKey);
-      await AppPreferences.saveMnemoric(mnemonic);
+      await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
+      await AppPreferences.saveToKeychain('private_key', privateKey);
+      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+
       await AsyncStorage.setItem('address', address);
       AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
 
@@ -110,7 +111,11 @@ export default class CreateWalletByPassportScreen extends Component {
         navigation.navigate('BackupPassphraseScreen');
       }, 1000);
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 

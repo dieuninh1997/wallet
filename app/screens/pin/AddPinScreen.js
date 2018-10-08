@@ -10,8 +10,8 @@ import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = ({navigation}) => ({
-    headerLeft: <MangoBackButton navigation={navigation} screen={'SettingScreen'}/>,
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} screen="SettingScreen" />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -113,7 +113,7 @@ export default class AddPinScreen extends Component {
     try {
       const { navigation } = this.props;
 
-      await AppPreferences.saveCodePin(codePin);
+      await AppPreferences.saveToKeychain('pin', codePin);
       AppPreferences.showToastMessage(I18n.t('addPinScreen.createPinSuccess'));
       setTimeout(() => {
         navigation.navigate('MainScreen');
@@ -194,12 +194,12 @@ const styles = ScaledSheet.create({
     borderRadius: '40@s',
     borderWidth: '12@s',
     borderColor: '#f1cf00',
-    flexDirection: 'row', 
+    flexDirection: 'row',
     height: '80@s',
     paddingBottom: '30@s',
     width: '300@s',
     marginBottom: '70@s',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
   },
   pincodeRowButton: {

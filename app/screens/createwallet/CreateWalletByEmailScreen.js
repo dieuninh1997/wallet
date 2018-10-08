@@ -106,9 +106,15 @@ export default class CreateWalletByEmailScreen extends Component {
       await register(registerInfo);
 
       const loginInfo = await login(registerInfo.email, registerInfo.password);
-      await AppPreferences.saveAccessToken(loginInfo.access_token);
-      await AppPreferences.savePrivateKey(privateKey);
-      await AppPreferences.saveMnemoric(mnemonic);
+
+      await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
+      await AppPreferences.saveToKeychain('private_key', privateKey);
+      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+
+      AppConfig.PRIVATE_KEY = privateKey;
+      AppConfig.MNEMORIC = mnemonic;
+      AppConfig.ACCESS_TOKEN = loginInfo.access_token;
+
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
@@ -119,7 +125,11 @@ export default class CreateWalletByEmailScreen extends Component {
         navigation.navigate('BackupPassphraseScreen');
       }, 1000);
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 

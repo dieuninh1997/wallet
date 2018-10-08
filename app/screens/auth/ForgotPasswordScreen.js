@@ -13,7 +13,7 @@ import AppPreferences from '../../utils/AppPreferences';
 
 export default class ForgotPasswordScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: AppConfig.ACCESS_TOKEN ? <View /> : <MangoBackButton navigation={navigation} />,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('resetPassword.forgotPassword'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -105,22 +105,25 @@ export default class ForgotPasswordScreen extends Component {
 
 const styles = ScaledSheet.create({
   forgotPassword: {
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
+    backgroundColor: 'rgb(245, 247, 250)',
   },
   inputContainer: {
-    marginTop: '50@s',
-    borderRadius: '25@s',
-    backgroundColor: CommonColors.screenBgColor,
-    borderColor: CommonColors.customBorderColor,
+    marginTop: '52@s',
+    borderRadius: '28@s',
+    backgroundColor: 'rgb(255, 255, 255)',
+    borderColor: 'rgb(202, 209, 219)',
     width: '90%',
+    height: '56@s',
     flexDirection: 'row',
+    borderWidth: 1,
   },
   emailIcon: {
-    width: '24@s',
-    height: '24@s',
-    marginTop: '10@s',
-    marginLeft: '12@s',
+    width: '23@s',
+    height: '23@s',
+    marginTop: '16.5@s',
+    marginLeft: '25@s',
   },
   inputText: {
     fontSize: '18@s',
@@ -129,8 +132,9 @@ const styles = ScaledSheet.create({
     marginLeft: '10@s',
   },
   btnResetPassword: {
-    marginTop: '50@s',
-    width: '220@s',
+    marginTop: '27@s',
+    width: '247@s',
+    height: '48@s',
     marginBottom: '20@s',
   },
   messageSuccess: {

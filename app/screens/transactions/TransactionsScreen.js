@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
 import _ from 'lodash';
@@ -122,6 +123,11 @@ class TransactionsScreen extends Component {
     );
   }
 
+  _showTransactionDetail = (transaction) => {
+    const { navigation } = this.props;
+    navigation.navigate('TransactionDetailScreen', transaction);
+  }
+
   _renderTransactonsYear = (transactions) => {
     const { address } = this.state;
     const images = [
@@ -139,35 +145,37 @@ class TransactionsScreen extends Component {
   }
 
   _renderTransactonsItem = (transaction, index, images, address) => (
-    <View key={index} style={styles.transactionItemContainer}>
-      <View style={styles.transactionImageContainer}>
-        <Image
-          source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
-          style={styles.transactionImageItem}
-        />
+    <TouchableOpacity key={index} onPress={() => this._showTransactionDetail(transaction)}>
+      <View style={styles.transactionItemContainer}>
+        <View style={styles.transactionImageContainer}>
+          <Image
+            source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
+            style={styles.transactionImageItem}
+          />
+        </View>
+        <View style={styles.transactionInfoContainer}>
+          <Text>
+            {Moment(transaction.time).format('MMM DD hh:mm')}
+            {' '}
+          </Text>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="middle"
+            style={styles.addressInfo}
+          >
+            {transaction.id}
+          </Text>
+        </View>
+        <View style={styles.transactionValueItem}>
+          <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
+            {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
+            {transaction.value}
+            {' '}
+            {'ETH'}
+          </Text>
+        </View>
       </View>
-      <View style={styles.transactionInfoContainer}>
-        <Text>
-          {Moment(transaction.time).format('MMM DD hh:mm')}
-          {' '}
-        </Text>
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="middle"
-          style={styles.addressInfo}
-        >
-          {transaction.id}
-        </Text>
-      </View>
-      <View style={styles.transactionValueItem}>
-        <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
-          {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
-          {transaction.value}
-          {' '}
-          {'ETH'}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   )
 
   render() {

@@ -60,11 +60,15 @@ class DashboardScreen extends React.Component {
     });
   }
 
-  _loadData = async () => {
+  async _loadData() {
     await Promise.all([
       this._loadPrices(),
       this._loadBalances()
     ]);
+  }
+
+  async _loadUserSettings() {
+
   }
 
   async _loadPrices() {
@@ -104,16 +108,13 @@ class DashboardScreen extends React.Component {
   }
 
   _getDisplayPrice(coin) {
-    if (coin == WALLET_COIN) {
-      let currency = this.state.currency;
-      let price = this._getPrice(coin);
-      if (price) {
-        return this._getCurrencySymbol() + ' ' + formatCoin(price, currency);
-      } else {
-        return price;
-      }
+    let currency = this.state.currency;
+    let price = this._getPrice(coin);
+    if (price) {
+      return this._getCurrencySymbol() + ' ' + formatCoin(price, currency);
+    } else {
+      return price;
     }
-    return this._getDisplayObject(coin).PRICE || '';
   }
 
   _getDisplayPC(coin) {

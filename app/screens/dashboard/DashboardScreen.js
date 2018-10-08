@@ -8,9 +8,12 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getPrices } from '../../api/common/BaseRequest';
+import { getUserSettings } from '../../api/user/UserRequest';
 import { formatCoin, getCoinName, getCoinFullName } from '../../utils/Filters';
 import AppPreferences from '../../utils/AppPreferences';
+import Events from '../../utils/Events';
 import WalletService from '../../services/wallet';
+import BaseScreen from '../BaseScreen';
 
 const { width } = Dimensions.get('window');
 const CURRENCY_SYMBOLS = {
@@ -27,7 +30,7 @@ const COIN_COLORS = {
   ETH: '#2650BF'
 };
 
-class DashboardScreen extends React.Component {
+class DashboardScreen extends BaseScreen {
   static _updateCoinValue = (newValue = []) => {
     // console.log('DashboardScreen', newValue);
   }
@@ -53,14 +56,21 @@ class DashboardScreen extends React.Component {
     await this._loadData();
     const socket = SocketIOClient('https://streamer.cryptocompare.com/');
     const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
-    socket.emit('SubAdd', { subs: subscription });
-    socket.on('m', (message) => {
-      const newValue = message.split('~');
-      DashboardScreen._updateCoinValue(newValue);
-    });
+    // socket.emit('SubAdd', { subs: subscription });
+    // socket.on('m', (message) => {
+    //   const newValue = message.split('~');
+    //   DashboardScreen._updateCoinValue(newValue);
+    // });
+  }
+
+  getDataEventHandlers() {
+    return {
+      [Events.ORDER_BOOK_SETTINGS_UPDATED]: this._loadData.bind(this)
+    };
   }
 
   async _loadData() {
+    await this._loadUserSettings();
     await Promise.all([
       this._loadPrices(),
       this._loadBalances()
@@ -68,7 +78,19 @@ class DashboardScreen extends React.Component {
   }
 
   async _loadUserSettings() {
-
+    try {
+      const response = await getUserSettings();
+      const settings = response.data;
+      console.log('settings' , settings);
+      for (let setting of settings) {
+        if (setting.key == Consts.USER_SETTINGS.CURRENCY) {
+          this.setState({currency: setting.value});
+          break;
+        }
+      }
+    } catch (e) {
+      console.log('DashboardScreen._loadUserSettings', e);
+    }
   }
 
   async _loadPrices() {

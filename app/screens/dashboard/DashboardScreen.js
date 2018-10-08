@@ -218,23 +218,26 @@ class DashboardScreen extends BaseScreen {
     ];
 
     const options = {
-      width: scale(350),
-      height: scale(350),
+      width: scale(335),
+      height: scale(335),
       animate: {
         enabled: false,
       },
     };
 
     return (
-      <View style={styles.container}>
-        <Pie
-          style={styles.pieContainer}
-          data={data}
-          options={options}
-          accessorKey="population"
-          r={scale(120)}
-          R={scale(150)}
-        />
+      <View style={{flex: 1}}>
+        <View style={styles.container}>
+          <Pie
+            style={styles.pieContainer}
+            data={data}
+            options={options}
+            accessorKey="population"
+            r={scale(105)}
+            R={scale(135)}
+          />
+        </View>
+        {this._renderSumSerires()}
       </View>
     );
   }
@@ -282,7 +285,7 @@ class DashboardScreen extends BaseScreen {
         </View>
 
         <View>
-          <Image source={require('../../../assets/right-arrow/right-arrow.png')} style={styles.imgArrowRight} />
+          <Image source={require('../../../assets/dash-board-tab/chart.png')} style={styles.chart} />
         </View>
       </View>
     );
@@ -327,6 +330,7 @@ class DashboardScreen extends BaseScreen {
     return (
       <ScrollView
         contentContainerStyle={styles.dashboardScreen}
+        showsHorizontalScrollIndicator={false}
         refreshControl={(
           <RefreshControl
             refreshing={refreshing}
@@ -335,7 +339,6 @@ class DashboardScreen extends BaseScreen {
         )}
       >
         {this._renderPieChart()}
-        {this._renderSumSerires()}
         {this._renderInforData()}
         {this._renderListWallet()}
       </ScrollView>
@@ -347,29 +350,35 @@ export default DashboardScreen;
 
 const styles = ScaledSheet.create({
   dashboardScreen: {
+    width: '100%',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ECEEF3',
   },
+  container: {
+    marginTop: '2@s'
+  },
   sumSeriresGroup: {
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '150@s',
+    marginTop: '132@s',
     zIndex: 3,
   },
   sumSerires: {
-    color: '#1D42B4',
+    color: '#000',
     fontWeight: '500',
-    fontSize: '28@s',
+    fontSize: '32@ms',
   },
   titleBalance: {
-    color: '#A1A6B5',
-    fontSize: '18@s',
+    color: '#8d93a6',
+    fontSize: '18@ms',
   },
   inforGroup: {
     flexDirection: 'row',
-    marginTop: '10@s',
+    marginTop: -scale(5),
   },
   itemGroup: {
     flexDirection: 'column',
@@ -382,51 +391,58 @@ const styles = ScaledSheet.create({
     borderRadius: '10@s',
   },
   itemCount: {
-    color: '#000',
+    color: '#26304d',
     fontSize: '14@s',
-    fontWeight: '500',
-    marginTop: '5@s',
-    marginBottom: '5@s',
+    fontWeight: '600',
+    marginTop: '8@s',
+    marginBottom: '2@s',
   },
   itemCountCoin: {
-    color: '#474F66',
+    color: '#26304d',
     fontSize: '15@s',
   },
   listWallet: {
+    flexDirection: 'column',
+    alignSelf: 'stretch',
     marginTop: '10@s',
     marginBottom: '10@s',
+    marginLeft: 0
   },
   walletContainer: {
-    width: width - scale(20),
-    backgroundColor: '#FFF',
-    height: '80@s',
+    flex: 1,
+    height: '101@s',
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: '5@s',
-    paddingLeft: '20@s',
-    paddingRight: '20@s',
+    borderRadius: '8@s',
+    marginLeft: '20@s',
+    marginRight: '20@s',
     marginTop: '20@s',
     justifyContent: 'space-between',
+    backgroundColor: '#FFF'
   },
   walletGroup: {
     flexDirection: 'column',
+    marginLeft: '16@s',
   },
   walletFullname: {
-    color: '#707688',
-    fontSize: '13@s',
+    color: '#26304d',
+    fontSize: '14@ms',
   },
   walletPrice: {
-    color: '#2A334D',
-    fontSize: '17@s',
+    color: '#26304d',
+    fontSize: '20@ms',
+    fontWeight: '600',
+    marginTop: '3@s',
+    marginBottom: '3@s'
   },
   walletPriceUp: {
-    color: '#7DBF44',
-    fontSize: '11@s',
+    color: '#7fbf36',
+    fontSize: '14@ms',
     marginLeft: '7@s',
   },
   walletPriceDown: {
     color: '#D30023',
-    fontSize: '11@s',
+    fontSize: '14@ms',
     marginLeft: '7@s',
   },
   changeGroup: {
@@ -437,8 +453,10 @@ const styles = ScaledSheet.create({
     width: '11@s',
     height: '11@s',
   },
-  imgArrowRight: {
-    width: '30@s',
-    height: '30@s',
+  chart: {
+    resizeMode: 'contain',
+    marginTop: '12@s',
+    marginBottom: '12@s',
+    marginRight: '16@s'
   },
 });

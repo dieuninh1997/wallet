@@ -61,7 +61,7 @@ export default class MangoTabBar extends Component {
 const styles = ScaledSheet.create({
   tabbar: {
     width: '100%',
-    height: '99@s',
+    height: '119@s',
     position: 'absolute',
     left: 0,
     right: 0,
@@ -69,13 +69,15 @@ const styles = ScaledSheet.create({
     backgroundColor: '#0000'
   },
   background: {
+    flex: 1,
     width: '100%',
-    height: '100%',
+    marginTop: '20@s',
     backgroundColor: '#0000'
   },
   tabs: {
+    flex: 1,
     width: '100%',
-    height: '100%',
+    marginTop: '20@s',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

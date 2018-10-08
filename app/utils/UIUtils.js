@@ -27,6 +27,7 @@ export default class UIUtils {
     if (Platform.OS === 'ios') {
         return UIUtils.isIphoneX() ? scale(17) : 0;
     }
+    return 0;
   }
 
   static getIphoneXBottomInsetHeight() {

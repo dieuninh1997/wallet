@@ -102,6 +102,7 @@ const MainScreen = TabNavigator(
     swipeEnabled: false,
     initialRouteName: 'DashboardScreen',
     tabBarComponent: MangoTabBar,
+    tabBarPosition: 'bottom',
   },
 );
 

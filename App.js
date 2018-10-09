@@ -36,7 +36,7 @@ async function initMasterdata() {
   try {
     const tokenSaved = await AsyncStorage.getItem('token_saved');
     console.log('tokenSaved', tokenSaved);
-    if (tokenSaved === 'false') {
+    if (tokenSaved !== 'true') {
       await AppPreferences.removeAccessToken();
       window.GlobalSocket = new GlobalSocket();
     } else {

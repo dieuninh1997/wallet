@@ -12,8 +12,9 @@ import AppConfig from '../utils/AppConfig';
 import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
 import { getUserSecuritySettings } from '../api/user/UserRequest';
+import BaseScreen from './BaseScreen';
 
-export default class SplashScreen extends Component {
+export default class SplashScreen extends BaseScreen {
   static navigationOptions = () => ({
     header: null,
   })
@@ -59,7 +60,7 @@ export default class SplashScreen extends Component {
         console.log('userSetting', AppConfig.USER_SETTING);
 
         if (isEnableCodePin) {
-          navigation.navigate('LoginUsePinScreen');
+          this.navigateAndClearStack('LoginUsePinScreen');
           return;
         }
         navigation.navigate('LoginScreen');

@@ -5,7 +5,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { CommonSize } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
-
+import I18n from '../../i18n/i18n';
 
 export default class LoginUsePinScreen extends Component {
   static navigationOptions = () => ({
@@ -58,7 +58,7 @@ export default class LoginUsePinScreen extends Component {
         <View style={styles.containerPassword} />
         <PINCode
           status="enter"
-          passwordLength={4}
+          passwordLength={6}
           pinStatus={isShowError ? 'failure' : 'initial'}
           storePin={(value) => { console.log('ma pin:', value); }}
           handleResultEnterPin={value => this._checkValuePin(value)}
@@ -77,6 +77,12 @@ export default class LoginUsePinScreen extends Component {
           stylePinCodeRowButtons={styles.pincodeRowButton}
           stylePinCodeTextButtonCircle={styles.textButtonCircle}
           stylePinCodeHiddenPasswordCircle={styles.borderPassword}
+          titleEnter={I18n.t('loginUserPin.enterPincode')}
+          titleAttemptFailed={I18n.t('loginUserPin.incorrectPincode')}
+          subtitleError={I18n.t('loginUserPin.pleaseAgain')}
+          stylePinCodeTextTitle={styles.pincodeTitle}
+          stylePinCodeColorTitle="#26304c"
+          stylePinCodeDeleteButtonColorHideUnderlay="#000"
           touchIDDisabled
         />
       </View>
@@ -138,19 +144,17 @@ const styles = ScaledSheet.create({
   },
   containerPassword: {
     width: '100%',
-    height: '175@s',
+    height: '184@s',
     position: 'absolute',
     backgroundColor: '#fcd800',
   },
   borderPassword: {
     backgroundColor: '#ffffff',
-    borderRadius: '40@s',
-    borderWidth: '12@s',
-    borderColor: '#f1cf00',
     flexDirection: 'row',
-    height: '80@s',
-    paddingBottom: '30@s',
-    width: '300@s',
+    height: '74@s',
+    borderRadius: '37@s',
+    paddingBottom: '27@s',
+    width: '319@s',
     marginBottom: '70@s',
     justifyContent: 'center',
     alignItems: 'center',
@@ -163,4 +167,8 @@ const styles = ScaledSheet.create({
     fontWeight: '400',
     color: '#26304c',
   },
+  pincodeTitle: {
+    fontSize: '16@ms', 
+    textAlign: 'center',
+  }
 });

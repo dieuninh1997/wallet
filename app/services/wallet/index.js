@@ -103,7 +103,7 @@ WalletService.sendTransaction = (coin, sendAddress, receiveAddress, privateKey, 
 WalletService.getTransactions = (coin, address, page, perPage) => {
   switch (coin.toLowerCase()) {
   case 'eth':
-    return EthService.getTransactions(address);
+    return EthService.getTransactions(address, page, perPage);
   default:
     if (_.includes(erc20Symbols, coin)) {
       return Erc20Servcie.getTransactions(coin, address, page, perPage);

@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
 import _ from 'lodash';
@@ -21,7 +22,11 @@ class TransactionsScreen extends Component {
     super(props);
     this.state = {
       transactions: [],
-      address: '0xd007d3bE383aA5c890B4728e570ddC9D05BcC021',
+      address: '0x5c7738b67a3403f349782244e59e776ddb3581c3',
+      page: 1,
+      coinName: 'mgc4',
+      perPage: 10,
+      isProcess: false,
     };
   }
 
@@ -37,22 +42,10 @@ class TransactionsScreen extends Component {
   // }
 
   componentDidMount = async () => {
-    const { address } = this.state;
-    try {
-      const transactions = await WalletService.getTransactions('mgc4', address, 1, 20);
-      console.log('TransactionsScreen: ', transactions);
+    const { address, coinName } = this.state;
 
-      const groupedByYear = _.groupBy(transactions, (item) => {
-        const d = new Date(item.time);
-        return d.getFullYear();
-      });
+    await this._getTransactions(coinName, address, this.state.page, this.state.perPage);
 
-      this.setState({
-        transactions: _.map(groupedByYear, (value, prop) => ({ year: prop, data: value })),
-      });
-    } catch (error) {
-      console.log('TransactionsScreen._error: ', error);
-    }
     const socketEventHandlers = this.getSocketEventHandlers();
     for (const event in socketEventHandlers) {
       const handler = socketEventHandlers[event];
@@ -72,6 +65,38 @@ class TransactionsScreen extends Component {
     //   }
     //   );
     // }
+  }
+
+  _getTransactions = async (coin, address, page, perPage, isFirst = true) => {
+    try {
+      const transactions = await WalletService.getTransactions(coin, address, page, perPage);
+      console.log('TransactionsScreen.transactions =====>: ', transactions);
+      this.setState({
+        isProcess: false,
+      });
+
+      if (!transactions.length) {
+        return;
+      }
+
+      let datas = transactions;
+      if (!isFirst) {
+        const transactionsOrigin = _.map(this.state.transactions, (item) => item.data);
+        datas = _.concat(_.flattenDeep(transactionsOrigin), transactions);
+      }
+
+      const groupedByYear = _.groupBy(datas, (item) => {
+        const d = new Date(item.time);
+        return d.getFullYear();
+      });
+
+      this.setState({
+        transactions: _.map(groupedByYear, (value, prop) => ({ year: prop, data: value })),
+        page: isFirst ? 1 : page,
+      });
+    } catch (error) {
+      console.log('TransactionsScreen._error: ', error);
+    }
   }
 
   componentWillUnmount = () => {
@@ -107,6 +132,17 @@ class TransactionsScreen extends Component {
     // this._loadData();
   }
 
+  _getMoreData = () => {
+    const { page, address, isProcess, coinName } = this.state;
+    if (isProcess) {
+      return;
+    }
+    this.setState({
+      isProcess: true,
+    });
+    this._getTransactions(coinName, address, page + 1, this.state.perPage, false);
+  }
+
   getDataEventHandlers = () => ({})
 
   notify = (event, data) => {
@@ -132,27 +168,33 @@ class TransactionsScreen extends Component {
 
   _renderTransactonsYear = (transactions) => {
     const { address } = this.state;
-    const images = [
-      require('../../../assets/send/right-arrow.png'),
-      require('../../../assets/recieved/left-arrow.png'),
-      require('../../../assets/loadding/rotate.png'),
-    ];
 
     return (
       <View key={transactions.year}>
         <Text style={styles.textYear}>{ transactions.year }</Text>
-        {transactions.data.map((transaction, index) => this._renderTransactonsItem(transaction, index, images, address))}
+        <FlatList
+          data={transactions.data}
+          renderItem={({item}) => this._renderTransactonsItem(item, address)}
+        />
       </View>
     );
   }
 
-  _renderTransactonsItem = (transaction, index, images, address) => (
-    <TouchableOpacity key={index} onPress={() => this._showTransactionDetail(transaction)}>
+  _showIconStatus = (transaction, address) => {
+    const images = [
+      require('../../../assets/send/sent.png'),
+      require('../../../assets/recieved/received.png'),
+    ];
+    return transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0];
+  }
+
+  _renderTransactonsItem = (transaction, address) => (
+    <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction)}>
       <View style={styles.transactionItemContainer}>
         <View style={styles.transactionImageContainer}>
           <Image
-            source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
-            style={styles.transactionImageItem}
+            source={this._showIconStatus(transaction, address)}
+            style={[styles.transactionImageItem, transaction.status === 'CONFIRMED' ? '' : styles.blurImage]}
           />
         </View>
         <View style={styles.transactionInfoContainer}>
@@ -187,6 +229,13 @@ class TransactionsScreen extends Component {
         <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
+          onScroll={(e) => {
+            let paddingToBottom = 10;
+            paddingToBottom += e.nativeEvent.layoutMeasurement.height;
+            if(e.nativeEvent.contentOffset.y > e.nativeEvent.contentSize.height - paddingToBottom) {
+              this._getMoreData();
+            }
+          }}
         >
           {transactions && transactions.length ? this._renderTransactonsList() : null}
         </ScrollView>
@@ -218,15 +267,17 @@ const styles = ScaledSheet.create({
 
   textYear: {
     fontWeight: 'bold',
-    fontSize: '28@s',
+    fontSize: '32@s',
     color: CommonColors.headerTitleColor,
+    marginTop: '13@s',
+    marginBottom: '13@s',
   },
 
   transactionItemContainer: {
     flexDirection: 'row',
     width: '340@s',
-    borderBottomWidth: 1,
-    borderBottomColor: CommonColors.customBorderColor,
+    borderTopWidth: 1,
+    borderTopColor: CommonColors.customBorderColor,
     paddingVertical: '12@s',
   },
 
@@ -237,8 +288,12 @@ const styles = ScaledSheet.create({
   },
 
   transactionImageItem: {
-    width: '20@s',
-    height: '20@s',
+    width: '32@s',
+    height: '32@s',
+  },
+
+  blurImage: {
+    opacity: 0.3,
   },
 
   transactionInfoContainer: {

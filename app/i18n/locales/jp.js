@@ -97,9 +97,15 @@ export default {
     toastConfirmPassword: 'パスワードが一致しません',
     changeSuccess: 'Change password success',
   },
-  addPinScreen: {
+  ChangePinScreen: {
     title: 'Change PIN',
-    createPinSuccess: 'Create pin code success',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
   genneralText: {
     back: 'Back',
@@ -131,4 +137,9 @@ export default {
     title: 'サービス規約',
     content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
   },
+  loginUserPin: {
+    enterPincode: 'PINを入力して下さい',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+  }
 };

@@ -97,9 +97,15 @@ export default {
     toastConfirmPassword: 'Confirm password is incorrect',
     changeSuccess: 'Change password success',
   },
-  addPinScreen: {
+  ChangePinScreen: {
     title: 'Change PIN',
-    createPinSuccess: 'Create pin code success',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
   genneralText: {
     back: 'Back',
@@ -127,4 +133,9 @@ export default {
     titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
     inputPlaceholder: 'Backup Phrase',
   },
+  loginUserPin: {
+    enterPincode: 'Enter your PIN code',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+  }
 };

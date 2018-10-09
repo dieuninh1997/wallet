@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TextInput, Clipboard, Linking } from 'react-native';
+import {
+  View, Text, Image, TextInput, Clipboard, Linking,
+} from 'react-native';
+import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import AppConfig from '../../utils/AppConfig';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
-import Moment from 'moment';
 import MangoGradientButton from '../common/MangoGradientButton';
 import AppPreferences from '../../utils/AppPreferences';
 
 export default class TransactionDetailScreen extends Component {
-
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('transactionDetail.transactionDetail'),
     headerTitleStyle: CommonStyles.headerTitle,
@@ -48,96 +49,116 @@ export default class TransactionDetailScreen extends Component {
   render() {
     const { transaction } = this.state;
 
-    return <View style={styles.transactionDetail}>
-      <View style={styles.transactionDetailContent}>
-        <View style={styles.transactionHeader}>
-          <View style={styles.coinIconHeader}>
-            <Image
-              source={require('../../../assets/mango-coin/mangocoin.png')}
-              style={styles.iconHeader}
-            />
+    return (
+      <View style={styles.transactionDetail}>
+        <View style={styles.transactionDetailContent}>
+          <View style={styles.transactionHeader}>
+            <View style={styles.coinIconHeader}>
+              <Image
+                source={require('../../../assets/mango-coin/mangocoin.png')}
+                style={styles.iconHeader}
+              />
+            </View>
+            <View style={styles.coinInfoHeader}>
+              <Text style={styles.fontText}>MGC</Text>
+              <Text>MangoCoin</Text>
+            </View>
           </View>
-          <View style={styles.coinInfoHeader}>
-            <Text style={styles.fontText}>MGC</Text>
-            <Text>MangoCoin</Text>
+
+          <View style={styles.transactionContentFirst}>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.amount')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent}>
+                  {'+'}
+                  {transaction.value}
+                  {' MGC'}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.status')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent}>{ transaction.status }</Text>
+              </View>
+            </View>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.confirmation')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent}>{transaction.confirmations}</Text>
+              </View>
+            </View>
           </View>
+
+          <View style={styles.transactionContentSecond}>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.address')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent} numberOfLines={1} ellipsizeMode="middle">{ transaction.sendAddress }</Text>
+              </View>
+            </View>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.txid')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent} numberOfLines={1} ellipsizeMode="middle">{ transaction.id }</Text>
+              </View>
+            </View>
+            <View style={styles.amount}>
+              <View style={styles.left}>
+                <Text style={styles.label}>
+                  {I18n.t('genneralText.date')}
+:
+                </Text>
+              </View>
+              <View style={styles.right}>
+                <Text style={styles.valueContent}>{Moment(transaction.time).format('YYYY-MM-DD HH:mm:ss')}</Text>
+              </View>
+            </View>
+          </View>
+
         </View>
 
-        <View style={styles.transactionContentFirst}>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.amount')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent}>
-              {'+'}
-              {transaction.value}
-              {' MGC'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.status')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent}>{ transaction.status }</Text>
-            </View>
-          </View>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.confirmation')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent}>{transaction.confirmations}</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.transactionContentSecond}>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.address')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent}  numberOfLines={1} ellipsizeMode="middle">{ transaction.sendAddress }</Text>
-            </View>
-          </View>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.txid')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent} numberOfLines={1} ellipsizeMode="middle">{ transaction.id }</Text>
-            </View>
-          </View>
-          <View style={styles.amount}>
-            <View style={styles.left}>
-              <Text style={styles.label}>{I18n.t('genneralText.date')}:</Text>
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.valueContent}>{Moment(transaction.time).format('YYYY-MM-DD HH:mm:ss')}</Text>
-            </View>
-          </View>
+        <View style={styles.transactionBottom}>
+          <MangoGradientButton
+            btnText={I18n.t('transactionDetail.copy_txid')}
+            btnStyle={styles.btnCopyTxid}
+            colorOptions={['#ffffff', '#ffffff', '#ffffff']}
+            onPress={() => this._handleCopyTxid()}
+          />
+          <MangoGradientButton
+            btnText={I18n.t('transactionDetail.check_export')}
+            btnStyle={styles.btnCheckExport}
+            onPress={() => this._handleCheckExport()}
+          />
         </View>
 
       </View>
-
-      <View style={styles.transactionBottom}>
-      <MangoGradientButton
-        btnText={I18n.t('transactionDetail.copy_txid')}
-        btnStyle={styles.btnCopyTxid}
-        colorOptions = {['#ffffff', '#ffffff', '#ffffff']}
-        onPress={() => this._handleCopyTxid()}
-      />
-      <MangoGradientButton
-        btnText={I18n.t('transactionDetail.check_export')}
-        btnStyle={styles.btnCheckExport}
-        onPress={() => this._handleCheckExport()}
-      />
-      </View>
-
-    </View>
+    );
   }
 }
 

@@ -1,14 +1,14 @@
 export default {
   coin: {
     MGC: {
-      fullname: 'MangoCoin'
+      fullname: 'MangoCoin',
     },
     BTC: {
-      fullname: 'Bitcoin'
+      fullname: 'Bitcoin',
     },
     ETH: {
-      fullname: 'Ethereum'
-    }
+      fullname: 'Ethereum',
+    },
   },
   landing: {
     coinName: 'Mango Coin',
@@ -59,7 +59,7 @@ export default {
   },
   dashboard: {
     title: 'Dashboard',
-    balance: 'Balance'
+    balance: 'Balance',
   },
   send: {
     title: 'Send',
@@ -107,9 +107,15 @@ export default {
     toastConfirmPassword: 'Confirm password is incorrect',
     changeSuccess: 'Change password success',
   },
-  addPinScreen: {
+  ChangePinScreen: {
     title: 'Change PIN',
-    createPinSuccess: 'Create pin code success',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
   genneralText: {
     back: 'Back',
@@ -139,6 +145,14 @@ export default {
   },
   terms: {
     title: 'Terms and Conditions',
-    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).',
   },
+  backupPassphraseScreen: {
+    title: 'Backup Phrase',
+  },
+  loginUserPin: {
+    enterPincode: 'Enter your PIN code',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+  }
 };

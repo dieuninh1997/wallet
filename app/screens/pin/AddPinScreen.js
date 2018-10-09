@@ -11,7 +11,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} screen="SettingScreen" />,
+    headerLeft: <View />,
     title: I18n.t('ChangePinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,

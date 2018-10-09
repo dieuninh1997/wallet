@@ -8,12 +8,8 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 class MangoBackButton extends Component {
   _onBack = () => {
-    const { navigation, screen } = this.props;
-    if (screen) {
-      navigation.navigate(screen);
-    } else {
-      navigation.goBack();
-    }
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   render() {

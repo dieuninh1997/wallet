@@ -11,7 +11,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class ChangePinScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} screen="SettingScreen" />,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('ChangePinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -130,7 +130,7 @@ export default class ChangePinScreen extends Component {
       await AppPreferences.saveToKeychain('pin', codePin);
       AppPreferences.showToastMessage(I18n.t('ChangePinScreen.changePinSuccess'));
       setTimeout(() => {
-        navigation.navigate('MainScreen');
+        navigation.navigate('SettingScreen');
       }, 1000);
     } catch (err) {
       console.log('SaveCodePin._error:', err);

@@ -63,9 +63,9 @@ export default class SplashScreen extends BaseScreen {
           this.navigateAndClearStack('LoginUsePinScreen');
           return;
         }
-        navigation.navigate('LoginScreen');
+        this.navigateAndClearStack('LoginScreen');
       } else {
-        navigation.navigate('LandingScreen');
+        this.navigateAndClearStack('LandingScreen');
       }
     } catch (error) {
       console.log('SplashScreen._initMangoApp._error: ', error);

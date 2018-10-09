@@ -9,8 +9,8 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { getUserSettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
+import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,16 +40,30 @@ export default class SettingScreen extends Component {
         otpVerified: AppConfig.USER_SETTING.otp_verified,
         phoneVerified: AppConfig.USER_SETTING.phone_verified,
       },
+      userSetting: {
+        emailNotification: false,
+        localCurrencyUser: 'U.S Dollar ($)',
+      },
       walletId: null,
     };
   }
 
   componentDidMount = async () => {
-    try {
-      const getUserSetting = await getUserSettings();
-      console.log('-------------------', getUserSetting);
-    } catch (error) {
-      console.log('<<<<<<<error<<<<', error.message);
+    const userSettingData = AppConfig.USER_SETTING_DATA;
+    if (userSettingData.currency === 'PHP') {
+      this.setState({
+        userSetting: {
+          emailNotification: userSettingData.email_notification,
+          localCurrencyUser: 'Philippines Peso (₱)',
+        }
+      });
+    } else {
+      this.setState({
+        userSetting: {
+          emailNotification: userSettingData.email_notification,
+          localCurrencyUser: 'U.S Dollar ($)',
+        }
+      });
     }
 
     try {
@@ -67,6 +81,26 @@ export default class SettingScreen extends Component {
 
     payload[`${title}`] = !payload[`${title}`];
     this.setState({ payload });
+  }
+
+  _showLocalCurrency = () => {
+    this._localCurrency.setModalVisible(true);
+  }
+
+  showChangeLocalCurrency = (value) => {
+    if (value === 'USD') {
+      this.setState({
+        userSetting: {
+          localCurrencyUser: 'U.S Dollar ($)',
+        }
+      });
+    }else{
+      this.setState({
+        userSetting: {
+          localCurrencyUser: 'Philippines Peso (₱)',
+        }
+      });
+    }
   }
 
   _renderProfile = () => {
@@ -90,10 +124,10 @@ export default class SettingScreen extends Component {
                   {I18n.t('setting.verified')}
                 </Text>
               ) : (
-                <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unverified')}
-                </Text>
-              )}
+                  <Text style={styles.textUnVerified}>
+                    {I18n.t('setting.unverified')}
+                  </Text>
+                )}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -110,10 +144,10 @@ export default class SettingScreen extends Component {
                   {I18n.t('setting.verified')}
                 </Text>
               ) : (
-                <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unverified')}
-                </Text>
-              )}
+                  <Text style={styles.textUnVerified}>
+                    {I18n.t('setting.unverified')}
+                  </Text>
+                )}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -137,7 +171,7 @@ export default class SettingScreen extends Component {
   }
 
   _renderReference() {
-    const { payload } = this.state;
+    const { payload, userSetting } = this.state;
 
     return (
       <View style={styles.textPerferences}>
@@ -149,17 +183,17 @@ export default class SettingScreen extends Component {
               containerStyle={styles.switchBorder}
               backgroundActive="#16ec7e"
               backgroundInactive="#fff"
-              value={payload.emailNotification}
+              value={userSetting.emailNotification}
               innerCircleStyle={styles.innerCircle}
               changeValueImmediately
               onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
             />
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LocalCurrencyScreen')}>
+          <TouchableWithoutFeedback onPress={() => this._showLocalCurrency()}>
             <View style={styles.borderElementBottom}>
               <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
               <View style={styles.activiRightGroup}>
-                <Text>U.S Dollar ($)</Text>
+                <Text>{userSetting.localCurrencyUser}</Text>
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
                   name="chevron-right"
@@ -270,6 +304,7 @@ export default class SettingScreen extends Component {
             {this._renderSecurity()}
           </View>
         </ScrollView>
+        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} showChangeLocalCurrency={this.showChangeLocalCurrency}/>
       </View>
     );
   }

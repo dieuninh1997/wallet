@@ -152,4 +152,9 @@ export default {
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
   },
+  localCurrencyScreen: {
+    title: 'Local Currency',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+  },
 };

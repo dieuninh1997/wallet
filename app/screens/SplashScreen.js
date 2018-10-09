@@ -11,8 +11,8 @@ import I18n from '../i18n/i18n';
 import AppConfig from '../utils/AppConfig';
 import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
-import { getUserSecuritySettings } from '../api/user/UserRequest';
 import BaseScreen from './BaseScreen';
+import { getUserSecuritySettings, getUserSettings } from '../api/user/UserRequest';
 
 export default class SplashScreen extends BaseScreen {
   static navigationOptions = () => ({
@@ -51,6 +51,8 @@ export default class SplashScreen extends BaseScreen {
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
         let userSetting = await AsyncStorage.getItem('userSetting');
+        let userSettingData = await AsyncStorage.getItem('userSettingData');
+
         if (!userSetting) {
           const response = await getUserSecuritySettings();
           userSetting = response.data;
@@ -58,6 +60,17 @@ export default class SplashScreen extends BaseScreen {
         }
         AppConfig.USER_SETTING = JSON.parse(userSetting);
         console.log('userSetting', AppConfig.USER_SETTING);
+
+        if (!userSettingData) {
+          const getUserSetting = await getUserSettings();
+          getUserSetting.data.map(data => {
+            AppConfig.USER_SETTING_DATA[data.key] = data.value
+          });
+          await AsyncStorage.setItem('userSettingData', JSON.stringify(AppConfig.USER_SETTING_DATA));
+        } else {
+          AppConfig.USER_SETTING_DATA = JSON.parse(userSettingData);
+        }
+        console.log('check', AppConfig.USER_SETTING_DATA);
 
         if (isEnableCodePin) {
           this.navigateAndClearStack('LoginUsePinScreen');

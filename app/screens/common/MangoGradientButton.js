@@ -9,10 +9,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 class MangoGradientButton extends Component {
-
   render() {
     const {
-      btnText, btnStyle, onPress, colorOptions,
+      btnText, btnStyle, onPress, colorOptions, buttonTextStyle,
     } = this.props;
     return (
       <TouchableOpacity
@@ -25,7 +24,7 @@ class MangoGradientButton extends Component {
           colors={colorOptions}
           style={[styles.container, btnStyle]}
         >
-          <Text style={styles.buttonText}>{btnText}</Text>
+          <Text style={[styles.buttonText, buttonTextStyle]}>{btnText}</Text>
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -62,6 +61,6 @@ const styles = ScaledSheet.create({
   buttonText: {
     color: '#000',
     fontWeight: '400',
-    fontSize: '22@s',
+    fontSize: '22@ms',
   },
 });

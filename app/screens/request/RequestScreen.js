@@ -14,6 +14,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
+import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
@@ -101,6 +102,7 @@ class RequestScreen extends Component {
           <View style={styles.contentContainer}>
             {this._renderQrCodeSection()}
             {this._renderBtnSection()}
+            {UIUtils.createBottomPadding()}
           </View>
         </ScrollView>
       </View>

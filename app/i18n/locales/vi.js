@@ -103,12 +103,24 @@ export default {
   },
   genneralText: {
     back: 'Back',
+    recieved: 'Recieved',
+    confirmation: 'Confirmation',
+    amount: 'Amount',
+    status: 'Status',
+    address: 'Address',
+    txid: 'Txid',
+    date: 'Date',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  transactionDetail: {
+    transactionDetail: 'Transaction Detail',
+    copy_txid: 'Copy Txid',
+    check_export: 'Check Export',
   },
   restoreWalletScreen: {
     title: 'Restore Account',

@@ -4,12 +4,14 @@ import {
   Text,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 // import I18n from '../../i18n/i18n';
 import _ from 'lodash';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
+import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
 import WalletService from '../../services/wallet';
@@ -118,8 +120,14 @@ class TransactionsScreen extends Component {
     return (
       <View style={styles.transactionsContainer}>
         {transactions.map(transactions => this._renderTransactonsYear(transactions))}
+        {UIUtils.createBottomPadding()}
       </View>
     );
+  }
+
+  _showTransactionDetail = (transaction) => {
+    const { navigation } = this.props;
+    navigation.navigate('TransactionDetailScreen', transaction);
   }
 
   _renderTransactonsYear = (transactions) => {
@@ -139,35 +147,37 @@ class TransactionsScreen extends Component {
   }
 
   _renderTransactonsItem = (transaction, index, images, address) => (
-    <View key={index} style={styles.transactionItemContainer}>
-      <View style={styles.transactionImageContainer}>
-        <Image
-          source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
-          style={styles.transactionImageItem}
-        />
+    <TouchableOpacity key={index} onPress={() => this._showTransactionDetail(transaction)}>
+      <View style={styles.transactionItemContainer}>
+        <View style={styles.transactionImageContainer}>
+          <Image
+            source={transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0]}
+            style={styles.transactionImageItem}
+          />
+        </View>
+        <View style={styles.transactionInfoContainer}>
+          <Text>
+            {Moment(transaction.time).format('MMM DD hh:mm')}
+            {' '}
+          </Text>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="middle"
+            style={styles.addressInfo}
+          >
+            {transaction.id}
+          </Text>
+        </View>
+        <View style={styles.transactionValueItem}>
+          <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
+            {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
+            {transaction.value}
+            {' '}
+            {'ETH'}
+          </Text>
+        </View>
       </View>
-      <View style={styles.transactionInfoContainer}>
-        <Text>
-          {Moment(transaction.time).format('MMM DD hh:mm')}
-          {' '}
-        </Text>
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="middle"
-          style={styles.addressInfo}
-        >
-          {transaction.id}
-        </Text>
-      </View>
-      <View style={styles.transactionValueItem}>
-        <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
-          {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
-          {transaction.value}
-          {' '}
-          {'ETH'}
-        </Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   )
 
   render() {

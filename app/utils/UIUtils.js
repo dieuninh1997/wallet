@@ -27,6 +27,7 @@ export default class UIUtils {
     if (Platform.OS === 'ios') {
         return UIUtils.isIphoneX() ? scale(17) : 0;
     }
+    return 0;
   }
 
   static getIphoneXBottomInsetHeight() {
@@ -53,5 +54,9 @@ export default class UIUtils {
 
   static generatePopupShadow() {
     return UIUtils.generateShadowStyle(8);
+  }
+
+  static createBottomPadding() {
+    return (<View style={{width: 0, height: scale(90)}}/>)
   }
 };

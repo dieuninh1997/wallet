@@ -120,6 +120,7 @@ Erc20Service.getTransactions = async (coin, address, page = 1, perPage = 20) => 
         time: transactionTime,
         status,
         url: transactionUrl,
+        confirmations
       };
     });
 

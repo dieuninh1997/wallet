@@ -45,15 +45,16 @@ const styles = ScaledSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '24@s',
-    height: '24@s',
-    borderWidth: '1@s',
-    borderColor: '#7E8389',
-    borderRadius: '12@s',
+    width: '26@s',
+    height: '26@s',
+    borderWidth: '2@s',
+    borderColor: '#000000',
+    borderRadius: '13@s',
     marginLeft: '14@s',
   },
 
   btnIcon: {
-    fontSize: '16@s',
+    fontSize: '20@s',
+    color: '#000000',
   },
 });

@@ -10,9 +10,11 @@ import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getPrices } from '../../api/common/BaseRequest';
 import { getUserSettings } from '../../api/user/UserRequest';
 import { formatCoin, getCoinName, getCoinFullName } from '../../utils/Filters';
+import { Fonts } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
 import Events from '../../utils/Events';
+import UIUtils from '../../utils/UIUtils';
 import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
 
@@ -341,6 +343,7 @@ class DashboardScreen extends BaseScreen {
         {this._renderPieChart()}
         {this._renderInforData()}
         {this._renderListWallet()}
+        {UIUtils.createBottomPadding()}
       </ScrollView>
     );
   }
@@ -369,12 +372,13 @@ const styles = ScaledSheet.create({
   },
   sumSerires: {
     color: '#000',
-    fontWeight: '500',
     fontSize: '32@ms',
+    ...Fonts.Ubuntu_Medium
   },
   titleBalance: {
     color: '#8d93a6',
     fontSize: '18@ms',
+    ...Fonts.Ubuntu_Light
   },
   inforGroup: {
     flexDirection: 'row',
@@ -393,13 +397,14 @@ const styles = ScaledSheet.create({
   itemCount: {
     color: '#26304d',
     fontSize: '14@s',
-    fontWeight: '600',
     marginTop: '8@s',
     marginBottom: '2@s',
+    ...Fonts.Ubuntu_Bold,
   },
   itemCountCoin: {
     color: '#26304d',
     fontSize: '15@s',
+    ...Fonts.Ubuntu_Light,
   },
   listWallet: {
     flexDirection: 'column',
@@ -427,23 +432,26 @@ const styles = ScaledSheet.create({
   walletFullname: {
     color: '#26304d',
     fontSize: '14@ms',
+    ...Fonts.Ubuntu_Light,
   },
   walletPrice: {
     color: '#26304d',
     fontSize: '20@ms',
-    fontWeight: '600',
     marginTop: '3@s',
-    marginBottom: '3@s'
+    marginBottom: '3@s',
+    ...Fonts.Ubuntu_Medium,
   },
   walletPriceUp: {
     color: '#7fbf36',
     fontSize: '14@ms',
     marginLeft: '7@s',
+    ...Fonts.Ubuntu_Regular,
   },
   walletPriceDown: {
     color: '#D30023',
     fontSize: '14@ms',
     marginLeft: '7@s',
+    ...Fonts.Ubuntu_Regular,
   },
   changeGroup: {
     flexDirection: 'row',

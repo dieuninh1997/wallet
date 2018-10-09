@@ -17,6 +17,7 @@ import Events from '../../utils/Events';
 import UIUtils from '../../utils/UIUtils';
 import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
+import BackPressHandler from '../../utils/BackPressHandler';
 
 const { width } = Dimensions.get('window');
 const CURRENCY_SYMBOLS = {
@@ -55,6 +56,9 @@ class DashboardScreen extends BaseScreen {
   }
 
   async componentDidMount() {
+    super.componentDidMount();
+    BackPressHandler.handleBackAction();
+
     await this._loadData();
     const socket = SocketIOClient('https://streamer.cryptocompare.com/');
     const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];

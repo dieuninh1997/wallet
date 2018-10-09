@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationActions, StackActions } from 'react-navigation';
 import {
   View, BackHandler, Alert, Platform, ToastAndroid,
 } from 'react-native';
@@ -15,6 +16,14 @@ export default class BaseScreen extends React.Component {
     navigate({
       routeName: screen, params, action: null, key: screen,
     });
+  }
+
+  navigateAndClearStack(screen, params) {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: screen })],
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   _onError(err, navigation) {

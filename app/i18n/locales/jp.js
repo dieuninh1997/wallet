@@ -1,14 +1,14 @@
 export default {
   coin: {
     MGC: {
-      fullname: 'MangoCoin'
+      fullname: 'MangoCoin',
     },
     BTC: {
-      fullname: 'Bitcoin'
+      fullname: 'Bitcoin',
     },
     ETH: {
-      fullname: 'Ethereum'
-    }
+      fullname: 'Ethereum',
+    },
   },
   landing: {
     coinName: 'マンゴーコイン',
@@ -49,7 +49,7 @@ export default {
   },
   dashboard: {
     title: 'ダッシュボード',
-    balance: '残高'
+    balance: '残高',
   },
   send: {
     title: 'Send',
@@ -135,11 +135,21 @@ export default {
   },
   terms: {
     title: 'サービス規約',
-    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).',
   },
   loginUserPin: {
     enterPincode: 'PINを入力して下さい',
     incorrectPincode: 'Incorrect PIN Code',
     pleaseAgain: 'Please try again	',
-  }
+  },
+  addPinScreen: {
+    title: 'Add New PIN',
+    changePinSuccess: 'Add pin code success',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again',
+    newPin: 'New PIN',
+    currentPin: 'Current PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
+  },
 };

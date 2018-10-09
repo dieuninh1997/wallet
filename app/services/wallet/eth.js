@@ -46,9 +46,9 @@ EthService.importWalletFromMnemonic = async (mnemonic) => {
   }
 };
 
-EthService.getTransactions = async (address) => {
+EthService.getTransactions = async (address, page, perPage) => {
   try {
-    const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=1&offset=100`;
+    const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=${page}&offset=${perPage}`;
     const response = await axios.get(url);
     const rawTransactions = response.data.result;
     console.log('rawTransactions', rawTransactions);

@@ -9,7 +9,7 @@ import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
-export default class AddPinScreen extends Component {
+export default class ChangePinScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} screen="SettingScreen" />,
     title: I18n.t('ChangePinScreen.title'),

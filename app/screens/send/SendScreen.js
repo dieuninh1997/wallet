@@ -5,7 +5,6 @@ import {
   Image,
   TextInput,
   AsyncStorage,
-  ImageBackground,
   TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
@@ -395,15 +394,16 @@ const styles = ScaledSheet.create({
 
   // Section button continue
   buttonFixBottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    // flex: 1,
+    // justifyContent: 'flex-end',
   },
 
   btnContinue: {
     width: '247@s',
     height: '48@s',
     borderRadius: '28@s',
-    marginBottom: '130@s',
+    marginTop: '130@s',
+    marginBottom: '10@s',
     marginHorizontal: '5@s',
   },
   btnContinuee: {

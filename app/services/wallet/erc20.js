@@ -203,7 +203,7 @@ Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, a
       gasPrice: ethers.utils.parseUnits(`${fee}`, 'gwei'),
     };
 
-    privateKey = Buffer.from(privateKey, 'hex');
+    // privateKey = Buffer.from(privateKey, 'hex');
 
     const wallet = new ethers.Wallet(privateKey, new ethers.providers.InfuraProvider(Erc20Service.network));
 

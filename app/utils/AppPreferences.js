@@ -25,17 +25,18 @@ export default class AppPreferences {
       console.log('keychainJson', keychainJson);
 
       await Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson), { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+      await AsyncStorage.setItem('token_saved', 'true');
     } catch (error) {
       console.log('AppPreferences.saveToKeychain._error: ', error);
     }
   }
 
-  static removeAccessToken() {
+  static async removeAccessToken() {
     AppConfig.ACCESS_TOKEN = '';
     AppConfig.PRIVATE_KEY = '';
     AppConfig.MNEMORIC = '';
     Keychain.resetGenericPassword();
-    AsyncStorage.setItem('token_saved', 'false');
+    await AsyncStorage.setItem('token_saved', 'false');
   }
 
   static async getEthAddress() {

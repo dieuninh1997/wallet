@@ -1,14 +1,14 @@
 export default {
   coin: {
     MGC: {
-      fullname: 'MangoCoin'
+      fullname: 'MangoCoin',
     },
     BTC: {
-      fullname: 'Bitcoin'
+      fullname: 'Bitcoin',
     },
     ETH: {
-      fullname: 'Ethereum'
-    }
+      fullname: 'Ethereum',
+    },
   },
   landing: {
     coinName: 'Mango Coin',
@@ -49,7 +49,7 @@ export default {
   },
   dashboard: {
     title: 'Tổng quan',
-    balance: 'Số dư'
+    balance: 'Số dư',
   },
   send: {
     title: 'Send',
@@ -137,5 +137,15 @@ export default {
     enterPincode: 'Enter your PIN code',
     incorrectPincode: 'Incorrect PIN Code',
     pleaseAgain: 'Please try again	',
-  }
+  },
+  addPinScreen: {
+    title: 'Add New PIN',
+    changePinSuccess: 'Add pin code success',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again',
+    newPin: 'New PIN',
+    currentPin: 'Current PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
+  },
 };

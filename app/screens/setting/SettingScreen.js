@@ -215,7 +215,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('AddPinScreen')}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('ChangePinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
               <View style={styles.activiRightGroup}>

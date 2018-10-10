@@ -132,6 +132,8 @@ const styles = ScaledSheet.create({
   },
 
   textRestoreWallet: {
+    marginTop: '24@s',
+    marginBottom: '24@s',
     marginVertical: '30@s',
     marginHorizontal: '15@s',
     textAlign: 'center',
@@ -141,12 +143,12 @@ const styles = ScaledSheet.create({
   },
 
   inputRestoreWalletContainer: {
-    width: '340@s',
-    height: '54@s',
+    width: '338@s',
+    height: '56@s',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFF',
-    borderRadius: '27@s',
+    borderRadius: '28@s',
     flexDirection: 'row',
     paddingHorizontal: '20@s',
     borderColor: '#e4e8ed',
@@ -154,13 +156,14 @@ const styles = ScaledSheet.create({
   },
 
   inputWallet: {
-    width: '300@s',
+    width: '330@s',
     fontSize: '18@s',
     textAlign: 'center',
   },
 
   btnRestoreWaletContainer: {
-    width: '240@s',
+    width: '247@s',
+    height: '48@s',
     marginBottom: '20@s',
     marginHorizontal: '5@s',
   },

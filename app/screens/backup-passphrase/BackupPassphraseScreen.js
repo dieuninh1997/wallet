@@ -69,11 +69,11 @@ class BackupPassphraseScreen extends Component {
           <Text style={styles.txtMnemonic}>{mnemonic}</Text>
         </View>
 
-        <View style={styles.viewMnemonic}>
+        {/* <View style={styles.viewMnemonic}>
           <Text style={styles.txtNote}>
             {I18n.t('backupPassphrase.important')}
           </Text>
-        </View>
+        </View> */}
 
       </View>
     );

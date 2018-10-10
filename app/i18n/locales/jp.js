@@ -10,6 +10,14 @@ export default {
       fullname: 'Ethereum',
     },
   },
+  currency: {
+    USD: {
+      settingLabel: 'U.S Dollar ($)'
+    },
+    PHP: {
+      settingLabel: 'Philippines Peso (₱)'
+    }
+  },
   landing: {
     coinName: 'マンゴーコイン',
     coinDescription: 'より良い未来のために',
@@ -80,6 +88,19 @@ export default {
     unconfirmed: '未確認',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'ペソ (₱)',
+  },
+  emailVerification: {
+    title: 'Email Verification',
+    content: 'この確認済みメールアドレスは、不正な動作が確認された際、認証コードの送付に使用されます。また、サインインIDの通知や、資金を受領した際の確認にも使用されます。',
+    emailAddress: 'メールアドレス',
+    resend: '再送する',
+    cancel: 'キャンセル',
+    update: '更新する',
+    verificationEmailSent: 'A verification link has been sent to your email account.',
+    errors: {
+      email_already_verified: 'Your email address has already been verified.',
+      email_in_use: 'This email address is already in use.'
+    }
   },
   request: {
     title: 'リクエスト',

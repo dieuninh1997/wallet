@@ -10,6 +10,14 @@ export default {
       fullname: 'Ethereum',
     },
   },
+  currency: {
+    USD: {
+      settingLabel: 'U.S Dollar ($)'
+    },
+    PHP: {
+      settingLabel: 'Philippines Peso (₱)'
+    }
+  },
   landing: {
     coinName: 'Mango Coin',
     coinDescription: 'Make a better future',
@@ -80,6 +88,19 @@ export default {
     unconfirmed: 'Unconfirmed',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'Philippines Peso (₱)',
+  },
+  emailVerification: {
+    title: 'Email Verification',
+    content: 'Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.',
+    emailAddress: 'Email Address',
+    resend: 'Resend',
+    cancel: 'Cancel',
+    update: 'Update',
+    verificationEmailSent: 'A verification link has been sent to your email account.',
+    errors: {
+      email_already_verified: 'Your email address has already been verified.',
+      email_in_use: 'This email address is already in use.'
+    }
   },
   request: {
     title: 'Request',

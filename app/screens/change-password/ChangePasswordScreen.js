@@ -8,6 +8,7 @@ import I18n from '../../i18n/i18n';
 import AppPreferences from '../../utils/AppPreferences';
 import BaseScreen from '../BaseScreen';
 import UIUtils from '../../utils/UIUtils';
+import { CommonColors } from '../../utils/CommonStyles';
 import Modal from 'react-native-modal';
 
 class ChangePasswordScreen extends BaseScreen {
@@ -32,24 +33,24 @@ class ChangePasswordScreen extends BaseScreen {
     const { currenPassword, newPassword, confirmNewPassword } = this.state;
 
     if (!currenPassword || !newPassword || !confirmNewPassword) {
-      AppPreferences.showToastMessage(I18n.t('changePassword.toastEnterFullInfo'));
+      UIUtils.showToastMessage(I18n.t('changePassword.toastEnterFullInfo'));
       return;
     }
     if (newPassword !== confirmNewPassword) {
-      AppPreferences.showToastMessage(I18n.t('changePassword.toastConfirmPassword'));
+      UIUtils.showToastMessage(I18n.t('changePassword.toastConfirmPassword'));
       return;
     }
 
     try {
       await changePassword(currenPassword, newPassword);
 
-      AppPreferences.showToastMessage(I18n.t('changePassword.changeSuccess'));
+      UIUtils.showToastMessage(I18n.t('changePassword.changeSuccess'));
       this.setModalVisible(false);
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }
@@ -62,8 +63,8 @@ class ChangePasswordScreen extends BaseScreen {
         <Modal
           animationType='slide'
           isVisible={modalVisible}
-          backdropColor='#9ea0a5'
-          backdropOpacity={0.98}
+          backdropColor={CommonColors.modalBackdropColor}
+          backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >

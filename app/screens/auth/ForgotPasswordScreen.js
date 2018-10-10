@@ -39,12 +39,12 @@ export default class ForgotPasswordScreen extends Component {
     const { email } = this.state;
 
     if (!email) {
-      AppPreferences.showToastMessage(I18n.t('resetPassword.emailFieldRequired'));
+      UIUtils.showToastMessage(I18n.t('resetPassword.emailFieldRequired'));
       return false;
     }
 
     if (!UIUtils.validateEmail(email)) {
-      AppPreferences.showToastMessage(I18n.t('resetPassword.invalidEmail'));
+      UIUtils.showToastMessage(I18n.t('resetPassword.invalidEmail'));
       return false;
     }
     return true;
@@ -66,9 +66,9 @@ export default class ForgotPasswordScreen extends Component {
       this._emailModal.setModalVisible(true);
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }

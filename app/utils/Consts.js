@@ -1,17 +1,6 @@
 export default class Consts {
-  static CURRENCY_BTC = 'btc';
 
-  static CURRENCY_ETH = 'eth';
-
-  static CURRENCY_KRW = 'krw';
-
-  static ORDER_TYPE_LIMIT = 'limit';
-
-  static ORDER_TYPE_MARKET = 'market';
-
-  static ORDER_TYPE_STOP_LIMIT = 'stop_limit';
-
-  static ORDER_TYPE_STOP_MARKET = 'stop_market';
+  static CURRENCIES = ['USD', 'PHP'];
 
   static DEPOSITE_HISTORY = 'Deposite History';
 

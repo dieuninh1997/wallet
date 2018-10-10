@@ -6,7 +6,9 @@ import { updateUserSettings } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import AppConfig from '../../utils/AppConfig';
-import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button'
+import { CommonColors } from '../../utils/CommonStyles';
+import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
+import Consts from '../../utils/Consts';
 import UIUtils from '../../utils/UIUtils';
 import Modal from 'react-native-modal';
 
@@ -15,71 +17,54 @@ class LocalCurrencyScreen extends Component {
     super(props);
 
     this.state = {
-      currency: AppConfig.USER_SETTING_DATA.currency,
+      currency: null,
       modalVisible: false,
-      valueRadio: 0,
+      radioValue: 0,
     };
-  }
-
-  componentDidMount = () => {
-    const userSettingData = AppConfig.USER_SETTING_DATA;
-    if (userSettingData.currency === 'PHP') {
-      this.setState({
-        valueRadio: 1,
-      })
-    } else {
-      this.setState({
-        valueRadio: 0,
-      })
-    }
   }
 
   setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
 
-  _onChooseRadioButton(index, value) {
+  show(currency, callback) {
+    console.log(currency);
+    let radioValue = Consts.CURRENCIES.indexOf(currency) || 0;
+    this.setState({
+      currency,
+      radioValue,
+      modalVisible: true
+    });
+  }
+
+  _onChooseCurrency(index, value) {
     this.setState({
       currency: value,
     });
   }
 
-  _onCLickCancel = () => {
+  _onClickCancel = () => {
     this.setModalVisible(false);
   }
 
   _onClickConfirm = async () => {
-    const { showChangeLocalCurrency } = this.props;
-    let userSettingData = AppConfig.USER_SETTING_DATA;
+    const { onLocalCurrencyUpdated } = this.props;
     const { currency } = this.state;
     const params = {
       currency,
     };
-    userSettingData.currency = currency;
 
     try {
-      const updateCurrency = await updateUserSettings(params);
-      const currencyMesseger = updateCurrency.message;
-      const statusCurrency = updateCurrency.status;
+      const response = await updateUserSettings(params);
+      console.log('hide');
+      const message = response.message;
 
-      AppPreferences.showToastMessage(currencyMesseger);
-      if (statusCurrency === 0) {
-        if (currency === 'PHP') {
-          this.setState({
-            valueRadio: 1,
-          })
-        } else {
-          this.setState({
-            valueRadio: 0,
-          })
-        }
-        await AsyncStorage.setItem('userSettingData', JSON.stringify(userSettingData));
-        AppConfig.USER_SETTING_DATA = userSettingData;
-        showChangeLocalCurrency(currency);
-        this.setModalVisible(false);
-      }
+      onLocalCurrencyUpdated(currency);
+      this.setModalVisible(false);
+      UIUtils.showToastMessage(message);
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      UIUtils.showToastMessage(error.message);
+      console.log('LocalCurrencyScreen._onClickConfirm', error);
     }
   }
 
@@ -91,8 +76,8 @@ class LocalCurrencyScreen extends Component {
         <Modal
           animationType='slide'
           isVisible={modalVisible}
-          backdropColor='#9ea0a5'
-          backdropOpacity={0.98}
+          backdropColor={CommonColors.modalBackdropColor}
+          backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >
@@ -117,27 +102,27 @@ class LocalCurrencyScreen extends Component {
   }
 
   _renderContent() {
-    const { valueRadio } = this.state;
+    const { radioValue } = this.state;
     return (
       <View style={styles.content}>
         <RadioGroup
           color='#2f64d1'
           size={scale(22)}
-          selectedIndex={valueRadio}
+          selectedIndex={radioValue}
           style={styles.groupRadio}
-          onSelect={(index, value) => this._onChooseRadioButton(index, value)}>
-          <RadioButton
-            style={styles.groupDolla}
-            value='USD'
-            color='#2f64d1'>
-            <Text style={styles.textUsDollar}>{I18n.t('localCurrencyScreen.usDollar')}</Text>
-          </RadioButton>
-          <RadioButton
-            style={styles.groupPeso}
-            value='PHP'
-            color='#2f64d1'>
-            <Text style={styles.textUsDollar}>{I18n.t('localCurrencyScreen.philippinesPeso')}</Text>
-          </RadioButton>
+          onSelect={(index, value) => this._onChooseCurrency(index, value)}>
+          {
+            Consts.CURRENCIES.map((currency, index) => {
+              return (
+                <RadioButton
+                  style={styles.groupDolla}
+                  value={currency}
+                  color='#2f64d1'>
+                  <Text style={styles.textUsDollar}>{I18n.t(`currency.${currency}.settingLabel`)}</Text>
+                </RadioButton>
+              )
+            })
+          }
         </RadioGroup>
       </View>
     )
@@ -147,7 +132,7 @@ class LocalCurrencyScreen extends Component {
     return (
       <View style={styles.footer}>
         <TouchableOpacity
-          onPress={() => this._onCLickCancel()}
+          onPress={() => this._onClickCancel()}
           style={styles.cancelContainer}>
           <Text style={styles.textCancel}> {I18n.t('localCurrencyScreen.cancel')}</Text>
         </TouchableOpacity>

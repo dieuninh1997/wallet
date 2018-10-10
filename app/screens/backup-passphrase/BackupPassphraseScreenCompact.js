@@ -12,7 +12,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 
 
@@ -56,7 +56,7 @@ class BackupPassphraseScreenCompact extends Component {
     const { mnemonic } = this.state;
 
     Clipboard.setString(mnemonic);
-    AppPreferences.showToastMessage(I18n.t('request.copied'));
+    UIUtils.showToastMessage(I18n.t('request.copied'));
   }
 
   _onBtnNext = () => {

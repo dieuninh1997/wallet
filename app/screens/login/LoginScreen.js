@@ -16,6 +16,7 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 
 class LoginScreen extends Component {
@@ -74,9 +75,9 @@ class LoginScreen extends Component {
       navigation.navigate('RestoreWalletScreen');
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }
@@ -112,7 +113,7 @@ class LoginScreen extends Component {
         navigation.navigate('DashboardScreen');
       })
       .catch(() => {
-        AppPreferences.showToastMessage('Authentication Failed');
+        UIUtils.showToastMessage('Authentication Failed');
       });
   }
 

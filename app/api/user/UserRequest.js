@@ -81,6 +81,13 @@ export function restoreAccount(mnemonic) {
   return post(url, params);
 }
 
+export function sendVerificationEmail(email) {
+  const url = '/send-email-verification';
+  const params = {
+    email
+  };
+  return post(url, params);
+}
 
 export function getUserSecuritySettings() {
   const url = '/user-security-settings';

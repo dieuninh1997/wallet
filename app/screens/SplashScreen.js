@@ -52,32 +52,11 @@ export default class SplashScreen extends BaseScreen {
 
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
-        let userSetting = await AsyncStorage.getItem('userSetting');
-        const userSettingData = await AsyncStorage.getItem('userSettingData');
-
-        if (!userSetting) {
-          const response = await getUserSecuritySettings();
-          userSetting = response.data;
-          await AsyncStorage.setItem('userSetting', JSON.stringify(userSetting));
-        }
-        AppConfig.USER_SETTING = JSON.parse(userSetting);
-        console.log('userSetting', AppConfig.USER_SETTING);
-
-        if (!userSettingData) {
-          const getUserSetting = await getUserSettings();
-          getUserSetting.data.map((data) => {
-            AppConfig.USER_SETTING_DATA[data.key] = data.value;
-          });
-          await AsyncStorage.setItem('userSettingData', JSON.stringify(AppConfig.USER_SETTING_DATA));
-        } else {
-          AppConfig.USER_SETTING_DATA = JSON.parse(userSettingData);
-        }
-        console.log('check', AppConfig.USER_SETTING_DATA);
-
         if (isEnableCodePin) {
           this.navigateAndClearStack('LoginUsePinScreen');
+        } else {
+          this.navigateAndClearStack('MainScreen');
         }
-        this.navigateAndClearStack('MainScreen');
       } else {
         this.navigateAndClearStack('LandingScreen');
       }

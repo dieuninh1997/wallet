@@ -1,6 +1,38 @@
 import { Platform } from 'react-native';
 import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
+const iOSFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light'
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium'
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold'
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular'
+  }
+};
+
+const androidFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light'
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium'
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold'
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular'
+  }
+};
+
+const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
+
 class CommonColors {
   static screenBgColor = '#F5F7FA';
 
@@ -31,6 +63,10 @@ class CommonColors {
   static highlightRed = '#FF0D00';
 
   static highlightBlue = '#0038FF';
+
+  static modalBackdropColor = '#232931';
+
+  static modalBackdropAlpha = 0.5;
 }
 
 class CommonSize {
@@ -46,38 +82,6 @@ class CommonSize {
 
   static headerFontSize = '18@s';
 }
-
-const iOSFonts = {
-  Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light',
-  },
-  Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium',
-  },
-  Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold',
-  },
-  Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular',
-  },
-};
-
-const androidFonts = {
-  Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light',
-  },
-  Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium',
-  },
-  Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold',
-  },
-  Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular',
-  },
-};
-
-const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
 
 const CommonStyles = {
   screen: {
@@ -128,7 +132,12 @@ const CommonStyles = {
     borderRadius: '20@s',
     backgroundColor: '#336ACF',
   },
+
+  errorMessage: {
+    color: '#e63d2e',
+    fontSize: scale(14),
+    ...Fonts.Ubuntu_Light
+  }
 };
-export {
-  CommonStyles, CommonColors, CommonSize, Fonts,
-};
+
+export { CommonStyles, CommonColors, CommonSize, Fonts };

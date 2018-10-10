@@ -13,6 +13,7 @@ import { CommonStyles } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import WalletService from '../../services/wallet';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 
 export default class CreateWalletPhoneNumberScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -69,9 +70,9 @@ export default class CreateWalletPhoneNumberScreen extends Component {
       navigation.navigate('MainScreen');
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }

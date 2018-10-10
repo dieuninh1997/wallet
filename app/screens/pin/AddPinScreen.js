@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
@@ -61,7 +62,7 @@ export default class AddPinScreen extends Component {
       const { navigation } = this.props;
 
       await AppPreferences.saveToKeychain('pin', codePin);
-      AppPreferences.showToastMessage(I18n.t('addPinScreen.changePinSuccess'));
+      UIUtils.showToastMessage(I18n.t('addPinScreen.changePinSuccess'));
       setTimeout(() => {
         navigation.navigate('MainScreen');
       }, 1000);

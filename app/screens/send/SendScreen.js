@@ -14,7 +14,7 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
-import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 import ConfirmationModal from '../common/ConfirmationModal';
 
@@ -97,16 +97,16 @@ class SendScreen extends Component {
 
   _validateSendCoin = (formSendCoin = {}) => {
     if (!formSendCoin.recievedAddress) {
-      AppPreferences.showToastMessage('Recieved address is required!');
+      UIUtils.showToastMessage('Recieved address is required!');
       return false;
     }
     if (!WalletService.isValidAddress('mgc', formSendCoin.recievedAddress)) {
-      AppPreferences.showToastMessage('Recieved address is not valid!');
+      UIUtils.showToastMessage('Recieved address is not valid!');
       return false;
     }
 
     if (!formSendCoin.coinValue) {
-      AppPreferences.showToastMessage('Coin value is not valid!');
+      UIUtils.showToastMessage('Coin value is not valid!');
       return false;
     }
     return true;
@@ -123,7 +123,7 @@ class SendScreen extends Component {
       const transaction = await WalletService.sendTransaction('mgc4', walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      UIUtils.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
     }
   }

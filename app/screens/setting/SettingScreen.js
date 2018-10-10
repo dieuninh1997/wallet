@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage,
+  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage, RefreshControl,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
 import MangoBackButton from '../common/MangoBackButton';
+import EmailVerificationModal from './EmailVerificationModal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import { getCurrentUser, getUserSettings, getUserSecuritySettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
+import Consts from '../../utils/Consts';
 import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
 import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
 
@@ -34,37 +37,39 @@ export default class SettingScreen extends Component {
       payload: {
         emailNotification: false,
         faceId: false,
-        swipeReceive: false,
-        emailVerified: AppConfig.USER_SETTING.email_verified,
-        bankAccountVerified: AppConfig.USER_SETTING.bank_account_verified,
-        identityVerified: AppConfig.USER_SETTING.identity_verified,
-        otpVerified: AppConfig.USER_SETTING.otp_verified,
-        phoneVerified: AppConfig.USER_SETTING.phone_verified,
+        swipeReceive: false
       },
       userSetting: {
-        emailNotification: false,
-        localCurrencyUser: I18n.t('setting.usDollar'),
+        emailNotification: false
       },
       walletId: null,
+      user: {},
+      userSettings: [],
+      userSecuritySettings: null,
+
+      refreshing: false,
     };
   }
 
+  _onRefresh = async () => {
+    this.setState({ refreshing: true });
+    await this._loadData();
+    this.setState({ refreshing: false });
+  }
+
   componentDidMount = async () => {
-    const userSettingData = AppConfig.USER_SETTING_DATA;
-    if (userSettingData.currency === 'PHP') {
-      this.setState({
-        userSetting: {
-          emailNotification: userSettingData.email_notification,
-          localCurrencyUser: I18n.t('setting.philippinesPeso'),
-        }
-      });
-    } else {
-      this.setState({
-        userSetting: {
-          emailNotification: userSettingData.email_notification,
-          localCurrencyUser: I18n.t('setting.usDollar'),
-        }
-      });
+    this._loadData();
+  }
+
+  _loadData = async () => {
+    try {
+      await Promise.all([
+        this._loadUserInfo(),
+        this._loadUserSettings(),
+        this._loadUserSecuritySettings()
+      ]);
+    } catch (error) {
+      console.log('SettingScreen._loadData', error);
     }
 
     try {
@@ -77,6 +82,47 @@ export default class SettingScreen extends Component {
     }
   }
 
+  _loadUserInfo = async () => {
+    try {
+      let response = await getCurrentUser();
+      this.setState({
+        user: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserInfo', error);
+    }
+  }
+
+  _loadUserSettings = async () => {
+    try {
+      let response = await getUserSettings();
+      this.setState({
+        userSettings: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserSettings', error);
+    }
+  }
+
+  _loadUserSecuritySettings = async () => {
+    try {
+      let response = await getUserSecuritySettings();
+      this.setState({
+        userSecuritySettings: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserSecuritySettings', error);
+    }
+  }
+
+  _getLocalCurrency() {
+    for (var setting of this.state.userSettings) {
+      if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
+        return setting.value;
+      }
+    }
+  }
+
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
@@ -85,34 +131,30 @@ export default class SettingScreen extends Component {
   }
 
   _showLocalCurrency = () => {
-    this._localCurrency.setModalVisible(true);
+    this._localCurrency.show(this._getLocalCurrency());
   }
 
   _showchangePassword = () => {
     this._changePassword.setModalVisible(true);
   }
 
-  showChangeLocalCurrency = (value) => {
-    if (value === 'USD') {
-      this.setState({
-        userSetting: {
-          localCurrencyUser: I18n.t('setting.usDollar'),
-        }
-      });
-    }else{
-      this.setState({
-        userSetting: {
-          localCurrencyUser: I18n.t('setting.philippinesPeso'),
-        }
-      });
+  _onLocalCurrencyUpdated = (currency) => {
+    let { userSettings } = this.state;
+    for (let setting of userSettings) {
+      if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
+        setting.value = currency;
+      }
     }
+    this.setState({
+      userSettings
+    });
   }
   _onPressBackupPassphrase = () => {
     this.props.navigation.navigate("BackupPassphraseScreen");
   }
 
   _renderProfile = () => {
-    const { walletId, payload } = this.state;
+    const { walletId, userSecuritySettings, user } = this.state;
 
     return (
       <View>
@@ -124,18 +166,19 @@ export default class SettingScreen extends Component {
             <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
 
+          <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
             <View style={styles.activiRightGroup}>
-              {payload.emailVerified ? (
+              {userSecuritySettings && (userSecuritySettings.email_verified ? (
                 <Text style={styles.textVerified}>
                   {I18n.t('setting.verified')}
                 </Text>
               ) : (
-                  <Text style={styles.textUnVerified}>
-                    {I18n.t('setting.unverified')}
-                  </Text>
-                )}
+                <Text style={styles.textUnVerified}>
+                  {I18n.t('setting.unverified')}
+                </Text>
+              ))}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -143,19 +186,20 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
+          </TouchableWithoutFeedback>
 
           <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
             <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
             <View style={styles.activiRightGroup}>
-              {payload.phoneVerified ? (
+              {userSecuritySettings && (userSecuritySettings.phone_verified ? (
                 <Text style={styles.textVerified}>
                   {I18n.t('setting.verified')}
                 </Text>
               ) : (
-                  <Text style={styles.textUnVerified}>
-                    {I18n.t('setting.unverified')}
-                  </Text>
-                )}
+                <Text style={styles.textUnVerified}>
+                  {I18n.t('setting.unverified')}
+                </Text>
+              ))}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -181,6 +225,9 @@ export default class SettingScreen extends Component {
   _renderReference() {
     const { payload, userSetting } = this.state;
 
+    const currency = this._getLocalCurrency();
+    const currencyLabel = currency ? I18n.t(`currency.${currency}.settingLabel`) : '';
+
     return (
       <View style={styles.textPerferences}>
         <Text style={styles.titleTable}>{I18n.t('setting.perferences')}</Text>
@@ -201,7 +248,7 @@ export default class SettingScreen extends Component {
             <View style={styles.borderElementBottom}>
               <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
               <View style={styles.activiRightGroup}>
-                <Text>{userSetting.localCurrencyUser}</Text>
+                <Text>{currencyLabel}</Text>
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
                   name="chevron-right"
@@ -304,16 +351,26 @@ export default class SettingScreen extends Component {
   }
 
   render() {
+    const { refreshing } = this.state;
+
     return (
       <View>
-        <ScrollView>
+        <EmailVerificationModal ref={ref => this._emailModal = ref}/>
+        <ScrollView
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => this._onRefresh()}
+            />
+          )}
+        >
           <View style={styles.container}>
             {this._renderProfile()}
             {this._renderReference()}
             {this._renderSecurity()}
           </View>
         </ScrollView>
-        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} showChangeLocalCurrency={this.showChangeLocalCurrency}/>
+        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated}/>
         <ChangePasswordScreen ref={ref => this._changePassword = ref}/>
       </View>
     );

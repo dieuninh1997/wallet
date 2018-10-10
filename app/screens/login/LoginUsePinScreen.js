@@ -5,6 +5,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { CommonSize } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
 
 export default class LoginUsePinScreen extends Component {
@@ -31,7 +32,7 @@ export default class LoginUsePinScreen extends Component {
       navigation.navigate('MainScreen');
     } else {
       this.setState({ isShowError: true });
-      AppPreferences.showToastMessage('Error Code Pin!');
+      UIUtils.showToastMessage('Error Code Pin!');
     }
     setTimeout(() => this.setState({ isShowError: false }), 1000);
   }

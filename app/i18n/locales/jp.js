@@ -78,6 +78,8 @@ export default {
     unverified: '未確認',
     disabled: '無効',
     unconfirmed: '未確認',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'ペソ (₱)',
   },
   request: {
     title: 'リクエスト',
@@ -158,6 +160,13 @@ export default {
     currentPin: 'Current PIN',
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
+  },
+  localCurrencyScreen: {
+    title: '現地通貨',
+    cancel: 'キャンセル',
+    confirm: '確認',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'ペソ (₱)',
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',

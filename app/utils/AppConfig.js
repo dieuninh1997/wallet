@@ -30,6 +30,8 @@ export default class AppConfig {
 
   static USER_SETTING = {};
 
+  static USER_SETTING_DATA = {};
+
   static dev() {
     return __DEV__ && JSON.parse(DEV);
   }

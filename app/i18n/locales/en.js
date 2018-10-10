@@ -21,7 +21,8 @@ export default {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
     inputWalletId: 'Wallet ID',
-    inputPassword: 'Password',
+    inputPassword: 'Passwords',
+    btnCreate: 'Create',
   },
   createWallet: {
     signin: 'Sign In',
@@ -88,6 +89,8 @@ export default {
     unverified: 'Unverified',
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
   request: {
     title: 'Request',
@@ -147,7 +150,7 @@ export default {
   },
   restoreWalletScreen: {
     title: 'Restore Account',
-    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    titleForm: 'Enter your 12 backup words with spaces to recover your funds & transactions',
     inputPlaceholder: 'Backup Phrase',
   },
   terms: {
@@ -171,6 +174,13 @@ export default {
     currentPin: 'Current PIN',
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
+  },
+  localCurrencyScreen: {
+    title: 'Local Currency',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',

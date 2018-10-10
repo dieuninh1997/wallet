@@ -8,6 +8,8 @@ class CommonColors {
 
   static headerTitleColor = '#000000';
 
+  static headerRightColor = '#8D96B1';
+
   static startSelectBoxBgColor = '#3975D7';
 
   static endSelectBoxBgColor = '#1F42B3';
@@ -34,13 +36,15 @@ class CommonColors {
 class CommonSize {
   static inputHeight = '43@s';
 
-  static inputFontSize = '14@s';
+  static inputFontSize = '20@s';
 
   static formLabelFontSize = '14@s';
 
   static btnSubmitHeight = scale(44);
 
   static headerHeight = scale(44);
+
+  static headerFontSize = '18@s';
 }
 
 const CommonStyles = {

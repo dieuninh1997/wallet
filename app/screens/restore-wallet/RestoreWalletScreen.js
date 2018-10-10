@@ -11,7 +11,7 @@ import crypto from 'crypto';
 
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, Fonts } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
 import AppConfig from '../../utils/AppConfig';
@@ -159,7 +159,7 @@ const styles = ScaledSheet.create({
     textAlign: 'center',
     fontSize: '16@ms',
     color: '#000',
-    fontWeight: '200',
+    ...Fonts.Ubuntu_Light
   },
 
   inputRestoreWalletContainer: {

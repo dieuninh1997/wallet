@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import { Fonts } from '../../utils/CommonStyles';
 
 class MangoGradientButton extends Component {
   render() {
@@ -60,7 +61,7 @@ const styles = ScaledSheet.create({
   },
   buttonText: {
     color: '#000',
-    fontWeight: '400',
     fontSize: '20@ms',
+    ...Fonts.Ubuntu_Regular
   },
 });

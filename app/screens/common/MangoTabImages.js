@@ -1,12 +1,13 @@
 const MangoTabImages = {
-  dashboardTab: require('../../../assets/dash-board-tab/dashboardTab.png'),
-  dashboardTabFocused: require('../../../assets/dash-board-tab/dashboardTabFocused.png'),
-  requestTab: require('../../../assets/request-tab/requestTab.png'),
-  requestTabFocused: require('../../../assets/request-tab/requestTabFocused.png'),
-  sendTab: require('../../../assets/send-tab/sendTab.png'),
-  sendTabFocused: require('../../../assets/send-tab/sendTabFocused.png'),
-  transactionTab: require('../../../assets/transaction-tab/transactionTab.png'),
-  transactionTabFocused: require('../../../assets/transaction-tab/transactionTabFocused.png'),
+  background: require('../../../assets/tabbar/tabMenuBg.png'),
+  dashboardTab: require('../../../assets/tabbar/tabMenuItem1.png'),
+  dashboardTabFocused: require('../../../assets/tabbar/tabMenuItem1Active.png'),
+  requestTab: require('../../../assets/tabbar/tabMenuItem2.png'),
+  requestTabFocused: require('../../../assets/tabbar/tabMenuItem2Active.png'),
+  sendTab: require('../../../assets/tabbar/tabMenuItem3.png'),
+  sendTabFocused: require('../../../assets/tabbar/tabMenuItem3Active.png'),
+  transactionTab: require('../../../assets/tabbar/tabMenuItem4.png'),
+  transactionTabFocused: require('../../../assets/tabbar/tabMenuItem4Active.png'),
 };
 
 export default MangoTabImages;

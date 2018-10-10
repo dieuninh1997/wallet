@@ -75,7 +75,6 @@ class LandingScreen extends Component {
         useNativeDriver
         onBackButtonPress={() => this._hideListLanguage()}
         onBackdropPress={() => this._hideListLanguage()}
-
       >
         <View style={styles.modalListLanguage}>
           {listLanguage.map((item, index) => this._renderListLanguageItem(item, index))}
@@ -104,6 +103,7 @@ class LandingScreen extends Component {
 
   _navigateScreen = (screen) => {
     const { navigation } = this.props;
+
     navigation.navigate(screen);
   }
 
@@ -177,6 +177,7 @@ class LandingScreen extends Component {
           title={I18n.t('landing.restoreAccount')}
           btnStyle={styles.btnAuthContainer}
           btnTextStyle={styles.btnTextAuthStyle}
+          onPressBtn={() => this._navigateScreen('RestoreWalletScreen')}
         />
       </View>
     );

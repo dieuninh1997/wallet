@@ -11,7 +11,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 class MangoGradientButton extends Component {
   render() {
     const {
-      btnText, btnStyle, onPress,
+      btnText, btnStyle, onPress, colorOptions, buttonTextStyle,
     } = this.props;
     return (
       <TouchableOpacity
@@ -21,15 +21,19 @@ class MangoGradientButton extends Component {
         <LinearGradient
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          colors={['#FFDD3B', '#FFCF38', '#FFC136']}
+          colors={colorOptions}
           style={[styles.container, btnStyle]}
         >
-          <Text style={styles.buttonText}>{btnText}</Text>
+          <Text style={[styles.buttonText, buttonTextStyle]}>{btnText}</Text>
         </LinearGradient>
       </TouchableOpacity>
     );
   }
 }
+
+MangoGradientButton.defaultProps = {
+  colorOptions: ['#FFDD3B', '#FFCF38', '#FFC136'],
+};
 
 export default MangoGradientButton;
 
@@ -57,6 +61,6 @@ const styles = ScaledSheet.create({
   buttonText: {
     color: '#000',
     fontWeight: '400',
-    fontSize: '22@s',
+    fontSize: '22@ms',
   },
 });

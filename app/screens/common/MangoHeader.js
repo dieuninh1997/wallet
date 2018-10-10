@@ -22,13 +22,13 @@ class MangoHeader extends React.Component {
     this.setState({ isShowMenu: false });
   }
 
-  _navigateSetting(routerName) {
+  async _navigateSetting(routerName) {
     const { navigation } = this.props;
 
     this.setState({ isShowMenu: false });
 
     if (routerName === 'LandingScreen') {
-      AppPreferences.removeAccessToken();
+      await AppPreferences.removeAccessToken();
       window.GlobalSocket.disconnect();
       RNRestart.Restart();
     } else {
@@ -68,11 +68,6 @@ class MangoHeader extends React.Component {
         title: 'Settings',
         routerName: 'SettingScreen',
       },
-      // {
-      //   source: require('../../../assets/question/question.png'),
-      //   title: 'Support',
-      //   routerName: 'SupportScreen',
-      // },
       {
         source: require('../../../assets/sing-out/logout.png'),
         title: 'Sign out',

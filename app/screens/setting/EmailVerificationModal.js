@@ -52,7 +52,7 @@ export default class EmailVerificationModal extends React.Component {
           animationType="slide"
           isVisible={this.state.modalVisible}
           backdropColor={'black'}
-          backdropOpacity={0}
+          backdropOpacity={0.7}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}>
           <View style={styles.popup}>

@@ -12,12 +12,14 @@ export default class CreateWalletScreen extends Component {
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('createWallet.title'),
     headerTitleStyle: CommonStyles.headerTitle,
+    headerStyle: CommonStyles.header,
     headerRight: <View />,
   })
 
   static SCREEN = {
     CREATE_BY_EMAIL: 'CreateWalletByEmailScreen',
     CREATE_BY_PHONE: 'CreateWalletPhoneNumberScreen',
+    CREATE_BY_PASSPORT: 'CreateWalletByPassportScreen',
   }
 
   _handleClickCreateWallet = (screen) => {
@@ -35,8 +37,8 @@ export default class CreateWalletScreen extends Component {
 
         <View style={styles.groupBtnContainer}>
           <TouchableOpacity
-            style={[styles.btnCreateWalletContainer, styles.btnCreateByPhone]}
-            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
             <Text style={styles.textCreateByPhone}>
@@ -45,7 +47,7 @@ export default class CreateWalletScreen extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateByPhone]}
             onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/email.png')} />
@@ -56,10 +58,10 @@ export default class CreateWalletScreen extends Component {
 
 
           <TouchableOpacity
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
-            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateByPhone]}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PASSPORT)}
           >
-            <Image style={styles.iconCreate} source={require('../../../assets/createwalet/phone.png')} />
+            <Image style={styles.iconCreate} source={require('../../../assets/passport/passport.png')} />
             <Text style={styles.textCreate}>
               {I18n.t('createWallet.passportNumber')}
             </Text>
@@ -67,7 +69,7 @@ export default class CreateWalletScreen extends Component {
 
           <TouchableOpacity
             style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
-            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+            // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
           >
             <Image style={styles.iconCreate} source={require('../../../assets/createwalet/FacebookIcon.png')} />
             <Text style={styles.textCreate}>
@@ -93,8 +95,8 @@ const styles = ScaledSheet.create({
   },
 
   imageWallet: {
-    width: '150@s',
-    height: '150@s',
+    width: '130@s',
+    height: '130@s',
   },
 
   groupBtnContainer: {
@@ -109,10 +111,10 @@ const styles = ScaledSheet.create({
   },
 
   btnCreateByPhone: {
-    height: '56@s',
-    borderRadius: '28@s',
+    height: '52@s',
+    borderRadius: '27@s',
     backgroundColor: '#FFFFFF',
-    elevation: 4,
+    elevation: 3,
   },
 
   btnCreateDisable: {
@@ -122,17 +124,18 @@ const styles = ScaledSheet.create({
   },
 
   iconCreate: {
-    width: '36@s',
-    height: '36@s',
+    width: '28@s',
+    height: '28@s',
     marginLeft: '25@s',
   },
 
   textCreateByPhone: {
-    fontSize: '20@s',
+    fontSize: '20@ms',
     marginLeft: '15@s',
     color: '#1c43b8',
     fontWeight: '300',
   },
+
   textCreate: {
     fontSize: '18@s',
     marginLeft: '15@s',

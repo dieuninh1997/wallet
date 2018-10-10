@@ -37,22 +37,8 @@ export default class Consts {
 
   static NOT_LOGIN = 'not login';
 
-  static DEFAULT_ORDER_BOOK_SETTING = {
-    click_to_order: 0,
-    created_at: null,
-    notification: 1,
-    notification_canceled: 1,
-    notification_created: 1,
-    notification_matched: 1,
-    order_confirmation: 1,
-    price_group: 1,
-    show_empty_group: 0,
-    updated_at: null,
-  };
-
-  static DEFAULT_USER_ORDER_BOOK = {
-    buy: [],
-    sell: [],
+  static USER_SETTINGS = {
+    CURRENCY: 'currency'
   };
 
   static PIN = 'pin';

@@ -10,17 +10,35 @@ const WalletService = {};
 
 const erc20Symbols = _.keys(erc20Tokens);
 
+WalletService.isValidAddress = (coin, address) => {
+  switch (coin.toLowerCase()) {
+  case 'eth':
+    return EthService.isValidAddress(address);
+  default:
+    if (_.includes(erc20Symbols, coin)) {
+      return Erc20Servcie.isValidAddress(address);
+    }
+  }
+};
+
 WalletService.importWalletFromPrivateKey = (coin, privateKey, mnemonic, password) => {
-  console.log('coin', coin);
-  console.log('privateKey', privateKey);
-  console.log('mnemonic', mnemonic);
-  console.log('password', password);
   switch (coin.toLowerCase()) {
   case 'eth':
     return EthService.importWalletFromPrivateKey(privateKey, mnemonic, password);
   default:
     if (_.includes(erc20Symbols, coin)) {
       return Erc20Servcie.importWalletFromPrivateKey(privateKey, mnemonic, password);
+    }
+  }
+};
+
+WalletService.importWalletFromMnemonic = (coin, mnemonic) => {
+  switch (coin.toLowerCase()) {
+  case 'eth':
+    return EthService.importWalletFromMnemonic(mnemonic);
+  default:
+    if (_.includes(erc20Symbols, coin)) {
+      return Erc20Servcie.importWalletFromMnemonic(mnemonic);
     }
   }
 };
@@ -85,12 +103,27 @@ WalletService.sendTransaction = (coin, sendAddress, receiveAddress, privateKey, 
 WalletService.getTransactions = (coin, address, page, perPage) => {
   switch (coin.toLowerCase()) {
   case 'eth':
-    return EthService.getTransactions(address);
+    return EthService.getTransactions(address, page, perPage);
   default:
     if (_.includes(erc20Symbols, coin)) {
       return Erc20Servcie.getTransactions(coin, address, page, perPage);
     }
     return [];
+  }
+};
+
+WalletService.getCurrentGasPrices = (coin = 'eth') => {
+  try {
+    switch (coin.toLowerCase()) {
+    case 'eth':
+      return EthService.getCurrentGasPrices();
+    default:
+      if (_.includes(erc20Symbols, coin)) {
+        return Erc20Servcie.getCurrentGasPrices();
+      }
+    }
+  } catch (error) {
+    console.log('WalletService.getCurrentGasPrices', error);
   }
 };
 

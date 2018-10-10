@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
-import MangoBackButton from '../common/MangoBackButton';
 import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = (navigation) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
+  static navigationOptions = () => ({
+    headerLeft: <View />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -51,25 +51,34 @@ export default class AddPinScreen extends Component {
 
   _renderChangePin = () => (
     <View style={styles.container}>
-      <View style={styles.containerPassword}></View>
-      <View style={styles.borderPassword}></View>
+      <View style={styles.containerPassword} />
       <PINCode
         status="choose"
-        passwordLength={4}
+        passwordLength={6}
         storePin={value => this._saveCodePin(value)}
         timeLocked={10000}
         numbersButtonOverlayColor="#fcd800"
         stylePinCodeMainContainer={styles.pinCodeContainer}
         styleMainContainer={styles.mainContainer}
         colorPassword="#ebedf2"
-        stylePinCodeHiddenPasswordSizeEmpty={20}
-        stylePinCodeHiddenPasswordSizeFull={20}
+        stylePinCodeButtonNumber="#000"
+        stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
+        stylePinCodeHiddenPasswordSizeFull={scale(20)}
         stylePinCodeButtonCircle={styles.buttonCircle}
         buttonDeleteText
         stylePinCodeColumnDeleteButton={styles.buttonDelete}
         stylePinCodeTextTitle={styles.textTitlePinCode}
         stylePinCodeRowButtons={styles.pincodeRowButton}
         stylePinCodeTextButtonCircle={styles.textButtonCircle}
+        stylePinCodeHiddenPasswordCircle={styles.borderPassword}
+        titleChoose={I18n.t('addPinScreen.newPin')}
+        titleConfirm={I18n.t('addPinScreen.confirmNewPin')}
+        subtitleChoose
+        titleConfirmFailed={I18n.t('addPinScreen.confirmFail')}
+        subtitleError={I18n.t('addPinScreen.pleaseAgain')}
+        stylePinCodeTextTitle={styles.pincodeTitle}
+        stylePinCodeColorTitle="#26304c"
+        stylePinCodeDeleteButtonColorHideUnderlay="#000"
         touchIDDisabled
       />
     </View>
@@ -80,26 +89,33 @@ export default class AddPinScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.containerPassword}></View>
-        <View style={styles.borderPassword}></View>
+        <View style={styles.containerPassword} />
         <PINCode
           status="enter"
-          passwordLength={4}
-          pinStatus={this.state.isShowError ? 'failure' : 'initial'}
+          passwordLength={6}
+          pinStatus={isShowError ? 'failure' : 'initial'}
           timeLocked={10000}
           handleResultEnterPin={value => this._checkCodePin(value)}
           numbersButtonOverlayColor="#fcd800"
           stylePinCodeMainContainer={styles.pinCodeContainer}
           styleMainContainer={styles.mainContainer}
           colorPassword="#ebedf2"
-          stylePinCodeHiddenPasswordSizeEmpty={20}
-          stylePinCodeHiddenPasswordSizeFull={20}
+          stylePinCodeButtonNumber="#000"
+          stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
+          stylePinCodeHiddenPasswordSizeFull={scale(20)}
           stylePinCodeButtonCircle={styles.buttonCircle}
           buttonDeleteText
           stylePinCodeColumnDeleteButton={styles.buttonDelete}
           stylePinCodeTextTitle={styles.textTitlePinCode}
           stylePinCodeRowButtons={styles.pincodeRowButton}
           stylePinCodeTextButtonCircle={styles.textButtonCircle}
+          stylePinCodeHiddenPasswordCircle={styles.borderPassword}
+          titleEnter={I18n.t('addPinScreen.currentPin')}
+          titleAttemptFailed={I18n.t('addPinScreen.incorrectPincode')}
+          subtitleError={I18n.t('addPinScreen.pleaseAgain')}
+          stylePinCodeTextTitle={styles.pincodeTitle}
+          stylePinCodeColorTitle="#26304c"
+          stylePinCodeDeleteButtonColorHideUnderlay="#000"
           touchIDDisabled
         />
       </View>
@@ -110,8 +126,8 @@ export default class AddPinScreen extends Component {
     try {
       const { navigation } = this.props;
 
-      await AppPreferences.saveCodePin(codePin);
-      AppPreferences.showToastMessage(I18n.t('addPinScreen.createPinSuccess'));
+      await AppPreferences.saveToKeychain('pin', codePin);
+      AppPreferences.showToastMessage(I18n.t('addPinScreen.changePinSuccess'));
       setTimeout(() => {
         navigation.navigate('MainScreen');
       }, 1000);
@@ -148,7 +164,8 @@ const styles = ScaledSheet.create({
   pinCodeContainer: {
     backgroundColor: 'transparent',
     flex: 1,
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: '30@s',
   },
   textTitlePinCode: {
@@ -181,19 +198,20 @@ const styles = ScaledSheet.create({
   },
   containerPassword: {
     width: '100%',
-    height: '195@s',
+    height: '175@s',
     position: 'absolute',
     backgroundColor: '#fcd800',
   },
   borderPassword: {
-    position: 'absolute',
-    width: '300@s',
-    height: '60@s',
     backgroundColor: '#ffffff',
-    borderRadius: '30@s',
-    marginTop: '115@s',
-    borderWidth: '12@s',
-    borderColor: '#f1cf00',
+    borderRadius: '37@s',
+    flexDirection: 'row',
+    height: '74@s',
+    paddingBottom: '27@s',
+    width: '319@s',
+    marginBottom: '60@s',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   pincodeRowButton: {
     marginTop: '13@s',
@@ -202,5 +220,9 @@ const styles = ScaledSheet.create({
     fontSize: '30@ms',
     fontWeight: '400',
     color: '#26304c',
+  },
+  pincodeTitle: {
+    fontSize: '16@ms',
+    textAlign: 'center',
   },
 });

@@ -1,4 +1,15 @@
 export default {
+  coin: {
+    MGC: {
+      fullname: 'MangoCoin',
+    },
+    BTC: {
+      fullname: 'Bitcoin',
+    },
+    ETH: {
+      fullname: 'Ethereum',
+    },
+  },
   landing: {
     coinName: 'マンゴーコイン',
     coinDescription: 'より良い未来のために',
@@ -35,6 +46,10 @@ export default {
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
     createWaletSuccess: '完了しました',
+  },
+  dashboard: {
+    title: 'ダッシュボード',
+    balance: '残高',
   },
   send: {
     title: 'Send',
@@ -88,8 +103,61 @@ export default {
     update: '更新する',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'パスワードが一致しません',
+    changeSuccess: 'Change password success',
+  },
+  ChangePinScreen: {
+    title: 'Change PIN',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
+  },
+  genneralText: {
+    back: 'Back',
+    recieved: 'Recieved',
+    confirmation: 'Confirmation',
+    amount: 'Amount',
+    status: 'Status',
+    address: 'Address',
+    txid: 'Txid',
+    date: 'Date',
+  },
+  resetPassword: {
+    forgotPassword: 'Forgot Password',
+    emailAddress: 'Email Address',
+    resetPassword: 'Reset Password',
+    resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  transactionDetail: {
+    transactionDetail: 'Transaction Detail',
+    copy_txid: 'Copy Txid',
+    check_export: 'Check Export',
+  },
+  restoreWalletScreen: {
+    title: '  アカウントの復元',
+    titleForm: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
+    inputPlaceholder: 'フレーズのバックアップ',
+  },
+  terms: {
+    title: 'サービス規約',
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).',
+  },
+  loginUserPin: {
+    enterPincode: 'PINを入力して下さい',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
   },
   addPinScreen: {
-    createPinSuccess: 'Create pin code success',
+    title: 'Add New PIN',
+    changePinSuccess: 'Add pin code success',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again',
+    newPin: 'New PIN',
+    currentPin: 'Current PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
 };

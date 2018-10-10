@@ -6,9 +6,7 @@ import moment from 'moment';
 
 import coinList from '../../configs/coinList';
 
-// const bip39 = require('bip39');
-// const hdkey = require('hdkey');
-
+const EthUtil = require('ethereumjs-util');
 const ethers = require('ethers');
 
 const ApiUrl = coinList.eth.apiUrl;
@@ -18,6 +16,8 @@ export const web3 = new Web3(new Web3.providers.HttpProvider(providerUrl));
 
 const EthService = {};
 
+EthService.isValidAddress = address => EthUtil.isValidAddress(address);
+
 EthService.generateWallet = () => {
   const { Wallet } = ethers;
   const wallet = Wallet.createRandom();
@@ -25,20 +25,30 @@ EthService.generateWallet = () => {
   return wallet;
 };
 
-EthService.importWalletFromPrivateKey = async (userPrivateKey, mnemonic, password) => {
+EthService.importWalletFromPrivateKey = async (userPrivateKey) => {
   const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'));
-  const keystore = await wallet.encrypt(password);
+  // const keystore = await wallet.encrypt(password);
   return {
     privateKey: userPrivateKey,
     address: wallet.address,
-    mnemonic,
-    keystore,
+    // mnemonic,
+    // keystore,
   };
 };
 
-EthService.getTransactions = async (address) => {
+EthService.importWalletFromMnemonic = async (mnemonic) => {
   try {
-    const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=1&offset=100`;
+    const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
+
+    return wallet;
+  } catch (error) {
+    throw new Error('Invalid mnemonic');
+  }
+};
+
+EthService.getTransactions = async (address, page, perPage) => {
+  try {
+    const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=${page}&offset=${perPage}`;
     const response = await axios.get(url);
     const rawTransactions = response.data.result;
     console.log('rawTransactions', rawTransactions);
@@ -120,6 +130,20 @@ EthService.sendTransaction = async (transaction, privateKey) => {
     wallet.provider = ethers.providers.getDefaultProvider(provider);
 
     await wallet.sendTransaction(transaction);
+  } catch (error) {
+    throw error;
+  }
+};
+
+EthService.getCurrentGasPrices = async () => {
+  try {
+    const response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
+
+    return {
+      slowly: response.data.safeLow / 10,
+      regular: response.data.average / 10,
+      fast: response.data.fast / 10,
+    };
   } catch (error) {
     throw error;
   }

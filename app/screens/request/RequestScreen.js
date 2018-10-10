@@ -9,14 +9,15 @@ import {
   AsyncStorage,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import Share from 'react-native-share';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors } from '../../utils/CommonStyles';
+import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
-
 
 class RequestScreen extends Component {
   constructor(props) {
@@ -31,6 +32,17 @@ class RequestScreen extends Component {
     this.setState({
       walletAddress,
     });
+  }
+
+  _onSharePress = () => {
+    const { walletAddress } = this.state;
+    const options = {
+      message: walletAddress,
+    };
+
+    Share.open(options)
+      .then(() => {})
+      .catch(() => {});
   }
 
   _handleCopyAddress = () => {
@@ -65,6 +77,7 @@ class RequestScreen extends Component {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.btnUpContainer}
+        onPress={() => this._onSharePress()}
       >
         <Image
           source={require('../../../assets/up/up-arrow.png')}
@@ -89,6 +102,7 @@ class RequestScreen extends Component {
           <View style={styles.contentContainer}>
             {this._renderQrCodeSection()}
             {this._renderBtnSection()}
+            {UIUtils.createBottomPadding()}
           </View>
         </ScrollView>
       </View>
@@ -163,7 +177,7 @@ const styles = ScaledSheet.create({
 
   btnCopyAddress: {
     width: '220@s',
-    marginBottom: '4@s',
+    marginBottom: '10@s',
     marginRight: '4@s',
   },
 });

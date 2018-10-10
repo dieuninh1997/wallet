@@ -5,7 +5,6 @@ import {
 import { CheckBox } from 'react-native-elements';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import Toast from 'react-native-root-toast';
 import bip39 from 'bip39';
 import hdkey from 'hdkey';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -44,6 +43,10 @@ export default class CreateWalletPhoneNumberScreen extends Component {
     });
   }
 
+  _onBtnTerms = () => {
+    this.props.navigation.navigate("TermsConditionScreen");
+  }
+
   _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
     console.log('hahah');
@@ -65,7 +68,11 @@ export default class CreateWalletPhoneNumberScreen extends Component {
 
       navigation.navigate('MainScreen');
     } catch (error) {
-      AppPreferences.showToastMessage(error.message);
+      if (error.errors) {
+        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        AppPreferences.showToastMessage(error.message);
+      }
     }
   }
 
@@ -117,7 +124,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
           />
           <TouchableWithoutFeedback
             activeOpacity={0.5}
-            onPress={() => this._handleToggleCheckBox()}
+            onPress={() => this._onBtnTerms()}
           >
             <View
               style={styles.touchIAccept}

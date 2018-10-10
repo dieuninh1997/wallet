@@ -1,4 +1,15 @@
 export default {
+  coin: {
+    MGC: {
+      fullname: 'MangoCoin',
+    },
+    BTC: {
+      fullname: 'Bitcoin',
+    },
+    ETH: {
+      fullname: 'Ethereum',
+    },
+  },
   landing: {
     coinName: 'Mango Coin',
     coinDescription: 'Make a better future',
@@ -35,6 +46,20 @@ export default {
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
     createWaletSuccess: 'Create wallet success',
+  },
+  createWalletByPassportScreen: {
+    title: 'Create by Passport Number',
+    inputEmail: 'Passport Number',
+    inputPassword: 'Passwords',
+    inputPasswordConfirm: 'Confirm Passwords',
+    iAccept: 'I accept the',
+    termsAndConditions: ' terms and conditions',
+    createWallet: 'Create Wallet',
+    createWaletSuccess: 'Create wallet success',
+  },
+  dashboard: {
+    title: 'Dashboard',
+    balance: 'Balance',
   },
   send: {
     title: 'Send',
@@ -88,9 +113,64 @@ export default {
     update: 'Update',
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Confirm password is incorrect',
+    changeSuccess: 'Change password success',
+  },
+  ChangePinScreen: {
+    title: 'Change PIN',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
+  },
+  genneralText: {
+    back: 'Back',
+    recieved: 'Recieved',
+    confirmation: 'Confirmation',
+    amount: 'Amount',
+    status: 'Status',
+    address: 'Address',
+    txid: 'Txid',
+    date: 'Date',
+  },
+  resetPassword: {
+    forgotPassword: 'Forgot Password',
+    emailAddress: 'Email Address',
+    resetPassword: 'Reset Password',
+    resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+  },
+  transactionDetail: {
+    transactionDetail: 'Transaction Detail',
+    copy_txid: 'Copy Txid',
+    check_export: 'Check Export',
+  },
+  restoreWalletScreen: {
+    title: 'Restore Account',
+    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    inputPlaceholder: 'Backup Phrase',
+  },
+  terms: {
+    title: 'Terms and Conditions',
+    content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).',
+  },
+  backupPassphraseScreen: {
+    title: 'Backup Phrase',
+  },
+  loginUserPin: {
+    enterPincode: 'Enter your PIN code',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
   },
   addPinScreen: {
-    title: 'Change PIN',
-    createPinSuccess: 'Create pin code success',
+    title: 'Add New PIN',
+    changePinSuccess: 'Add pin code success',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again',
+    newPin: 'New PIN',
+    currentPin: 'Current PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
 };

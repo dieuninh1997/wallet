@@ -54,7 +54,8 @@ export default {
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
-    continue: 'Continue',
+    continue: '続ける',
+    confirmationText: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
   },
   setting: {
     title: '設定',

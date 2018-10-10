@@ -160,18 +160,18 @@ class LoginScreen extends Component {
     </View>
   )
 
-  _renderBtnLoginWithTouchId = () => (
-    <View style={{ alignSelf: 'center' }}>
-      <TouchableOpacity
-        onPress={() => this._handlerLoginWithTouchId()}
-      >
-        <Image
-          source={require('../../../assets/fingerprint/fingerprint.png')}
-          style={styles.fingerPrintImage}
-        />
-      </TouchableOpacity>
-    </View>
-  )
+  // _renderBtnLoginWithTouchId = () => (
+  //   <View style={{ alignSelf: 'center' }}>
+  //     <TouchableOpacity
+  //       onPress={() => this._handlerLoginWithTouchId()}
+  //     >
+  //       <Image
+  //         source={require('../../../assets/fingerprint/fingerprint.png')}
+  //         style={styles.fingerPrintImage}
+  //       />
+  //     </TouchableOpacity>
+  //   </View>
+  // )
 
   _renderBtnLogin = () => (
     <MangoGradientButton
@@ -187,7 +187,7 @@ class LoginScreen extends Component {
         <ScrollView>
           {this._renderFormLogin()}
           {this._renderBtnLogin()}
-          { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null }
+          {/* { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null } */}
           {this._renderBtnForgotPassword()}
         </ScrollView>
           

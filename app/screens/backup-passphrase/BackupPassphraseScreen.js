@@ -39,11 +39,6 @@ class BackupPassphraseScreen extends Component {
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
-  _onBtnNext = () => {
-    const { navigation } = this.props;
-    navigation.navigate('AddPinScreen');
-  }
-
   _renderQrCodeSection = () => {
     const { mnemonic } = this.state;
     console.log('Mnemonic: ', mnemonic);

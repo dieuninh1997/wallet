@@ -44,7 +44,7 @@ export default class CreateWalletPhoneNumberScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate("TermsConditionScreen");
+    this.props.navigation.navigate('TermsConditionScreen');
   }
 
   _handleClickCreateWallet = async () => {

@@ -1,5 +1,5 @@
-import { scale } from '../libs/reactSizeMatter/scalingUtils';
 import { Platform } from 'react-native';
+import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
 class CommonColors {
   static screenBgColor = '#F5F7FA';
@@ -47,6 +47,38 @@ class CommonSize {
   static headerFontSize = '18@s';
 }
 
+const iOSFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light',
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium',
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold',
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular',
+  },
+};
+
+const androidFonts = {
+  Ubuntu_Light: {
+    fontFamily: 'Ubuntu-Light',
+  },
+  Ubuntu_Medium: {
+    fontFamily: 'Ubuntu-Medium',
+  },
+  Ubuntu_Bold: {
+    fontFamily: 'Ubuntu-Bold',
+  },
+  Ubuntu_Regular: {
+    fontFamily: 'Ubuntu-Regular',
+  },
+};
+
+const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
+
 const CommonStyles = {
   screen: {
     flex: 1,
@@ -72,8 +104,9 @@ const CommonStyles = {
     flexGrow: 0.9,
     textAlign: 'center',
     fontSize: scale(18),
-    fontWeight: '200',
+    fontWeight: '100',
     color: CommonColors.headerTitleColor,
+    ...Fonts.Ubuntu_Regular,
   },
 
   // Section select coin
@@ -96,37 +129,6 @@ const CommonStyles = {
     backgroundColor: '#336ACF',
   },
 };
-
-const iOSFonts = {
-  Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light'
-  },
-  Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium'
-  },
-  Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold'
-  },
-  Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular'
-  }
+export {
+  CommonStyles, CommonColors, CommonSize, Fonts,
 };
-
-const androidFonts = {
-  Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light'
-  },
-  Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium'
-  },
-  Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold'
-  },
-  Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular'
-  }
-};
-
-const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
-
-export { CommonStyles, CommonColors, CommonSize, Fonts };

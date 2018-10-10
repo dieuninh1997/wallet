@@ -24,15 +24,18 @@ class LoginScreen extends Component {
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: <View>
-      <TouchableOpacity 
-        style = {styles.btnCreate}
-        onPress = {() => { navigation.navigate("CreateWalletScreen")}}>
-        <View>
-          <Text style = {styles.txtLblCreate}>{I18n.t("signin.btnCreate")}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>,
+    headerRight: (
+      <View>
+        <TouchableOpacity
+          style={styles.btnCreate}
+          onPress={() => { navigation.navigate('CreateWalletScreen'); }}
+        >
+          <View>
+            <Text style={styles.txtLblCreate}>{I18n.t('signin.btnCreate')}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    ),
   });
 
   static LOGIN_INFO = {
@@ -51,9 +54,9 @@ class LoginScreen extends Component {
   }
 
   componentDidMount = () => {
-    if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
-      this._handlerLoginWithTouchId();
-    }
+    // if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
+    //   this._handlerLoginWithTouchId();
+    // }
   }
 
   _handleClickLogin = async () => {
@@ -190,7 +193,7 @@ class LoginScreen extends Component {
           {/* { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null } */}
           {this._renderBtnForgotPassword()}
         </ScrollView>
-          
+
       </View>
     );
   }
@@ -237,7 +240,7 @@ const styles = ScaledSheet.create({
   fingerPrintImage: {
     width: '50@s',
     height: '50@s',
-    marginBottom: '24@s'
+    marginBottom: '24@s',
   },
 
   inputText: {

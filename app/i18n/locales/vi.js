@@ -77,6 +77,8 @@ export default {
     unverified: 'Unverified',
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
   request: {
     title: 'Request',
@@ -116,12 +118,18 @@ export default {
     address: 'Address',
     txid: 'Txid',
     date: 'Date',
+    ok: 'Ok',
+    password: 'Password',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+    verifyYourEmail: 'Verify Your Email',
+    checkEmailToResetPassword: 'Please check your email to reset',
+    emailFieldRequired: 'The email field is required.',
+    invalidEmail: 'The email must be a valid email address.',
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
@@ -152,5 +160,7 @@ export default {
     title: 'Local Currency',
     cancel: 'Cancel',
     confirm: 'Confirm',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
 };

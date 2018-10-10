@@ -87,6 +87,8 @@ export default {
     unverified: 'Unverified',
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
   request: {
     title: 'Request',
@@ -126,12 +128,18 @@ export default {
     address: 'Address',
     txid: 'Txid',
     date: 'Date',
+    ok: 'Ok',
+    password: 'Password',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+    verifyYourEmail: 'Verify Your Email',
+    checkEmailToResetPassword: 'Please check your email to reset',
+    emailFieldRequired: 'The email field is required.',
+    invalidEmail: 'The email must be a valid email address.',
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
@@ -169,5 +177,14 @@ export default {
     title: 'Local Currency',
     cancel: 'Cancel',
     confirm: 'Confirm',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
+  backupPassphrase: {
+    title: 'Backup your Passphrase',
+    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
+    important: '**Do not lose it!** It cannot be recovered if you lose it.\n**Do not share it!**Your funds will be stolen, if you use this file on a malicious/phising site.',
+    btnCopy: 'Copy',
+    btnNext: 'Next',
+  }
 };

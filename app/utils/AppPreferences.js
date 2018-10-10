@@ -34,7 +34,7 @@ export default class AppPreferences {
   static async removeAccessToken() {
     AppConfig.ACCESS_TOKEN = '';
     AppConfig.PRIVATE_KEY = '';
-    AppConfig.MNEMORIC = '';
+    AppConfig.MNEMONIC = '';
     Keychain.resetGenericPassword();
     await AsyncStorage.setItem('token_saved', 'false');
   }

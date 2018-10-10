@@ -130,13 +130,13 @@ class LocalCurrencyScreen extends Component {
             style={styles.groupDolla}
             value='USD'
             color='#2f64d1'>
-            <Text style={styles.textUsDollar}>U.S Dollar ($)</Text>
+            <Text style={styles.textUsDollar}>{I18n.t('localCurrencyScreen.usDollar')}</Text>
           </RadioButton>
           <RadioButton
             style={styles.groupPeso}
             value='PHP'
             color='#2f64d1'>
-            <Text style={styles.textUsDollar}>Philippines Peso (₱)</Text>
+            <Text style={styles.textUsDollar}>{I18n.t('localCurrencyScreen.philippinesPeso')}</Text>
           </RadioButton>
         </RadioGroup>
       </View>

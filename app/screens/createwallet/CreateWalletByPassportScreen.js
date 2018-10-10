@@ -109,14 +109,14 @@ export default class CreateWalletByPassportScreen extends Component {
       await AppPreferences.saveToKeychain('mnemonic', mnemonic);
 
       AppConfig.PRIVATE_KEY = privateKey;
-      AppConfig.MNEMORIC = mnemonic;
+      AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = loginInfo.access_token;
 
       await AsyncStorage.setItem('address', address);
       AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
 
       setTimeout(() => {
-        navigation.navigate('BackupPassphraseScreen');
+        navigation.navigate('BackupPassphraseScreenCompact');
       }, 1000);
     } catch (error) {
       if (error.errors) {

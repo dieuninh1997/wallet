@@ -42,7 +42,7 @@ export default class SettingScreen extends Component {
       },
       userSetting: {
         emailNotification: false,
-        localCurrencyUser: 'U.S Dollar ($)',
+        localCurrencyUser: I18n.t('setting.usDollar'),
       },
       walletId: null,
     };
@@ -54,14 +54,14 @@ export default class SettingScreen extends Component {
       this.setState({
         userSetting: {
           emailNotification: userSettingData.email_notification,
-          localCurrencyUser: 'Philippines Peso (₱)',
+          localCurrencyUser: I18n.t('setting.philippinesPeso'),
         }
       });
     } else {
       this.setState({
         userSetting: {
           emailNotification: userSettingData.email_notification,
-          localCurrencyUser: 'U.S Dollar ($)',
+          localCurrencyUser: I18n.t('setting.usDollar'),
         }
       });
     }
@@ -91,16 +91,19 @@ export default class SettingScreen extends Component {
     if (value === 'USD') {
       this.setState({
         userSetting: {
-          localCurrencyUser: 'U.S Dollar ($)',
+          localCurrencyUser: I18n.t('setting.usDollar'),
         }
       });
     }else{
       this.setState({
         userSetting: {
-          localCurrencyUser: 'Philippines Peso (₱)',
+          localCurrencyUser: I18n.t('setting.philippinesPeso'),
         }
       });
     }
+  }
+  _onPressBackupPassphrase = () => {
+    this.props.navigation.navigate("BackupPassphraseScreen");
   }
 
   _renderProfile = () => {
@@ -237,18 +240,19 @@ export default class SettingScreen extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <View style={styles.borderElement}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text style={styles.textUnVerified}>
-                {I18n.t('setting.unconfirmed')}
-              </Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+
+          <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
+            <View style={styles.borderElement}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
+          
           <TouchableWithoutFeedback onPress={() => navigation.navigate('ChangePinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>

@@ -10,6 +10,8 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import I18n from '../../i18n/i18n';
 import { ressetPassword } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
+import VerifyYourEmailModal from './VerifyYourEmailModal';
+import UIUtils from '../../utils/UIUtils';
 
 export default class ForgotPasswordScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,7 +26,6 @@ export default class ForgotPasswordScreen extends Component {
     super(props);
     this.state = {
       email: null,
-      isSubmitSuccess: false,
     };
   }
 
@@ -34,23 +35,36 @@ export default class ForgotPasswordScreen extends Component {
     });
   }
 
-  _backToLogin = () => {
-    const { navigation } = this.props;
+  _validateEmail = () => {
+    const { email } = this.state;
 
-    navigation.navigate('LoginScreen');
+    if (!email) {
+      AppPreferences.showToastMessage(I18n.t('resetPassword.emailFieldRequired'));
+      return false;
+    }
+
+    if (!UIUtils.validateEmail(email)) {
+      AppPreferences.showToastMessage(I18n.t('resetPassword.invalidEmail'));
+      return false;
+    }
+    return true;
   }
 
   _handleResetPassword = async () => {
-    try {
-      const responseUser = await ressetPassword(this.state.email);
+    const { email } = this.state;
 
+    if (!this._validateEmail()) {
+      return;
+    }
+    try {
+      const responseUser = await ressetPassword(email);
+
+      this.emailAddress.clear();
       this.setState({
-        isSubmitSuccess: true,
+        email: '',
       });
+      this._emailModal.setModalVisible(true);
     } catch (error) {
-      this.setState({
-        isSubmitSuccess: false,
-      });
       if (error.errors) {
         AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
@@ -60,46 +74,30 @@ export default class ForgotPasswordScreen extends Component {
   }
 
   render() {
-    const { isSubmitSuccess } = this.state;
-    let contentShow;
-
-    if (!isSubmitSuccess) {
-      contentShow = (
-        <View style={styles.forgotPassword}>
-          <View style={styles.inputContainer}>
-            <Image
-              source={require('../../../assets/createwalet/email.png')}
-              style={styles.emailIcon}
-            />
-            <TextInput
-              placeholder={I18n.t('resetPassword.emailAddress')}
-              editable
-              underlineColorAndroid="transparent"
-              style={styles.inputText}
-              onChangeText={value => this._handleChangeInputEmail(value)}
-            />
-          </View>
-          <MangoGradientButton
-            btnText={I18n.t('resetPassword.resetPassword')}
-            btnStyle={styles.btnResetPassword}
-            onPress={() => this._handleResetPassword()}
+    return (
+      <View style={styles.forgotPassword}>
+        <VerifyYourEmailModal ref={ref => this._emailModal = ref}/>
+        <View style={styles.inputContainer}>
+          <Image
+            source={require('../../../assets/email/email.png')}
+            style={styles.emailIcon}
+          />
+          <TextInput
+            placeholder={I18n.t('resetPassword.emailAddress')}
+            editable
+            ref={input => { this.emailAddress = input }}
+            underlineColorAndroid="transparent"
+            style={styles.inputText}
+            onChangeText={value => this._handleChangeInputEmail(value)}
           />
         </View>
-      );
-    } else {
-      contentShow = (
-        <View style={styles.forgotPassword}>
-          <Text style={styles.messageSuccess}>{I18n.t('resetPassword.resetPasswordSuccessMessage')}</Text>
-          <MangoGradientButton
-            btnText={I18n.t('genneralText.back')}
-            btnStyle={styles.btnResetPassword}
-            onPress={() => this._backToLogin()}
-          />
-        </View>
-      );
-    }
-
-    return (contentShow);
+        <MangoGradientButton
+          btnText={I18n.t('resetPassword.resetPassword')}
+          btnStyle={styles.btnResetPassword}
+          onPress={() => this._handleResetPassword()}
+        />
+      </View>
+    );
   }
 }
 
@@ -120,13 +118,13 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
   },
   emailIcon: {
-    width: '23@s',
-    height: '23@s',
-    marginTop: '16.5@s',
+    width: '30@s',
+    height: '30@s',
+    marginTop: '13@s',
     marginLeft: '25@s',
   },
   inputText: {
-    fontSize: '18@s',
+    fontSize: '20@ms',
     fontWeight: '100',
     width: '270@s',
     marginLeft: '10@s',

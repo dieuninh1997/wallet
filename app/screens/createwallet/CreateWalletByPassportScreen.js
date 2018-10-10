@@ -20,6 +20,7 @@ import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { register, login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 
 export default class CreateWalletByPassportScreen extends Component {
@@ -113,16 +114,16 @@ export default class CreateWalletByPassportScreen extends Component {
       AppConfig.ACCESS_TOKEN = loginInfo.access_token;
 
       await AsyncStorage.setItem('address', address);
-      AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
+      UIUtils.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
 
       setTimeout(() => {
         navigation.navigate('BackupPassphraseScreenCompact');
       }, 1000);
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }

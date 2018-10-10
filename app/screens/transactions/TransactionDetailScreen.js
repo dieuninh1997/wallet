@@ -9,7 +9,7 @@ import AppConfig from '../../utils/AppConfig';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
-import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 
 export default class TransactionDetailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -37,7 +37,7 @@ export default class TransactionDetailScreen extends Component {
   _handleCopyTxid = () => {
     const { transaction } = this.state;
     Clipboard.setString(transaction.id);
-    AppPreferences.showToastMessage(I18n.t('transactionDetail.copy_txid'));
+    UIUtils.showToastMessage(I18n.t('transactionDetail.copy_txid'));
   }
 
   _handleCheckExport = () => {

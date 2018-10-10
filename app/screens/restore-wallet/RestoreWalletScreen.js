@@ -18,6 +18,7 @@ import AppConfig from '../../utils/AppConfig';
 import { restoreAccount } from '../../api/user/UserRequest';
 import WalletService from '../../services/wallet';
 import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 
 class RestoreWalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -76,9 +77,9 @@ class RestoreWalletScreen extends Component {
       navigation.navigate('MainScreen');
     } catch (error) {
       if (error.errors) {
-        AppPreferences.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        AppPreferences.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message);
       }
     }
   }

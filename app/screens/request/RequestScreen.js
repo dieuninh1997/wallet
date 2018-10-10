@@ -17,7 +17,7 @@ import { CommonColors } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import AppPreferences from '../../utils/AppPreferences';
+import UIUtils from '../../utils/UIUtils';
 
 class RequestScreen extends Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class RequestScreen extends Component {
     const { walletAddress } = this.state;
 
     Clipboard.setString(walletAddress);
-    AppPreferences.showToastMessage(I18n.t('request.copied'));
+    UIUtils.showToastMessage(I18n.t('request.copied'));
   }
 
   _renderQrCodeSection = () => {

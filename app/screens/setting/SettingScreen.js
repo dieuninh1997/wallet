@@ -371,6 +371,7 @@ export default class SettingScreen extends Component {
           </View>
         </ScrollView>
         <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated}/>
+        <ChangePasswordScreen ref={ref => this._changePassword = ref}/>
       </View>
     );
   }

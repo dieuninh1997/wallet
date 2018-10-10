@@ -15,7 +15,7 @@ import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -141,7 +141,7 @@ export default class CreateWalletByEmailScreen extends Component {
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer]}>
         <Image
-          source={require('../../../assets/wallet/wallet.png')}
+          source={require('../../../assets/email/email.png')}
           style={styles.inputImageIcon}
         />
         <TextInput
@@ -227,8 +227,8 @@ export default class CreateWalletByEmailScreen extends Component {
         <ScrollView>
           {this._renderFormCreateByEmail()}
           {this._renderTermsAndConditions()}
+          {this._renderButtonCreate()}
         </ScrollView>
-        {this._renderButtonCreate()}
       </View>
     );
   }
@@ -270,18 +270,18 @@ const styles = ScaledSheet.create({
   },
 
   formLoginContainer: {
-    marginTop: '46@s',
-    height: '170@s',
+    marginTop: '24@s',
+    height: '168@s',
     alignItems: 'center',
     backgroundColor: CommonColors.headerBarBgColor,
-    borderRadius: '25@s',
+    borderRadius: '28@s',
     borderWidth: 1,
     borderColor: CommonColors.customBorderColor,
   },
 
   inputContainer: {
     flex: 1,
-    width: '340@s',
+    width: '330@s',
     flexDirection: 'row',
     paddingHorizontal: '20@s',
     alignItems: 'center',
@@ -306,13 +306,15 @@ const styles = ScaledSheet.create({
 
   inputText: {
     flex: 7,
-    fontSize: '18@s',
+    fontSize: CommonSize.inputFontSize,
     fontWeight: '100',
   },
 
   btnCreateWalletContainer: {
-    width: '220@s',
+    alignSelf: 'center',
+    marginTop: '28@s',
+    width: '247@s',
+    height: '48@s',
     marginBottom: '20@s',
-    marginHorizontal: '5@s',
   },
 });

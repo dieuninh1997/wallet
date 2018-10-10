@@ -63,7 +63,7 @@ export default class UIUtils {
   static showToastMessage(message) {
     Toast.show(message, {
       duration: Toast.durations.SHORT,
-      position: Toast.positions.BOTTOM,
+      position: Toast.positions.CENTER,
       shadow: true,
       animation: true,
       hideOnPress: true,

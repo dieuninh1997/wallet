@@ -57,6 +57,10 @@ class RestoreWalletScreen extends Component {
     const { navigation } = this.props;
     const { mnemonic } = restoreInfo;
 
+    if (!this._validateMnemonic(mnemonic)) {
+      return;
+    }
+
     try {
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())
@@ -79,9 +83,24 @@ class RestoreWalletScreen extends Component {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`));
       }
     }
+  }
+
+  _validateMnemonic = (mnemonic) => {
+    if (!mnemonic) {
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.mnemonicRequired'));
+      return false;
+    }
+
+    const words = mnemonic.split(' ');
+    if (words.length != 12) {
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'));
+      return false;
+    }
+
+    return true;
   }
 
   _renderFormRestore() {

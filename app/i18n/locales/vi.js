@@ -162,6 +162,11 @@ export default {
     title: 'Restore Account',
     titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
     inputPlaceholder: 'Backup Phrase',
+    mnemonicRequired: 'Please enter your backup phrase.',
+    invalidMnemonic: 'Invalid backup phrase.',
+    errors: {
+      mnemonic_not_found: 'Wallet not found.'
+    }
   },
   loginUserPin: {
     enterPincode: 'Enter your PIN code',

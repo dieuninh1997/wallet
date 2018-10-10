@@ -43,7 +43,6 @@ async function initMasterdata() {
       const credentials = await AppPreferences.getGeneric();
 
       const keychain = credentials.password;
-      console.log('keychain', keychain);
 
       const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
       const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;

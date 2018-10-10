@@ -4,6 +4,8 @@ import {
   Text,
   Image,
   AsyncStorage,
+  ImageBackground,
+  SafeAreaView,
 } from 'react-native';
 import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
@@ -13,6 +15,7 @@ import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
 import BaseScreen from './BaseScreen';
 import { getUserSecuritySettings, getUserSettings } from '../api/user/UserRequest';
+import { CommonColors, Fonts } from '../utils/CommonStyles';
 
 export default class SplashScreen extends BaseScreen {
   static navigationOptions = () => ({
@@ -43,7 +46,6 @@ export default class SplashScreen extends BaseScreen {
   }
 
   async _initMangoApp() {
-    const { navigation } = this.props;
     const { isEnableCodePin } = this.state;
 
     await initApp();
@@ -51,7 +53,7 @@ export default class SplashScreen extends BaseScreen {
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
         let userSetting = await AsyncStorage.getItem('userSetting');
-        let userSettingData = await AsyncStorage.getItem('userSettingData');
+        const userSettingData = await AsyncStorage.getItem('userSettingData');
 
         if (!userSetting) {
           const response = await getUserSecuritySettings();
@@ -63,8 +65,8 @@ export default class SplashScreen extends BaseScreen {
 
         if (!userSettingData) {
           const getUserSetting = await getUserSettings();
-          getUserSetting.data.map(data => {
-            AppConfig.USER_SETTING_DATA[data.key] = data.value
+          getUserSetting.data.map((data) => {
+            AppConfig.USER_SETTING_DATA[data.key] = data.value;
           });
           await AsyncStorage.setItem('userSettingData', JSON.stringify(AppConfig.USER_SETTING_DATA));
         } else {
@@ -74,7 +76,6 @@ export default class SplashScreen extends BaseScreen {
 
         if (isEnableCodePin) {
           this.navigateAndClearStack('LoginUsePinScreen');
-          return;
         }
         this.navigateAndClearStack('LoginScreen');
       } else {
@@ -85,13 +86,25 @@ export default class SplashScreen extends BaseScreen {
     }
   }
 
+  _renderLogoGroup = () => (
+    <View style={styles.logoGroupContainer}>
+      <Image source={require('../../assets/logo/logoMangocoinNotxt.png')} style={styles.logoImage} />
+      <Text style={styles.logoContent}>{I18n.t('landing.coinName')}</Text>
+    </View>
+  )
+
   render() {
     return (
-      <View style={styles.container}>
-        <Image source={require('../../assets/logo/logo.png')} />
-        <Text style={styles.logoContent}>{I18n.t('landing.coinName')}</Text>
-        <Text style={styles.logoDescription}>{I18n.t('landing.coinDescription')}</Text>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          { this._renderLogoGroup() }
+        </View>
+        <ImageBackground
+          source={require('../../assets/background/bg1.png')}
+          style={{ flex: 1, height: undefined, width: '100%' }}
+          resizeMode="stretch"
+        />
+      </SafeAreaView>
     );
   }
 }
@@ -99,14 +112,25 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFCB38',
+    backgroundColor: '#f5f7fa',
   },
+
+  logoGroupContainer: {
+    alignItems: 'center',
+    marginTop: '40@s',
+  },
+
+  logoImage: {
+    width: '140@s',
+    height: '140@s',
+  },
+
   logoContent: {
-    color: '#1F42B3',
+    color: '#2f64d1',
     fontWeight: 'bold',
-    fontSize: '32@s',
+    fontSize: '32@ms',
   },
+
   logoDescription: {
     color: '#BAC5E6',
   },

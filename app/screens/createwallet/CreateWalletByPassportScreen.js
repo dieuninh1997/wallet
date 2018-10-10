@@ -303,7 +303,7 @@ const styles = ScaledSheet.create({
 
   btnCreateWalletContainer: {
     alignSelf: 'center',
-    marginTop: '18@s',
+    marginTop: '28@s',
     width: '247@s',
     height: '48@s',
     marginBottom: '20@s',

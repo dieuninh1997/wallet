@@ -12,11 +12,14 @@ import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getCurrentUser, getUserSettings, getUserSecuritySettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
+import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
+import Events from '../../utils/Events';
 import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
 import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
+import BaseScreen from '../BaseScreen';
 
-export default class SettingScreen extends Component {
+export default class SettingScreen extends BaseScreen {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('setting.title'),
@@ -58,7 +61,18 @@ export default class SettingScreen extends Component {
   }
 
   componentDidMount = async () => {
+    await this._loadLocalSettings();
     this._loadData();
+  }
+
+  _loadLocalSettings = async () => {
+    let userSettings = await AppPreferences.getUserSettings() || [];
+    let userSecuritySettings = await AppPreferences.getUserSecuritySettings() || {};
+
+    this.setState({
+      userSettings,
+      userSecuritySettings
+    });
   }
 
   _loadData = async () => {
@@ -95,10 +109,12 @@ export default class SettingScreen extends Component {
 
   _loadUserSettings = async () => {
     try {
-      let response = await getUserSettings();
+      const response = await getUserSettings();
+      const settings = response.data;
       this.setState({
-        userSettings: response.data
+        userSettings: settings
       });
+      AppPreferences.saveUserSettings(settings);
     } catch (error) {
       console.log('SettingScreen._loadUserSettings', error);
     }
@@ -107,9 +123,11 @@ export default class SettingScreen extends Component {
   _loadUserSecuritySettings = async () => {
     try {
       let response = await getUserSecuritySettings();
+      const settings = response.data;
       this.setState({
-        userSecuritySettings: response.data
+        userSecuritySettings: settings
       });
+      AppPreferences.saveUserSecuritySettings(settings);
     } catch (error) {
       console.log('SettingScreen._loadUserSecuritySettings', error);
     }
@@ -148,6 +166,9 @@ export default class SettingScreen extends Component {
     this.setState({
       userSettings
     });
+
+    this.notify(Events.USER_SETTINGS_UPDATED);
+    this._loadUserSettings();
   }
   _onPressBackupPassphrase = () => {
     this.props.navigation.navigate("BackupPassphraseScreen");

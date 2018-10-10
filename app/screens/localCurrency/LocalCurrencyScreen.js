@@ -115,6 +115,7 @@ class LocalCurrencyScreen extends Component {
             Consts.CURRENCIES.map((currency, index) => {
               return (
                 <RadioButton
+                  key={currency}
                   style={styles.groupDolla}
                   value={currency}
                   color='#2f64d1'>

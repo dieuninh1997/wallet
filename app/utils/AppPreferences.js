@@ -43,14 +43,25 @@ export default class AppPreferences {
     return await AsyncStorage.getItem('address');
   }
 
-  static showToastMessage(message) {
-    Toast.show(message, {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
+  static async getUserSettings() {
+    let data = await AsyncStorage.getItem('user_settings');
+    if (data) {
+      return JSON.parse(data);
+    }
+  }
+
+  static async saveUserSettings(json) {
+    await AsyncStorage.setItem('user_settings', JSON.stringify(json));
+  }
+
+  static async getUserSecuritySettings() {
+    let data = await AsyncStorage.getItem('user_security_settings');
+    if (data) {
+      return JSON.parse(data);
+    }
+  }
+
+  static async saveUserSecuritySettings(json) {
+    await AsyncStorage.setItem('user_security_settings', JSON.stringify(json));
   }
 }

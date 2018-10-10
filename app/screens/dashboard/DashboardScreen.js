@@ -71,7 +71,7 @@ class DashboardScreen extends BaseScreen {
 
   getDataEventHandlers() {
     return {
-      [Events.ORDER_BOOK_SETTINGS_UPDATED]: this._loadData.bind(this),
+      [Events.USER_SETTINGS_UPDATED]: this._loadData.bind(this),
     };
   }
 

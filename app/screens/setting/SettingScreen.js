@@ -11,6 +11,7 @@ import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppConfig from '../../utils/AppConfig';
 import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
+import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -85,6 +86,10 @@ export default class SettingScreen extends Component {
 
   _showLocalCurrency = () => {
     this._localCurrency.setModalVisible(true);
+  }
+
+  _showchangePassword = () => {
+    this._changePassword.setModalVisible(true);
   }
 
   showChangeLocalCurrency = (value) => {
@@ -229,7 +234,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+          <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
             <View style={styles.borderElementBottom}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
               <View style={styles.activiRightGroup}>
@@ -309,6 +314,7 @@ export default class SettingScreen extends Component {
           </View>
         </ScrollView>
         <LocalCurrencyScreen ref={ref => this._localCurrency = ref} showChangeLocalCurrency={this.showChangeLocalCurrency}/>
+        <ChangePasswordScreen ref={ref => this._changePassword = ref}/>
       </View>
     );
   }

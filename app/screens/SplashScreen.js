@@ -77,7 +77,7 @@ export default class SplashScreen extends BaseScreen {
         if (isEnableCodePin) {
           this.navigateAndClearStack('LoginUsePinScreen');
         }
-        this.navigateAndClearStack('LoginScreen');
+        this.navigateAndClearStack('MainScreen');
       } else {
         this.navigateAndClearStack('LandingScreen');
       }

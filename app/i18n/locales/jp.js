@@ -54,8 +54,8 @@ export default {
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
-    continue: 'Continue',
-    confirmationText: 'Enter your 12 backup words with spaces to recover your funds & transactions',
+    continue: '続ける',
+    confirmationText: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
   },
   setting: {
     title: '設定',

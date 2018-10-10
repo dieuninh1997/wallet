@@ -131,4 +131,11 @@ export default {
     title: 'サービス規約',
     content: 'This agreement is beetween you and the service operator, Mango. By using any services made available through the Mango website (https://www.mgc.com).'
   },
+  backupPassphrase: {
+    title: 'Backup your Passphrase',
+    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
+    important: '※紛失注意！※ 紛失した場合、復元できません。\n※共有注意！※ このファイルを悪意あるWebサイトで使用するとあなたの資金が盗まれます。',
+    btnCopy: 'Copy',
+    btnNext: 'Next',
+  }
 };

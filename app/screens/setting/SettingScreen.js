@@ -69,6 +69,10 @@ export default class SettingScreen extends Component {
     this.setState({ payload });
   }
 
+  _onPressBackupPassphrase = () => {
+    this.props.navigation.navigate("BackupPassphraseScreen");
+  }
+
   _renderProfile = () => {
     const { walletId, payload } = this.state;
 
@@ -203,18 +207,19 @@ export default class SettingScreen extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <View style={styles.borderElement}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text style={styles.textUnVerified}>
-                {I18n.t('setting.unconfirmed')}
-              </Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+
+          <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
+            <View style={styles.borderElement}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
+          
           <TouchableWithoutFeedback onPress={() => navigation.navigate('AddPinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>

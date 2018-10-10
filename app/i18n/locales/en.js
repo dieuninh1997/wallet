@@ -149,7 +149,7 @@ export default {
   },
   restoreWalletScreen: {
     title: 'Restore Account',
-    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    titleForm: 'Enter your 12 backup words with spaces to recover your funds & transactions',
     inputPlaceholder: 'Backup Phrase',
   },
   terms: {

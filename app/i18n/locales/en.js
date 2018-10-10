@@ -94,7 +94,12 @@ export default {
     emailAddress: 'Email Address',
     resend: 'Resend',
     cancel: 'Cancel',
-    update: 'Update'
+    update: 'Update',
+    verificationEmailSent: 'A verification link has been sent to your email account.',
+    errors: {
+      email_already_verified: 'Your email address has already been verified.',
+      email_in_use: 'This email address is already in use.'
+    }
   },
   request: {
     title: 'Request',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, Text, View, Dimensions } from 'react-native';
+import Toast from 'react-native-root-toast';
 import { moderateScale, scale } from '../libs/reactSizeMatter/scalingUtils';
 import { CommonColors, CommonStyles, Fonts } from './CommonStyles';
 
@@ -37,11 +38,11 @@ export default class UIUtils {
   static generateShadowStyle(height = 4) {
     if (Platform.OS === 'ios') {
       return {
-        shadowColor: 'black',
-        shadowOpacity: 0.5,
+        shadowColor: '#0530b0',
+        shadowOpacity: 0.4,
         shadowOffset: {
-          width: 5,
-          height: 5,
+          width: 0,
+          height: 3,
         },
         zIndex: 999,
       };
@@ -57,5 +58,16 @@ export default class UIUtils {
 
   static createBottomPadding() {
     return (<View style={{ width: 0, height: scale(90) }} />);
+  }
+
+  static showToastMessage(message) {
+    Toast.show(message, {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
   }
 }

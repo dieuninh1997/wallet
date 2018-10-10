@@ -84,7 +84,12 @@ export default {
     emailAddress: 'メールアドレス',
     resend: '再送する',
     cancel: 'キャンセル',
-    update: '更新する'
+    update: '更新する',
+    verificationEmailSent: 'A verification link has been sent to your email account.',
+    errors: {
+      email_already_verified: 'Your email address has already been verified.',
+      email_in_use: 'This email address is already in use.'
+    }
   },
   request: {
     title: 'リクエスト',

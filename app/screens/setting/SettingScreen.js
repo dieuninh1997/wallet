@@ -10,7 +10,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { getUserSettings } from '../../api/user/UserRequest';
+import { getCurrentUser, getUserSettings, getUserSecuritySettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
 
 export default class SettingScreen extends Component {
@@ -42,15 +42,23 @@ export default class SettingScreen extends Component {
         phoneVerified: AppConfig.USER_SETTING.phone_verified,
       },
       walletId: null,
+      user: {}
     };
   }
 
   componentDidMount = async () => {
+    this._loadData()
+  }
+
+  _loadData = async () => {
     try {
-      const getUserSetting = await getUserSettings();
-      console.log('-------------------', getUserSetting);
+      await Promise.all([
+        this._loadUserInfo(),
+        getUserSettings(),
+        getUserSecuritySettings()
+      ]);
     } catch (error) {
-      console.log('<<<<<<<error<<<<', error.message);
+      console.log('SettingScreen._loadData', error);
     }
 
     try {
@@ -63,6 +71,17 @@ export default class SettingScreen extends Component {
     }
   }
 
+  _loadUserInfo = async () => {
+    try {
+      let response = await getCurrentUser();
+      this.setState({
+        user: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserInfo', error);
+    }
+  }
+
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
@@ -71,7 +90,7 @@ export default class SettingScreen extends Component {
   }
 
   _renderProfile = () => {
-    const { walletId, payload } = this.state;
+    const { walletId, payload, user } = this.state;
 
     return (
       <View>
@@ -83,7 +102,7 @@ export default class SettingScreen extends Component {
             <Text style={styles.walletAddress}>{walletId}</Text>
           </View>
 
-          <TouchableWithoutFeedback onPress={() => this._emailModal.setModalVisible(true)}>
+          <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
             <View style={styles.activiRightGroup}>

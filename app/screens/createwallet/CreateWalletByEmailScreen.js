@@ -148,6 +148,7 @@ export default class CreateWalletByEmailScreen extends Component {
           placeholder={I18n.t('createWalletByEmailScreen.inputEmail')}
           editable
           underlineColorAndroid="transparent"
+          autoCapitalize="none"
           style={styles.inputText}
           onChangeText={value => this._handleChangeInput(CreateWalletByEmailScreen.WALLET_INFO.EMAIL, value)}
         />

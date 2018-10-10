@@ -141,7 +141,7 @@ export default class CreateWalletByEmailScreen extends Component {
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer]}>
         <Image
-          source={require('../../../assets/wallet/wallet-login.png')}
+          source={require('../../../assets/wallet/wallet.png')}
           style={styles.inputImageIcon}
         />
         <TextInput

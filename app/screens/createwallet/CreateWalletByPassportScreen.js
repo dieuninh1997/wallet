@@ -116,7 +116,7 @@ export default class CreateWalletByPassportScreen extends Component {
       AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
 
       setTimeout(() => {
-        navigation.navigate('BackupPassphraseScreen');
+        navigation.navigate('BackupPassphraseScreenCompact');
       }, 1000);
     } catch (error) {
       if (error.errors) {

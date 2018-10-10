@@ -126,7 +126,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
       AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
       setTimeout(() => {
-        navigation.navigate('BackupPassphraseScreen');
+        navigation.navigate('BackupPassphraseScreenCompact');
       }, 1000);
     } catch (error) {
       if (error.errors) {

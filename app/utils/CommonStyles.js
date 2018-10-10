@@ -25,6 +25,10 @@ class CommonColors {
   static endGradientBlue = '#2046B6';
 
   static customBorderColor = '#DEE3E9';
+
+  static highlightRed = '#FF0D00';
+
+  static highlightBlue = '#0038FF';
 }
 
 class CommonSize {

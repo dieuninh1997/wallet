@@ -171,4 +171,11 @@ export default {
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
   },
+  backupPassphrase: {
+    title: 'Backup your Passphrase',
+    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
+    important: '**Do not lose it!** It cannot be recovered if you lose it.\n**Do not share it!**Your funds will be stolen, if you use this file on a malicious/phising site.',
+    btnCopy: 'Copy',
+    btnNext: 'Next',
+  }
 };

@@ -18,7 +18,7 @@ import AppConfig from '../../utils/AppConfig';
 
 class BackupPassphraseScreenCompact extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <View/>,
+    headerLeft: <View />,
     title: I18n.t('backupPassphrase.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -26,25 +26,22 @@ class BackupPassphraseScreenCompact extends Component {
   })
 
   _didFocusSubcription;
+
   _willBlurSubcription;
 
   constructor(props) {
     super(props);
     this.state = {
-      mnemoric: AppConfig.MNEMORIC ? AppConfig.MNEMORIC : null,
+      mnemonic: AppConfig.MNEMONIC ? AppConfig.MNEMONIC : null,
     };
   }
 
   componentWillMount() {
-    this._didFocusSubcription = this.props.navigation.addListener('didFocus', payload => 
-      BackHandler.addEventListener('hardwareBackPress', this._onBackAndroidPress)
-    );
+    this._didFocusSubcription = this.props.navigation.addListener('didFocus', payload => BackHandler.addEventListener('hardwareBackPress', this._onBackAndroidPress));
   }
 
   componentDidMount() {
-    this._willBlurSubcription = this.props.navigation.addListener('willBlur', payload =>
-      BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroidPress)
-    );
+    this._willBlurSubcription = this.props.navigation.addListener('willBlur', payload => BackHandler.removeEventListener('hardwareBackPress', this._onBackAndroidPress));
   }
 
   componentWillUnmount() {
@@ -52,15 +49,13 @@ class BackupPassphraseScreenCompact extends Component {
     this._willBlurSubcription && this._willBlurSubcription.remove();
   }
 
-  _onBackAndroidPress = () => {
-    // Disable back android
-    return true;
-  }
+  _onBackAndroidPress = () => true
+
 
   _handleCopyAddress = () => {
-    const { mnemoric } = this.state;
+    const { mnemonic } = this.state;
 
-    Clipboard.setString(mnemoric);
+    Clipboard.setString(mnemonic);
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
@@ -70,36 +65,36 @@ class BackupPassphraseScreenCompact extends Component {
   }
 
   _renderQrCodeSection = () => {
-    const { mnemoric } = this.state;
-    console.log('Mnemoric: ', mnemoric);
+    const { mnemonic } = this.state;
+    console.log('Mnemonic: ', mnemonic);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
-        <View style = {styles.viewMnemoric}>
-          <Text style = {[styles.txtNote, {color: '#000000'}]}>
-              {I18n.t("backupPassphrase.note")}
+        <View style={styles.viewMnemonic}>
+          <Text style={[styles.txtNote, { color: '#000000' }]}>
+            {I18n.t('backupPassphrase.note')}
           </Text>
         </View>
-        
+
         <View style={styles.qrCodeContainer}>
-          {!mnemoric ? null : (
+          {!mnemonic ? null : (
             <QRCode
-              value={mnemoric}
+              value={mnemonic}
               size={scale(200)}
             />
           )}
         </View>
 
         <View style={styles.addressContainer}>
-          <Text style = {styles.txtMnemoric}>{mnemoric}</Text>
+          <Text style={styles.txtMnemonic}>{mnemonic}</Text>
         </View>
 
-        <View style = {styles.viewMnemoric}>
-          <Text style = {styles.txtNote}>
-              {I18n.t("backupPassphrase.important")}
+        <View style={styles.viewMnemonic}>
+          <Text style={styles.txtNote}>
+            {I18n.t('backupPassphrase.important')}
           </Text>
         </View>
-        
+
       </View>
     );
   }
@@ -169,11 +164,11 @@ const styles = ScaledSheet.create({
     height: '260@s',
   },
 
-  viewMnemoric: {
+  viewMnemonic: {
     marginLeft: '20@s',
     marginRight: '20@s',
     marginBottom: '20@s',
-    //height: '300@s',
+    // height: '300@s',
   },
 
   addressContainer: {
@@ -219,11 +214,11 @@ const styles = ScaledSheet.create({
     color: CommonColors.highlightRed,
   },
 
-  txtMnemoric: {
+  txtMnemonic: {
     fontSize: '16@s',
     color: CommonColors.highlightBlue,
     fontWeight: 'bold',
     paddingHorizontal: '10@s',
     paddingVertical: '10@s',
-  }
+  },
 });

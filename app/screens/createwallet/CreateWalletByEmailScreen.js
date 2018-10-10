@@ -59,7 +59,7 @@ export default class CreateWalletByEmailScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate("TermsConditionScreen");
+    this.props.navigation.navigate('TermsConditionScreen');
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -116,7 +116,7 @@ export default class CreateWalletByEmailScreen extends Component {
       await AppPreferences.saveToKeychain('mnemonic', mnemonic);
 
       AppConfig.PRIVATE_KEY = privateKey;
-      AppConfig.MNEMORIC = mnemonic;
+      AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = loginInfo.access_token;
 
       window.GlobalSocket.connect();

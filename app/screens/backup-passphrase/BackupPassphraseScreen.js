@@ -18,7 +18,7 @@ import AppConfig from '../../utils/AppConfig';
 
 class BackupPassphraseScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation}/>,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('backupPassphrase.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
@@ -28,14 +28,14 @@ class BackupPassphraseScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mnemoric: AppConfig.MNEMORIC ? AppConfig.MNEMORIC : null,
+      mnemonic: AppConfig.MNEMONIC ? AppConfig.MNEMONIC : null,
     };
   }
 
   _handleCopyAddress = () => {
-    const { mnemoric } = this.state;
+    const { mnemonic } = this.state;
 
-    Clipboard.setString(mnemoric);
+    Clipboard.setString(mnemonic);
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
@@ -45,36 +45,36 @@ class BackupPassphraseScreen extends Component {
   }
 
   _renderQrCodeSection = () => {
-    const { mnemoric } = this.state;
-    console.log('Mnemoric: ', mnemoric);
+    const { mnemonic } = this.state;
+    console.log('Mnemonic: ', mnemonic);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
-        <View style = {styles.viewMnemoric}>
-          <Text style = {[styles.txtNote, {color: '#000000'}]}>
-              {I18n.t("backupPassphrase.note")}
+        <View style={styles.viewMnemonic}>
+          <Text style={[styles.txtNote, { color: '#000000' }]}>
+            {I18n.t('backupPassphrase.note')}
           </Text>
         </View>
-        
+
         <View style={styles.qrCodeContainer}>
-          {!mnemoric ? null : (
+          {!mnemonic ? null : (
             <QRCode
-              value={mnemoric}
+              value={mnemonic}
               size={scale(200)}
             />
           )}
         </View>
 
         <View style={styles.addressContainer}>
-          <Text style = {styles.txtMnemoric}>{mnemoric}</Text>
+          <Text style={styles.txtMnemonic}>{mnemonic}</Text>
         </View>
 
-        <View style = {styles.viewMnemoric}>
-          <Text style = {styles.txtNote}>
-              {I18n.t("backupPassphrase.important")}
+        <View style={styles.viewMnemonic}>
+          <Text style={styles.txtNote}>
+            {I18n.t('backupPassphrase.important')}
           </Text>
         </View>
-        
+
       </View>
     );
   }
@@ -89,7 +89,7 @@ class BackupPassphraseScreen extends Component {
     </View>
   )
 
-  render() {    
+  render() {
     return (
       <View style={styles.container}>
         <ScrollView
@@ -138,11 +138,11 @@ const styles = ScaledSheet.create({
     height: '260@s',
   },
 
-  viewMnemoric: {
+  viewMnemonic: {
     marginLeft: '20@s',
     marginRight: '20@s',
     marginBottom: '20@s',
-    //height: '300@s',
+    // height: '300@s',
   },
 
   addressContainer: {
@@ -160,7 +160,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     marginLeft: '20@s',
     marginRight: '20@s',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   btnUpContainer: {
@@ -188,11 +188,11 @@ const styles = ScaledSheet.create({
     color: CommonColors.highlightRed,
   },
 
-  txtMnemoric: {
+  txtMnemonic: {
     fontSize: '16@s',
     color: CommonColors.highlightBlue,
     fontWeight: 'bold',
     paddingHorizontal: '10@s',
     paddingVertical: '10@s',
-  }
+  },
 });

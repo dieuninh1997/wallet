@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage,
+  View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage, RefreshControl,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
@@ -34,16 +34,20 @@ export default class SettingScreen extends Component {
       payload: {
         emailNotification: false,
         faceId: false,
-        swipeReceive: false,
-        emailVerified: AppConfig.USER_SETTING.email_verified,
-        bankAccountVerified: AppConfig.USER_SETTING.bank_account_verified,
-        identityVerified: AppConfig.USER_SETTING.identity_verified,
-        otpVerified: AppConfig.USER_SETTING.otp_verified,
-        phoneVerified: AppConfig.USER_SETTING.phone_verified,
+        swipeReceive: false
       },
       walletId: null,
-      user: {}
+      user: {},
+      userSecuritySettings: null,
+
+      refreshing: false,
     };
+  }
+
+  _onRefresh = async () => {
+    this.setState({ refreshing: true });
+    await this._loadData();
+    this.setState({ refreshing: false });
   }
 
   componentDidMount = async () => {
@@ -54,8 +58,7 @@ export default class SettingScreen extends Component {
     try {
       await Promise.all([
         this._loadUserInfo(),
-        getUserSettings(),
-        getUserSecuritySettings()
+        this._loadUserSecuritySettings()
       ]);
     } catch (error) {
       console.log('SettingScreen._loadData', error);
@@ -82,6 +85,17 @@ export default class SettingScreen extends Component {
     }
   }
 
+  _loadUserSecuritySettings = async () => {
+    try {
+      let response = await getUserSecuritySettings();
+      this.setState({
+        userSecuritySettings: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserSecuritySettings', error);
+    }
+  }
+
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
@@ -90,7 +104,7 @@ export default class SettingScreen extends Component {
   }
 
   _renderProfile = () => {
-    const { walletId, payload, user } = this.state;
+    const { walletId, userSecuritySettings, user } = this.state;
 
     return (
       <View>
@@ -106,7 +120,7 @@ export default class SettingScreen extends Component {
           <View style={styles.borderElementBottom}>
             <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
             <View style={styles.activiRightGroup}>
-              {payload.emailVerified ? (
+              {userSecuritySettings && (userSecuritySettings.email_verified ? (
                 <Text style={styles.textVerified}>
                   {I18n.t('setting.verified')}
                 </Text>
@@ -114,7 +128,7 @@ export default class SettingScreen extends Component {
                 <Text style={styles.textUnVerified}>
                   {I18n.t('setting.unverified')}
                 </Text>
-              )}
+              ))}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -127,7 +141,7 @@ export default class SettingScreen extends Component {
           <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
             <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
             <View style={styles.activiRightGroup}>
-              {payload.phoneVerified ? (
+              {userSecuritySettings && (userSecuritySettings.phone_verified ? (
                 <Text style={styles.textVerified}>
                   {I18n.t('setting.verified')}
                 </Text>
@@ -135,7 +149,7 @@ export default class SettingScreen extends Component {
                 <Text style={styles.textUnVerified}>
                   {I18n.t('setting.unverified')}
                 </Text>
-              )}
+              ))}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -283,10 +297,19 @@ export default class SettingScreen extends Component {
   }
 
   render() {
+    const { refreshing } = this.state;
+
     return (
       <View>
         <EmailVerificationModal ref={ref => this._emailModal = ref}/>
-        <ScrollView>
+        <ScrollView
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => this._onRefresh()}
+            />
+          )}
+        >
           <View style={styles.container}>
             {this._renderProfile()}
             {this._renderReference()}

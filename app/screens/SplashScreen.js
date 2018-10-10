@@ -50,17 +50,8 @@ export default class SplashScreen extends BaseScreen {
 
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
-        let userSetting = await AsyncStorage.getItem('userSetting');
-        if (!userSetting) {
-          const response = await getUserSecuritySettings();
-          userSetting = response.data;
-          await AsyncStorage.setItem('userSetting', JSON.stringify(userSetting));
-        }
-        AppConfig.USER_SETTING = JSON.parse(userSetting);
-        console.log('userSetting', AppConfig.USER_SETTING);
-
         if (isEnableCodePin) {
-          this.navigateAndClearStack('LoginUsePinScreen');
+          this.navigateAndClearStack('SettingScreen');
           return;
         }
         this.navigateAndClearStack('LoginScreen');

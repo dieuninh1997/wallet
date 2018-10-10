@@ -21,7 +21,8 @@ export default {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
     inputWalletId: 'Wallet ID',
-    inputPassword: 'Password',
+    inputPassword: 'Passwords',
+    btnCreate: 'Create',
   },
   createWallet: {
     signin: 'Sign In',

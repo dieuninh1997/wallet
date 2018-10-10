@@ -41,7 +41,7 @@ export default MangoGradientButton;
 const styles = ScaledSheet.create({
   container: {
     height: '50@s',
-    borderRadius: '25@s',
+    borderRadius: '28@s',
     backgroundColor: 'transparent',
     borderColor: '#000',
     justifyContent: 'center',

@@ -39,11 +39,6 @@ class BackupPassphraseScreen extends Component {
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
-  _onBtnNext = () => {
-    const { navigation } = this.props;
-    navigation.navigate('AddPinScreen');
-  }
-
   _renderQrCodeSection = () => {
     const { mnemonic } = this.state;
     console.log('Mnemonic: ', mnemonic);
@@ -158,6 +153,7 @@ const styles = ScaledSheet.create({
   // Section button
   groupBtnContainer: {
     flexDirection: 'row',
+    marginTop: '20@s',
     marginLeft: '20@s',
     marginRight: '20@s',
     justifyContent: 'center',
@@ -184,7 +180,7 @@ const styles = ScaledSheet.create({
   },
 
   txtNote: {
-    fontSize: CommonSize.inputFontSize,
+    fontSize: '14@s',
     color: CommonColors.highlightRed,
   },
 

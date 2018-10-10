@@ -184,6 +184,7 @@ const styles = ScaledSheet.create({
   // Section button
   groupBtnContainer: {
     flexDirection: 'row',
+    marginTop: '20@s',
     marginLeft: '20@s',
     marginRight: '20@s',
     justifyContent: 'space-between',
@@ -210,7 +211,7 @@ const styles = ScaledSheet.create({
   },
 
   txtNote: {
-    fontSize: CommonSize.inputFontSize,
+    fontSize: '14@s',
     color: CommonColors.highlightRed,
   },
 

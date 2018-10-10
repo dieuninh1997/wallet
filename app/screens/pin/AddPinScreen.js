@@ -5,7 +5,6 @@ import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 export default class AddPinScreen extends Component {
@@ -20,36 +19,9 @@ export default class AddPinScreen extends Component {
   state = {
     codePin: null,
     isShowChangePin: false,
-    isShowError: false,
   };
 
-  async componentDidMount() {
-    await this._getCodePin();
-  }
-
-  _getCodePin = async () => {
-    try {
-      const responsePin = await AppPreferences.getGeneric();
-      const codePin = responsePin.password.includes(Consts.PIN) ? JSON.parse(responsePin.password).pin : null;
-
-      this.setState({ codePin });
-    } catch (err) {
-      console.log('CheckStatusPin._error:', err);
-    }
-  }
-
-
-  _checkCodePin = (value) => {
-    const { codePin } = this.state;
-    if (codePin === value) {
-      this.setState({ isShowChangePin: true });
-    } else {
-      this.setState({ isShowError: true });
-    }
-    setTimeout(() => this.setState({ isShowError: false }), 1000);
-  }
-
-  _renderChangePin = () => (
+  _renderAddPin = () => (
     <View style={styles.container}>
       <View style={styles.containerPassword} />
       <PINCode
@@ -84,44 +56,6 @@ export default class AddPinScreen extends Component {
     </View>
   )
 
-  _renderCheckPinCode() {
-    const { isShowError } = this.state;
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.containerPassword} />
-        <PINCode
-          status="enter"
-          passwordLength={6}
-          pinStatus={isShowError ? 'failure' : 'initial'}
-          timeLocked={10000}
-          handleResultEnterPin={value => this._checkCodePin(value)}
-          numbersButtonOverlayColor="#fcd800"
-          stylePinCodeMainContainer={styles.pinCodeContainer}
-          styleMainContainer={styles.mainContainer}
-          colorPassword="#ebedf2"
-          stylePinCodeButtonNumber="#000"
-          stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
-          stylePinCodeHiddenPasswordSizeFull={scale(20)}
-          stylePinCodeButtonCircle={styles.buttonCircle}
-          buttonDeleteText
-          stylePinCodeColumnDeleteButton={styles.buttonDelete}
-          stylePinCodeTextTitle={styles.textTitlePinCode}
-          stylePinCodeRowButtons={styles.pincodeRowButton}
-          stylePinCodeTextButtonCircle={styles.textButtonCircle}
-          stylePinCodeHiddenPasswordCircle={styles.borderPassword}
-          titleEnter={I18n.t('addPinScreen.currentPin')}
-          titleAttemptFailed={I18n.t('addPinScreen.incorrectPincode')}
-          subtitleError={I18n.t('addPinScreen.pleaseAgain')}
-          stylePinCodeTextTitle={styles.pincodeTitle}
-          stylePinCodeColorTitle="#26304c"
-          stylePinCodeDeleteButtonColorHideUnderlay="#000"
-          touchIDDisabled
-        />
-      </View>
-    );
-  }
-
   async _saveCodePin(codePin) {
     try {
       const { navigation } = this.props;
@@ -140,8 +74,7 @@ export default class AddPinScreen extends Component {
     const { codePin, isShowChangePin } = this.state;
     return (
       <View style={styles.main}>
-        {codePin && !isShowChangePin ? this._renderCheckPinCode() : null}
-        {!codePin || isShowChangePin ? this._renderChangePin() : null}
+        {!codePin || isShowChangePin ? this._renderAddPin() : null}
       </View>
     );
   }

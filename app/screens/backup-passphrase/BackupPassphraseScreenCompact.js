@@ -61,6 +61,7 @@ class BackupPassphraseScreenCompact extends Component {
 
   _onBtnNext = () => {
     const { navigation } = this.props;
+
     navigation.navigate('AddPinScreen');
   }
 

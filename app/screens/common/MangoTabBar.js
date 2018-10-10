@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
+import { CommonSize } from '../../utils/CommonStyles';
 import MangoTabImages from './MangoTabImages';
 
 export default class MangoTabBar extends Component {
@@ -58,14 +59,20 @@ export default class MangoTabBar extends Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+
+const tabbarHeight = scale(119);
+const tabbarTop = height - tabbarHeight - CommonSize.headerHeight - UIUtils.getStatusBarHeight()
+                  + UIUtils.getIphoneXBottomInsetHeight() - UIUtils.getBottomInsetHeight();
+
 const styles = ScaledSheet.create({
   tabbar: {
     width: '100%',
-    height: '119@s',
+    height: tabbarHeight,
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: -UIUtils.getIphoneXBottomInsetHeight() + UIUtils.getBottomInsetHeight(),
+    top: tabbarTop,
     backgroundColor: '#0000'
   },
   background: {

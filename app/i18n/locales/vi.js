@@ -1,14 +1,14 @@
 export default {
   coin: {
     MGC: {
-      fullname: 'MangoCoin'
+      fullname: 'MangoCoin',
     },
     BTC: {
-      fullname: 'Bitcoin'
+      fullname: 'Bitcoin',
     },
     ETH: {
-      fullname: 'Ethereum'
-    }
+      fullname: 'Ethereum',
+    },
   },
   landing: {
     coinName: 'Mango Coin',
@@ -49,7 +49,7 @@ export default {
   },
   dashboard: {
     title: 'Tổng quan',
-    balance: 'Số dư'
+    balance: 'Số dư',
   },
   send: {
     title: 'Send',
@@ -97,9 +97,15 @@ export default {
     toastConfirmPassword: 'Confirm password is incorrect',
     changeSuccess: 'Change password success',
   },
-  addPinScreen: {
+  ChangePinScreen: {
     title: 'Change PIN',
-    createPinSuccess: 'Create pin code success',
+    changePinSuccess: 'Change pin code success',
+    currentPin: 'Current PIN',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+    newPin: 'New PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
   genneralText: {
     back: 'Back',
@@ -110,12 +116,18 @@ export default {
     address: 'Address',
     txid: 'Txid',
     date: 'Date',
+    ok: 'Ok',
+    password: 'Password',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+    verifyYourEmail: 'Verify Your Email',
+    checkEmailToResetPassword: 'Please check your email to reset',
+    emailFieldRequired: 'The email field is required.',
+    invalidEmail: 'The email must be a valid email address.',
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
@@ -126,5 +138,20 @@ export default {
     title: 'Restore Account',
     titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
     inputPlaceholder: 'Backup Phrase',
+  },
+  loginUserPin: {
+    enterPincode: 'Enter your PIN code',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again	',
+  },
+  addPinScreen: {
+    title: 'Add New PIN',
+    changePinSuccess: 'Add pin code success',
+    incorrectPincode: 'Incorrect PIN Code',
+    pleaseAgain: 'Please try again',
+    newPin: 'New PIN',
+    currentPin: 'Current PIN',
+    confirmNewPin: 'Confirm New PIN',
+    confirmFail: 'Your entries did not match',
   },
 };

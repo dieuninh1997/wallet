@@ -75,7 +75,6 @@ class LandingScreen extends Component {
         useNativeDriver
         onBackButtonPress={() => this._hideListLanguage()}
         onBackdropPress={() => this._hideListLanguage()}
-
       >
         <View style={styles.modalListLanguage}>
           {listLanguage.map((item, index) => this._renderListLanguageItem(item, index))}

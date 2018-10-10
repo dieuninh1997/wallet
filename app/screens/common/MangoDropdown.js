@@ -18,7 +18,7 @@ class MangoDropdown extends Component {
     super(props);
     const listCoin = [
       {
-        image: require('../../../assets/bitcoin/bitcoin.png'),
+        image: require('../../../assets/mango-coin/mangocoin.png'),
         name: 'Mango Coin',
       },
       {

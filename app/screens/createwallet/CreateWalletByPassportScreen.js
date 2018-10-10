@@ -58,7 +58,7 @@ export default class CreateWalletByPassportScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate("TermsConditionScreen");
+    this.props.navigation.navigate('TermsConditionScreen');
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -107,6 +107,10 @@ export default class CreateWalletByPassportScreen extends Component {
       await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
       await AppPreferences.saveToKeychain('private_key', privateKey);
       await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+
+      AppConfig.PRIVATE_KEY = privateKey;
+      AppConfig.MNEMORIC = mnemonic;
+      AppConfig.ACCESS_TOKEN = loginInfo.access_token;
 
       await AsyncStorage.setItem('address', address);
       AppPreferences.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));

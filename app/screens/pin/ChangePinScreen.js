@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import PINCode from '@haskkor/react-native-pincode';
+import MangoBackButton from '../common/MangoBackButton';
 import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
@@ -8,10 +9,10 @@ import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
-export default class AddPinScreen extends Component {
-  static navigationOptions = () => ({
-    headerLeft: <View />,
-    title: I18n.t('addPinScreen.title'),
+export default class ChangePinScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} />,
+    title: I18n.t('ChangePinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,
@@ -71,11 +72,11 @@ export default class AddPinScreen extends Component {
         stylePinCodeRowButtons={styles.pincodeRowButton}
         stylePinCodeTextButtonCircle={styles.textButtonCircle}
         stylePinCodeHiddenPasswordCircle={styles.borderPassword}
-        titleChoose={I18n.t('addPinScreen.newPin')}
-        titleConfirm={I18n.t('addPinScreen.confirmNewPin')}
+        titleChoose={I18n.t('ChangePinScreen.newPin')}
+        titleConfirm={I18n.t('ChangePinScreen.confirmNewPin')}
         subtitleChoose
-        titleConfirmFailed={I18n.t('addPinScreen.confirmFail')}
-        subtitleError={I18n.t('addPinScreen.pleaseAgain')}
+        titleConfirmFailed={I18n.t('ChangePinScreen.confirmFail')}
+        subtitleError={I18n.t('ChangePinScreen.pleaseAgain')}
         stylePinCodeTextTitle={styles.pincodeTitle}
         stylePinCodeColorTitle="#26304c"
         stylePinCodeDeleteButtonColorHideUnderlay="#000"
@@ -110,9 +111,9 @@ export default class AddPinScreen extends Component {
           stylePinCodeRowButtons={styles.pincodeRowButton}
           stylePinCodeTextButtonCircle={styles.textButtonCircle}
           stylePinCodeHiddenPasswordCircle={styles.borderPassword}
-          titleEnter={I18n.t('addPinScreen.currentPin')}
-          titleAttemptFailed={I18n.t('addPinScreen.incorrectPincode')}
-          subtitleError={I18n.t('addPinScreen.pleaseAgain')}
+          titleEnter={I18n.t('ChangePinScreen.currentPin')}
+          titleAttemptFailed={I18n.t('ChangePinScreen.incorrectPincode')}
+          subtitleError={I18n.t('ChangePinScreen.pleaseAgain')}
           stylePinCodeTextTitle={styles.pincodeTitle}
           stylePinCodeColorTitle="#26304c"
           stylePinCodeDeleteButtonColorHideUnderlay="#000"
@@ -127,9 +128,9 @@ export default class AddPinScreen extends Component {
       const { navigation } = this.props;
 
       await AppPreferences.saveToKeychain('pin', codePin);
-      AppPreferences.showToastMessage(I18n.t('addPinScreen.changePinSuccess'));
+      AppPreferences.showToastMessage(I18n.t('ChangePinScreen.changePinSuccess'));
       setTimeout(() => {
-        navigation.navigate('MainScreen');
+        navigation.navigate('SettingScreen');
       }, 1000);
     } catch (err) {
       console.log('SaveCodePin._error:', err);

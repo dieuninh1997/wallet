@@ -8,7 +8,7 @@ import CreateWalletByPassportScreen from './createwallet/CreateWalletByPassportS
 import SettingScreen from './setting/SettingScreen';
 import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
-import AddPinScreen from './pin/AddPinScreen';
+import ChangePinScreen from './pin/ChangePinScreen';
 import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
 import RestoreWalletScreen from './restore-wallet/RestoreWalletScreen';
@@ -17,6 +17,7 @@ import BackupPassphraseScreenCompact from './backup-passphrase/BackupPassphraseS
 import TransactionDetailScreen from './transactions/TransactionDetailScreen';
 import LocalCurrencyScreen from './localCurrency/LocalCurrencyScreen';
 import TermsConditionScreen from './terms/TermsConditionScreen';
+import AddPinScreen from './pin/AddPinScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -30,7 +31,7 @@ export default {
   CreateWalletPhoneNumberScreen: { screen: CreateWalletPhoneNumberScreen },
   CreateWalletByEmailScreen: { screen: CreateWalletByEmailScreen },
   CreateWalletByPassportScreen: { screen: CreateWalletByPassportScreen },
-  AddPinScreen: { screen: AddPinScreen },
+  ChangePinScreen: { screen: ChangePinScreen },
   ForgotPasswordScreen: { screen: ForgotPasswordScreen },
   ChangePasswordScreen: { screen: ChangePasswordScreen },
   BackupPassphraseScreen: { screen: BackupPassphraseScreen },
@@ -38,4 +39,5 @@ export default {
   TransactionDetailScreen: { screen: TransactionDetailScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
   TermsConditionScreen: {screen: TermsConditionScreen},
+  AddPinScreen: {screen: AddPinScreen},
 };

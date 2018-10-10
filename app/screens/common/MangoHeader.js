@@ -22,13 +22,13 @@ class MangoHeader extends React.Component {
     this.setState({ isShowMenu: false });
   }
 
-  _navigateSetting(routerName) {
+  async _navigateSetting(routerName) {
     const { navigation } = this.props;
 
     this.setState({ isShowMenu: false });
 
     if (routerName === 'LandingScreen') {
-      AppPreferences.removeAccessToken();
+      await AppPreferences.removeAccessToken();
       window.GlobalSocket.disconnect();
       RNRestart.Restart();
     } else {

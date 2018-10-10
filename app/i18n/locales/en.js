@@ -21,7 +21,8 @@ export default {
     title: 'Sign In',
     forgotPassword: 'Forgot password',
     inputWalletId: 'Wallet ID',
-    inputPassword: 'Password',
+    inputPassword: 'Passwords',
+    btnCreate: 'Create',
   },
   createWallet: {
     signin: 'Sign In',
@@ -65,6 +66,7 @@ export default {
     title: 'Send',
     walletAddress: 'Wallet Address',
     continue: 'Continue',
+    confirmationText: 'Enter your 12 backup words with spaces to recover your funds & transactions',
   },
   setting: {
     title: 'Settings',
@@ -87,6 +89,8 @@ export default {
     unverified: 'Unverified',
     disabled: 'Disabled',
     unconfirmed: 'Unconfirmed',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -139,12 +143,18 @@ export default {
     address: 'Address',
     txid: 'Txid',
     date: 'Date',
+    ok: 'Ok',
+    password: 'Password',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+    verifyYourEmail: 'Verify Your Email',
+    checkEmailToResetPassword: 'Please check your email to reset',
+    emailFieldRequired: 'The email field is required.',
+    invalidEmail: 'The email must be a valid email address.',
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
@@ -153,7 +163,7 @@ export default {
   },
   restoreWalletScreen: {
     title: 'Restore Account',
-    titleForm: 'Enter your 12 backup words with spaces to recover your Funds & transactions',
+    titleForm: 'Enter your 12 backup words with spaces to recover your funds & transactions',
     inputPlaceholder: 'Backup Phrase',
   },
   terms: {
@@ -178,4 +188,18 @@ export default {
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
   },
+  localCurrencyScreen: {
+    title: 'Local Currency',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'Philippines Peso (₱)',
+  },
+  backupPassphrase: {
+    title: 'Backup your Passphrase',
+    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
+    important: '**Do not lose it!** It cannot be recovered if you lose it.',
+    btnCopy: 'Copy',
+    btnNext: 'Next',
+  }
 };

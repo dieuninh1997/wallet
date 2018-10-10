@@ -69,7 +69,6 @@ export function changePassword(password, newPassword, otp) {
   const params = {
     password,
     new_password: newPassword,
-    otp,
   };
   return put(url, params);
 }

@@ -43,13 +43,14 @@ async function initMasterdata() {
       const credentials = await AppPreferences.getGeneric();
 
       const keychain = credentials.password;
+
       const parseAccessToken = keychain && keychain.includes(Consts.ACCESS_TOKEN_TITLE) ? JSON.parse(keychain).access_token : null;
       const parsePrivateKey = keychain && keychain.includes('private_key') ? JSON.parse(keychain).private_key : null;
-      const parseMnemoric = keychain && keychain.includes('mnemoric') ? JSON.parse(keychain).mnemoric : null;
+      const parseMnemonic = keychain && keychain.includes('mnemonic') ? JSON.parse(keychain).mnemonic : null;
 
       AppConfig.ACCESS_TOKEN = parseAccessToken;
       AppConfig.PRIVATE_KEY = parsePrivateKey;
-      AppConfig.MNEMORIC = parseMnemoric;
+      AppConfig.MNEMONIC = parseMnemonic;
 
       window.GlobalSocket = new GlobalSocket();
 
@@ -57,7 +58,7 @@ async function initMasterdata() {
         console.log(`API Server: ${AppConfig.getApiServer()}`);
         console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
         console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
-        console.log(`MNEMORIC: ${AppConfig.MNEMORIC}`);
+        console.log(`MNEMONIC: ${AppConfig.MNEMONIC}`);
       }
     }
   } catch (error) {

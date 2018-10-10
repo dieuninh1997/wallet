@@ -2,82 +2,82 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Clipboard,
-  TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
+import MangoBackButton from '../common/MangoBackButton';
+import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';
 
+
 class BackupPassphraseScreen extends Component {
-  static navigationOptions = () => ({
-    headerLeft: <View />,
-    title: I18n.t('backupPassphraseScreen.title'),
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} />,
+    title: I18n.t('backupPassphrase.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,
-  });
+  })
 
   constructor(props) {
     super(props);
     this.state = {
-      mnemoric: AppConfig.MNEMORIC ? AppConfig.MNEMORIC : null,
+      mnemonic: AppConfig.MNEMONIC ? AppConfig.MNEMONIC : null,
     };
   }
 
   _handleCopyAddress = () => {
-    const { mnemoric } = this.state;
+    const { mnemonic } = this.state;
 
-    Clipboard.setString(mnemoric);
+    Clipboard.setString(mnemonic);
     AppPreferences.showToastMessage(I18n.t('request.copied'));
   }
 
-  _navigateScreen = () => {
-    const { navigation } = this.props;
-    navigation.navigate('AddPinScreen');
-  }
-
   _renderQrCodeSection = () => {
-    const { mnemoric } = this.state;
+    const { mnemonic } = this.state;
+    console.log('Mnemonic: ', mnemonic);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
+        <View style={styles.viewMnemonic}>
+          <Text style={[styles.txtNote, { color: '#000000' }]}>
+            {I18n.t('backupPassphrase.note')}
+          </Text>
+        </View>
+
         <View style={styles.qrCodeContainer}>
-          {!mnemoric ? null : (
+          {!mnemonic ? null : (
             <QRCode
-              value={mnemoric}
-              size={scale(260)}
+              value={mnemonic}
+              size={scale(200)}
             />
           )}
         </View>
+
         <View style={styles.addressContainer}>
-          <Text>{mnemoric}</Text>
+          <Text style={styles.txtMnemonic}>{mnemonic}</Text>
         </View>
+
+        <View style={styles.viewMnemonic}>
+          <Text style={styles.txtNote}>
+            {I18n.t('backupPassphrase.important')}
+          </Text>
+        </View>
+
       </View>
     );
   }
 
-  _renderBtnSection = () => (
+  _renderBtnSectionSetting = () => (
     <View style={styles.groupBtnContainer}>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={styles.btnUpContainer}
-        onPress={() => this._navigateScreen()}
-      >
-        <Image
-          source={require('../../../assets/go-right/go-right.png')}
-          style={styles.btnUpImage}
-        />
-      </TouchableOpacity>
       <MangoGradientButton
-        btnText={I18n.t('request.copyAddress')}
+        btnText={I18n.t('backupPassphrase.btnCopy')}
         btnStyle={styles.btnCopyAddress}
         onPress={() => this._handleCopyAddress()}
       />
@@ -92,7 +92,7 @@ class BackupPassphraseScreen extends Component {
         >
           <View style={styles.contentContainer}>
             {this._renderQrCodeSection()}
-            {this._renderBtnSection()}
+            {this._renderBtnSectionSetting()}
           </View>
         </ScrollView>
       </View>
@@ -105,7 +105,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5F7FA',
+    backgroundColor: CommonColors.screenBgColor,
   },
 
   contentContainer: {
@@ -119,8 +119,8 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeContainer: {
-    width: '320@s',
-    height: '320@s',
+    width: '220@s',
+    height: '220@s',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
@@ -129,25 +129,34 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeImage: {
-    width: '260@s',
-    height: '260@s',
+    width: '200@s',
+    height: '200@s',
+  },
+
+  viewMnemonic: {
+    marginLeft: '20@s',
+    marginRight: '20@s',
+    marginBottom: '10@s',
+    // height: '300@s',
   },
 
   addressContainer: {
-    width: '280@s',
-    borderBottomLeftRadius: '8@s',
-    borderBottomRightRadius: '8@s',
-    paddingHorizontal: '16@s',
-    paddingVertical: '14@s',
+    width: '260@s',
+    borderRadius: '8@s',
     backgroundColor: '#E4E9F1',
-    marginBottom: '24@s',
+    marginBottom: '10@s',
+    marginTop: '10@s',
+    marginRight: '20@s',
+    marginLeft: '20@s',
   },
 
   // Section button
   groupBtnContainer: {
     flexDirection: 'row',
-    width: '320@s',
-    justifyContent: 'space-between',
+    marginTop: '20@s',
+    marginLeft: '20@s',
+    marginRight: '20@s',
+    justifyContent: 'center',
   },
 
   btnUpContainer: {
@@ -166,8 +175,20 @@ const styles = ScaledSheet.create({
   },
 
   btnCopyAddress: {
-    width: '220@s',
+    width: '140@s',
     marginBottom: '10@s',
-    marginRight: '4@s',
+  },
+
+  txtNote: {
+    fontSize: '14@s',
+    color: CommonColors.highlightRed,
+  },
+
+  txtMnemonic: {
+    fontSize: '16@s',
+    color: CommonColors.highlightBlue,
+    fontWeight: 'bold',
+    paddingHorizontal: '10@s',
+    paddingVertical: '10@s',
   },
 });

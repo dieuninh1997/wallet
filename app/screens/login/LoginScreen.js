@@ -13,7 +13,7 @@ import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';
@@ -24,7 +24,18 @@ class LoginScreen extends Component {
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: <View />,
+    headerRight: (
+      <View>
+        <TouchableOpacity
+          style={styles.btnCreate}
+          onPress={() => { navigation.navigate('CreateWalletScreen'); }}
+        >
+          <View>
+            <Text style={styles.txtLblCreate}>{I18n.t('signin.btnCreate')}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    ),
   });
 
   static LOGIN_INFO = {
@@ -43,9 +54,9 @@ class LoginScreen extends Component {
   }
 
   componentDidMount = () => {
-    if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
-      this._handlerLoginWithTouchId();
-    }
+    // if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
+    //   this._handlerLoginWithTouchId();
+    // }
   }
 
   _handleClickLogin = async () => {
@@ -109,7 +120,7 @@ class LoginScreen extends Component {
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
         <Image
-          source={require('../../../assets/wallet/wallet-login.png')}
+          source={require('../../../assets/wallet/wallet.png')}
           style={styles.inputImageIcon}
         />
         <TextInput
@@ -144,7 +155,7 @@ class LoginScreen extends Component {
         style={styles.btnForgotPass}
       >
         <Image
-          source={require('../../../assets/forgot-password/forgot-password.png')}
+          source={require('../../../assets/forgot-password/forgotPass.png')}
           style={styles.inputImageIcon}
         />
         <Text onPress={() => this._handleForgotPassword()} style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
@@ -152,18 +163,18 @@ class LoginScreen extends Component {
     </View>
   )
 
-  _renderBtnLoginWithTouchId = () => (
-    <View style={{ marginLeft: 10 }}>
-      <TouchableOpacity
-        onPress={() => this._handlerLoginWithTouchId()}
-      >
-        <Image
-          source={require('../../../assets/fingerprint/fingerprint.png')}
-          style={styles.fingerPrintImage}
-        />
-      </TouchableOpacity>
-    </View>
-  )
+  // _renderBtnLoginWithTouchId = () => (
+  //   <View style={{ alignSelf: 'center' }}>
+  //     <TouchableOpacity
+  //       onPress={() => this._handlerLoginWithTouchId()}
+  //     >
+  //       <Image
+  //         source={require('../../../assets/fingerprint/fingerprint.png')}
+  //         style={styles.fingerPrintImage}
+  //       />
+  //     </TouchableOpacity>
+  //   </View>
+  // )
 
   _renderBtnLogin = () => (
     <MangoGradientButton
@@ -178,12 +189,11 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <ScrollView>
           {this._renderFormLogin()}
+          {this._renderBtnLogin()}
+          {/* { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null } */}
           {this._renderBtnForgotPassword()}
         </ScrollView>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          {this._renderBtnLogin()}
-          { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null }
-        </View>
+
       </View>
     );
   }
@@ -199,18 +209,18 @@ const styles = ScaledSheet.create({
   },
 
   formLoginContainer: {
-    marginTop: '46@s',
-    height: '130@s',
+    marginTop: '24@s',
+    height: '112@s',
     alignItems: 'center',
     backgroundColor: CommonColors.headerBarBgColor,
-    borderRadius: '25@s',
+    borderRadius: '28@s',
     borderWidth: 1,
     borderColor: CommonColors.customBorderColor,
   },
 
   inputContainer: {
     flex: 1,
-    width: '340@s',
+    width: '338@s',
     flexDirection: 'row',
     paddingHorizontal: '20@s',
     alignItems: 'center',
@@ -228,8 +238,9 @@ const styles = ScaledSheet.create({
   },
 
   fingerPrintImage: {
-    width: '32@s',
-    height: '32@s',
+    width: '50@s',
+    height: '50@s',
+    marginBottom: '24@s',
   },
 
   inputText: {
@@ -239,27 +250,42 @@ const styles = ScaledSheet.create({
   },
 
   btnForgotPassContainer: {
-    marginTop: '18@s',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
 
   btnForgotPass: {
     flexDirection: 'row',
-    width: '180@s',
-    height: '36@s',
-    borderRadius: '18@s',
+    width: '158@s',
+    height: '40@s',
+    borderRadius: '20@s',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E5EAF1',
+    backgroundColor: '#E6EBF2',
+  },
+
+  btnCreate: {
+    flexDirection: 'row',
+    width: '80@s',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  txtLblCreate: {
+    fontSize: CommonSize.headerFontSize,
+    color: CommonColors.headerRightColor,
   },
 
   btnForgotPassText: {
-    color: '#5F7AC7',
+    color: '#26304d',
+    fontSize: '14@s',
   },
 
   btnSigninContainer: {
-    width: '220@s',
-    marginBottom: '20@s',
-    marginHorizontal: '5@s',
+    width: '247@s',
+    height: '48@s',
+    marginBottom: '24@s',
+    marginTop: '21@s',
+    alignSelf: 'center',
   },
 });

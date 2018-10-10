@@ -12,6 +12,9 @@ import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getCurrentUser, getUserSettings, getUserSecuritySettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
+import Consts from '../../utils/Consts';
+import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
+import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
 
 export default class SettingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -36,8 +39,12 @@ export default class SettingScreen extends Component {
         faceId: false,
         swipeReceive: false
       },
+      userSetting: {
+        emailNotification: false
+      },
       walletId: null,
       user: {},
+      userSettings: [],
       userSecuritySettings: null,
 
       refreshing: false,
@@ -58,6 +65,7 @@ export default class SettingScreen extends Component {
     try {
       await Promise.all([
         this._loadUserInfo(),
+        this._loadUserSettings(),
         this._loadUserSecuritySettings()
       ]);
     } catch (error) {
@@ -85,6 +93,17 @@ export default class SettingScreen extends Component {
     }
   }
 
+  _loadUserSettings = async () => {
+    try {
+      let response = await getUserSettings();
+      this.setState({
+        userSettings: response.data
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserSettings', error);
+    }
+  }
+
   _loadUserSecuritySettings = async () => {
     try {
       let response = await getUserSecuritySettings();
@@ -96,11 +115,46 @@ export default class SettingScreen extends Component {
     }
   }
 
+  _getLocalCurrency() {
+    for (var setting of this.state.userSettings) {
+      if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
+        return setting.value;
+      }
+    }
+  }
+
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
     payload[`${title}`] = !payload[`${title}`];
     this.setState({ payload });
+  }
+
+  _showLocalCurrency = () => {
+    this._localCurrency.setModalVisible(true);
+  }
+
+  _showchangePassword = () => {
+    this._changePassword.setModalVisible(true);
+  }
+
+  showChangeLocalCurrency = (value) => {
+    if (value === 'USD') {
+      this.setState({
+        userSetting: {
+          localCurrencyUser: I18n.t('setting.usDollar'),
+        }
+      });
+    }else{
+      this.setState({
+        userSetting: {
+          localCurrencyUser: I18n.t('setting.philippinesPeso'),
+        }
+      });
+    }
+  }
+  _onPressBackupPassphrase = () => {
+    this.props.navigation.navigate("BackupPassphraseScreen");
   }
 
   _renderProfile = () => {
@@ -173,7 +227,10 @@ export default class SettingScreen extends Component {
   }
 
   _renderReference() {
-    const { payload } = this.state;
+    const { payload, userSetting } = this.state;
+
+    const currency = this._getLocalCurrency();
+    const currencyLabel = currency ? I18n.t(`currency.${currency}.settingLabel`) : '';
 
     return (
       <View style={styles.textPerferences}>
@@ -185,17 +242,17 @@ export default class SettingScreen extends Component {
               containerStyle={styles.switchBorder}
               backgroundActive="#16ec7e"
               backgroundInactive="#fff"
-              value={payload.emailNotification}
+              value={userSetting.emailNotification}
               innerCircleStyle={styles.innerCircle}
               changeValueImmediately
               onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
             />
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('LocalCurrencyScreen')}>
+          <TouchableWithoutFeedback onPress={() => this._showLocalCurrency()}>
             <View style={styles.borderElementBottom}>
               <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
               <View style={styles.activiRightGroup}>
-                <Text>U.S Dollar ($)</Text>
+                <Text>{currencyLabel}</Text>
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
                   name="chevron-right"
@@ -228,7 +285,7 @@ export default class SettingScreen extends Component {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('ChangePasswordScreen')}>
+          <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
             <View style={styles.borderElementBottom}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
               <View style={styles.activiRightGroup}>
@@ -239,18 +296,19 @@ export default class SettingScreen extends Component {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <View style={styles.borderElement}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text style={styles.textUnVerified}>
-                {I18n.t('setting.unconfirmed')}
-              </Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+
+          <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
+            <View style={styles.borderElement}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
+              <View style={styles.activiRightGroup}>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
+          
           <TouchableWithoutFeedback onPress={() => navigation.navigate('ChangePinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>

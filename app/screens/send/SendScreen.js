@@ -16,6 +16,7 @@ import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
 import AppPreferences from '../../utils/AppPreferences';
 import AppConfig from '../../utils/AppConfig';
+import ConfirmationModal from '../common/ConfirmationModal';
 
 class SendScreen extends Component {
   static FORM_SEND = {
@@ -113,11 +114,6 @@ class SendScreen extends Component {
 
   _handleSendCoin = async () => {
     const { formSendCoin } = this.state;
-    console.log('formSendCoin', formSendCoin);
-    if (!this._validateSendCoin(formSendCoin)) {
-      return;
-    }
-
     try {
       const walletAddress = await AsyncStorage.getItem('address');
       const privateKey = AppConfig.PRIVATE_KEY;
@@ -130,6 +126,19 @@ class SendScreen extends Component {
       AppPreferences.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
     }
+  }
+
+  _handClickContinuebtn = () => {
+    const { formSendCoin } = this.state;
+    if (!this._validateSendCoin(formSendCoin)) {
+      return;
+    }
+    this._confirmModal.setModalVisible(true);
+  }
+
+  _handConfirmModal = () => {
+    this._confirmModal.setModalVisible(false);
+    this._handleSendCoin();
   }
 
   _handleChangeFee = (feeSelected) => {
@@ -247,7 +256,7 @@ class SendScreen extends Component {
         btnText={I18n.t('send.continue')}
         btnStyle={styles.btnContinue}
         buttonTextStyle={styles.buttonTextStyle}
-        onPress={() => this._handleSendCoin()}
+        onPress={() => this._handClickContinuebtn()}
       />
     </View>
 
@@ -258,6 +267,10 @@ class SendScreen extends Component {
 
     return (
       <View style={[styles.container]}>
+        <ConfirmationModal
+          ref={ref => this._confirmModal = ref}
+          handConfirmModal={this._handConfirmModal}
+        />
         <MangoDropdown />
         {this._renderFormSend()}
         {isShowMenuSelectFee ? this._renderMenuOptions() : null}

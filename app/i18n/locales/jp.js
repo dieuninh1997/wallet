@@ -54,7 +54,8 @@ export default {
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
-    continue: 'Continue',
+    continue: '続ける',
+    confirmationText: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
   },
   setting: {
     title: '設定',
@@ -77,6 +78,8 @@ export default {
     unverified: '未確認',
     disabled: '無効',
     unconfirmed: '未確認',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'ペソ (₱)',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -129,12 +132,18 @@ export default {
     address: 'Address',
     txid: 'Txid',
     date: 'Date',
+    ok: 'Ok',
+    password: 'Password',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
     emailAddress: 'Email Address',
     resetPassword: 'Reset Password',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
+    verifyYourEmail: 'Verify Your Email',
+    checkEmailToResetPassword: 'Please check your email to reset',
+    emailFieldRequired: 'The email field is required.',
+    invalidEmail: 'The email must be a valid email address.',
   },
   transactionDetail: {
     transactionDetail: 'Transaction Detail',
@@ -165,4 +174,18 @@ export default {
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
   },
+  localCurrencyScreen: {
+    title: '現地通貨',
+    cancel: 'キャンセル',
+    confirm: '確認',
+    usDollar: 'U.S Dollar ($)',
+    philippinesPeso: 'ペソ (₱)',
+  },
+  backupPassphrase: {
+    title: 'Backup your Passphrase',
+    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
+    important: '※紛失注意！※ 紛失した場合、復元できません。\n※共有注意！※ このファイルを悪意あるWebサイトで使用するとあなたの資金が盗まれます。',
+    btnCopy: 'Copy',
+    btnNext: 'Next',
+  }
 };

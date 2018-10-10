@@ -1,5 +1,5 @@
-import { scale } from '../libs/reactSizeMatter/scalingUtils';
 import { Platform } from 'react-native';
+import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
 const iOSFonts = {
   Ubuntu_Light: {
@@ -40,6 +40,8 @@ class CommonColors {
 
   static headerTitleColor = '#000000';
 
+  static headerRightColor = '#8D96B1';
+
   static startSelectBoxBgColor = '#3975D7';
 
   static endSelectBoxBgColor = '#1F42B3';
@@ -57,18 +59,24 @@ class CommonColors {
   static endGradientBlue = '#2046B6';
 
   static customBorderColor = '#DEE3E9';
+
+  static highlightRed = '#FF0D00';
+
+  static highlightBlue = '#0038FF';
 }
 
 class CommonSize {
   static inputHeight = '43@s';
 
-  static inputFontSize = '14@s';
+  static inputFontSize = '20@s';
 
   static formLabelFontSize = '14@s';
 
   static btnSubmitHeight = scale(44);
 
   static headerHeight = scale(44);
+
+  static headerFontSize = '18@s';
 }
 
 const CommonStyles = {
@@ -96,8 +104,9 @@ const CommonStyles = {
     flexGrow: 0.9,
     textAlign: 'center',
     fontSize: scale(18),
-    fontWeight: '200',
+    fontWeight: '100',
     color: CommonColors.headerTitleColor,
+    ...Fonts.Ubuntu_Regular,
   },
 
   // Section select coin

@@ -15,7 +15,7 @@ import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -59,7 +59,7 @@ export default class CreateWalletByEmailScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate("TermsConditionScreen");
+    this.props.navigation.navigate('TermsConditionScreen');
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -116,7 +116,7 @@ export default class CreateWalletByEmailScreen extends Component {
       await AppPreferences.saveToKeychain('mnemonic', mnemonic);
 
       AppConfig.PRIVATE_KEY = privateKey;
-      AppConfig.MNEMORIC = mnemonic;
+      AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = loginInfo.access_token;
 
       window.GlobalSocket.connect();
@@ -126,7 +126,7 @@ export default class CreateWalletByEmailScreen extends Component {
 
       AppPreferences.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
       setTimeout(() => {
-        navigation.navigate('BackupPassphraseScreen');
+        navigation.navigate('BackupPassphraseScreenCompact');
       }, 1000);
     } catch (error) {
       if (error.errors) {
@@ -141,7 +141,7 @@ export default class CreateWalletByEmailScreen extends Component {
     <View style={styles.formLoginContainer}>
       <View style={[styles.inputContainer]}>
         <Image
-          source={require('../../../assets/wallet/wallet-login.png')}
+          source={require('../../../assets/email/email.png')}
           style={styles.inputImageIcon}
         />
         <TextInput
@@ -228,8 +228,8 @@ export default class CreateWalletByEmailScreen extends Component {
         <ScrollView>
           {this._renderFormCreateByEmail()}
           {this._renderTermsAndConditions()}
+          {this._renderButtonCreate()}
         </ScrollView>
-        {this._renderButtonCreate()}
       </View>
     );
   }
@@ -271,18 +271,18 @@ const styles = ScaledSheet.create({
   },
 
   formLoginContainer: {
-    marginTop: '46@s',
-    height: '170@s',
+    marginTop: '24@s',
+    height: '168@s',
     alignItems: 'center',
     backgroundColor: CommonColors.headerBarBgColor,
-    borderRadius: '25@s',
+    borderRadius: '28@s',
     borderWidth: 1,
     borderColor: CommonColors.customBorderColor,
   },
 
   inputContainer: {
     flex: 1,
-    width: '340@s',
+    width: '330@s',
     flexDirection: 'row',
     paddingHorizontal: '20@s',
     alignItems: 'center',
@@ -307,13 +307,15 @@ const styles = ScaledSheet.create({
 
   inputText: {
     flex: 7,
-    fontSize: '18@s',
+    fontSize: CommonSize.inputFontSize,
     fontWeight: '100',
   },
 
   btnCreateWalletContainer: {
-    width: '220@s',
+    alignSelf: 'center',
+    marginTop: '28@s',
+    width: '247@s',
+    height: '48@s',
     marginBottom: '20@s',
-    marginHorizontal: '5@s',
   },
 });

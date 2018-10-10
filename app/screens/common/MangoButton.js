@@ -13,6 +13,7 @@ class MangoButton extends Component {
       <TouchableOpacity
         style={btnStyle}
         onPress={onPressBtn}
+        activeOpacity={0.6}
       >
         <Text style={btnTextStyle}>{title}</Text>
       </TouchableOpacity>

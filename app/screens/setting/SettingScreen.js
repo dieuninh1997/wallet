@@ -58,7 +58,7 @@ export default class SettingScreen extends Component {
   }
 
   componentDidMount = async () => {
-    this._loadData()
+    this._loadData();
   }
 
   _loadData = async () => {
@@ -131,27 +131,23 @@ export default class SettingScreen extends Component {
   }
 
   _showLocalCurrency = () => {
-    this._localCurrency.setModalVisible(true);
+    this._localCurrency.show(this._getLocalCurrency());
   }
 
   _showchangePassword = () => {
     this._changePassword.setModalVisible(true);
   }
 
-  showChangeLocalCurrency = (value) => {
-    if (value === 'USD') {
-      this.setState({
-        userSetting: {
-          localCurrencyUser: I18n.t('setting.usDollar'),
-        }
-      });
-    }else{
-      this.setState({
-        userSetting: {
-          localCurrencyUser: I18n.t('setting.philippinesPeso'),
-        }
-      });
+  _onLocalCurrencyUpdated = (currency) => {
+    let { userSettings } = this.state;
+    for (let setting of userSettings) {
+      if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
+        setting.value = currency;
+      }
     }
+    this.setState({
+      userSettings
+    });
   }
   _onPressBackupPassphrase = () => {
     this.props.navigation.navigate("BackupPassphraseScreen");
@@ -374,6 +370,7 @@ export default class SettingScreen extends Component {
             {this._renderSecurity()}
           </View>
         </ScrollView>
+        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated}/>
       </View>
     );
   }

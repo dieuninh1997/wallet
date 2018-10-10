@@ -12,7 +12,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonColors, CommonStyles, Fonts } from '../../utils/CommonStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import { sendVerificationEmail } from '../../api/user/UserRequest';
 
@@ -76,8 +76,8 @@ export default class EmailVerificationModal extends React.Component {
         <Modal
           animationType="slide"
           isVisible={this.state.modalVisible}
-          backdropColor='#232931'
-          backdropOpacity={0.5}
+          backdropColor={CommonColors.modalBackdropColor}
+          backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}>
           <View style={[styles.popup, {height: height}]}>

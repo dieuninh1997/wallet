@@ -63,6 +63,10 @@ class CommonColors {
   static highlightRed = '#FF0D00';
 
   static highlightBlue = '#0038FF';
+
+  static modalBackdropColor = '#232931';
+
+  static modalBackdropAlpha = 0.5;
 }
 
 class CommonSize {

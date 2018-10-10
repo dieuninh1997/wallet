@@ -10,6 +10,14 @@ export default {
       fullname: 'Ethereum',
     },
   },
+  currency: {
+    USD: {
+      settingLabel: 'U.S Dollar ($)'
+    },
+    PHP: {
+      settingLabel: 'Philippines Peso (₱)'
+    }
+  },
   landing: {
     coinName: 'Mango Coin',
     coinDescription: 'Make a better future',

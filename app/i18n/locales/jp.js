@@ -55,6 +55,7 @@ export default {
     title: 'Send',
     walletAddress: 'Wallet Address',
     continue: 'Continue',
+    confirmationText: 'Enter your 12 backup words with spaces to recover your funds & transactions',
   },
   setting: {
     title: '設定',

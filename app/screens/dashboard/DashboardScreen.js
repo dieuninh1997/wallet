@@ -466,6 +466,7 @@ const styles = ScaledSheet.create({
   },
   chart: {
     resizeMode: 'contain',
+    width: '180@s',
     marginTop: '12@s',
     marginBottom: '12@s',
     marginRight: '16@s',

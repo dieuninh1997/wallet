@@ -124,8 +124,8 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeContainer: {
-    width: '260@s',
-    height: '260@s',
+    width: '220@s',
+    height: '220@s',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
@@ -134,14 +134,14 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeImage: {
-    width: '260@s',
-    height: '260@s',
+    width: '200@s',
+    height: '200@s',
   },
 
   viewMnemonic: {
     marginLeft: '20@s',
     marginRight: '20@s',
-    marginBottom: '20@s',
+    marginBottom: '10@s',
     // height: '300@s',
   },
 
@@ -149,7 +149,7 @@ const styles = ScaledSheet.create({
     width: '260@s',
     borderRadius: '8@s',
     backgroundColor: '#E4E9F1',
-    marginBottom: '24@s',
+    marginBottom: '10@s',
     marginTop: '10@s',
     marginRight: '20@s',
     marginLeft: '20@s',

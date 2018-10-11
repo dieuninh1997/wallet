@@ -44,7 +44,7 @@ export default class AppPreferences {
   }
 
   static async getUserSettings() {
-    let data = await AsyncStorage.getItem('user_settings');
+    const data = await AsyncStorage.getItem('user_settings');
     if (data) {
       return JSON.parse(data);
     }
@@ -55,7 +55,7 @@ export default class AppPreferences {
   }
 
   static async getUserSecuritySettings() {
-    let data = await AsyncStorage.getItem('user_security_settings');
+    const data = await AsyncStorage.getItem('user_security_settings');
     if (data) {
       return JSON.parse(data);
     }
@@ -63,5 +63,13 @@ export default class AppPreferences {
 
   static async saveUserSecuritySettings(json) {
     await AsyncStorage.setItem('user_security_settings', JSON.stringify(json));
+  }
+
+  static async getCoinSelected() {
+    return await AsyncStorage.getItem('coin_selected');
+  }
+
+  static async saveCoinSelected(index) {
+    await AsyncStorage.setItem('coin_selected', index);
   }
 }

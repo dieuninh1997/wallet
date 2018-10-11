@@ -11,28 +11,59 @@ import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import AppPreferences from '../../utils/AppPreferences';
+import Events from '../../utils/Events';
+import BaseScreen from '../BaseScreen';
+import Consts from '../../utils/Consts';
 
-class MangoDropdown extends Component {
+class MangoDropdown extends BaseScreen {
   constructor(props) {
     super(props);
-    const listCoin = [
-      {
-        image: require('../../../assets/mango-coin/mangocoin.png'),
-        name: 'Mango Coin',
-      },
-      {
-        image: require('../../../assets/bitcoin/bitcoin.png'),
-        name: 'Bitcoin',
-      },
-      {
-        image: require('../../../assets/eth/eth.png'),
-        name: 'Ethereum',
-      },
-    ];
+    const listCoin = Consts.LIST_COIN;
+
     this.state = {
       coinSelected: listCoin[0],
       listCoin,
       isShowListCoin: false,
+    };
+  }
+
+  componentDidMount = async () => {
+    super.componentDidMount();
+    try {
+      const indexCoin = await AppPreferences.getCoinSelected();
+      console.log('coinSelected', indexCoin);
+
+      const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+
+      this.setState({
+        coinSelected,
+      });
+    } catch (error) {
+      console.log('MangoDropdown.componentDidMount._error: ', error);
+    }
+  }
+
+  _handleChangeCoinSelected = () => {
+    this.notify(Events.COIN_SELECTED_UPDATED);
+  }
+
+  async _loadData() {
+    await this._loadCoinSelected();
+  }
+
+  _loadCoinSelected = async () => {
+    const indexCoin = await AppPreferences.getCoinSelected();
+    console.log('coinSelected', indexCoin);
+    const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+    this.setState({
+      coinSelected,
+    });
+  };
+
+  getDataEventHandlers() {
+    return {
+      [Events.COIN_SELECTED_UPDATED]: this._loadData.bind(this),
     };
   }
 
@@ -49,11 +80,16 @@ class MangoDropdown extends Component {
     });
   }
 
-  _selectCoin = (coinSelected) => {
+  _selectCoin = async (coinSelected, index) => {
     this.setState({
       isShowListCoin: false,
       coinSelected,
     });
+    await AppPreferences.saveCoinSelected(`${index}`);
+    const a = await AppPreferences.getCoinSelected();
+    console.log('a------------------->', a);
+
+    this._handleChangeCoinSelected();
   }
 
   _renderListCoin() {
@@ -80,7 +116,7 @@ class MangoDropdown extends Component {
   _renderItemCoin(item, index, coinSelected) {
     return (
       <TouchableOpacity
-        onPress={() => this._selectCoin(item)}
+        onPress={() => this._selectCoin(item, index)}
         key={index}
       >
         <View style={[styles.listSelectItemCoin, item.name === coinSelected.name ? styles.activeCoin : null]}>
@@ -88,7 +124,7 @@ class MangoDropdown extends Component {
             source={item.image}
             style={styles.imageSelectItemCoin}
           />
-          <Text style={styles.textSelectItemCoin}>{item.name}</Text>
+          <Text style={styles.textSelectItemCoin}>{item.showName}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -114,7 +150,7 @@ class MangoDropdown extends Component {
               source={coinSelected.image}
               style={styles.imageCoin}
             />
-            <Text style={styles.textCoin}>{coinSelected.name}</Text>
+            <Text style={styles.textCoin}>{coinSelected.showName}</Text>
             <MaterialCommunityIcons
               style={styles.selectCoinIcon}
               name="chevron-down"

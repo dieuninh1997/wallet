@@ -1,6 +1,5 @@
 import { isNil } from 'lodash';
 import Numeral from '../libs/numeral';
-import Consts from './Consts';
 import I18n from '../i18n/i18n';
 
 function formatCoin(amount, currency, zeroValue) {

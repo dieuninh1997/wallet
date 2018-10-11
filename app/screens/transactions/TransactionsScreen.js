@@ -14,57 +14,68 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
-import { getOrdersPending } from '../../api/transaction-history/TransactionRequest';
 import WalletService from '../../services/wallet';
+import Events from '../../utils/Events';
+import BaseScreen from '../BaseScreen';
+import Consts from '../../utils/Consts';
+import AppPreferences from '../../utils/AppPreferences';
 
-class TransactionsScreen extends Component {
+class TransactionsScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
       transactions: [],
       address: '0x5c7738b67a3403f349782244e59e776ddb3581c3',
       page: 1,
-      coinName: 'mgc4',
-      perPage: 10,
+      perPage: Consts.PER_PAGE,
       isProcess: false,
+      coinSelected: Consts.LIST_COIN[0],
     };
   }
 
-  // _loadData = async () => {
-  //   try {
-  //     const params = { currency: 'tenge', page: 1, limit: 20 };
-
-  //     const responseOrder = await getOrdersPending(params);
-  //     console.log('getOrderPending', responseOrder);
-  //   } catch (err) {
-  //     console.log('LoadDatas._error:', err);
-  //   }
-  // }
-
   componentDidMount = async () => {
-    const { address, coinName } = this.state;
+    super.componentDidMount();
+    try {
+      const { address, page, perPage } = this.state;
+      const indexCoin = await AppPreferences.getCoinSelected();
+      console.log('coinSelected', indexCoin);
 
-    await this._getTransactions(coinName, address, this.state.page, this.state.perPage);
+      const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
 
-    const socketEventHandlers = this.getSocketEventHandlers();
-    for (const event in socketEventHandlers) {
-      const handler = socketEventHandlers[event];
-      window.GlobalSocket.bind(event, handler);
+      this.setState({
+        coinSelected,
+      });
+
+      await this._getTransactions(coinSelected.symbol, address, page, perPage);
+    } catch (error) {
+      console.log('MangoDropdown.componentDidMount._error: ', error);
     }
+  }
 
-    const dataEventHandlers = this.getDataEventHandlers();
-    for (const event in dataEventHandlers) {
-      const handler = dataEventHandlers[event];
-      window.EventBus.bind(event, handler);
-    }
-    // this._loadData();
-    // if (Platform.OS === 'android' && this.props.navigation) {
-    //   this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload => {
-    //     //console.log("payload willBlur", payload)
-    //     return BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid.bind(this))
-    //   }
-    //   );
-    // }
+  async _loadData() {
+    const { address, perPage } = this.state;
+    this.setState({
+      page: 1,
+    });
+    await this._loadCoinSelected();
+    const indexCoin = await AppPreferences.getCoinSelected();
+    const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+    await this._getTransactions(coinSelected.symbol, address, 1, perPage);
+  }
+
+  _loadCoinSelected = async () => {
+    const indexCoin = await AppPreferences.getCoinSelected();
+    console.log('coinSelected', indexCoin);
+    const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+    this.setState({
+      coinSelected,
+    });
+  };
+
+  getDataEventHandlers() {
+    return {
+      [Events.COIN_SELECTED_UPDATED]: this._loadData.bind(this),
+    };
   }
 
   _getTransactions = async (coin, address, page, perPage, isFirst = true) => {
@@ -81,7 +92,7 @@ class TransactionsScreen extends Component {
 
       let datas = transactions;
       if (!isFirst) {
-        const transactionsOrigin = _.map(this.state.transactions, (item) => item.data);
+        const transactionsOrigin = _.map(this.state.transactions, item => item.data);
         datas = _.concat(_.flattenDeep(transactionsOrigin), transactions);
       }
 
@@ -99,56 +110,18 @@ class TransactionsScreen extends Component {
     }
   }
 
-  componentWillUnmount = () => {
-    const socketEventHandlers = this.getSocketEventHandlers();
-    for (const event in socketEventHandlers) {
-      const handler = socketEventHandlers[event];
-      window.GlobalSocket.unbind(event, handler);
-    }
-
-    const dataEventHandlers = this.getDataEventHandlers();
-    for (const event in dataEventHandlers) {
-      const handler = dataEventHandlers[event];
-      window.EventBus.unbind(event, handler);
-    }
-  }
-
-  getSocketEventHandlers = () => ({
-    TransactionCreated: this.onTransactionCreated.bind(this),
-    OrderListUpdated: this._onOpenOrderUpdated.bind(this),
-  })
-
-  onTransactionCreated = (data) => {
-    console.log('data', data);
-  }
-
-  _onOpenOrderUpdated = (data) => {
-    const { currency } = this.props;
-
-    if (data.currency !== currency) {
-
-    }
-
-    // this._loadData();
-  }
-
   _getMoreData = () => {
-    const { page, address, isProcess, coinName } = this.state;
+    const {
+      page, address, isProcess, coinSelected,
+    } = this.state;
     if (isProcess) {
       return;
     }
     this.setState({
       isProcess: true,
     });
-    this._getTransactions(coinName, address, page + 1, this.state.perPage, false);
+    this._getTransactions(coinSelected.symbol, address, page + 1, this.state.perPage, false);
   }
-
-  getDataEventHandlers = () => ({})
-
-  notify = (event, data) => {
-    window.EventBus.notify(event, data);
-  }
-
 
   _renderTransactonsList = () => {
     const { transactions } = this.state;
@@ -163,18 +136,23 @@ class TransactionsScreen extends Component {
 
   _showTransactionDetail = (transaction) => {
     const { navigation } = this.props;
+    const { coinSelected } = this.state;
+
+    transaction.coinInfo = coinSelected;
+    console.log('transaction.coinInfo', transaction.coinInfo);
+
     navigation.navigate('TransactionDetailScreen', transaction);
   }
 
   _renderTransactonsYear = (transactions) => {
-    const { address } = this.state;
+    const { address, coinSelected } = this.state;
 
     return (
       <View key={transactions.year}>
         <Text style={styles.textYear}>{ transactions.year }</Text>
         <FlatList
           data={transactions.data}
-          renderItem={({item}) => this._renderTransactonsItem(item, address)}
+          renderItem={({ item }) => this._renderTransactonsItem(item, address, coinSelected)}
         />
       </View>
     );
@@ -188,7 +166,7 @@ class TransactionsScreen extends Component {
     return transaction.receiveAddress === address.toLowerCase() ? images[1] : images[0];
   }
 
-  _renderTransactonsItem = (transaction, address) => (
+  _renderTransactonsItem = (transaction, address, coinSelected) => (
     <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction)}>
       <View style={styles.transactionItemContainer}>
         <View style={styles.transactionImageContainer}>
@@ -215,7 +193,7 @@ class TransactionsScreen extends Component {
             {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
             {transaction.value}
             {' '}
-            {'ETH'}
+            {coinSelected.name}
           </Text>
         </View>
       </View>
@@ -232,7 +210,7 @@ class TransactionsScreen extends Component {
           onScroll={(e) => {
             let paddingToBottom = 10;
             paddingToBottom += e.nativeEvent.layoutMeasurement.height;
-            if(e.nativeEvent.contentOffset.y > e.nativeEvent.contentSize.height - paddingToBottom) {
+            if (e.nativeEvent.contentOffset.y > e.nativeEvent.contentSize.height - paddingToBottom) {
               this._getMoreData();
             }
           }}

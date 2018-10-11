@@ -13,12 +13,13 @@ import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import {
+  CommonStyles, CommonColors, CommonSize, Fonts,
+} from '../../utils/CommonStyles';
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
-import { Fonts } from '../../utils/CommonStyles';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -92,7 +93,7 @@ class LoginScreen extends Component {
     });
   }
 
-  _handleForgotPassword = (typeInput, value) => {
+  _handleForgotPassword = () => {
     const { navigation } = this.props;
     navigation.navigate('ForgotPasswordScreen');
   }

@@ -107,8 +107,10 @@ class DashboardScreen extends BaseScreen {
   async _loadBalances() {
     try {
       const address = await AppPreferences.getEthAddress();
+      console.log('address', address);
+
       const balances = await Promise.all([
-        WalletService.getAddressBalance('mgc', address),
+        WalletService.getAddressBalance('mgc4', address),
         WalletService.getAddressBalance('eth', address),
       ]);
       this.setState({
@@ -119,7 +121,7 @@ class DashboardScreen extends BaseScreen {
         },
       });
     } catch (e) {
-      console.log('DasgboardScreen._loadBalances', e);
+      console.log('DashboardScreen._loadBalances', e);
     }
   }
 

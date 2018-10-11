@@ -10,7 +10,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';

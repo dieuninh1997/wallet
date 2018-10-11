@@ -14,7 +14,7 @@ import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize} from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -59,7 +59,9 @@ export default class CreateWalletByPassportScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate('TermsConditionScreen');
+    const { navigation } = this.props;
+
+    navigation.navigate('TermsConditionScreen');
   }
 
   _handleChangeInput = (typeInput, value) => {

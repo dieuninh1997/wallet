@@ -2,14 +2,12 @@ import React from 'react';
 import {
   Text,
   View,
-  Image
 } from 'react-native';
-import Modal from "react-native-modal";
-import _ from 'lodash';
+import Modal from 'react-native-modal';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import UIUtils from '../../utils/UIUtils';
-import MangoGradientButton from '../common/MangoGradientButton';
+import MangoGradientButton from './MangoGradientButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
 
 export default class ConfirmationModal extends React.Component {
@@ -31,17 +29,19 @@ export default class ConfirmationModal extends React.Component {
   }
 
   render() {
+    const { modalVisible } = this.state;
     return (
       <View>
         <Modal
           animationType="slide"
-          isVisible={this.state.modalVisible}
+          isVisible={modalVisible}
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
-          onBackdropPress={() => this.setModalVisible(false)}>
+          onBackdropPress={() => this.setModalVisible(false)}
+        >
           <View style={styles.popup}>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
               {this._renderFooter()}
@@ -51,6 +51,7 @@ export default class ConfirmationModal extends React.Component {
       </View>
     );
   }
+
   _renderHeader() {
     const { title } = this.props;
     return (
@@ -59,6 +60,7 @@ export default class ConfirmationModal extends React.Component {
       </View>
     );
   }
+
   _renderContent() {
     const { contentText } = this.props;
     return (
@@ -67,8 +69,11 @@ export default class ConfirmationModal extends React.Component {
       </View>
     );
   }
+
   _renderFooter() {
-    const { btnCancelName, btnConfirmName, onClick, handConfirmModal } = this.props;
+    const {
+      btnCancelName, btnConfirmName, handConfirmModal,
+    } = this.props;
     return (
       <View style={styles.footer}>
         <MangoGradientButton
@@ -94,7 +99,7 @@ ConfirmationModal.defaultProps = {
   contentText: I18n.t('send.confirmationText'),
   btnCancelName: I18n.t('changePassword.cancel'),
   btnConfirmName: I18n.t('genneralText.ok'),
-}
+};
 
 const margin = 3;
 const styles = ScaledSheet.create({
@@ -109,7 +114,7 @@ const styles = ScaledSheet.create({
     paddingLeft: '24@s',
     paddingRight: '24@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
   popupHeader: {
     marginBottom: '16@s',

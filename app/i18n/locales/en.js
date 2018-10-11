@@ -12,11 +12,11 @@ export default {
   },
   currency: {
     USD: {
-      settingLabel: 'U.S Dollar ($)'
+      settingLabel: 'U.S Dollar ($)',
     },
     PHP: {
-      settingLabel: 'Philippines Peso (₱)'
-    }
+      settingLabel: 'Philippines Peso (₱)',
+    },
   },
   landing: {
     coinName: 'Mango Coin',
@@ -55,6 +55,9 @@ export default {
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
     createWaletSuccess: 'Create wallet success',
+    readAndCheckTerms: 'Please read and accept terms and conditions!',
+    emailInvalid: 'Email is not valid!',
+    passwordMustMatch: 'Password must match password confirmation!',
   },
   createWalletByPassportScreen: {
     title: 'Create by Passport Number',
@@ -110,8 +113,8 @@ export default {
     verificationEmailSent: 'A verification link has been sent to your email account.',
     errors: {
       email_already_verified: 'Your email address has already been verified.',
-      email_in_use: 'This email address is already in use.'
-    }
+      email_in_use: 'This email address is already in use.',
+    },
   },
   request: {
     title: 'Request',
@@ -176,8 +179,8 @@ export default {
     mnemonicRequired: 'Please enter your backup phrase.',
     invalidMnemonic: 'Invalid backup phrase.',
     errors: {
-      mnemonic_not_found: 'Wallet not found.'
-    }
+      mnemonic_not_found: 'Wallet not found.',
+    },
   },
   terms: {
     title: 'Terms and Conditions',
@@ -214,5 +217,5 @@ export default {
     important: '**Do not lose it!** It cannot be recovered if you lose it.',
     btnCopy: 'Copy',
     btnNext: 'Next',
-  }
+  },
 };

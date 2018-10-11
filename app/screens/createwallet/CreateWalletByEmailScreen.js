@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   Keyboard,
-  Clipboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import crypto from 'crypto';
@@ -23,6 +22,7 @@ import { register, login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
+import { Fonts } from '../../utils/CommonStyles';
 
 export default class CreateWalletByEmailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -48,8 +48,25 @@ export default class CreateWalletByEmailScreen extends Component {
         password: null,
         passwordConfirm: null,
       },
+      // walletInfo: {},
     };
   }
+
+  // componentDidMount = async () => {
+  //   try {
+  //     const walletInfo = EthService.generateWallet();
+  //     const mnemonicHash = crypto.createHmac('sha256', walletInfo.mnemonic)
+  //       .update(AppConfig.getClientSecret())
+  //       .digest('hex');
+  //     walletInfo.mnemonicHash = mnemonicHash;
+  //     this.setState({
+  //       walletInfo,
+  //     });
+  //     console.log('walletInfo', walletInfo);
+  //   } catch (error) {
+  //     console.log('CreateByEmailScreen._error: ', error);
+  //   }
+  // }
 
   _handleToggleCheckBox = () => {
     const { isChecked } = this.state;
@@ -60,7 +77,9 @@ export default class CreateWalletByEmailScreen extends Component {
   }
 
   _onBtnTerms = () => {
-    this.props.navigation.navigate('TermsConditionScreen');
+    const { navigation } = this.props;
+
+    navigation.navigate('TermsConditionScreen');
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -83,14 +102,14 @@ export default class CreateWalletByEmailScreen extends Component {
 
     try {
       if (!isChecked) {
-        throw new Error('Please read and accept terms and conditions!');
+        throw new Error(I18n.t('createWalletByEmailScreen.readAndCheckTerms'));
       }
 
       if (!this.validateEmail(createWalletInfo.email)) {
-        throw new Error('Email is not valid!');
+        throw new Error(I18n.t('createWalletByEmailScreen.emailInvalid'));
       }
       if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
-        throw new Error('Password must match password confirmation!');
+        throw new Error(I18n.t('createWalletByEmailScreen.passwordMustMatch'));
       }
 
       const { privateKey, address, mnemonic } = EthService.generateWallet();
@@ -219,6 +238,7 @@ export default class CreateWalletByEmailScreen extends Component {
     <MangoGradientButton
       btnText={I18n.t('createWalletByEmailScreen.createWallet')}
       btnStyle={styles.btnCreateWalletContainer}
+      buttonTextStyle={styles.textBtnCreateWalletContainer}
       onPress={() => this._handleClickCreateWallet()}
     />
   )
@@ -262,13 +282,15 @@ const styles = ScaledSheet.create({
   },
 
   textAccept: {
-    color: '#121313',
+    color: '#000',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   textTerms: {
-    color: '#1f45b9',
+    color: '#1e68ff',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   formLoginContainer: {
@@ -278,7 +300,7 @@ const styles = ScaledSheet.create({
     backgroundColor: CommonColors.headerBarBgColor,
     borderRadius: '28@s',
     borderWidth: 1,
-    borderColor: CommonColors.customBorderColor,
+    borderColor: '#cad1db',
   },
 
   inputContainer: {
@@ -292,18 +314,13 @@ const styles = ScaledSheet.create({
   inputWalletIdContainer: {
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    borderColor: CommonColors.customBorderColor,
+    borderColor: '#cad1db',
   },
 
   inputImageIcon: {
-    width: '24@s',
-    height: '24@s',
+    width: '28@s',
+    height: '28@s',
     marginRight: '10@s',
-  },
-
-  fingerPrintImage: {
-    width: '32@s',
-    height: '32@s',
   },
 
   inputText: {
@@ -318,5 +335,10 @@ const styles = ScaledSheet.create({
     width: '247@s',
     height: '48@s',
     marginBottom: '20@s',
+  },
+
+  textBtnCreateWalletContainer: {
+    fontSize: '20@ms',
+    ...Fonts.Ubuntu_Regular,
   },
 });

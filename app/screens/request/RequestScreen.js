@@ -13,7 +13,7 @@ import Share from 'react-native-share';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonColors } from '../../utils/CommonStyles';
+import { CommonColors, Fonts } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
@@ -60,12 +60,12 @@ class RequestScreen extends Component {
           {!walletAddress ? null : (
             <QRCode
               value={walletAddress}
-              size={scale(260)}
+              size={scale(230)}
             />
           ) }
         </View>
         <View style={styles.addressContainer}>
-          <Text>{walletAddress}</Text>
+          <Text style={styles.addressText}>{walletAddress}</Text>
         </View>
       </View>
     );
@@ -79,8 +79,8 @@ class RequestScreen extends Component {
         onPress={() => this._onSharePress()}
       >
         <Image
-          source={require('../../../assets/up/up-arrow.png')}
-          style={styles.btnUpImage}
+          source={require('../../../assets/share/share.png')}
+          style={styles.btnShareImage}
         />
       </TouchableOpacity>
       <MangoGradientButton
@@ -114,7 +114,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#F5F7FA',
+    backgroundColor: '#f5f7fa',
   },
 
   contentContainer: {
@@ -128,13 +128,13 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeContainer: {
-    width: '320@s',
-    height: '320@s',
+    width: '280@s',
+    height: '280@s',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
     backgroundColor: CommonColors.headerBarBgColor,
-    elevation: 4,
+    ...UIUtils.generateShadowStyle(),
   },
 
   qrCodeImage: {
@@ -143,16 +143,22 @@ const styles = ScaledSheet.create({
   },
 
   addressContainer: {
-    width: '280@s',
+    width: '240@s',
     borderBottomLeftRadius: '8@s',
     borderBottomRightRadius: '8@s',
     paddingHorizontal: '16@s',
-    paddingVertical: '14@s',
+    paddingVertical: '12@s',
     backgroundColor: '#E4E9F1',
-    marginBottom: '24@s',
+    marginBottom: '20@s',
   },
 
-  // Section button
+  addressText: {
+    textAlign: 'center',
+    color: '#2f64d1',
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+
   groupBtnContainer: {
     flexDirection: 'row',
     width: '320@s',
@@ -160,18 +166,18 @@ const styles = ScaledSheet.create({
   },
 
   btnUpContainer: {
-    width: '70@s',
-    height: '50@s',
-    borderRadius: '25@s',
+    width: '66@s',
+    height: '48@s',
+    borderRadius: '28@s',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: CommonColors.headerBarBgColor,
-    elevation: 4,
+    ...UIUtils.generateShadowStyle(),
   },
 
-  btnUpImage: {
-    width: '24@s',
-    height: '24@s',
+  btnShareImage: {
+    width: '38@s',
+    height: '38@s',
   },
 
   btnCopyAddress: {

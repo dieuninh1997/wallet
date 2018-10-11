@@ -139,6 +139,7 @@ android {
 }
 
 dependencies {
+    compile project(':nodejs-mobile-react-native')
     compile project(':react-native-share')
     compile project(':react-native-randombytes')
     compile project(':react-native-keychain')

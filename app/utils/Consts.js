@@ -25,6 +25,13 @@ export default class Consts {
 
   static NOT_LOGIN = 'not login';
 
+  static LOGIN_TYPES = {
+    PHONE_NUMBER: 0,
+    EMAIL: 1,
+    PASSPORT: 2,
+    FACEBOOK: 3
+  };
+
   static USER_SETTINGS = {
     CURRENCY: 'currency',
     EMAIL_NOTIFICATION: 'email_notification',
@@ -36,7 +43,7 @@ export default class Consts {
 
   static CODE_PIN = 'code_pin';
 
-  static FINGER_PRINT = 'finger_print'
+  static FINGER_PRINT = 'finger_print';
 
   static PER_PAGE = 10
 

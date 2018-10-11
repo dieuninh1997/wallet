@@ -12,11 +12,11 @@ export default {
   },
   currency: {
     USD: {
-      settingLabel: 'U.S Dollar ($)'
+      settingLabel: 'U.S Dollar ($)',
     },
     PHP: {
-      settingLabel: 'Philippines Peso (₱)'
-    }
+      settingLabel: 'Philippines Peso (₱)',
+    },
   },
   landing: {
     coinName: 'マンゴーコイン',
@@ -54,6 +54,9 @@ export default {
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
     createWaletSuccess: '完了しました',
+    readAndCheckTerms: 'Please read and accept terms and conditions!',
+    emailInvalid: 'Email is not valid!',
+    passwordMustMatch: 'Password must match password confirmation!',
   },
   dashboard: {
     title: 'ダッシュボード',
@@ -99,8 +102,8 @@ export default {
     verificationEmailSent: 'A verification link has been sent to your email account.',
     errors: {
       email_already_verified: 'Your email address has already been verified.',
-      email_in_use: 'This email address is already in use.'
-    }
+      email_in_use: 'This email address is already in use.',
+    },
   },
   request: {
     title: 'リクエスト',
@@ -165,8 +168,8 @@ export default {
     mnemonicRequired: 'Please enter your backup phrase.',
     invalidMnemonic: 'Invalid backup phrase.',
     errors: {
-      mnemonic_not_found: 'Wallet not found.'
-    }
+      mnemonic_not_found: 'Wallet not found.',
+    },
   },
   terms: {
     title: 'サービス規約',
@@ -200,5 +203,5 @@ export default {
     important: '※紛失注意！※ 紛失した場合、復元できません。\n※共有注意！※ このファイルを悪意あるWebサイトで使用するとあなたの資金が盗まれます。',
     btnCopy: 'Copy',
     btnNext: 'Next',
-  }
+  },
 };

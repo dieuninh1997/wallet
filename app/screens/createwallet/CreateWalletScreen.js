@@ -6,6 +6,7 @@ import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import UIUtils from '../../utils/UIUtils';
 
 export default class CreateWalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -49,7 +50,7 @@ export default class CreateWalletScreen extends Component {
             style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
             // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
-            <Image style={styles.iconCreate} source={require('../../../assets/phone/phone.png')} />
+            <Image style={styles.iconCreateWallet} source={require('../../../assets/phone/phone.png')} />
             <Text style={styles.textCreateDisable}>
               {I18n.t('createWallet.phoneNumber')}
             </Text>
@@ -60,7 +61,7 @@ export default class CreateWalletScreen extends Component {
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
             onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
           >
-            <Image style={styles.iconCreate} source={require('../../../assets/email/email.png')} />
+            <Image style={styles.iconCreateWallet} source={require('../../../assets/email/email.png')} />
             <Text style={styles.textCreateEnable}>
               {I18n.t('createWallet.emailAddress')}
             </Text>
@@ -72,7 +73,7 @@ export default class CreateWalletScreen extends Component {
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
             onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PASSPORT)}
           >
-            <Image style={styles.iconCreate} source={require('../../../assets/passport/passport.png')} />
+            <Image style={styles.iconCreateWallet} source={require('../../../assets/passport/passport.png')} />
             <Text style={styles.textCreateEnable}>
               {I18n.t('createWallet.passportNumber')}
             </Text>
@@ -83,7 +84,7 @@ export default class CreateWalletScreen extends Component {
             style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
             // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
           >
-            <Image style={styles.iconCreate} source={require('../../../assets/facebook/facebook.png')} />
+            <Image style={styles.iconCreateWallet} source={require('../../../assets/facebook/facebook.png')} />
             <Text style={styles.textCreateDisable}>
               {I18n.t('createWallet.facebook')}
             </Text>
@@ -116,7 +117,7 @@ const styles = ScaledSheet.create({
   },
 
   imageWallet: {
-    width: '280@s',
+    width: '290@s',
     height: '260@s',
   },
 
@@ -126,7 +127,7 @@ const styles = ScaledSheet.create({
 
   btnCreateWalletContainer: {
     flexDirection: 'row',
-    marginBottom: '20@s',
+    marginBottom: '16@s',
     marginHorizontal: '40@s',
     alignItems: 'center',
   },
@@ -135,7 +136,7 @@ const styles = ScaledSheet.create({
     height: '56@s',
     borderRadius: '29@s',
     backgroundColor: '#FFFFFF',
-    elevation: 4,
+    ...UIUtils.generateShadowStyle(),
   },
 
   btnCreateDisable: {
@@ -144,9 +145,9 @@ const styles = ScaledSheet.create({
     backgroundColor: '#e6ebf2',
   },
 
-  iconCreate: {
-    width: '28@s',
-    height: '28@s',
+  iconCreateWallet: {
+    width: '32@s',
+    height: '32@s',
     marginLeft: '25@s',
   },
 

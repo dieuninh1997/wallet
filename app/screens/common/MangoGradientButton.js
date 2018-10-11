@@ -62,6 +62,6 @@ const styles = ScaledSheet.create({
   buttonText: {
     color: '#000',
     fontSize: '20@ms',
-    ...Fonts.Ubuntu_Regular
+    ...Fonts.Ubuntu_Regular,
   },
 });

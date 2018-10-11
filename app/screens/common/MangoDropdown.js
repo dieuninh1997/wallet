@@ -10,8 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonColors } from '../../utils/CommonStyles';
-
+import { CommonColors, Fonts } from '../../utils/CommonStyles';
 
 class MangoDropdown extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class MangoDropdown extends Component {
         name: 'Bitcoin',
       },
       {
-        image: require('../../../assets/eth/ethereum.png'),
+        image: require('../../../assets/eth/eth.png'),
         name: 'Ethereum',
       },
     ];
@@ -140,7 +139,6 @@ class MangoDropdown extends Component {
 export default MangoDropdown;
 
 const styles = ScaledSheet.create({
-
   // Section select coin
   selectCoinContainer: {
     backgroundColor: CommonColors.headerBarBgColor,
@@ -155,7 +153,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '220@s',
+    width: '210@s',
     height: '40@s',
     borderRadius: '20@s',
     backgroundColor: '#336ACF',
@@ -163,23 +161,19 @@ const styles = ScaledSheet.create({
 
   textCoin: {
     color: CommonColors.headerBarBgColor,
-    fontSize: '18@s',
+    fontSize: '18@ms',
     marginHorizontal: '15@s',
+    ...Fonts.Ubuntu_Regular,
   },
 
   coinIcon: {
     color: CommonColors.headerBarBgColor,
-    fontSize: '30@s',
+    fontSize: '30@ms',
   },
 
   selectCoinIcon: {
     color: CommonColors.headerBarBgColor,
-    fontSize: '18@s',
-  },
-
-  selectFeeIcon: {
-    color: CommonColors.customBorderColor,
-    fontSize: '24@s',
+    fontSize: '18@ms',
   },
 
   itemCoin: {
@@ -209,7 +203,8 @@ const styles = ScaledSheet.create({
   },
 
   textSelectItemCoin: {
-    fontSize: '18@s',
+    fontSize: '18@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   modalListCoin: {

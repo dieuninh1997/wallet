@@ -152,26 +152,24 @@ const styles = ScaledSheet.create({
   },
 
   textRestoreWallet: {
-    marginTop: '24@s',
-    marginBottom: '24@s',
     marginVertical: '30@s',
     marginHorizontal: '15@s',
     textAlign: 'center',
     fontSize: '16@ms',
     color: '#000',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
 
   inputRestoreWalletContainer: {
+    flexDirection: 'row',
     width: '338@s',
     height: '56@s',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFF',
     borderRadius: '28@s',
-    flexDirection: 'row',
     paddingHorizontal: '20@s',
-    borderColor: '#e4e8ed',
+    borderColor: '#cad1db',
     borderWidth: '1@s',
   },
 

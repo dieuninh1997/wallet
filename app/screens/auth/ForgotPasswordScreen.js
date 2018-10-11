@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import {
-  View, Text, Image, TextInput,
+  View, Image, TextInput,
 } from 'react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
-import AppConfig from '../../utils/AppConfig';
+import { CommonStyles } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import I18n from '../../i18n/i18n';
 import { ressetPassword } from '../../api/user/UserRequest';
-import AppPreferences from '../../utils/AppPreferences';
 import VerifyYourEmailModal from './VerifyYourEmailModal';
 import UIUtils from '../../utils/UIUtils';
 
@@ -76,7 +74,7 @@ export default class ForgotPasswordScreen extends Component {
   render() {
     return (
       <View style={styles.forgotPassword}>
-        <VerifyYourEmailModal ref={ref => this._emailModal = ref}/>
+        <VerifyYourEmailModal ref={ref => this._emailModal = ref} />
         <View style={styles.inputContainer}>
           <Image
             source={require('../../../assets/email/email.png')}
@@ -85,7 +83,7 @@ export default class ForgotPasswordScreen extends Component {
           <TextInput
             placeholder={I18n.t('resetPassword.emailAddress')}
             editable
-            ref={input => { this.emailAddress = input }}
+            ref={(input) => { this.emailAddress = input; }}
             underlineColorAndroid="transparent"
             style={styles.inputText}
             onChangeText={value => this._handleChangeInputEmail(value)}

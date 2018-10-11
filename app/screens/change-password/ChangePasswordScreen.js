@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import {
   View, Text, Image, TextInput, TouchableOpacity,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { changePassword } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
-import AppPreferences from '../../utils/AppPreferences';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import BaseScreen from '../BaseScreen';
 import UIUtils from '../../utils/UIUtils';
 import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
-import Modal from 'react-native-modal';
 
 class ChangePasswordScreen extends BaseScreen {
   constructor(props) {
@@ -71,21 +70,21 @@ class ChangePasswordScreen extends BaseScreen {
   render() {
     const { modalVisible, error } = this.state;
     let height = modalHeight;
-    if (!!error) {
+    if (error) {
       height += scale(20);
     }
 
     return (
       <View style={styles.container}>
         <Modal
-          animationType='slide'
+          animationType="slide"
           isVisible={modalVisible}
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >
-          <View style={[styles.popup, { height: height }]}>
+          <View style={[styles.popup, { height }]}>
             <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
@@ -102,7 +101,7 @@ class ChangePasswordScreen extends BaseScreen {
       <View style={styles.popupHeader}>
         <Text style={styles.textPopupHeader}>{I18n.t('changePassword.title')}</Text>
       </View>
-    )
+    );
   }
 
   _renderContent() {
@@ -144,7 +143,7 @@ class ChangePasswordScreen extends BaseScreen {
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
-    )
+    );
   }
 
   _renderFooter() {
@@ -171,7 +170,7 @@ class ChangePasswordScreen extends BaseScreen {
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -189,7 +188,7 @@ const styles = ScaledSheet.create({
     borderRadius: '15@s',
     margin: '16@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
   popupHeader: {
     justifyContent: 'center',
@@ -211,7 +210,7 @@ const styles = ScaledSheet.create({
     marginBottom: '17@s',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   currenPassword: {
     borderWidth: '1@s',

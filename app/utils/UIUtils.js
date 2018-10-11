@@ -1,18 +1,18 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, Text, View, Dimensions } from 'react-native';
+import {
+  Platform, StatusBar, View, Dimensions,
+} from 'react-native';
 import Toast from 'react-native-root-toast';
-import { moderateScale, scale } from '../libs/reactSizeMatter/scalingUtils';
-import { CommonColors, CommonStyles, Fonts } from './CommonStyles';
+import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
 export default class UIUtils {
-
   static isIphoneX() {
     const dimen = Dimensions.get('window');
     return (
-      Platform.OS === 'ios' &&
-      !Platform.isPad &&
-      !Platform.isTVOS &&
-      (dimen.height === 812 || dimen.width === 812)
+      Platform.OS === 'ios'
+      && !Platform.isPad
+      && !Platform.isTVOS
+      && (dimen.height === 812 || dimen.width === 812)
     );
   }
 

@@ -3,32 +3,32 @@ import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
 const iOSFonts = {
   Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light'
+    fontFamily: 'Ubuntu-Light',
   },
   Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium'
+    fontFamily: 'Ubuntu-Medium',
   },
   Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold'
+    fontFamily: 'Ubuntu-Bold',
   },
   Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular'
-  }
+    fontFamily: 'Ubuntu-Regular',
+  },
 };
 
 const androidFonts = {
   Ubuntu_Light: {
-    fontFamily: 'Ubuntu-Light'
+    fontFamily: 'Ubuntu-Light',
   },
   Ubuntu_Medium: {
-    fontFamily: 'Ubuntu-Medium'
+    fontFamily: 'Ubuntu-Medium',
   },
   Ubuntu_Bold: {
-    fontFamily: 'Ubuntu-Bold'
+    fontFamily: 'Ubuntu-Bold',
   },
   Ubuntu_Regular: {
-    fontFamily: 'Ubuntu-Regular'
-  }
+    fontFamily: 'Ubuntu-Regular',
+  },
 };
 
 const Fonts = Platform.OS === 'ios' ? iOSFonts : androidFonts;
@@ -72,15 +72,15 @@ class CommonColors {
 class CommonSize {
   static inputHeight = '43@s';
 
-  static inputFontSize = '20@s';
+  static inputFontSize = '20@ms';
 
-  static formLabelFontSize = '14@s';
+  static formLabelFontSize = '14@ms';
 
   static btnSubmitHeight = scale(44);
 
   static headerHeight = scale(44);
 
-  static headerFontSize = '18@s';
+  static headerFontSize = '18@ms';
 }
 
 const CommonStyles = {
@@ -136,8 +136,10 @@ const CommonStyles = {
   errorMessage: {
     color: '#e63d2e',
     fontSize: scale(14),
-    ...Fonts.Ubuntu_Light
-  }
+    ...Fonts.Ubuntu_Light,
+  },
 };
 
-export { CommonStyles, CommonColors, CommonSize, Fonts };
+export {
+  CommonStyles, CommonColors, CommonSize, Fonts,
+};

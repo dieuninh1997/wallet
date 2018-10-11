@@ -18,6 +18,7 @@ import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
+import { Fonts } from '../../utils/CommonStyles';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -216,7 +217,7 @@ const styles = ScaledSheet.create({
     backgroundColor: CommonColors.headerBarBgColor,
     borderRadius: '28@s',
     borderWidth: 1,
-    borderColor: CommonColors.customBorderColor,
+    borderColor: '#cad1db',
   },
 
   inputContainer: {
@@ -246,7 +247,7 @@ const styles = ScaledSheet.create({
 
   inputText: {
     flex: 7,
-    fontSize: '18@s',
+    fontSize: '18@ms',
     fontWeight: '100',
   },
 
@@ -261,7 +262,7 @@ const styles = ScaledSheet.create({
     borderRadius: '20@s',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E6EBF2',
+    backgroundColor: '#e6ebf2',
   },
 
   btnCreate: {
@@ -274,12 +275,14 @@ const styles = ScaledSheet.create({
 
   txtLblCreate: {
     fontSize: CommonSize.headerFontSize,
-    color: CommonColors.headerRightColor,
+    color: '#8d96b1',
+    ...Fonts.Ubuntu_Regular,
   },
 
   btnForgotPassText: {
     color: '#26304d',
-    fontSize: '14@s',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   btnSigninContainer: {

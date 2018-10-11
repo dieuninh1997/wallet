@@ -4,14 +4,17 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Switch } from 'react-native-switch';
+import TouchID from 'react-native-touch-id';
+
 import MangoBackButton from '../common/MangoBackButton';
 import EmailVerificationModal from './EmailVerificationModal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { getCurrentUser, getUserSettings, getUserSecuritySettings, updateUserSettings } from '../../api/user/UserRequest';
-import AppConfig from '../../utils/AppConfig';
+import {
+  getCurrentUser, getUserSettings, getUserSecuritySettings, updateUserSettings,
+} from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
 import Events from '../../utils/Events';
@@ -31,7 +34,6 @@ export default class SettingScreen extends BaseScreen {
 
   static TITLE_SWITCH = {
     emailNotification: 'emailNotification',
-    faceId: 'faceId',
     swipeReceive: 'swipeReceive',
   };
 
@@ -40,7 +42,6 @@ export default class SettingScreen extends BaseScreen {
     this.state = {
       payload: {
         emailNotification: false,
-        faceId: false,
         swipeReceive: false,
       },
       userSetting: {
@@ -52,7 +53,33 @@ export default class SettingScreen extends BaseScreen {
       userSecuritySettings: null,
 
       refreshing: false,
+      isSupportedTouchId: false,
+      isEnableTouchId: false,
     };
+  }
+
+  componentDidMount = async () => {
+    try {
+      const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
+      console.log('isEnableTouchId', isEnableTouchId);
+
+      TouchID.isSupported({ unifiedErrors: false })
+        .then((biometryType) => {
+          console.log('TouchID.isSupported: ', biometryType);
+          this.setState({
+            isSupportedTouchId: true,
+            isEnableTouchId: isEnableTouchId === 'true',
+          });
+        })
+        .catch((error) => {
+          console.log('TouchID.isSupported.Error: ', error);
+        });
+
+      await this._loadLocalSettings();
+      this._loadData();
+    } catch (error) {
+      console.log('SettingScreen._error: ', error);
+    }
   }
 
   _onRefresh = async () => {
@@ -61,18 +88,13 @@ export default class SettingScreen extends BaseScreen {
     this.setState({ refreshing: false });
   }
 
-  componentDidMount = async () => {
-    await this._loadLocalSettings();
-    this._loadData();
-  }
-
   _loadLocalSettings = async () => {
-    let userSettings = await AppPreferences.getUserSettings() || [];
-    let userSecuritySettings = await AppPreferences.getUserSecuritySettings() || {};
+    const userSettings = await AppPreferences.getUserSettings() || [];
+    const userSecuritySettings = await AppPreferences.getUserSecuritySettings() || {};
 
     this.setState({
       userSettings,
-      userSecuritySettings
+      userSecuritySettings,
     });
   }
 
@@ -81,7 +103,7 @@ export default class SettingScreen extends BaseScreen {
       await Promise.all([
         this._loadUserInfo(),
         this._loadUserSettings(),
-        this._loadUserSecuritySettings()
+        this._loadUserSecuritySettings(),
       ]);
     } catch (error) {
       console.log('SettingScreen._loadData', error);
@@ -99,9 +121,9 @@ export default class SettingScreen extends BaseScreen {
 
   _loadUserInfo = async () => {
     try {
-      let response = await getCurrentUser();
+      const response = await getCurrentUser();
       this.setState({
-        user: response.data
+        user: response.data,
       });
     } catch (error) {
       console.log('SettingScreen._loadUserInfo', error);
@@ -112,19 +134,19 @@ export default class SettingScreen extends BaseScreen {
     try {
       const response = await getUserSettings();
       const settings = response.data;
-      
+
       this.setState({
-        userSettings: settings
+        userSettings: settings,
       });
-      for (var setting of settings) {
+      for (const setting of settings) {
         if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
-          const emailNotification = (parseInt(setting.value) === 1) ? true : false;
+          const emailNotification = (parseInt(setting.value, 10) === 1);
 
           this.setState({
             userSetting: {
               emailNotification,
-            }
-          })
+            },
+          });
         }
       }
       AppPreferences.saveUserSettings(settings);
@@ -135,10 +157,10 @@ export default class SettingScreen extends BaseScreen {
 
   _loadUserSecuritySettings = async () => {
     try {
-      let response = await getUserSecuritySettings();
+      const response = await getUserSecuritySettings();
       const settings = response.data;
       this.setState({
-        userSecuritySettings: settings
+        userSecuritySettings: settings,
       });
       AppPreferences.saveUserSecuritySettings(settings);
     } catch (error) {
@@ -147,7 +169,7 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _getLocalCurrency() {
-    for (var setting of this.state.userSettings) {
+    for (const setting of this.state.userSettings) {
       if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
         return setting.value;
       }
@@ -170,12 +192,13 @@ export default class SettingScreen extends BaseScreen {
 
     try {
       const response = await updateUserSettings(params);
-      const message = response.message;
+      const { message } = response;
+
       this.setState({
         userSetting: {
           emailNotification: !userSetting.emailNotification,
-        }
-      })
+        },
+      });
       UIUtils.showToastMessage(message);
     } catch (error) {
       UIUtils.showToastMessage(error.message);
@@ -192,21 +215,37 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onLocalCurrencyUpdated = (currency) => {
-    let { userSettings } = this.state;
-    for (let setting of userSettings) {
+    const { userSettings } = this.state;
+
+    for (const setting of userSettings) {
       if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
         setting.value = currency;
       }
     }
     this.setState({
-      userSettings
+      userSettings,
     });
 
     this.notify(Events.USER_SETTINGS_UPDATED);
     this._loadUserSettings();
   }
+
   _onPressBackupPassphrase = () => {
-    this.props.navigation.navigate("BackupPassphraseScreen");
+    this.props.navigation.navigate('BackupPassphraseScreen');
+  }
+
+  _handleChangeUseTouchId = async () => {
+    try {
+      const { isEnableTouchId } = this.state;
+      const textIsEnable = isEnableTouchId ? 'false' : 'true';
+
+      this.setState({
+        isEnableTouchId: !isEnableTouchId,
+      });
+      await AsyncStorage.setItem('isEnableTouchId', textIsEnable);
+    } catch (error) {
+      console.log('SettingScreen._handleChangeUseTouchId.Error: ', error);
+    }
   }
 
   _renderProfile = () => {
@@ -301,7 +340,7 @@ export default class SettingScreen extends BaseScreen {
               value={userSetting.emailNotification}
               innerCircleStyle={styles.innerCircle}
               changeValueImmediately
-              onValueChange={(value) => this._onChangeSwitchEmailNotification(value)}
+              onValueChange={value => this._onChangeSwitchEmailNotification(value)}
             />
           </View>
           <TouchableWithoutFeedback onPress={() => this._showLocalCurrency()}>
@@ -322,7 +361,7 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderSecurity() {
-    const { payload } = this.state;
+    const { payload, isSupportedTouchId, isEnableTouchId } = this.state;
     const { navigation } = this.props;
 
     return (
@@ -359,7 +398,7 @@ export default class SettingScreen extends BaseScreen {
                 <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
                 <View style={styles.activiRightGroup}>
                   <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unconfirmed')}
+                    {I18n.t('setting.unconfirmed')}
                   </Text>
                   <MaterialCommunityIcons
                     style={styles.iconChevronRight}
@@ -383,20 +422,24 @@ export default class SettingScreen extends BaseScreen {
           </TouchableWithoutFeedback>
 
           <View style={styles.groupUseFaceID}>
-            <View style={styles.borderUseFaceID}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
-              <View style={styles.activiRightGroup}>
-                <Switch
-                  containerStyle={styles.switchBorder}
-                  backgroundActive="#16ec7e"
-                  backgroundInactive="#fff"
-                  value={payload.faceId}
-                  innerCircleStyle={styles.innerCircle}
-                  changeValueImmediately
-                  onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.faceId)}
-                />
+
+            {isSupportedTouchId ? (
+              <View style={styles.borderUseFaceID}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
+                <View style={styles.activiRightGroup}>
+                  <Switch
+                    containerStyle={styles.switchBorder}
+                    backgroundActive="#16ec7e"
+                    backgroundInactive="#fff"
+                    value={isEnableTouchId}
+                    innerCircleStyle={styles.innerCircle}
+                    changeValueImmediately
+                    onValueChange={() => this._handleChangeUseTouchId()}
+                  />
+                </View>
               </View>
-            </View>
+            ) : null}
+
             <View style={styles.borderUseFaceID}>
               <Text style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
               <View style={styles.activiRightGroup}>
@@ -437,8 +480,13 @@ export default class SettingScreen extends BaseScreen {
             {this._renderSecurity()}
           </View>
         </ScrollView>
-        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated} />
-        <ChangePasswordScreen ref={ref => this._changePassword = ref} />
+        <LocalCurrencyScreen
+          ref={ref => this._localCurrency = ref}
+          onLocalCurrencyUpdated={this._onLocalCurrencyUpdated}
+        />
+        <ChangePasswordScreen
+          ref={ref => this._changePassword = ref}
+        />
       </View>
     );
   }
@@ -460,7 +508,6 @@ const styles = ScaledSheet.create({
     borderRadius: '13@s',
     borderColor: '#e0e4eb',
     backgroundColor: '#FFF',
-    height: '181@s',
     borderWidth: '1@s',
     marginLeft: '16@s',
     marginRight: '16@s',
@@ -519,7 +566,6 @@ const styles = ScaledSheet.create({
     borderRadius: '13@s',
     borderColor: '#e0e4eb',
     backgroundColor: '#FFF',
-    height: '88@s',
     borderWidth: '1@s',
     marginLeft: '16@s',
     marginRight: '16@s',
@@ -545,7 +591,6 @@ const styles = ScaledSheet.create({
     borderRadius: '13@s',
     borderColor: '#e0e4eb',
     backgroundColor: '#FFF',
-    height: '269@s',
     borderWidth: '1@s',
     marginLeft: '16@s',
     marginRight: '16@s',
@@ -588,7 +633,6 @@ const styles = ScaledSheet.create({
     borderColor: '#ced4dd',
   },
   groupUseFaceID: {
-    height: '98@s',
     flexDirection: 'column',
   },
   borderUseFaceID: {
@@ -638,5 +682,5 @@ const styles = ScaledSheet.create({
     fontSize: '14@ms',
     color: '#8d93a6',
     ...Fonts.Ubuntu_Regular,
-  }
+  },
 });

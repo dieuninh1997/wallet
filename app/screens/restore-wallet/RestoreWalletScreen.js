@@ -73,6 +73,11 @@ class RestoreWalletScreen extends Component {
 
       await AppPreferences.saveToKeychain('access_token', restoreAccountInfo.data.accessToken);
       await AppPreferences.saveToKeychain('private_key', wallet.privateKey);
+      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+
+      AppConfig.PRIVATE_KEY = wallet.privateKey;
+      AppConfig.MNEMONIC = mnemonic;
+      AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
 
       window.GlobalSocket.connect();
       Keyboard.dismiss();
@@ -95,7 +100,7 @@ class RestoreWalletScreen extends Component {
     }
 
     const words = mnemonic.split(' ');
-    if (words.length != 12) {
+    if (words.length !== 12) {
       UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'));
       return false;
     }

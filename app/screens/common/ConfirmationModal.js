@@ -23,11 +23,6 @@ export default class ConfirmationModal extends React.Component {
     this.setModalVisible(false);
   }
 
-  _onConfirmPress(callBackFunction) {
-    callBackFunction();
-    this.setModalVisible(false);
-  }
-
   render() {
     const { modalVisible } = this.state;
     return (
@@ -96,7 +91,7 @@ export default class ConfirmationModal extends React.Component {
 
 ConfirmationModal.defaultProps = {
   title: I18n.t('genneralText.confirmation'),
-  contentText: I18n.t('send.confirmationText'),
+  contentText: I18n.t('send.confirmationTextDefault'),
   btnCancelName: I18n.t('changePassword.cancel'),
   btnConfirmName: I18n.t('genneralText.ok'),
 };

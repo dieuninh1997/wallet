@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
+import TouchID from 'react-native-touch-id';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { CommonSize } from '../../utils/CommonStyles';
@@ -17,9 +18,17 @@ export default class LoginUsePinScreen extends Component {
   state = {
     codePin: null,
     isShowError: false,
+    isEnableTouchId: false,
   };
 
   async componentDidMount() {
+    const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
+    console.log('isEnableTouchId', isEnableTouchId);
+
+    this.setState({
+      isEnableTouchId: isEnableTouchId === 'true',
+    });
+
     await hasUserSetPinCode();
     await this._getCodePin();
   }
@@ -50,12 +59,36 @@ export default class LoginUsePinScreen extends Component {
     }
   }
 
+  _renderLoginByTouchId = () => {
+    const { navigation } = this.props;
+
+    const optionalConfigObject = {
+      title: 'Login by Touch ID',
+      color: '#e00606',
+      sensorDescription: 'Touch sensor to open your app', // Android
+      cancelText: 'Cancel', // Android
+      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+      unifiedErrors: false, // use unified error messages (default false)
+    };
+
+    TouchID.authenticate('Touch sensor to open your app', optionalConfigObject)
+      .then(() => {
+        navigation.navigate('MainScreen');
+      })
+      .catch((error) => {
+        console.log('error', error);
+        if (error.details === 'cancelled') {
+          this.setState({ isEnableTouchId: false });
+        }
+      });
+  }
 
   render() {
-    const { isShowError } = this.state;
+    const { isShowError, isEnableTouchId } = this.state;
 
     return (
       <View style={styles.container}>
+        {isEnableTouchId ? this._renderLoginByTouchId() : null }
         <View style={styles.containerPassword} />
         <PINCode
           status="enter"
@@ -169,7 +202,7 @@ const styles = ScaledSheet.create({
     color: '#26304c',
   },
   pincodeTitle: {
-    fontSize: '16@ms', 
+    fontSize: '16@ms',
     textAlign: 'center',
-  }
+  },
 });

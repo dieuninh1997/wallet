@@ -10,6 +10,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import UIUtils from '../../utils/UIUtils';
 import MangoGradientButton from '../common/MangoGradientButton';
+import { CommonColors, Fonts } from '../../utils/CommonStyles';
 
 export default class VerifyYourEmailModal extends React.Component {
   state = {
@@ -31,8 +32,8 @@ export default class VerifyYourEmailModal extends React.Component {
         <Modal
           animationType="slide"
           isVisible={this.state.modalVisible}
-          backdropColor={'black'}
-          backdropOpacity={0}
+          backdropColor={CommonColors.modalBackdropColor}
+          backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}>
           <View style={styles.popup}>
@@ -72,6 +73,7 @@ export default class VerifyYourEmailModal extends React.Component {
         <MangoGradientButton
           btnText={I18n.t('genneralText.ok')}
           btnStyle={styles.btnCancel}
+          buttonTextStyle={styles.buttonTextStyle}
           onPress={() => this._onCancelPress()}
         />
       </View>
@@ -95,7 +97,8 @@ export default class VerifyYourEmailModal extends React.Component {
   },
   popupHeaderText: {
     color: '#1f1f1f',
-    fontSize: '20@ms'
+    fontSize: '20@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   content: {
     alignItems: 'center',
@@ -110,11 +113,13 @@ export default class VerifyYourEmailModal extends React.Component {
     color: 'rgb(38, 48, 77)',
     fontSize: '16@ms',
     alignSelf: 'center',
+    ...Fonts.Ubuntu_Light,
   },
   contentText: {
     color: 'rgb(38, 48, 77)',
     fontSize: '16@ms',
     textAlign: 'center',
+    ...Fonts.Ubuntu_Light,
   },
   imageKey: {
     height: '102@s',
@@ -131,5 +136,9 @@ export default class VerifyYourEmailModal extends React.Component {
     width: '128@s',
     height: '40@s',
     marginBottom: '10@s'
-  }
+  },
+  buttonTextStyle: {
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
+  },
 });

@@ -10,7 +10,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import UIUtils from '../../utils/UIUtils';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { Fonts } from '../../utils/CommonStyles';
+import { CommonColors, Fonts } from '../../utils/CommonStyles';
 
 export default class ConfirmationModal extends React.Component {
   state = {
@@ -36,8 +36,8 @@ export default class ConfirmationModal extends React.Component {
         <Modal
           animationType="slide"
           isVisible={this.state.modalVisible}
-          backdropColor={'#ccc'}
-          backdropOpacity={0.8}
+          backdropColor={CommonColors.modalBackdropColor}
+          backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}>
           <View style={styles.popup}>
@@ -74,12 +74,14 @@ export default class ConfirmationModal extends React.Component {
         <MangoGradientButton
           btnText={btnCancelName}
           btnStyle={styles.btnCancel}
+          buttonTextStyle={styles.buttonTextStyle}
           colorOptions={['#f5f7fa', '#f5f7fa', '#f5f7fa']}
           onPress={() => this._onCancelPress()}
         />
         <MangoGradientButton
           btnText={btnConfirmName}
           btnStyle={styles.btnconfirm}
+          buttonTextStyle={styles.buttonTextStyle}
           onPress={() => handConfirmModal()}
         />
       </View>
@@ -132,16 +134,16 @@ const styles = ScaledSheet.create({
   btnCancel: {
     width: '81@s',
     height: '40@s',
-    fontSize: '16@ms',
     marginBottom: '10@s',
-    ...Fonts.Ubuntu_Regular,
   },
   btnconfirm: {
     width: '81@s',
     height: '40@s',
-    fontSize: '16@ms',
     marginBottom: '10@s',
     marginLeft: '12@s',
+  },
+  buttonTextStyle: {
+    fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular,
-  }
+  },
 });

@@ -25,6 +25,8 @@ import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import { Fonts } from '../../utils/CommonStyles';
 
+import nodejs from 'nodejs-mobile-react-native';
+
 export default class CreateWalletBaseScreen extends Component {
 
   static WALLET_INFO = {
@@ -44,25 +46,29 @@ export default class CreateWalletBaseScreen extends Component {
         password: null,
         passwordConfirm: null,
       },
-      // walletInfo: {},
     };
+    this.walletInfo = null
   }
 
-  // componentDidMount = async () => {
-  //   try {
-  //     const walletInfo = EthService.generateWallet();
-  //     const mnemonicHash = crypto.createHmac('sha256', walletInfo.mnemonic)
-  //       .update(AppConfig.getClientSecret())
-  //       .digest('hex');
-  //     walletInfo.mnemonicHash = mnemonicHash;
-  //     this.setState({
-  //       walletInfo,
-  //     });
-  //     console.log('walletInfo', walletInfo);
-  //   } catch (error) {
-  //     console.log('CreateByEmailScreen._error: ', error);
-  //   }
-  // }
+  componentDidMount = async () => {
+    this._generateWallet();
+  }
+
+  _generateWallet = () => {
+    try {
+      nodejs.start("main.js");
+      nodejs.channel.addListener(
+        "message",
+        (message) => {
+          console.log(`Wallet created: ${message}`);
+          this.walletInfo = JSON.parse(message);
+        },
+      );
+      nodejs.channel.send('generateWallet');
+    } catch (error) {
+      console.log('CreateByEmailScreen._generateWallet: ', error);
+    }
+  }
 
   getLoginType = () => {
     throw new Error('Please override this method in sub-class');
@@ -107,13 +113,17 @@ export default class CreateWalletBaseScreen extends Component {
   }
 
   _handleClickCreateWallet = async () => {
+    if (!this.walletInfo) {
+      return;
+    }
+
     const { navigation } = this.props;
     const { isChecked, createWalletInfo } = this.state;
 
     try {
       this._validateForm();
 
-      const { privateKey, address, mnemonic } = EthService.generateWallet();
+      const { privateKey, address, mnemonic } = this.walletInfo;
 
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())

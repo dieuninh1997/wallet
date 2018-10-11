@@ -14,7 +14,9 @@ import crypto from 'crypto';
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import {
+  CommonStyles, CommonColors, CommonSize, Fonts,
+} from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -22,7 +24,6 @@ import { register, login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
-import { Fonts } from '../../utils/CommonStyles';
 
 export default class CreateWalletByEmailScreen extends Component {
   static navigationOptions = ({ navigation }) => ({

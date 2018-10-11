@@ -1,5 +1,4 @@
 export default class Consts {
-
   static CURRENCIES = ['USD', 'PHP'];
 
   static DEPOSITE_HISTORY = 'Deposite History';
@@ -45,4 +44,27 @@ export default class Consts {
   static CODE_PIN = 'code_pin';
 
   static FINGER_PRINT = 'finger_print';
+
+  static PER_PAGE = 10
+
+  static LIST_COIN = [
+    {
+      image: require('../../assets/mango-coin/mangocoin.png'),
+      showName: 'Mango Coin',
+      name: 'MGC',
+      symbol: 'mgc4',
+    },
+    {
+      image: require('../../assets/eth/eth.png'),
+      showName: 'Ethereum',
+      name: 'ETH',
+      symbol: 'eth',
+    },
+    // {
+    //   image: require('../../assets/bitcoin/bitcoin.png'),
+    //   showName: 'Bitcoin',
+    //   name: 'BTC',
+    //   symbol: 'btc',
+    // },
+  ];
 }

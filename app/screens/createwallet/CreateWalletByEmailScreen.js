@@ -8,11 +8,12 @@ import {
 
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import {
+  CommonStyles, CommonColors, CommonSize, Fonts,
+} from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import UIUtils from '../../utils/UIUtils';
 import Consts from '../../utils/Consts';
-import { Fonts } from '../../utils/CommonStyles';
 import CreateWalletBaseScreen from './CreateWalletBaseScreen';
 
 export default class CreateWalletByEmailScreen extends CreateWalletBaseScreen {

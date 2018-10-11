@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Text,
   View,
@@ -17,8 +17,12 @@ import WalletService from '../../services/wallet';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 import ConfirmationModal from '../common/ConfirmationModal';
+import Events from '../../utils/Events';
+import BaseScreen from '../BaseScreen';
+import Consts from '../../utils/Consts';
+import AppPreferences from '../../utils/AppPreferences';
 
-class SendScreen extends Component {
+class SendScreen extends BaseScreen {
   static FORM_SEND = {
     RECIEVED_ADDRESS: 'recievedAddress',
     COIN_VALUE: 'coinValue',
@@ -53,10 +57,12 @@ class SendScreen extends Component {
       isShowMenuSelectFee: false,
       feeSelected,
       listFee,
+      coinSelected: Consts.LIST_COIN[0],
     };
   }
 
   componentDidMount = async () => {
+    super.componentDidMount();
     try {
       const { listFee, formSendCoin } = this.state;
       const currentGasPrices = await WalletService.getCurrentGasPrices();
@@ -68,14 +74,39 @@ class SendScreen extends Component {
       });
       console.log('<-----------listFeeNew----------->', listFeeNew);
       formSendCoin.feeValue = listFeeNew[0].value;
+      const indexCoin = await AppPreferences.getCoinSelected();
+      console.log('coinSelected', indexCoin);
+
+      const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+
       this.setState({
         listFee: listFeeNew,
         feeSelected: listFeeNew[0],
         formSendCoin,
+        coinSelected,
       });
     } catch (error) {
       console.log('SendScreen.componentDidMount._error: ', error);
     }
+  }
+
+  async _loadData() {
+    await this._loadCoinSelected();
+  }
+
+  _loadCoinSelected = async () => {
+    const indexCoin = await AppPreferences.getCoinSelected();
+    console.log('coinSelected', indexCoin);
+    const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+    this.setState({
+      coinSelected,
+    });
+  };
+
+  getDataEventHandlers() {
+    return {
+      [Events.COIN_SELECTED_UPDATED]: this._loadData.bind(this),
+    };
   }
 
   _toggleMenu() {
@@ -96,11 +127,13 @@ class SendScreen extends Component {
   }
 
   _validateSendCoin = (formSendCoin = {}) => {
+    const { coinSelected } = this.state;
+
     if (!formSendCoin.recievedAddress) {
       UIUtils.showToastMessage('Recieved address is required!');
       return false;
     }
-    if (!WalletService.isValidAddress('mgc', formSendCoin.recievedAddress)) {
+    if (!WalletService.isValidAddress(coinSelected.symbol, formSendCoin.recievedAddress)) {
       UIUtils.showToastMessage('Recieved address is not valid!');
       return false;
     }
@@ -113,14 +146,14 @@ class SendScreen extends Component {
   }
 
   _handleSendCoin = async () => {
-    const { formSendCoin } = this.state;
+    const { formSendCoin, coinSelected } = this.state;
     try {
       const walletAddress = await AsyncStorage.getItem('address');
       const privateKey = AppConfig.PRIVATE_KEY;
       console.log('walletAddress', walletAddress);
       console.log('privateKey', privateKey);
 
-      const transaction = await WalletService.sendTransaction('mgc4', walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
+      const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
     } catch (error) {
       UIUtils.showToastMessage(error.message);
@@ -128,7 +161,7 @@ class SendScreen extends Component {
     }
   }
 
-  _handClickContinuebtn = () => {
+  _handClickContinueBtn = () => {
     const { formSendCoin } = this.state;
     if (!this._validateSendCoin(formSendCoin)) {
       return;
@@ -190,7 +223,7 @@ class SendScreen extends Component {
   }
 
   _renderFormSend = () => {
-    const { formSendCoin, feeSelected } = this.state;
+    const { formSendCoin, feeSelected, coinSelected } = this.state;
     return (
       <View style={styles.formSendContainer}>
         <View style={styles.inputAddressContainer}>
@@ -209,7 +242,7 @@ class SendScreen extends Component {
 
         <View style={styles.inputCoinValueContainer}>
           <View style={styles.inputCoinValue}>
-            <Text style={styles.inputTextLabel}>MGC</Text>
+            <Text style={styles.inputTextLabel}>{coinSelected.name}</Text>
             <TextInput
               editable
               placeholder="0.0000"
@@ -256,7 +289,7 @@ class SendScreen extends Component {
         btnText={I18n.t('send.continue')}
         btnStyle={styles.btnContinue}
         buttonTextStyle={styles.buttonTextStyle}
-        onPress={() => this._handClickContinuebtn()}
+        onPress={() => this._handClickContinueBtn()}
       />
     </View>
 
@@ -269,7 +302,7 @@ class SendScreen extends Component {
       <View style={[styles.container]}>
         <ConfirmationModal
           ref={ref => this._confirmModal = ref}
-          contentText={I18n.t('send.confirmationText', {amount: formSendCoin.coinValue, coinName: 'MGC', address: formSendCoin.recievedAddress})}
+          contentText={I18n.t('send.confirmationText', { amount: formSendCoin.coinValue, coinName: 'MGC', address: formSendCoin.recievedAddress })}
           handConfirmModal={this._handConfirmModal}
         />
         <MangoDropdown />

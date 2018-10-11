@@ -12,7 +12,6 @@ import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import WalletService from '../../services/wallet';
-import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 
 export default class CreateWalletPhoneNumberScreen extends Component {

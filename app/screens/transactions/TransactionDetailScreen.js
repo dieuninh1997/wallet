@@ -4,8 +4,7 @@ import {
 } from 'react-native';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, CommonColors } from '../../utils/CommonStyles';
-import AppConfig from '../../utils/AppConfig';
+import { CommonStyles } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -23,12 +22,16 @@ export default class TransactionDetailScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      transaction: new Object(),
+      transaction: {
+        coinInfo: {},
+      },
     };
   }
 
   componentDidMount = () => {
     const { params } = this.props.navigation.state;
+    console.log('params', params);
+
     this.setState({
       transaction: params,
     });
@@ -42,7 +45,7 @@ export default class TransactionDetailScreen extends Component {
 
   _handleCheckExport = () => {
     const { transaction } = this.state;
-    const urlLink = `https://ropsten.etherscan.io/tx/${transaction.id}`;
+    const urlLink = transaction.url;
     Linking.openURL(urlLink);
   }
 
@@ -60,8 +63,8 @@ export default class TransactionDetailScreen extends Component {
               />
             </View>
             <View style={styles.coinInfoHeader}>
-              <Text style={styles.fontText}>MGC</Text>
-              <Text>MangoCoin</Text>
+              <Text style={styles.fontText}>{transaction.coinInfo.name}</Text>
+              <Text>{transaction.coinInfo.showName}</Text>
             </View>
           </View>
 
@@ -77,7 +80,7 @@ export default class TransactionDetailScreen extends Component {
                 <Text style={styles.valueContent}>
                   {'+'}
                   {transaction.value}
-                  {' MGC'}
+                  {` ${transaction.coinInfo.name}`}
                 </Text>
               </View>
             </View>

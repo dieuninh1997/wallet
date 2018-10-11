@@ -88,7 +88,7 @@ class DashboardScreen extends BaseScreen {
       const response = await getUserSettings();
       const settings = response.data;
       for (const setting of settings) {
-        if (setting.key == Consts.USER_SETTINGS.CURRENCY) {
+        if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
           this.setState({ currency: setting.value });
           break;
         }

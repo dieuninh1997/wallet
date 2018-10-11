@@ -6,9 +6,10 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { changePassword } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
 import AppPreferences from '../../utils/AppPreferences';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import BaseScreen from '../BaseScreen';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors } from '../../utils/CommonStyles';
+import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
 import Modal from 'react-native-modal';
 
 class ChangePasswordScreen extends BaseScreen {
@@ -18,6 +19,7 @@ class ChangePasswordScreen extends BaseScreen {
       newPassword: null,
       confirmNewPassword: null,
       modalVisible: false,
+      error: '',
     };
   }
 
@@ -27,17 +29,24 @@ class ChangePasswordScreen extends BaseScreen {
 
   _onCLickCancel = () => {
     this.setModalVisible(false);
+    this.setState({
+      error: '',
+    });
   }
 
   _onClickUpdate = async () => {
     const { currenPassword, newPassword, confirmNewPassword } = this.state;
 
     if (!currenPassword || !newPassword || !confirmNewPassword) {
-      UIUtils.showToastMessage(I18n.t('changePassword.toastEnterFullInfo'));
+      this.setState({
+        error: I18n.t('changePassword.toastEnterFullInfo'),
+      });
       return;
     }
     if (newPassword !== confirmNewPassword) {
-      UIUtils.showToastMessage(I18n.t('changePassword.toastConfirmPassword'));
+      this.setState({
+        error: I18n.t('changePassword.toastConfirmPassword'),
+      });
       return;
     }
 
@@ -48,15 +57,23 @@ class ChangePasswordScreen extends BaseScreen {
       this.setModalVisible(false);
     } catch (error) {
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        this.setState({
+          error: error.errors[Object.keys(error.errors)[0]],
+        });
       } else {
-        UIUtils.showToastMessage(error.message);
+        this.setState({
+          error: error.message,
+        });
       }
     }
   }
 
   render() {
-    const { modalVisible } = this.state;
+    const { modalVisible, error } = this.state;
+    let height = modalHeight;
+    if (!!error) {
+      height += scale(20);
+    }
 
     return (
       <View style={styles.container}>
@@ -68,7 +85,7 @@ class ChangePasswordScreen extends BaseScreen {
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >
-          <View style={styles.popup}>
+          <View style={[styles.popup, { height: height }]}>
             <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
@@ -89,6 +106,8 @@ class ChangePasswordScreen extends BaseScreen {
   }
 
   _renderContent() {
+    const { error } = this.state;
+
     return (
       <View style={styles.content}>
         <View style={styles.currenPassword}>
@@ -98,7 +117,7 @@ class ChangePasswordScreen extends BaseScreen {
             secureTextEntry
             editable
             underlineColorAndroid="transparent"
-            onChangeText={text => this.setState({ currenPassword: text })}
+            onChangeText={text => this.setState({ currenPassword: text, error: '' })}
             placeholder={I18n.t('changePassword.curentPassword')}
           />
         </View>
@@ -109,7 +128,7 @@ class ChangePasswordScreen extends BaseScreen {
             <TextInput
               style={styles.textCurrenPassword}
               secureTextEntry
-              onChangeText={text => this.setState({ newPassword: text })}
+              onChangeText={text => this.setState({ newPassword: text, error: '' })}
               placeholder={I18n.t('changePassword.newPassword')}
             />
           </View>
@@ -118,12 +137,12 @@ class ChangePasswordScreen extends BaseScreen {
             <TextInput
               style={styles.textCurrenPassword}
               secureTextEntry
-              onChangeText={text => this.setState({ confirmNewPassword: text })}
+              onChangeText={text => this.setState({ confirmNewPassword: text, error: '' })}
               placeholder={I18n.t('changePassword.confirmNewPassword')}
             />
           </View>
         </View>
-
+        {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
     )
   }
@@ -158,14 +177,14 @@ class ChangePasswordScreen extends BaseScreen {
 
 export default ChangePasswordScreen;
 
+const modalHeight = scale(296);
+
 const styles = ScaledSheet.create({
   container: {
-    backgroundColor: '#d6d9db',
     flex: 1,
   },
   popup: {
     width: '343@s',
-    height: '296@s',
     backgroundColor: '#FFF',
     borderRadius: '15@s',
     margin: '16@s',
@@ -266,5 +285,9 @@ const styles = ScaledSheet.create({
   textUpdate: {
     color: '#000000',
     fontSize: '16@ms',
+  },
+  errorMessage: {
+    marginTop: '5@s',
+    marginLeft: '24@s',
   },
 });

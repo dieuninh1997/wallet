@@ -27,7 +27,8 @@ export default class Consts {
   static NOT_LOGIN = 'not login';
 
   static USER_SETTINGS = {
-    CURRENCY: 'currency'
+    CURRENCY: 'currency',
+    EMAIL_NOTIFICATION: 'email_notification',
   };
 
   static PIN = 'pin';

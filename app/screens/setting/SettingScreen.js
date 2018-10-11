@@ -10,11 +10,12 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { getCurrentUser, getUserSettings, getUserSecuritySettings } from '../../api/user/UserRequest';
+import { getCurrentUser, getUserSettings, getUserSecuritySettings, updateUserSettings } from '../../api/user/UserRequest';
 import AppConfig from '../../utils/AppConfig';
 import AppPreferences from '../../utils/AppPreferences';
 import Consts from '../../utils/Consts';
 import Events from '../../utils/Events';
+import UIUtils from '../../utils/UIUtils';
 import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
 import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
 import BaseScreen from '../BaseScreen';
@@ -40,10 +41,10 @@ export default class SettingScreen extends BaseScreen {
       payload: {
         emailNotification: false,
         faceId: false,
-        swipeReceive: false
+        swipeReceive: false,
       },
       userSetting: {
-        emailNotification: false
+        emailNotification: false,
       },
       walletId: null,
       user: {},
@@ -114,6 +115,18 @@ export default class SettingScreen extends BaseScreen {
       this.setState({
         userSettings: settings
       });
+      for (var setting of settings) {
+        if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
+          const emailNotification = (parseInt(setting.value) === 1) ? true : false;
+          console.log('emailnotification----', setting.value, emailNotification);
+
+          this.setState({
+            userSetting: {
+              emailNotification,
+            }
+          })
+        }
+      }
       AppPreferences.saveUserSettings(settings);
     } catch (error) {
       console.log('SettingScreen._loadUserSettings', error);
@@ -146,6 +159,29 @@ export default class SettingScreen extends BaseScreen {
 
     payload[`${title}`] = !payload[`${title}`];
     this.setState({ payload });
+  }
+
+  _onChangeSwitchEmailNotification = async () => {
+    const { userSetting } = this.state;
+    const email_notification = (!userSetting.emailNotification) ? 1 : 0;
+    const params = {
+      email_notification,
+    };
+
+    console.log('-------------email', userSetting.emailNotification, email_notification);
+    try {
+      const response = await updateUserSettings(params);
+      const message = response.message;
+      this.setState({
+        userSetting: {
+          emailNotification: !userSetting.emailNotification,
+        }
+      })
+      UIUtils.showToastMessage(message);
+    } catch (error) {
+      UIUtils.showToastMessage(error.message);
+      console.log('LocalCurrencyScreen._onClickConfirm', error);
+    }
   }
 
   _showLocalCurrency = () => {
@@ -188,25 +224,25 @@ export default class SettingScreen extends BaseScreen {
           </View>
 
           <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
-            <View style={styles.activiRightGroup}>
-              {userSecuritySettings && (userSecuritySettings.email_verified ? (
-                <Text style={styles.textVerified}>
-                  {I18n.t('setting.verified')}
-                </Text>
-              ) : (
-                <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unverified')}
-                </Text>
-              ))}
+            <View style={styles.borderElementBottom}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
+              <View style={styles.activiRightGroup}>
+                {userSecuritySettings && (userSecuritySettings.email_verified ? (
+                  <Text style={styles.textVerified}>
+                    {I18n.t('setting.verified')}
+                  </Text>
+                ) : (
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
           </TouchableWithoutFeedback>
 
           <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
@@ -217,10 +253,10 @@ export default class SettingScreen extends BaseScreen {
                   {I18n.t('setting.verified')}
                 </Text>
               ) : (
-                <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unverified')}
-                </Text>
-              ))}
+                  <Text style={styles.textUnVerified}>
+                    {I18n.t('setting.unverified')}
+                  </Text>
+                ))}
 
               <MaterialCommunityIcons
                 style={styles.iconChevronRight}
@@ -262,7 +298,7 @@ export default class SettingScreen extends BaseScreen {
               value={userSetting.emailNotification}
               innerCircleStyle={styles.innerCircle}
               changeValueImmediately
-              onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.emailNotification)}
+              onValueChange={(value) => this._onChangeSwitchEmailNotification(value)}
             />
           </View>
           <TouchableWithoutFeedback onPress={() => this._showLocalCurrency()}>
@@ -325,7 +361,7 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </View>
           </TouchableWithoutFeedback>
-          
+
           <TouchableWithoutFeedback onPress={() => navigation.navigate('ChangePinScreen')}>
             <View style={styles.borderElement}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
@@ -376,7 +412,7 @@ export default class SettingScreen extends BaseScreen {
 
     return (
       <View>
-        <EmailVerificationModal ref={ref => this._emailModal = ref}/>
+        <EmailVerificationModal ref={ref => this._emailModal = ref} />
         <ScrollView
           refreshControl={(
             <RefreshControl
@@ -391,8 +427,8 @@ export default class SettingScreen extends BaseScreen {
             {this._renderSecurity()}
           </View>
         </ScrollView>
-        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated}/>
-        <ChangePasswordScreen ref={ref => this._changePassword = ref}/>
+        <LocalCurrencyScreen ref={ref => this._localCurrency = ref} onLocalCurrencyUpdated={this._onLocalCurrencyUpdated} />
+        <ChangePasswordScreen ref={ref => this._changePassword = ref} />
       </View>
     );
   }

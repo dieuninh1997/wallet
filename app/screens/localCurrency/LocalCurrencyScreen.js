@@ -3,10 +3,8 @@ import { View, Text, TouchableOpacity, AsyncStorage } from 'react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { updateUserSettings } from '../../api/user/UserRequest';
-import AppPreferences from '../../utils/AppPreferences';
 import I18n from '../../i18n/i18n';
-import AppConfig from '../../utils/AppConfig';
-import { CommonColors } from '../../utils/CommonStyles';
+import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Consts from '../../utils/Consts';
 import UIUtils from '../../utils/UIUtils';
@@ -20,6 +18,7 @@ class LocalCurrencyScreen extends Component {
       currency: null,
       modalVisible: false,
       radioValue: 0,
+      error: '',
     };
   }
 
@@ -45,6 +44,9 @@ class LocalCurrencyScreen extends Component {
 
   _onClickCancel = () => {
     this.setModalVisible(false);
+    this.setState({
+      error: '',
+    });
   }
 
   _onClickConfirm = async () => {
@@ -56,20 +58,25 @@ class LocalCurrencyScreen extends Component {
 
     try {
       const response = await updateUserSettings(params);
-      console.log('hide');
       const message = response.message;
 
       onLocalCurrencyUpdated(currency);
       this.setModalVisible(false);
       UIUtils.showToastMessage(message);
     } catch (error) {
-      UIUtils.showToastMessage(error.message);
+      this.setState({
+        error: error.message,
+      });
       console.log('LocalCurrencyScreen._onClickConfirm', error);
     }
   }
 
   render() {
-    const { modalVisible } = this.state;
+    const { modalVisible, error } = this.state;
+    let height = modalHeight;
+    if (!!error) {
+      height += scale(20);
+    }
 
     return (
       <View style={styles.container}>
@@ -81,7 +88,7 @@ class LocalCurrencyScreen extends Component {
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >
-          <View style={styles.popup}>
+          <View style={[styles.popup, { height: height }]}>
             <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
@@ -102,7 +109,8 @@ class LocalCurrencyScreen extends Component {
   }
 
   _renderContent() {
-    const { radioValue } = this.state;
+    const { radioValue, error } = this.state;
+
     return (
       <View style={styles.content}>
         <RadioGroup
@@ -125,6 +133,7 @@ class LocalCurrencyScreen extends Component {
             })
           }
         </RadioGroup>
+        {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
     )
   }
@@ -150,13 +159,14 @@ class LocalCurrencyScreen extends Component {
 
 export default LocalCurrencyScreen;
 
+const modalHeight = scale(213);
+
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
   },
   popup: {
     width: '343@s',
-    height: '213@s',
     backgroundColor: '#FFF',
     borderRadius: '10@s',
     margin: '16@s',
@@ -224,5 +234,9 @@ const styles = ScaledSheet.create({
   textConfirm: {
     color: '#000000',
     fontSize: '16@ms',
+  },
+  errorMessage: {
+    marginTop: '5@s',
+    marginLeft: '24@s',
   },
 })

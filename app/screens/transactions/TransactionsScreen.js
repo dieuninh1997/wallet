@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-// import I18n from '../../i18n/i18n';
+import I18n from '../../i18n/i18n';
 import _ from 'lodash';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import { CommonColors, Fonts, CommonSize } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
@@ -220,6 +220,7 @@ class TransactionsScreen extends BaseScreen {
           }}
         >
           {transactions && transactions.length ? this._renderTransactonsList() : null}
+          {transactions && transactions.length === 0 ? <Text style={styles.noTransactionAvailable}>{ I18n.t('transactions.noTransactionAvailable') }</Text> : null}
         </ScrollView>
       </View>
     );
@@ -318,4 +319,10 @@ const styles = ScaledSheet.create({
   textRecieved: {
     color: '#2f64d1',
   },
+
+  noTransactionAvailable: {
+    fontSize: CommonSize.headerFontSize,
+    ...Fonts.Ubuntu_Light,
+    marginTop: '30@s',
+  }
 });

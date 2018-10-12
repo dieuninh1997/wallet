@@ -8,7 +8,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import UIUtils from '../../utils/UIUtils';
 import MangoGradientButton from './MangoGradientButton';
-import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, Fonts } from '../../utils/CommonStyles';
 
 export default class ConfirmationModal extends React.Component {
   state = {
@@ -99,7 +99,7 @@ ConfirmationModal.defaultProps = {
 const margin = 3;
 const styles = ScaledSheet.create({
   popup: {
-    width: '343@s',
+    width: CommonSize.popupWidth,
     height: '221@s',
     backgroundColor: '#FFF',
     borderRadius: '10@s',
@@ -116,7 +116,7 @@ const styles = ScaledSheet.create({
   },
   popupHeaderText: {
     color: '#000000',
-    fontSize: '20@ms',
+    fontSize: CommonSize.inputFontSize,
     ...Fonts.Ubuntu_Regular,
   },
   content: {
@@ -135,12 +135,14 @@ const styles = ScaledSheet.create({
     width: '81@s',
     height: '40@s',
     marginBottom: '10@s',
+    marginHorizontal: '5@s',
   },
   btnconfirm: {
     width: '81@s',
     height: '40@s',
     marginBottom: '10@s',
     marginLeft: '12@s',
+    marginHorizontal: '5@s',
   },
   buttonTextStyle: {
     fontSize: '16@ms',

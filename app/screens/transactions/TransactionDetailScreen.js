@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonSize } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -102,7 +102,7 @@ export default class TransactionDetailScreen extends Component {
               <View style={styles.right}>
                 <Image
                   source={this._showIconIsSend(transaction)}
-                  style={styles.iconIsSend}
+                  style={[styles.iconIsSend, transaction.status === 'CONFIRMED' ? '' : styles.blurImage]}
                 />
                 <Text style={styles.valueContent}>{ transaction.status }</Text>
               </View>
@@ -244,7 +244,7 @@ const styles = ScaledSheet.create({
     paddingTop: '20@s',
   },
   fontText: {
-    fontSize: '20@ms',
+    fontSize: CommonSize.inputFontSize,
     fontWeight: 'bold',
     color: '#000000',
     ...Fonts.Ubuntu_Medium,
@@ -264,17 +264,22 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginRight: '9@s',
     backgroundColor: '#ffffff',
+    marginHorizontal: '5@s',
   },
   btnCheckExport: {
     marginBottom: '10@s',
     width: '149@s',
     height: '48@s',
     marginRight: '9@s',
+    marginHorizontal: '5@s',
   },
   iconIsSend: {
     width: '28@s',
     height: '28@s',
     marginRight: '16@s',
     bottom: '5@s'
-  }
+  },
+  blurImage: {
+    opacity: 0.3,
+  },
 });

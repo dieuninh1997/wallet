@@ -113,6 +113,7 @@ export default {
   },
   transactions: {
     title: 'トランザクション',
+    noTransactionAvailable: 'No transaction record available.',
   },
   changePassword: {
     title: 'パスワード変更',

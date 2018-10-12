@@ -15,10 +15,23 @@ export default class MangoTabBar extends Component {
   }
 
   _onTabPress(index) {
-    const { navigation } = this.props;
-
     this.setState({activeTab: index});
-    navigation.navigate(this.TABS[index]);
+
+    const { jumpToIndex, navigation } = this.props;
+    const currentIndex = navigation.state.index;
+
+    if (currentIndex === index) {
+      let childRoute = navigation.state.routes[index];
+      if (childRoute.hasOwnProperty('index') && childRoute.index > 0) {
+        navigation.dispatch(
+          StackActions.popToTop({ key: childRoute.key })
+        );
+      } else {
+        // TODO: do something to scroll to top
+      }
+    } else {
+      jumpToIndex(index);
+    }
   }
 
   render() {

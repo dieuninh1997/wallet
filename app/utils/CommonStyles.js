@@ -81,6 +81,8 @@ class CommonSize {
   static headerHeight = scale(44);
 
   static headerFontSize = '18@ms';
+
+  static popupWidth = '328@s'
 }
 
 const CommonStyles = {

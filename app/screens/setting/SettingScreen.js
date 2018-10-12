@@ -101,6 +101,7 @@ export default class SettingScreen extends BaseScreen {
   _loadData = async () => {
     try {
       await Promise.all([
+        this._loadEthAddress(),
         this._loadUserInfo(),
         this._loadUserSettings(),
         this._loadUserSecuritySettings(),
@@ -108,14 +109,16 @@ export default class SettingScreen extends BaseScreen {
     } catch (error) {
       console.log('SettingScreen._loadData', error);
     }
+  }
 
+  _loadEthAddress = async () => {
     try {
       const walletId = await AsyncStorage.getItem('address');
       this.setState({
         walletId,
       });
     } catch (error) {
-      console.log('SettingScreen._error: ', error);
+      console.log('SettingScreen._loadEthAddress: ', error);
     }
   }
 

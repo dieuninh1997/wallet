@@ -175,7 +175,16 @@ class SendScreen extends BaseScreen {
 
       const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
+
       UIUtils.showToastMessage(I18n.t('send.submitted'));
+      this.setState({
+        feeSelected: SendScreen.LIST_FEE[0],
+        formSendCoin: {
+          recievedAddress: null,
+          coinValue: 0.0000,
+          feeValue: SendScreen.LIST_FEE[0].value,
+        },
+      });
     } catch (error) {
       UIUtils.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
@@ -259,6 +268,7 @@ class SendScreen extends BaseScreen {
             placeholder={I18n.t('send.walletAddress')}
             underlineColorAndroid="transparent"
             style={styles.inputTextAddress}
+            value={formSendCoin.recievedAddress}
             onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.RECIEVED_ADDRESS, value)}
           />
         </View>
@@ -270,6 +280,7 @@ class SendScreen extends BaseScreen {
               editable
               placeholder="0.0000"
               underlineColorAndroid="transparent"
+              value={formSendCoin.coinValue}
               style={styles.inputText}
               onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.COIN_VALUE, value)}
             />

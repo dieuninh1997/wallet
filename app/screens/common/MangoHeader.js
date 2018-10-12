@@ -39,7 +39,7 @@ class MangoHeader extends React.Component {
   _renderIconToggleMenu() {
     return (
       <TouchableWithoutFeedback onPress={() => this._toggleMenu()}>
-        <View>
+        <View style = {styles.viewMenu}>
           <Image source={require('../../../assets/menu/menu.png')} style={styles.imgMenu} />
         </View>
       </TouchableWithoutFeedback>
@@ -108,10 +108,15 @@ class MangoHeader extends React.Component {
 export default MangoHeader;
 
 const styles = ScaledSheet.create({
+  viewMenu: {
+    width: '80@s',
+    height: '100%',
+    justifyContent: 'center',
+  },
   imgMenu: {
     width: '20@s',
     height: '20@s',
-    marginLeft: '10@s',
+    marginLeft: '17@s',
   },
   menuGroup: {
     flexDirection: 'column',

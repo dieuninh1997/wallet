@@ -87,7 +87,7 @@ export default {
     email: 'Email',
     mobileNumber: 'Mobile Number',
     logIntoWebWallet: 'Log in to Web Wallet',
-    perferences: 'Perferences',
+    perferences: 'Preferences',
     emailNotification: 'Email Notification',
     localCurrency: 'Local Currency',
     security: 'Security',

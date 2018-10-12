@@ -1,6 +1,5 @@
 import { AsyncStorage } from 'react-native';
 import * as Keychain from 'react-native-keychain';
-import Toast from 'react-native-root-toast';
 import AppConfig from './AppConfig';
 
 export default class AppPreferences {

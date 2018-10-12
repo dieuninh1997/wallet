@@ -4,17 +4,34 @@ import urljoin from 'url-join';
 import _ from 'lodash';
 import moment from 'moment';
 
-import coinList from '../../configs/coinList';
-
 const EthUtil = require('ethereumjs-util');
 const ethers = require('ethers');
 
-const ApiUrl = coinList.eth.apiUrl;
-const { provider, providerUrl, broadcastTransactionUrl } = coinList.eth;
+const EthService = {
+  network: 'ropsten',
+  apiUrl: 'https://api-ropsten.etherscan.io',
+  providerUrl: 'http://ropsten.infura.io',
+  broadcastTransactionUrl: 'https://ropsten.etherscan.io',
+};
 
-export const web3 = new Web3(new Web3.providers.HttpProvider(providerUrl));
+export const web3 = new Web3(new Web3.providers.HttpProvider(EthService.providerUrl));
 
-const EthService = {};
+EthService.getApiUrl = () => {
+  let ApiUrl = '';
+
+  switch (EthService.network) {
+  case 'mainnet':
+    ApiUrl = 'https://api.etherscan.io';
+    break;
+  case 'ropsten':
+    ApiUrl = 'https://api-ropsten.etherscan.io';
+    break;
+  default:
+    ApiUrl = 'https://ropsten.etherscan.io';
+  }
+
+  return ApiUrl;
+};
 
 EthService.isValidAddress = address => EthUtil.isValidAddress(address);
 
@@ -48,6 +65,8 @@ EthService.importWalletFromMnemonic = async (mnemonic) => {
 
 EthService.getTransactions = async (address, page, perPage) => {
   try {
+    const ApiUrl = EthService.getApiUrl();
+
     const url = `${ApiUrl}/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken&page=${page}&offset=${perPage}`;
     const response = await axios.get(url);
     const rawTransactions = response.data.result;
@@ -61,12 +80,12 @@ EthService.getTransactions = async (address, page, perPage) => {
       const transactionId = transaction.hash;
       const sendAddress = transaction.from;
       const receiveAddress = transaction.to;
-      const value = Number(transaction.value) / Math.pow(10, 18);
-      const transactionUrl = urljoin(broadcastTransactionUrl, 'tx', transaction.hash);
+      const value = Number(transaction.value) / (10 ** 18);
+      const transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
       const transactionTime = moment(Number(transaction.timeStamp) * 1000).format('lll');
       const confirmations = Number(transaction.confirmations);
       let status = '';
-      if (confirmations >= 16) {
+      if (confirmations >= 1) {
         status = 'CONFIRMED';
       } else {
         status = 'PENDING';
@@ -94,6 +113,8 @@ EthService.getTransactions = async (address, page, perPage) => {
 
 EthService.getAddressBalance = async (address) => {
   try {
+    const ApiUrl = EthService.getApiUrl();
+
     const url = `${ApiUrl}/api?module=account&action=balance&address=${address}&tag=latest&apikey=YourApiKeyToken`;
     const response = await axios.get(url);
     const balance = response.data.result;
@@ -104,26 +125,22 @@ EthService.getAddressBalance = async (address) => {
   }
 };
 
-EthService.makeTransaction = async (sendAddress, receiveAddress, privateKey, amount) => {
+EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amount, fee) => {
   try {
-    const wallet = new ethers.Wallet(Buffer.from(privateKey, 'hex'));
-    wallet.provider = ethers.providers.getDefaultProvider(provider);
-
-    privateKey = Buffer.from(privateKey, 'hex');
-
+    const wallet = new ethers.Wallet(privateKey, new ethers.providers.InfuraProvider(EthService.network));
     const nonce = await wallet.getTransactionCount();
 
-    const transaction = {
+    const transactionInfo = {
       nonce: web3.utils.toHex(nonce),
-      gasLimit: web3.utils.toHex(25000), // prevent known transaction
-      gasPrice: web3.utils.toHex(10e9), // 10 Gwei
+      gasLimit: web3.utils.toHex(100000), // prevent known transaction
+      gasPrice: ethers.utils.parseUnits(`${fee}`, 'gwei'),
       to: receiveAddress,
       from: sendAddress,
       value: web3.utils.toHex(web3.utils.toWei(amount.toString(), 'ether')),
     };
 
-    const transactionGas = await wallet.estimateGas(transaction);
-
+    const transactionGas = await wallet.estimateGas(transactionInfo);
+    const transaction = await wallet.sendTransaction(transactionInfo);
     return {
       transaction,
       fee: transactionGas.toNumber() * 0.00000002,
@@ -133,16 +150,16 @@ EthService.makeTransaction = async (sendAddress, receiveAddress, privateKey, amo
   }
 };
 
-EthService.sendTransaction = async (transaction, privateKey) => {
-  try {
-    const wallet = new ethers.Wallet(Buffer.from(privateKey, 'hex'));
-    wallet.provider = ethers.providers.getDefaultProvider(provider);
+// EthService.sendTransaction = async (transaction, privateKey) => {
+//   try {
+//     const wallet = new ethers.Wallet(Buffer.from(privateKey, 'hex'));
+//     wallet.provider = ethers.providers.getDefaultProvider(provider);
 
-    await wallet.sendTransaction(transaction);
-  } catch (error) {
-    throw error;
-  }
-};
+//     await wallet.sendTransaction(transaction);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 EthService.getCurrentGasPrices = async () => {
   try {

@@ -134,12 +134,12 @@ Erc20Service.getTransactions = async (coin, address, page = 1, perPage = 20) => 
       const transactionId = transaction.hash;
       const sendAddress = transaction.from;
       const receiveAddress = transaction.to;
-      const value = Number(transaction.value) / Math.pow(10, decimals);
+      const value = Number(transaction.value) / (10 ** decimals);
       const transactionUrl = urljoin(Erc20Service.broadcastTransactionUrl, 'tx', transaction.hash);
       const transactionTime = Number(transaction.timeStamp) * 1000;
       const confirmations = Number(transaction.confirmations);
       let status = '';
-      if (confirmations >= 16) {
+      if (confirmations >= 1) {
         status = 'CONFIRMED';
       } else {
         status = 'PENDING';

@@ -67,7 +67,8 @@ export default {
     walletAddress: 'Wallet Address',
     continue: '続ける',
     confirmationTextDefault: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
-    confirmationText: "Are you sure want to send {{amount}} {{coinName}} to addresss {{address}}?",
+    confirmationText: 'Are you sure want to send {{amount}} {{coinName}} to addresss {{address}}?',
+    submitted: 'Submitted',
   },
   setting: {
     title: '設定',

@@ -21,6 +21,7 @@ import Events from '../../utils/Events';
 import BaseScreen from '../BaseScreen';
 import Consts from '../../utils/Consts';
 import AppPreferences from '../../utils/AppPreferences';
+import { getUserSettings } from '../../api/user/UserRequest';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
@@ -32,14 +33,17 @@ class SendScreen extends BaseScreen {
     {
       title: 'Slowly',
       value: 3.0,
+      time: '30 + Minute',
     },
     {
       title: 'Regular',
       value: 5.0,
+      time: '5 + Minute',
     },
     {
       title: 'Fast',
       value: 20.0,
+      time: '2 + Minute',
     },
   ];
 
@@ -51,13 +55,14 @@ class SendScreen extends BaseScreen {
     this.state = {
       formSendCoin: {
         recievedAddress: null,
-        coinValue: 0.0000,
+        coinValue: 0.0,
         feeValue: feeSelected.value,
       },
       isShowMenuSelectFee: false,
       feeSelected,
       listFee,
       coinSelected: Consts.LIST_COIN[0],
+      currency: 'USD',
     };
   }
 
@@ -74,16 +79,13 @@ class SendScreen extends BaseScreen {
       });
       console.log('<-----------listFeeNew----------->', listFeeNew);
       formSendCoin.feeValue = listFeeNew[0].value;
-      const indexCoin = await AppPreferences.getCoinSelected();
-      console.log('coinSelected', indexCoin);
 
-      const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
+      await this._loadData();
 
       this.setState({
         listFee: listFeeNew,
         feeSelected: listFeeNew[0],
         formSendCoin,
-        coinSelected,
       });
     } catch (error) {
       console.log('SendScreen.componentDidMount._error: ', error);
@@ -92,6 +94,7 @@ class SendScreen extends BaseScreen {
 
   async _loadData() {
     await this._loadCoinSelected();
+    await this._loadUserSettings();
   }
 
   _loadCoinSelected = async () => {
@@ -103,9 +106,25 @@ class SendScreen extends BaseScreen {
     });
   };
 
+  async _loadUserSettings() {
+    try {
+      const response = await getUserSettings();
+      const settings = response.data;
+      for (const setting of settings) {
+        if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
+          this.setState({ currency: setting.value });
+          break;
+        }
+      }
+    } catch (e) {
+      console.log('SendScreen._loadUserSettings', e);
+    }
+  }
+
   getDataEventHandlers() {
     return {
       [Events.COIN_SELECTED_UPDATED]: this._loadData.bind(this),
+      [Events.USER_SETTINGS_UPDATED]: this._loadData.bind(this),
     };
   }
 
@@ -146,8 +165,9 @@ class SendScreen extends BaseScreen {
   }
 
   _handleSendCoin = async () => {
-    const { formSendCoin, coinSelected } = this.state;
     try {
+      const { formSendCoin, coinSelected } = this.state;
+
       const walletAddress = await AsyncStorage.getItem('address');
       const privateKey = AppConfig.PRIVATE_KEY;
       console.log('walletAddress', walletAddress);
@@ -155,6 +175,7 @@ class SendScreen extends BaseScreen {
 
       const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
+      UIUtils.showToastMessage(I18n.t('send.submitted'));
     } catch (error) {
       UIUtils.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
@@ -223,7 +244,9 @@ class SendScreen extends BaseScreen {
   }
 
   _renderFormSend = () => {
-    const { formSendCoin, feeSelected, coinSelected } = this.state;
+    const {
+      formSendCoin, feeSelected, coinSelected, currency,
+    } = this.state;
     return (
       <View style={styles.formSendContainer}>
         <View style={styles.inputAddressContainer}>
@@ -235,7 +258,7 @@ class SendScreen extends BaseScreen {
             editable
             placeholder={I18n.t('send.walletAddress')}
             underlineColorAndroid="transparent"
-            style={styles.inputText}
+            style={styles.inputTextAddress}
             onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.RECIEVED_ADDRESS, value)}
           />
         </View>
@@ -257,9 +280,10 @@ class SendScreen extends BaseScreen {
               { marginLeft: 'auto', backgroundColor: '#f5f7fa' },
             ]}
           >
-            <Text style={styles.inputTextLabel}>USD</Text>
+            <Text style={styles.inputTextLabel}>{currency}</Text>
             <TextInput
               editable={false}
+              placeholder="0.0000"
               value={formSendCoin.coinValue.toString()}
               underlineColorAndroid="transparent"
               style={styles.inputText}
@@ -273,10 +297,14 @@ class SendScreen extends BaseScreen {
           <View style={styles.inputFeeContainer}>
             <Text style={styles.inputTextLabel}>FEE</Text>
             <Text style={styles.textFeeSelected}>{feeSelected.title}</Text>
-            <Image
-              source={require('../../../assets/arrow-down/down-arrow.png')}
-              style={styles.imageDropdownIcon}
-            />
+            <View style={styles.textSendTimeContainer}>
+              <Text style={styles.textSendTime}>{feeSelected.time}</Text>
+              <Image
+                source={require('../../../assets/arrow-down/down-arrow.png')}
+                style={styles.imageDropdownIcon}
+              />
+            </View>
+
           </View>
         </TouchableWithoutFeedback>
       </View>
@@ -297,6 +325,7 @@ class SendScreen extends BaseScreen {
 
   render() {
     const { isShowMenuSelectFee, formSendCoin, coinSelected } = this.state;
+
     return (
       <View style={[styles.container]}>
         <ConfirmationModal
@@ -322,6 +351,7 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#f5f7fa',
   },
 
   formSendContainer: {
@@ -346,16 +376,24 @@ const styles = ScaledSheet.create({
     marginRight: '5@s',
   },
 
+  inputTextAddress: {
+    // marginTop: '2@s',
+    width: '94%',
+    fontSize: '18@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+
   inputText: {
-    width: '92%',
-    fontSize: '16@s',
-    fontWeight: '100',
+    width: '100@s',
+    paddingBottom: '8@s',
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   inputTextFee: {
     flex: 7,
     marginLeft: '7@s',
-    fontSize: '16@s',
+    fontSize: '16@ms',
   },
 
   imageDropdownIcon: {
@@ -406,6 +444,20 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Light,
   },
 
+  textSendTimeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 'auto',
+  },
+
+  textSendTime: {
+    marginRight: '10@s',
+    color: '#8d93a6',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+
   buttonTextStyle: {
     fontSize: '20@ms',
     ...Fonts.Ubuntu_Regular,
@@ -442,15 +494,16 @@ const styles = ScaledSheet.create({
   buttonFixBottom: {
     // flex: 1,
     // justifyContent: 'flex-end',
+    marginTop: '130@s',
+    marginBottom: '10@s',
   },
 
   btnContinue: {
     width: '247@s',
     height: '48@s',
     borderRadius: '28@s',
-    marginTop: '130@s',
-    marginBottom: '10@s',
     marginHorizontal: '5@s',
+    marginBottom: '10@s',
   },
   btnContinuee: {
     width: '262@s',

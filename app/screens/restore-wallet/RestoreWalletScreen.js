@@ -182,8 +182,9 @@ const styles = ScaledSheet.create({
 
   inputWallet: {
     width: '330@s',
-    fontSize: '18@s',
+    fontSize: '18@ms',
     textAlign: 'center',
+    ...Fonts.Ubuntu_Light,
   },
 
   btnRestoreWaletContainer: {

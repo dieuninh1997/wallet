@@ -12,23 +12,21 @@ import {
 import { CheckBox } from 'react-native-elements';
 import crypto from 'crypto';
 
+import nodejs from 'nodejs-mobile-react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import {
+  CommonColors, CommonSize, Fonts,
+} from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import EthService from '../../services/wallet/eth';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { register, login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
-import { Fonts } from '../../utils/CommonStyles';
 
-import nodejs from 'nodejs-mobile-react-native';
 
 export default class CreateWalletBaseScreen extends Component {
-
   static WALLET_INFO = {
     EMAIL: 'email',
     PASSPORT: 'passport',
@@ -47,7 +45,7 @@ export default class CreateWalletBaseScreen extends Component {
         passwordConfirm: null,
       },
     };
-    this.walletInfo = null
+    this.walletInfo = null;
   }
 
   componentDidMount = async () => {
@@ -56,9 +54,9 @@ export default class CreateWalletBaseScreen extends Component {
 
   _generateWallet = () => {
     try {
-      nodejs.start("main.js");
+      nodejs.start('main.js');
       nodejs.channel.addListener(
-        "message",
+        'message',
         (message) => {
           console.log(`Wallet created: ${message}`);
           this.walletInfo = JSON.parse(message);
@@ -79,13 +77,12 @@ export default class CreateWalletBaseScreen extends Component {
 
     const loginType = this.getLoginType();
     switch (loginType) {
-      case Consts.LOGIN_TYPES.EMAIL:
-        return createWalletInfo['email'];
-      case Consts.LOGIN_TYPES.PASSPORT:
-        return createWalletInfo['passport'];
-        break;
-      default:
-        throw new Error(`Unknown login type: ${loginType}`);
+    case Consts.LOGIN_TYPES.EMAIL:
+      return createWalletInfo.email;
+    case Consts.LOGIN_TYPES.PASSPORT:
+      return createWalletInfo.passport;
+    default:
+      throw new Error(`Unknown login type: ${loginType}`);
     }
   }
 
@@ -116,9 +113,7 @@ export default class CreateWalletBaseScreen extends Component {
     if (!this.walletInfo) {
       return;
     }
-
     const { navigation } = this.props;
-    const { isChecked, createWalletInfo } = this.state;
 
     try {
       this._validateForm();
@@ -185,7 +180,7 @@ export default class CreateWalletBaseScreen extends Component {
     const { createWalletInfo } = this.state;
     const loginType = this.getLoginType();
 
-    let registerInfo = {
+    const registerInfo = {
       password: createWalletInfo.password,
       password_confirmation: createWalletInfo.passwordConfirm,
       mnemonic: mnemonicHash,
@@ -193,16 +188,16 @@ export default class CreateWalletBaseScreen extends Component {
       eth_address: address,
     };
 
-    let username = this.getUsername();
+    const username = this.getUsername();
     switch (loginType) {
-      case Consts.LOGIN_TYPES.EMAIL:
-        registerInfo['email'] = username;
-        break;
-      case Consts.LOGIN_TYPES.PASSPORT:
-        registerInfo['passport_number'] = username;
-        break;
-      default:
-        throw new Error(`Unknown login type: ${loginType}`);
+    case Consts.LOGIN_TYPES.EMAIL:
+      registerInfo.email = username;
+      break;
+    case Consts.LOGIN_TYPES.PASSPORT:
+      registerInfo.passport_number = username;
+      break;
+    default:
+      throw new Error(`Unknown login type: ${loginType}`);
     }
 
     return registerInfo;
@@ -245,11 +240,9 @@ export default class CreateWalletBaseScreen extends Component {
     </View>
   )
 
-  _renderUsernameInput = () => {
-    return (
-      <View />
-    );
-  }
+  _renderUsernameInput = () => (
+    <View />
+  )
 
   _renderTermsAndConditions = () => {
     const { isChecked } = this.state;
@@ -371,7 +364,7 @@ const styles = ScaledSheet.create({
   inputText: {
     flex: 7,
     fontSize: CommonSize.inputFontSize,
-    fontWeight: '100',
+    ...Fonts.Ubuntu_Light,
   },
 
   btnCreateWalletContainer: {

@@ -71,7 +71,9 @@ class LoginScreen extends Component {
       const responseUser = await login(email, password);
       console.log('responseUser', responseUser);
 
-      AppPreferences.saveToKeychain('access_token', responseUser.access_token);
+      AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token
+      });
       window.GlobalSocket.connect();
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen');
@@ -156,12 +158,13 @@ class LoginScreen extends Component {
     <View style={styles.btnForgotPassContainer}>
       <TouchableOpacity
         style={styles.btnForgotPass}
+        onPress={() => this._handleForgotPassword()}
       >
         <Image
           source={require('../../../assets/forgot-password/forgotPass.png')}
           style={styles.inputImageIcon}
         />
-        <Text onPress={() => this._handleForgotPassword()} style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
+        <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
     </View>
   )

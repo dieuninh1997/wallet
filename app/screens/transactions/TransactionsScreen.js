@@ -134,11 +134,12 @@ class TransactionsScreen extends BaseScreen {
     );
   }
 
-  _showTransactionDetail = (transaction) => {
+  _showTransactionDetail = (transaction, address) => {
     const { navigation } = this.props;
     const { coinSelected } = this.state;
 
     transaction.coinInfo = coinSelected;
+    transaction.isSend = transaction.receiveAddress === address.toLowerCase() ? false : true;
     console.log('transaction.coinInfo', transaction.coinInfo);
 
     navigation.navigate('TransactionDetailScreen', transaction);
@@ -167,7 +168,7 @@ class TransactionsScreen extends BaseScreen {
   }
 
   _renderTransactonsItem = (transaction, address, coinSelected) => (
-    <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction)}>
+    <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction, address)}>
       <View style={styles.transactionItemContainer}>
         <View style={styles.transactionImageContainer}>
           <Image

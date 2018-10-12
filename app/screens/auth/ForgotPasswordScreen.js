@@ -132,6 +132,7 @@ const styles = ScaledSheet.create({
     width: '247@s',
     height: '48@s',
     marginBottom: '20@s',
+    marginHorizontal: '5@s',
   },
   messageSuccess: {
     width: '90%',

@@ -49,6 +49,14 @@ export default class TransactionDetailScreen extends Component {
     Linking.openURL(urlLink);
   }
 
+  _showIconCoin = (transaction) => {
+    return transaction.coinInfo.name === 'ETH' ? require('../../../assets/eth/eth.png') : require('../../../assets/mango-coin/mangocoin.png');
+  }
+
+  _showIconIsSend = (transaction) => {
+    return transaction.isSend ? require('../../../assets/send/sent.png') : require('../../../assets/recieved/received.png');
+  }
+
   render() {
     const { transaction } = this.state;
 
@@ -58,7 +66,7 @@ export default class TransactionDetailScreen extends Component {
           <View style={styles.transactionHeader}>
             <View style={styles.coinIconHeader}>
               <Image
-                source={require('../../../assets/mango-coin/mangocoin.png')}
+                source={this._showIconCoin(transaction)}
                 style={styles.iconHeader}
               />
             </View>
@@ -78,7 +86,7 @@ export default class TransactionDetailScreen extends Component {
               </View>
               <View style={styles.right}>
                 <Text style={styles.valueContent}>
-                  {'+'}
+                  {transaction.isSend ? '-' : '+'}
                   {transaction.value}
                   {` ${transaction.coinInfo.name}`}
                 </Text>
@@ -92,6 +100,10 @@ export default class TransactionDetailScreen extends Component {
                 </Text>
               </View>
               <View style={styles.right}>
+                <Image
+                  source={this._showIconIsSend(transaction)}
+                  style={styles.iconIsSend}
+                />
                 <Text style={styles.valueContent}>{ transaction.status }</Text>
               </View>
             </View>
@@ -209,8 +221,9 @@ const styles = ScaledSheet.create({
     width: '35%',
   },
   right: {
+    flexDirection: 'row',
     width: '65%',
-    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   label: {
     fontSize: '16@ms',
@@ -258,4 +271,10 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginRight: '9@s',
   },
+  iconIsSend: {
+    width: '28@s',
+    height: '28@s',
+    marginRight: '16@s',
+    bottom: '5@s'
+  }
 });

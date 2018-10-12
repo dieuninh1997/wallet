@@ -5,7 +5,7 @@ import {
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonSize} from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 
 export default class CreateWalletScreen extends Component {
@@ -16,9 +16,10 @@ export default class CreateWalletScreen extends Component {
     headerStyle: CommonStyles.header,
     headerRight: (
       <TouchableOpacity
+        style={styles.viewRedirectSignin}
         onPress={() => { navigation.navigate('LoginScreen'); }}
       >
-        <View style={styles.btnRedirectSignin}>
+        <View>
           <Text style={styles.textBtnRedirectSignin}>{I18n.t('createWallet.signin')}</Text>
         </View>
       </TouchableOpacity>
@@ -105,8 +106,16 @@ const styles = ScaledSheet.create({
     marginRight: '19@s',
   },
 
+  viewRedirectSignin: {
+    flexDirection: 'row',
+    width: '80@s',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   textBtnRedirectSignin: {
-    fontSize: '18@ms',
+    fontSize: CommonSize.headerFontSize,
     color: '#8d96b1',
     ...Fonts.Ubuntu_Regular,
   },

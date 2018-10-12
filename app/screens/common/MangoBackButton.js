@@ -33,8 +33,8 @@ export default MangoBackButton;
 
 const styles = ScaledSheet.create({
   btnContainer: {
-    width: '50@s',
-    height: '50@s',
+    width: '80@s',
+    height: '100%',
     justifyContent: 'center',
   },
 

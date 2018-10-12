@@ -11,7 +11,7 @@ import {
 import _ from 'lodash';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonColors } from '../../utils/CommonStyles';
+import { CommonColors, Fonts } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
@@ -134,11 +134,12 @@ class TransactionsScreen extends BaseScreen {
     );
   }
 
-  _showTransactionDetail = (transaction) => {
+  _showTransactionDetail = (transaction, address) => {
     const { navigation } = this.props;
     const { coinSelected } = this.state;
 
     transaction.coinInfo = coinSelected;
+    transaction.isSend = transaction.receiveAddress === address.toLowerCase() ? false : true;
     console.log('transaction.coinInfo', transaction.coinInfo);
 
     navigation.navigate('TransactionDetailScreen', transaction);
@@ -167,7 +168,7 @@ class TransactionsScreen extends BaseScreen {
   }
 
   _renderTransactonsItem = (transaction, address, coinSelected) => (
-    <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction)}>
+    <TouchableOpacity key={transaction.id} onPress={() => this._showTransactionDetail(transaction, address)}>
       <View style={styles.transactionItemContainer}>
         <View style={styles.transactionImageContainer}>
           <Image
@@ -176,7 +177,7 @@ class TransactionsScreen extends BaseScreen {
           />
         </View>
         <View style={styles.transactionInfoContainer}>
-          <Text>
+          <Text style={styles.textDate}>
             {Moment(transaction.time).format('MMM DD hh:mm')}
             {' '}
           </Text>
@@ -245,7 +246,7 @@ const styles = ScaledSheet.create({
 
   textYear: {
     fontWeight: 'bold',
-    fontSize: '32@s',
+    fontSize: '32@ms',
     color: CommonColors.headerTitleColor,
     marginTop: '13@s',
     marginBottom: '13@s',
@@ -279,8 +280,17 @@ const styles = ScaledSheet.create({
     width: '170@s',
   },
 
+  textDate: {
+    fontSize: '13@ms',
+    color: 'rgb(141, 147, 166)',
+    ...Fonts.Ubuntu_Regular,
+    marginBottom: '7@s',
+  },
+
   addressInfo: {
+    fontSize: '14@ms',
     color: CommonColors.headerTitleColor,
+    ...Fonts.Ubuntu_Regular,
   },
 
   transactionValueItem: {
@@ -294,15 +304,15 @@ const styles = ScaledSheet.create({
   },
 
   textCoinValue: {
-    fontSize: '16@s',
-    fontWeight: 'bold',
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Medium,
   },
 
   textSend: {
-    color: '#F52036',
+    color: '#ef1d29',
   },
 
   textRecieved: {
-    color: '#2E62CC',
+    color: '#2f64d1',
   },
 });

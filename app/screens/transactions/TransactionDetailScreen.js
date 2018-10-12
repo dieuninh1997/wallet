@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -49,6 +49,14 @@ export default class TransactionDetailScreen extends Component {
     Linking.openURL(urlLink);
   }
 
+  _showIconCoin = (transaction) => {
+    return transaction.coinInfo.name === 'ETH' ? require('../../../assets/eth/eth.png') : require('../../../assets/mango-coin/mangocoin.png');
+  }
+
+  _showIconIsSend = (transaction) => {
+    return transaction.isSend ? require('../../../assets/send/sent.png') : require('../../../assets/recieved/received.png');
+  }
+
   render() {
     const { transaction } = this.state;
 
@@ -58,13 +66,13 @@ export default class TransactionDetailScreen extends Component {
           <View style={styles.transactionHeader}>
             <View style={styles.coinIconHeader}>
               <Image
-                source={require('../../../assets/mango-coin/mangocoin.png')}
+                source={this._showIconCoin(transaction)}
                 style={styles.iconHeader}
               />
             </View>
             <View style={styles.coinInfoHeader}>
               <Text style={styles.fontText}>{transaction.coinInfo.name}</Text>
-              <Text>{transaction.coinInfo.showName}</Text>
+              <Text style={styles.fontTextName}>{transaction.coinInfo.showName}</Text>
             </View>
           </View>
 
@@ -78,7 +86,7 @@ export default class TransactionDetailScreen extends Component {
               </View>
               <View style={styles.right}>
                 <Text style={styles.valueContent}>
-                  {'+'}
+                  {transaction.isSend ? '-' : '+'}
                   {transaction.value}
                   {` ${transaction.coinInfo.name}`}
                 </Text>
@@ -92,6 +100,10 @@ export default class TransactionDetailScreen extends Component {
                 </Text>
               </View>
               <View style={styles.right}>
+                <Image
+                  source={this._showIconIsSend(transaction)}
+                  style={styles.iconIsSend}
+                />
                 <Text style={styles.valueContent}>{ transaction.status }</Text>
               </View>
             </View>
@@ -170,7 +182,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'rgb(245, 247, 250)',
-    fontSize: '18@s',
+    fontSize: '18@ms',
   },
   transactionDetailContent: {
     marginTop: '25@s',
@@ -209,17 +221,20 @@ const styles = ScaledSheet.create({
     width: '35%',
   },
   right: {
+    flexDirection: 'row',
     width: '65%',
-    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   label: {
-    fontSize: '16@s',
+    fontSize: '16@ms',
     color: '#000000',
+    ...Fonts.Ubuntu_Regular,
   },
   valueContent: {
-    fontSize: '16@s',
+    fontSize: '16@ms',
     color: 'rgb(47, 100, 209)',
     marginRight: '16@s',
+    ...Fonts.Ubuntu_Regular,
   },
   transactionContentSecond: {
     height: '162@s',
@@ -229,9 +244,15 @@ const styles = ScaledSheet.create({
     paddingTop: '20@s',
   },
   fontText: {
-    fontSize: '18@s',
+    fontSize: '20@ms',
     fontWeight: 'bold',
     color: '#000000',
+    ...Fonts.Ubuntu_Medium,
+  },
+  fontTextName: {
+    fontSize: '14@ms',
+    color: 'rgb(38, 48, 77)',
+    ...Fonts.Ubuntu_Light,
   },
   transactionBottom: {
     flexDirection: 'row',
@@ -250,4 +271,10 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginRight: '9@s',
   },
+  iconIsSend: {
+    width: '28@s',
+    height: '28@s',
+    marginRight: '16@s',
+    bottom: '5@s'
+  }
 });

@@ -158,12 +158,13 @@ class LoginScreen extends Component {
     <View style={styles.btnForgotPassContainer}>
       <TouchableOpacity
         style={styles.btnForgotPass}
+        onPress={() => this._handleForgotPassword()}
       >
         <Image
           source={require('../../../assets/forgot-password/forgotPass.png')}
           style={styles.inputImageIcon}
         />
-        <Text onPress={() => this._handleForgotPassword()} style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
+        <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
     </View>
   )

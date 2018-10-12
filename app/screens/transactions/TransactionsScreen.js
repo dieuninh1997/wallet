@@ -110,7 +110,7 @@ class TransactionsScreen extends BaseScreen {
     }
   }
 
-  _getMoreData = () => {
+  _getMoreData = (isFirst = false) => {
     const {
       page, address, isProcess, coinSelected,
     } = this.state;
@@ -120,7 +120,7 @@ class TransactionsScreen extends BaseScreen {
     this.setState({
       isProcess: true,
     });
-    this._getTransactions(coinSelected.symbol, address, page + 1, this.state.perPage, false);
+    this._getTransactions(coinSelected.symbol, address, isFirst ? 1 : page + 1, this.state.perPage, isFirst);
   }
 
   _renderTransactonsList = () => {
@@ -213,6 +213,9 @@ class TransactionsScreen extends BaseScreen {
             paddingToBottom += e.nativeEvent.layoutMeasurement.height;
             if (e.nativeEvent.contentOffset.y > e.nativeEvent.contentSize.height - paddingToBottom) {
               this._getMoreData();
+            }
+            if (e.nativeEvent.contentOffset.y === 0) {
+              this._getMoreData(true);
             }
           }}
         >

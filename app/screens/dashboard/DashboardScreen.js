@@ -205,24 +205,43 @@ class DashboardScreen extends BaseScreen {
     let btcValue = this._getCoinValue('BTC');
     let ethValue = this._getCoinValue('ETH');
     let mgcValue = this._getCoinValue('MGC');
+
+    let data = [];
     if (!btcValue && !ethValue && !mgcValue) {
-      btcValue = 1;
-      ethValue = 1;
-      mgcValue = 1;
+      data = [
+        {
+          population: 1,
+          color: { r: 255, g: 169, b: 52 },
+        },
+        {
+          population: 1,
+          color: { r: 38, g: 80, b: 191 },
+        },
+        {
+          population: 1,
+          color: { r: 255, g: 216, b: 47 },
+        }
+      ];
+    } else {
+      if (btcValue) {
+        data.push({
+          population: btcValue,
+          color: { r: 255, g: 169, b: 52 },
+        });
+      }
+      if (ethValue) {
+        data.push({
+          population: ethValue,
+          color: { r: 38, g: 80, b: 191 },
+        });
+      }
+      if (mgcValue) {
+        data.push({
+          population: mgcValue,
+          color: { r: 255, g: 216, b: 47 },
+        });
+      }
     }
-    const data = [
-      {
-        population: btcValue,
-        color: { r: 255, g: 169, b: 52 },
-      },
-      {
-        population: ethValue,
-        color: { r: 38, g: 80, b: 191 },
-      }, {
-        population: mgcValue,
-        color: { r: 255, g: 216, b: 47 },
-      },
-    ];
 
     const options = {
       width: scale(335),

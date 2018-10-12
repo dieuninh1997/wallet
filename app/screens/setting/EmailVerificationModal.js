@@ -19,19 +19,25 @@ import { sendVerificationEmail } from '../../api/user/UserRequest';
 export default class EmailVerificationModal extends React.Component {
   state = {
     email: '',
+    emailEditable: false,
     modalVisible: false,
     error: ''
   };
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+    if (!visible && this.closeCallback) {
+      this.closeCallback();
+    }
   }
 
-  show = (email) => {
+  show = (email, callback) => {
     this.setState({
       email,
-      modalVisible: true
+      modalVisible: true,
+      emailEditable: !email
     });
+    this.closeCallback = callback;
   }
 
   _onCancelPress() {
@@ -101,7 +107,7 @@ export default class EmailVerificationModal extends React.Component {
   }
 
   _renderContent() {
-    const { email, error } = this.state;
+    const { email, error, emailEditable } = this.state;
     return (
       <View style={styles.content}>
         <Text style={styles.contentText}>{I18n.t('emailVerification.content')}</Text>
@@ -109,7 +115,7 @@ export default class EmailVerificationModal extends React.Component {
           <Image style={styles.emailIcon} source={require('../../../assets/setting/email.png')} />
           <TextInput
             style={styles.emailTextInput}
-            editable
+            editable={emailEditable}
             keyboardType="email-address"
             autoCapitalize="none"
             underlineColorAndroid="transparent"

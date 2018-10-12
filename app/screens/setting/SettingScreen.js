@@ -121,7 +121,7 @@ export default class SettingScreen extends BaseScreen {
 
   _loadUserInfo = async () => {
     try {
-      const response = await getCurrentUser();
+      const response = await getCurrentUser(false);
       this.setState({
         user: response.data,
       });
@@ -230,6 +230,26 @@ export default class SettingScreen extends BaseScreen {
     this._loadUserSettings();
   }
 
+  _isEmailVerified = () => {
+    const { userSecuritySettings } = this.state;
+    return !userSecuritySettings || userSecuritySettings.email_verified;
+  }
+
+  _isUserDataLoaded = () => {
+    const { user } = this.state;
+    return !!user;
+  }
+
+  _onPressVerifyEmail = () => {
+    const { user } = this.state;
+    if (!this._isEmailVerified() && this._isUserDataLoaded()) {
+      this._emailModal.show(user.email, () => {
+        this.user = undefined;
+        this._loadUserInfo();
+      });
+    }
+  }
+
   _onPressBackupPassphrase = () => {
     this.props.navigation.navigate('BackupPassphraseScreen');
   }
@@ -249,7 +269,7 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderProfile = () => {
-    const { walletId, userSecuritySettings, user } = this.state;
+    const { walletId, userSecuritySettings } = this.state;
 
     return (
       <View>
@@ -264,7 +284,7 @@ export default class SettingScreen extends BaseScreen {
           </View>
 
           <View style={styles.groupEmail}>
-            <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
+            <TouchableWithoutFeedback onPress={this._onPressVerifyEmail}>
               <View style={styles.borderEmailMobileNumber}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
                 <View style={styles.activiRightGroup}>

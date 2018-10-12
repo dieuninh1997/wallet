@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import { withNavigationFocus } from 'react-navigation';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -92,6 +93,12 @@ class SendScreen extends BaseScreen {
     }
   }
 
+  componentDidUpdate(previousProps) {
+    if (this.props.isFocused && !previousProps.isFocused) {
+      this._resetFormSendCoin();
+    }
+  }
+
   async _loadData() {
     await this._loadCoinSelected();
     await this._loadUserSettings();
@@ -164,6 +171,17 @@ class SendScreen extends BaseScreen {
     return true;
   }
 
+  _resetFormSendCoin = () => {
+    this.setState({
+      feeSelected: SendScreen.LIST_FEE[0],
+      formSendCoin: {
+        recievedAddress: null,
+        coinValue: 0.0000,
+        feeValue: SendScreen.LIST_FEE[0].value,
+      },
+    });
+  }
+
   _handleSendCoin = async () => {
     try {
       const { formSendCoin, coinSelected } = this.state;
@@ -177,14 +195,7 @@ class SendScreen extends BaseScreen {
       console.log('SendScreen.transaction: ', transaction);
 
       UIUtils.showToastMessage(I18n.t('send.submitted'));
-      this.setState({
-        feeSelected: SendScreen.LIST_FEE[0],
-        formSendCoin: {
-          recievedAddress: null,
-          coinValue: 0.0000,
-          feeValue: SendScreen.LIST_FEE[0].value,
-        },
-      });
+      this._resetFormSendCoin();
     } catch (error) {
       UIUtils.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
@@ -356,7 +367,8 @@ class SendScreen extends BaseScreen {
     );
   }
 }
-export default SendScreen;
+
+export default withNavigationFocus(SendScreen);
 
 const styles = ScaledSheet.create({
   container: {

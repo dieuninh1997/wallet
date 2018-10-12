@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -64,7 +64,7 @@ export default class TransactionDetailScreen extends Component {
             </View>
             <View style={styles.coinInfoHeader}>
               <Text style={styles.fontText}>{transaction.coinInfo.name}</Text>
-              <Text>{transaction.coinInfo.showName}</Text>
+              <Text style={styles.fontTextName}>{transaction.coinInfo.showName}</Text>
             </View>
           </View>
 
@@ -170,7 +170,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'rgb(245, 247, 250)',
-    fontSize: '18@s',
+    fontSize: '18@ms',
   },
   transactionDetailContent: {
     marginTop: '25@s',
@@ -213,13 +213,15 @@ const styles = ScaledSheet.create({
     alignItems: 'flex-end',
   },
   label: {
-    fontSize: '16@s',
+    fontSize: '16@ms',
     color: '#000000',
+    ...Fonts.Ubuntu_Regular,
   },
   valueContent: {
-    fontSize: '16@s',
+    fontSize: '16@ms',
     color: 'rgb(47, 100, 209)',
     marginRight: '16@s',
+    ...Fonts.Ubuntu_Regular,
   },
   transactionContentSecond: {
     height: '162@s',
@@ -229,9 +231,15 @@ const styles = ScaledSheet.create({
     paddingTop: '20@s',
   },
   fontText: {
-    fontSize: '18@s',
+    fontSize: '20@ms',
     fontWeight: 'bold',
     color: '#000000',
+    ...Fonts.Ubuntu_Medium,
+  },
+  fontTextName: {
+    fontSize: '14@ms',
+    color: 'rgb(38, 48, 77)',
+    ...Fonts.Ubuntu_Light,
   },
   transactionBottom: {
     flexDirection: 'row',

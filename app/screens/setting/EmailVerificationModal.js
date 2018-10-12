@@ -176,7 +176,7 @@ const styles = ScaledSheet.create({
   },
   popupHeaderText: {
     color: '#1f1f1f',
-    fontSize: '20@ms',
+    fontSize: '19@ms',
     ...Fonts.Ubuntu_Regular
   },
 
@@ -196,6 +196,8 @@ const styles = ScaledSheet.create({
     marginRight: '10@s'
   },
   emailTextInput: {
+    flex: 1,
+    marginRight: '10@s',
     color: '#1f1f1f',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Light

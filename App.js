@@ -53,13 +53,12 @@ async function initMasterdata() {
       AppConfig.MNEMONIC = parseMnemonic;
 
       window.GlobalSocket = new GlobalSocket();
-
-      if (__DEV__) {
-        console.log(`API Server: ${AppConfig.getApiServer()}`);
-        console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
-        console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
-        console.log(`MNEMONIC: ${AppConfig.MNEMONIC}`);
-      }
+    }
+    if (__DEV__) {
+      console.log(`API Server: ${AppConfig.getApiServer()}`);
+      console.log(`ACCESS_TOKEN: ${AppConfig.ACCESS_TOKEN}`);
+      console.log(`PRIVATE_KEY: ${AppConfig.PRIVATE_KEY}`);
+      console.log(`MNEMONIC: ${AppConfig.MNEMONIC}`);
     }
   } catch (error) {
     console.log('App.initMasterdata._error: ', error);

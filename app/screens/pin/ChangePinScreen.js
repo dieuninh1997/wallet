@@ -62,7 +62,7 @@ export default class ChangePinScreen extends Component {
         numbersButtonOverlayColor="#fcd800"
         stylePinCodeMainContainer={styles.pinCodeContainer}
         styleMainContainer={styles.mainContainer}
-        colorPassword="#ebedf2"
+        colorPassword="#ece2a8"
         stylePinCodeButtonNumber="#000"
         stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
         stylePinCodeHiddenPasswordSizeFull={scale(20)}
@@ -101,7 +101,7 @@ export default class ChangePinScreen extends Component {
           numbersButtonOverlayColor="#fcd800"
           stylePinCodeMainContainer={styles.pinCodeContainer}
           styleMainContainer={styles.mainContainer}
-          colorPassword="#ebedf2"
+          colorPassword="#ece2a8"
           stylePinCodeButtonNumber="#000"
           stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
           stylePinCodeHiddenPasswordSizeFull={scale(20)}
@@ -129,7 +129,7 @@ export default class ChangePinScreen extends Component {
       const { navigation } = this.props;
 
       await AppPreferences.saveToKeychain({
-        pin: codePin
+        pin: codePin,
       });
       UIUtils.showToastMessage(I18n.t('ChangePinScreen.changePinSuccess'));
       setTimeout(() => {

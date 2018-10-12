@@ -252,7 +252,7 @@ const styles = ScaledSheet.create({
   inputText: {
     flex: 7,
     fontSize: '18@ms',
-    fontWeight: '100',
+    ...Fonts.Ubuntu_Light,
   },
 
   btnForgotPassContainer: {

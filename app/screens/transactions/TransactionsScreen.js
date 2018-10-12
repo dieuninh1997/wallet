@@ -36,14 +36,16 @@ class TransactionsScreen extends BaseScreen {
   componentDidMount = async () => {
     super.componentDidMount();
     try {
-      const { address, page, perPage } = this.state;
+      const { page, perPage } = this.state;
       const indexCoin = await AppPreferences.getCoinSelected();
+      const address = await AppPreferences.getEthAddress();
       console.log('coinSelected', indexCoin);
 
       const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
 
       this.setState({
         coinSelected,
+        address,
       });
 
       await this._getTransactions(coinSelected.symbol, address, page, perPage);
@@ -139,7 +141,7 @@ class TransactionsScreen extends BaseScreen {
     const { coinSelected } = this.state;
 
     transaction.coinInfo = coinSelected;
-    transaction.isSend = transaction.receiveAddress === address.toLowerCase() ? false : true;
+    transaction.isSend = transaction.receiveAddress !== address.toLowerCase();
     console.log('transaction.coinInfo', transaction.coinInfo);
 
     navigation.navigate('TransactionDetailScreen', transaction);

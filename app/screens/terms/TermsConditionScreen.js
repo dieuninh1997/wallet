@@ -4,7 +4,9 @@ import {
 } from 'react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonSize, CommonColors } from '../../utils/CommonStyles';
+import {
+  CommonStyles, CommonSize, CommonColors, Fonts,
+} from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 
 export default class TermsConditionScreen extends Component {
@@ -16,16 +18,12 @@ export default class TermsConditionScreen extends Component {
     headerRight: (<View />),
   })
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
-      <ScrollView style = {styles.screen}>
-        <Text style = {styles.content}>{I18n.t('terms.content')}</Text>
+      <ScrollView style={styles.screen}>
+        <Text style={styles.content}>{I18n.t('terms.content')}</Text>
       </ScrollView>
-    )
+    );
   }
 }
 
@@ -39,5 +37,6 @@ const styles = ScaledSheet.create({
     marginLeft: '24@s',
     marginRight: '24@s',
     marginTop: '16@s',
-  }
+    ...Fonts.Ubuntu_Light,
+  },
 });

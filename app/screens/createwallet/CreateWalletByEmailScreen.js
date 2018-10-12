@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
-  Text,
   TextInput,
   Image,
 } from 'react-native';
@@ -9,10 +8,9 @@ import {
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import {
-  CommonStyles, CommonColors, CommonSize, Fonts,
+  CommonStyles, CommonSize, Fonts,
 } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import UIUtils from '../../utils/UIUtils';
 import Consts from '../../utils/Consts';
 import CreateWalletBaseScreen from './CreateWalletBaseScreen';
 
@@ -25,9 +23,7 @@ export default class CreateWalletByEmailScreen extends CreateWalletBaseScreen {
     headerRight: <View />,
   })
 
-  getLoginType = () => {
-    return Consts.LOGIN_TYPES.EMAIL;
-  }
+  getLoginType = () => Consts.LOGIN_TYPES.EMAIL
 
   validateEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,24 +38,22 @@ export default class CreateWalletByEmailScreen extends CreateWalletBaseScreen {
     }
   }
 
-  _renderUsernameInput = () => {
-    return (
-      <View style={[styles.inputContainer]}>
-        <Image
-          source={require('../../../assets/email/email.png')}
-          style={styles.inputImageIcon}
-        />
-        <TextInput
-          placeholder={I18n.t('createWalletByEmailScreen.inputEmail')}
-          editable
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-          style={styles.inputText}
-          onChangeText={value => this._handleChangeInput(CreateWalletBaseScreen.WALLET_INFO.EMAIL, value)}
-        />
-      </View>
-    );
-  }
+  _renderUsernameInput = () => (
+    <View style={[styles.inputContainer]}>
+      <Image
+        source={require('../../../assets/email/email.png')}
+        style={styles.inputImageIcon}
+      />
+      <TextInput
+        placeholder={I18n.t('createWalletByEmailScreen.inputEmail')}
+        editable
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+        style={styles.inputText}
+        onChangeText={value => this._handleChangeInput(CreateWalletBaseScreen.WALLET_INFO.EMAIL, value)}
+      />
+    </View>
+  )
 }
 
 const styles = ScaledSheet.create({
@@ -80,6 +74,6 @@ const styles = ScaledSheet.create({
   inputText: {
     flex: 7,
     fontSize: CommonSize.inputFontSize,
-    fontWeight: '100',
+    ...Fonts.Ubuntu_Light,
   },
 });

@@ -78,7 +78,8 @@ export default {
     walletAddress: 'Địa chỉ ví',
     continue: 'Tiếp tục',
     confirmationTextDefault: 'Nhập 12 từ bí mật để khôi phục tài khoản và giao dịch.',
-    confirmationText: "Bạn có chắc chắn muốn gửi {{amount}} {{coinName}} tới địa chỉ {{address}}?",
+    confirmationText: 'Bạn có chắc chắn muốn gửi {{amount}} {{coinName}} tới địa chỉ {{address}}?',
+    submitted: 'Submitted',
   },
   setting: {
     title: 'Cài đặt',
@@ -100,7 +101,7 @@ export default {
     verified: 'Đã xác thực',
     unverified: 'Chưa xác thực',
     disabled: 'Đã tắt',
-    enabled:'Đã bật',
+    enabled: 'Đã bật',
     unconfirmed: 'Chưa xác nhận',
     usDollar: 'Tiền Mỹ ($)',
     philippinesPeso: 'Tiền Philippines (₱)',

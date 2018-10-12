@@ -78,7 +78,8 @@ export default {
     walletAddress: 'Wallet Address',
     continue: 'Continue',
     confirmationTextDefault: 'Enter your 12 backup words with spaces to recover your funds & transactions',
-    confirmationText: "Are you sure want to send {{amount}} {{coinName}} to addresss {{address}}?",
+    confirmationText: 'Are you sure want to send {{amount}} {{coinName}} to addresss {{address}}?',
+    submitted: 'Submitted',
   },
   setting: {
     title: 'Settings',

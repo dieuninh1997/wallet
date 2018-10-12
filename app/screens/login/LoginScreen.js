@@ -71,7 +71,9 @@ class LoginScreen extends Component {
       const responseUser = await login(email, password);
       console.log('responseUser', responseUser);
 
-      AppPreferences.saveToKeychain('access_token', responseUser.access_token);
+      AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token
+      });
       window.GlobalSocket.connect();
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen');

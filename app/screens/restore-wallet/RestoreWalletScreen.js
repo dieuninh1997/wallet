@@ -71,9 +71,11 @@ class RestoreWalletScreen extends Component {
 
       const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
 
-      await AppPreferences.saveToKeychain('access_token', restoreAccountInfo.data.accessToken);
-      await AppPreferences.saveToKeychain('private_key', wallet.privateKey);
-      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+      await AppPreferences.saveToKeychain({
+        access_token: restoreAccountInfo.data.accessToken,
+        private_key: wallet.privateKey,
+        mnemonic: mnemonic
+      });
 
       AppConfig.PRIVATE_KEY = wallet.privateKey;
       AppConfig.MNEMONIC = mnemonic;

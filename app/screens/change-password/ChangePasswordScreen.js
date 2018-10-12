@@ -9,7 +9,7 @@ import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import BaseScreen from '../BaseScreen';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, CommonStyles } from '../../utils/CommonStyles';
 
 class ChangePasswordScreen extends BaseScreen {
   constructor(props) {
@@ -183,7 +183,7 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   popup: {
-    width: '343@s',
+    width: CommonSize.popupWidth,
     backgroundColor: '#FFF',
     borderRadius: '15@s',
     margin: '16@s',

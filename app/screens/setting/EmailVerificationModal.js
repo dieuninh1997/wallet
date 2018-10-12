@@ -12,7 +12,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors, CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import { sendVerificationEmail } from '../../api/user/UserRequest';
 
@@ -159,7 +159,7 @@ const modalHeight = scale(327);
 
 const styles = ScaledSheet.create({
   popup: {
-    width: '343@s',
+    width: CommonSize.popupWidth,
     backgroundColor: '#FFF',
     borderRadius: '10@s',
     margin: '16@s',

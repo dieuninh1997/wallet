@@ -131,29 +131,28 @@ export default class CreateWalletBaseScreen extends Component {
 
 
       const registerInfo = this._getRegisterInfo(mnemonicHash, address);
-      await register(registerInfo);
+      const response = await register(registerInfo);
+      const loginInfo = response.data;
 
-      const loginInfo = await login(this.getUsername(), registerInfo.password, '', this.getLoginType());
+      // const loginInfo = await login(this.getUsername(), registerInfo.password, '', this.getLoginType());
 
       await AppPreferences.saveToKeychain({
-        access_token: loginInfo.access_token,
+        access_token: loginInfo.accessToken,
         private_key: privateKey,
         mnemonic: mnemonic
       });
 
       AppConfig.PRIVATE_KEY = privateKey;
       AppConfig.MNEMONIC = mnemonic;
-      AppConfig.ACCESS_TOKEN = loginInfo.access_token;
+      AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
 
-      window.GlobalSocket.connect();
+      // window.GlobalSocket.connect();
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', address);
 
       UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
-      setTimeout(() => {
-        navigation.navigate('BackupPassphraseScreenCompact');
-      }, 1000);
+      navigation.navigate('BackupPassphraseScreenCompact');
     } catch (error) {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);

@@ -161,7 +161,7 @@ const styles = ScaledSheet.create({
   },
 
   textCreateEnable: {
-    fontSize: '20@ms',
+    fontSize: '19@ms',
     marginLeft: '15@s',
     color: '#2f64d1',
     ...Fonts.Ubuntu_Regular,

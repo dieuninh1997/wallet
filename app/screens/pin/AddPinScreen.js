@@ -61,7 +61,9 @@ export default class AddPinScreen extends Component {
     try {
       const { navigation } = this.props;
 
-      await AppPreferences.saveToKeychain('pin', codePin);
+      await AppPreferences.saveToKeychain({
+        pin: codePin
+      });
       UIUtils.showToastMessage(I18n.t('addPinScreen.changePinSuccess'));
       setTimeout(() => {
         navigation.navigate('MainScreen');

@@ -135,9 +135,11 @@ export default class CreateWalletBaseScreen extends Component {
 
       const loginInfo = await login(this.getUsername(), registerInfo.password, '', this.getLoginType());
 
-      await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
-      await AppPreferences.saveToKeychain('private_key', privateKey);
-      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+      await AppPreferences.saveToKeychain({
+        access_token: loginInfo.access_token,
+        private_key: privateKey,
+        mnemonic: mnemonic
+      });
 
       AppConfig.PRIVATE_KEY = privateKey;
       AppConfig.MNEMONIC = mnemonic;

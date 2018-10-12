@@ -16,12 +16,12 @@ export default class AppPreferences {
     return await AsyncStorage.getItem('user_locale');
   }
 
-  static async saveToKeychain(key, value) {
+  static async saveToKeychain(data) {
     try {
       const keychain = await Keychain.getGenericPassword();
-      const keychainJson = keychain ? JSON.parse(keychain.password) : {};
+      let keychainJson = keychain ? JSON.parse(keychain.password) : {};
 
-      keychainJson[key] = value;
+      keychainJson = Object.assign(keychainJson, data);
       console.log('keychainJson', keychainJson);
 
       await Keychain.setGenericPassword('keychain', JSON.stringify(keychainJson), { accessible: Keychain.ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });

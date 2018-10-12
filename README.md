@@ -11,6 +11,12 @@
 ```sh
 $ npm install
 ```
+
+  - Install node modules for nodejs process
+```sh
+$ cd nodejs-assets/nodejs-project && npm install
+```
+
   - Install react-native-cli
 ```sh
 $ npm install -g react-native-cli

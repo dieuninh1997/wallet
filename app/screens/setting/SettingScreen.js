@@ -10,7 +10,7 @@ import MangoBackButton from '../common/MangoBackButton';
 import EmailVerificationModal from './EmailVerificationModal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import {
   getCurrentUser, getUserSettings, getUserSecuritySettings, updateUserSettings,
@@ -134,13 +134,13 @@ export default class SettingScreen extends BaseScreen {
     try {
       const response = await getUserSettings();
       const settings = response.data;
+
       this.setState({
         userSettings: settings,
       });
       for (const setting of settings) {
         if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
           const emailNotification = (parseInt(setting.value, 10) === 1);
-          console.log('emailnotification----', setting.value, emailNotification);
 
           this.setState({
             userSetting: {
@@ -190,7 +190,6 @@ export default class SettingScreen extends BaseScreen {
       email_notification,
     };
 
-    console.log('-------------email', userSetting.emailNotification, email_notification);
     try {
       const response = await updateUserSettings(params);
       const { message } = response;
@@ -254,27 +253,51 @@ export default class SettingScreen extends BaseScreen {
 
     return (
       <View>
-        <Text style={styles.titleTable}>{I18n.t('setting.profile')}</Text>
-        <View style={styles.borderTable}>
+        <Text style={styles.titleProfile}>{I18n.t('setting.profile')}</Text>
+        <View style={styles.tableProfile}>
 
           <View style={styles.borderWalletId}>
-            <Text style={styles.walletID}>{I18n.t('setting.walletId')}</Text>
-            <Text style={styles.walletAddress}>{walletId}</Text>
+            <Text style={styles.textWalletID}>{I18n.t('setting.walletId')}</Text>
+            <Text
+              style={styles.textWalletAddress}
+              numberOfLines={1}>{walletId}</Text>
           </View>
 
-          <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
-            <View style={styles.borderElementBottom}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
+          <View style={styles.groupEmail}>
+            <TouchableWithoutFeedback onPress={() => this._emailModal.show(user.email)}>
+              <View style={styles.borderEmailMobileNumber}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
+                <View style={styles.activiRightGroup}>
+                  {userSecuritySettings && (userSecuritySettings.email_verified ? (
+                    <Text style={styles.textVerified}>
+                      {I18n.t('setting.verified')}
+                    </Text>
+                  ) : (
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
+
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <View style={styles.borderEmailMobileNumber}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
               <View style={styles.activiRightGroup}>
-                {userSecuritySettings && (userSecuritySettings.email_verified ? (
+                {userSecuritySettings && (userSecuritySettings.phone_verified ? (
                   <Text style={styles.textVerified}>
                     {I18n.t('setting.verified')}
                   </Text>
                 ) : (
-                  <Text style={styles.textUnVerified}>
-                    {I18n.t('setting.unverified')}
-                  </Text>
-                ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
@@ -282,29 +305,9 @@ export default class SettingScreen extends BaseScreen {
                 />
               </View>
             </View>
-          </TouchableWithoutFeedback>
-
-          <View style={[styles.borderElement, { paddingTop: scale(2) }]}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
-            <View style={styles.activiRightGroup}>
-              {userSecuritySettings && (userSecuritySettings.phone_verified ? (
-                <Text style={styles.textVerified}>
-                  {I18n.t('setting.verified')}
-                </Text>
-              ) : (
-                <Text style={styles.textUnVerified}>
-                  {I18n.t('setting.unverified')}
-                </Text>
-              ))}
-
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
-            </View>
           </View>
 
-          <View style={styles.borderElementBottom}>
+          <View style={styles.borderLogintoWeb}>
             <Text style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
@@ -325,10 +328,10 @@ export default class SettingScreen extends BaseScreen {
     const currencyLabel = currency ? I18n.t(`currency.${currency}.settingLabel`) : '';
 
     return (
-      <View style={styles.textPerferences}>
-        <Text style={styles.titleTable}>{I18n.t('setting.perferences')}</Text>
-        <View style={styles.borderTable}>
-          <View style={styles.borderElementBottom}>
+      <View >
+        <Text style={styles.textPerferences}>{I18n.t('setting.perferences')}</Text>
+        <View style={styles.tablePerferences}>
+          <View style={styles.borderEmailNotification}>
             <Text style={styles.titleSetting}>{I18n.t('setting.emailNotification')}</Text>
             <Switch
               containerStyle={styles.switchBorder}
@@ -341,10 +344,10 @@ export default class SettingScreen extends BaseScreen {
             />
           </View>
           <TouchableWithoutFeedback onPress={() => this._showLocalCurrency()}>
-            <View style={styles.borderElementBottom}>
+            <View style={styles.borderEmailNotification}>
               <Text style={styles.titleSetting}>{I18n.t('setting.localCurrency')}</Text>
               <View style={styles.activiRightGroup}>
-                <Text>{currencyLabel}</Text>
+                <Text style={styles.textDollar}>{currencyLabel}</Text>
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
                   name="chevron-right"
@@ -362,10 +365,10 @@ export default class SettingScreen extends BaseScreen {
     const { navigation } = this.props;
 
     return (
-      <View style={styles.textPerferences}>
-        <Text style={styles.titleTable}>{I18n.t('setting.security')}</Text>
-        <View style={styles.borderTable}>
-          <View style={styles.borderElement}>
+      <View >
+        <Text style={styles.textSecurity}>{I18n.t('setting.security')}</Text>
+        <View style={styles.tableSecurity}>
+          <View style={styles.borderStepVerification}>
             <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
             <View style={styles.activiRightGroup}>
               <Text style={styles.textUnVerified}>
@@ -377,32 +380,37 @@ export default class SettingScreen extends BaseScreen {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
-            <View style={styles.borderElementBottom}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
-              <View style={styles.activiRightGroup}>
-                <MaterialCommunityIcons
-                  style={styles.iconChevronRight}
-                  name="chevron-right"
-                />
+          <View style={styles.groupChangePassword}>
+            <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
+              <View style={styles.borderChangePassword}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+                <View style={styles.activiRightGroup}>
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
-            <View style={styles.borderElement}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
-              <View style={styles.activiRightGroup}>
-                <MaterialCommunityIcons
-                  style={styles.iconChevronRight}
-                  name="chevron-right"
-                />
+            <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
+              <View style={styles.borderChangePassword}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
+                <View style={styles.activiRightGroup}>
+                  <Text style={styles.textUnVerified}>
+                    {I18n.t('setting.unconfirmed')}
+                  </Text>
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          </View>
 
           <TouchableWithoutFeedback onPress={() => navigation.navigate('ChangePinScreen')}>
-            <View style={styles.borderElement}>
+            <View style={styles.bordeChangePin}>
               <Text style={styles.titleSetting}>{I18n.t('setting.changePin')}</Text>
               <View style={styles.activiRightGroup}>
                 <MaterialCommunityIcons
@@ -413,36 +421,38 @@ export default class SettingScreen extends BaseScreen {
             </View>
           </TouchableWithoutFeedback>
 
-          {isSupportedTouchId ? (
-            <View style={styles.borderElementBottom}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
+          <View style={styles.groupUseFaceID}>
+
+            {isSupportedTouchId ? (
+              <View style={styles.borderUseFaceID}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.useFaceIdAsPin')}</Text>
+                <View style={styles.activiRightGroup}>
+                  <Switch
+                    containerStyle={styles.switchBorder}
+                    backgroundActive="#16ec7e"
+                    backgroundInactive="#fff"
+                    value={isEnableTouchId}
+                    innerCircleStyle={styles.innerCircle}
+                    changeValueImmediately
+                    onValueChange={() => this._handleChangeUseTouchId()}
+                  />
+                </View>
+              </View>
+            ) : null}
+
+            <View style={styles.borderUseFaceID}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
               <View style={styles.activiRightGroup}>
                 <Switch
                   containerStyle={styles.switchBorder}
                   backgroundActive="#16ec7e"
                   backgroundInactive="#fff"
-                  value={isEnableTouchId}
                   innerCircleStyle={styles.innerCircle}
+                  value={payload.swipeReceive}
                   changeValueImmediately
-                  onValueChange={() => this._handleChangeUseTouchId()}
+                  onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.swipeReceive)}
                 />
               </View>
-            </View>
-          ) : null}
-
-
-          <View style={styles.borderElementBottom}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Switch
-                containerStyle={styles.switchBorder}
-                backgroundActive="#16ec7e"
-                backgroundInactive="#fff"
-                innerCircleStyle={styles.innerCircle}
-                value={payload.swipeReceive}
-                changeValueImmediately
-                onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.swipeReceive)}
-              />
             </View>
           </View>
         </View>
@@ -485,57 +495,169 @@ export default class SettingScreen extends BaseScreen {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    padding: '14@s',
     backgroundColor: '#f5f7fa',
   },
-  headerTitle: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: '400',
-  },
-  titleTable: {
-    fontSize: '12@ms',
-    marginLeft: '15@s',
-    marginBottom: '5@s',
-    marginTop: '10@s',
+  titleProfile: {
+    fontSize: '13@ms',
+    marginLeft: '30@s',
+    marginTop: '22@s',
     color: '#3459bf',
+    ...Fonts.Ubuntu_Regular,
   },
-  borderTable: {
+  tableProfile: {
     borderRadius: '13@s',
     borderColor: '#e0e4eb',
     backgroundColor: '#FFF',
-    alignSelf: 'stretch',
     borderWidth: '1@s',
+    marginLeft: '16@s',
+    marginRight: '16@s',
+    marginTop: '10@s',
+    flexDirection: 'column',
   },
   borderWalletId: {
     borderBottomWidth: '1@s',
-    padding: '10@s',
+    height: '59@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+    justifyContent: 'center',
     borderColor: '#ced4dd',
   },
-  borderElement: {
+  textwalletID: {
+    color: '#9298aa',
+    fontSize: '13@ms',
+    ...Fonts.Ubuntu_Regular,
+  },
+  textWalletAddress: {
+    fontSize: '14@ms',
+    color: '#293350',
+    marginTop: '7@s',
+    ...Fonts.Ubuntu_Regular,
+  },
+  groupEmail: {
+    height: '73@s',
     borderBottomWidth: '1@s',
-    padding: '10@s',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     borderColor: '#ced4dd',
   },
-  borderElementBottom: {
-    padding: '10@s',
+  borderEmailMobileNumber: {
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    height: '36@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+  },
+  borderLogintoWeb: {
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '47@s',
     justifyContent: 'space-between',
+  },
+  textPerferences: {
+    fontSize: '13@ms',
+    marginLeft: '30@s',
+    marginTop: '34@s',
+    color: '#3459bf',
+    ...Fonts.Ubuntu_Regular,
+  },
+  tablePerferences: {
+    borderRadius: '13@s',
+    borderColor: '#e0e4eb',
+    backgroundColor: '#FFF',
+    borderWidth: '1@s',
+    marginLeft: '16@s',
+    marginRight: '16@s',
+    marginTop: '10@s',
+    flexDirection: 'column',
+  },
+  borderEmailNotification: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '43@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+  },
+  textSecurity: {
+    fontSize: '13@ms',
+    marginLeft: '30@s',
+    marginTop: '34@s',
+    color: '#3459bf',
+    ...Fonts.Ubuntu_Regular,
+  },
+  tableSecurity: {
+    borderRadius: '13@s',
+    borderColor: '#e0e4eb',
+    backgroundColor: '#FFF',
+    borderWidth: '1@s',
+    marginLeft: '16@s',
+    marginRight: '16@s',
+    marginTop: '10@s',
+    marginBottom: '24@s',
+    flexDirection: 'column',
+  },
+  borderStepVerification: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '41@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+    borderBottomWidth: '1@s',
+    borderColor: '#ced4dd',
+  },
+  groupChangePassword: {
+    height: '82@s',
+    borderBottomWidth: '1@s',
+    flexDirection: 'column',
+    borderColor: '#ced4dd',
+  },
+  borderChangePassword: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '41@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+  },
+  bordeChangePin: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '45@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+    borderBottomWidth: '1@s',
+    borderColor: '#ced4dd',
+  },
+  groupUseFaceID: {
+    flexDirection: 'column',
+  },
+  borderUseFaceID: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '49@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
   },
   activiRightGroup: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   textVerified: {
     marginRight: '5@s',
     color: '#85ec81',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   textUnVerified: {
     marginRight: '5@s',
     color: '#e63d2e',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   iconChevronRight: {
     fontSize: '25@ms',
@@ -543,24 +665,22 @@ const styles = ScaledSheet.create({
   switchBorder: {
     borderWidth: '1@s',
     borderColor: '#e0e4eb',
-  },
-  textPerferences: {
-    marginTop: '15@s',
+    marginRight: '7@s',
+    width: '51@s',
+    height: '31@s',
   },
   innerCircle: {
     borderColor: '#e0e4eb',
     borderWidth: '1@s',
   },
   titleSetting: {
-    fontSize: '13@s',
+    fontSize: '14@ms',
     color: '#26304d',
+    ...Fonts.Ubuntu_Regular,
   },
-  walletID: {
-    color: '#9298aa',
-    fontSize: '13@ms',
-  },
-  walletAddress: {
-    fontSize: '12@ms',
-    color: '#293350',
+  textDollar: {
+    fontSize: '14@ms',
+    color: '#8d93a6',
+    ...Fonts.Ubuntu_Regular,
   },
 });

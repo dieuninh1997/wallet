@@ -4,7 +4,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { updateUserSettings } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
-import { CommonColors, CommonStyles } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, CommonStyles } from '../../utils/CommonStyles';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Consts from '../../utils/Consts';
 import UIUtils from '../../utils/UIUtils';
@@ -164,9 +164,10 @@ const modalHeight = scale(213);
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
+    width: '375@s'
   },
   popup: {
-    width: '343@s',
+    width: CommonSize.popupWidth,
     backgroundColor: '#FFF',
     borderRadius: '10@s',
     margin: '16@s',

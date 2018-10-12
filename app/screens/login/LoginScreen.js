@@ -23,7 +23,7 @@ import AppConfig from '../../utils/AppConfig';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: AppConfig.ACCESS_TOKEN ? <View /> : <MangoBackButton navigation={navigation} />,
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('signin.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,

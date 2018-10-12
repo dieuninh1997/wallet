@@ -125,6 +125,7 @@ export default {
   },
   transactions: {
     title: 'Giao dịch',
+    noTransactionAvailable: 'No transaction record available.',
   },
   changePassword: {
     title: 'Đổi mật khẩu',

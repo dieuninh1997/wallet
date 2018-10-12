@@ -296,13 +296,12 @@ class SendScreen extends BaseScreen {
   )
 
   render() {
-    const { isShowMenuSelectFee, formSendCoin } = this.state;
-
+    const { isShowMenuSelectFee, formSendCoin, coinSelected } = this.state;
     return (
       <View style={[styles.container]}>
         <ConfirmationModal
           ref={ref => this._confirmModal = ref}
-          contentText={I18n.t('send.confirmationText', { amount: formSendCoin.coinValue, coinName: 'MGC', address: formSendCoin.recievedAddress })}
+          contentText={I18n.t('send.confirmationText', { amount: formSendCoin.coinValue, coinName: coinSelected.name, address: formSendCoin.recievedAddress })}
           handConfirmModal={this._handConfirmModal}
         />
         <MangoDropdown />

@@ -124,6 +124,7 @@ export default {
   },
   transactions: {
     title: 'Transactions',
+    noTransactionAvailable: 'No transaction record available.',
   },
   changePassword: {
     title: 'Change Password',

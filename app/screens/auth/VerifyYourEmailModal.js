@@ -135,7 +135,8 @@ export default class VerifyYourEmailModal extends React.Component {
   btnCancel: {
     width: '128@s',
     height: '40@s',
-    marginBottom: '10@s'
+    marginBottom: '10@s',
+    marginHorizontal: '5@s',
   },
   buttonTextStyle: {
     fontSize: '16@ms',

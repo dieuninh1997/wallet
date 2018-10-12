@@ -3,7 +3,7 @@ import {
   View, Image, TextInput,
 } from 'react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonSize } from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import I18n from '../../i18n/i18n';
@@ -122,10 +122,10 @@ const styles = ScaledSheet.create({
     marginLeft: '25@s',
   },
   inputText: {
-    fontSize: '20@ms',
-    fontWeight: '100',
+    fontSize: CommonSize.inputFontSize,
     width: '270@s',
     marginLeft: '10@s',
+    ...Fonts.Ubuntu_Light,
   },
   btnResetPassword: {
     marginTop: '27@s',

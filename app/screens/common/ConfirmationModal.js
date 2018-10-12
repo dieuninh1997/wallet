@@ -116,7 +116,7 @@ const styles = ScaledSheet.create({
   },
   popupHeaderText: {
     color: '#000000',
-    fontSize: '20@ms',
+    fontSize: CommonSize.inputFontSize,
     ...Fonts.Ubuntu_Regular,
   },
   content: {
@@ -135,12 +135,14 @@ const styles = ScaledSheet.create({
     width: '81@s',
     height: '40@s',
     marginBottom: '10@s',
+    marginHorizontal: '5@s',
   },
   btnconfirm: {
     width: '81@s',
     height: '40@s',
     marginBottom: '10@s',
     marginLeft: '12@s',
+    marginHorizontal: '5@s',
   },
   buttonTextStyle: {
     fontSize: '16@ms',

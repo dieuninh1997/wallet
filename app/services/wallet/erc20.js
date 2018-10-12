@@ -151,8 +151,8 @@ Erc20Service.getTransactions = async (coin, address, page = 1, perPage = 20) => 
         receiveAddress,
         value,
         time: transactionTime,
-        status,
         url: transactionUrl,
+        status,
         confirmations,
       };
     });

@@ -64,14 +64,23 @@ EthService.getTransactions = async (address, page, perPage) => {
       const value = Number(transaction.value) / Math.pow(10, 18);
       const transactionUrl = urljoin(broadcastTransactionUrl, 'tx', transaction.hash);
       const transactionTime = moment(Number(transaction.timeStamp) * 1000).format('lll');
+      const confirmations = Number(transaction.confirmations);
+      let status = '';
+      if (confirmations >= 16) {
+        status = 'CONFIRMED';
+      } else {
+        status = 'PENDING';
+      }
 
       memo.push({
         id: transactionId,
         sendAddress,
         receiveAddress,
         value,
-        url: transactionUrl,
         time: transactionTime,
+        url: transactionUrl,
+        status,
+        confirmations,
       });
 
       return memo;

@@ -269,4 +269,15 @@ export default {
   exit: {
     content: 'Please click BACK again to exit',
   },
+  mobileNumberVerification: {
+    title: 'Mobile Number Verification',
+    contentUpdate: 'Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.',
+    contentVerify: 'We have sent your mobile an SMS message with a verification code. Enter the code to verify your mobile phone number.',
+    phoneNumber: 'Phone Number',
+    cancel: 'Cancel',
+    update: 'Update',
+    resend: 'Resend',
+    verify: 'Verify',
+    message: 'Please enter phone number',
+  },
 };

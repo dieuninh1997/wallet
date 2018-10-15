@@ -448,6 +448,7 @@ const styles = ScaledSheet.create({
     marginTop: '20@s',
     justifyContent: 'space-between',
     backgroundColor: '#FFF',
+    elevation: 1,
   },
   walletGroup: {
     flexDirection: 'column',

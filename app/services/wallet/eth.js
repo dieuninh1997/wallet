@@ -9,7 +9,6 @@ const ethers = require('ethers');
 
 const EthService = {
   network: 'ropsten',
-  apiUrl: 'https://api-ropsten.etherscan.io',
   providerUrl: 'http://ropsten.infura.io',
   broadcastTransactionUrl: 'https://ropsten.etherscan.io',
 };
@@ -38,7 +37,7 @@ EthService.isValidAddress = address => EthUtil.isValidAddress(address);
 EthService.generateWallet = () => {
   const { Wallet } = ethers;
   const wallet = Wallet.createRandom();
-  wallet.provider = ethers.providers.getDefaultProvider('ropsten');
+  wallet.provider = ethers.providers.getDefaultProvider(EthService.network);
   return wallet;
 };
 
@@ -127,8 +126,11 @@ EthService.getAddressBalance = async (address) => {
 
 EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amount, fee) => {
   try {
-    const wallet = new ethers.Wallet(privateKey, new ethers.providers.InfuraProvider(EthService.network));
+    const wallet = new ethers.Wallet(privateKey, new ethers.providers.EtherscanProvider(EthService.network));
+    console.log('wallet', wallet);
+
     const nonce = await wallet.getTransactionCount();
+    console.log('nonce', nonce);
 
     const transactionInfo = {
       nonce: web3.utils.toHex(nonce),

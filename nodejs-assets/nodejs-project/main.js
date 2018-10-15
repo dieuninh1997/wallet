@@ -10,6 +10,10 @@ rn_bridge.channel.on('message', (message) => {
   rn_bridge.channel.send(handleMessage(message));
 });
 
+rn_bridge.channel.on('haha', async (mnemonic) => {
+  rn_bridge.channel.send(await importWalletFromMnemonic(mnemonic));
+});
+
 function handleMessage(message) {
   switch (message) {
   case 'generateWallet':
@@ -21,4 +25,14 @@ function generateWallet() {
   const { Wallet } = ethers;
   const wallet = Wallet.createRandom();
   return JSON.stringify(wallet.signingKey);
+}
+
+async function importWalletFromMnemonic(mnemonic) {
+  try {
+    const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
+
+    return JSON.stringify(wallet);
+  } catch (error) {
+    throw new Error('Invalid mnemonic');
+  }
 }

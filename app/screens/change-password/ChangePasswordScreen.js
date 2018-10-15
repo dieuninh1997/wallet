@@ -9,7 +9,7 @@ import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import BaseScreen from '../BaseScreen';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors, CommonSize, CommonStyles } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
 
 class ChangePasswordScreen extends BaseScreen {
   constructor(props) {
@@ -197,7 +197,8 @@ const styles = ScaledSheet.create({
   },
   textPopupHeader: {
     color: '#1f1f1f',
-    fontSize: '20@ms',
+    fontSize: '19@ms',
+    ...Fonts.Ubuntu_Regular
   },
   content: {
     flex: 1,
@@ -233,6 +234,7 @@ const styles = ScaledSheet.create({
     width: '100%',
     color: '#a6a6a6',
     marginRight: '20@s',
+    ...Fonts.Ubuntu_Light
   },
   newPasswordGroup: {
     borderWidth: '1@s',
@@ -271,6 +273,7 @@ const styles = ScaledSheet.create({
   textCancel: {
     color: '#000000',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   updateContainer: {
     alignItems: 'center',
@@ -284,6 +287,7 @@ const styles = ScaledSheet.create({
   textUpdate: {
     color: '#000000',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {
     marginTop: '5@s',

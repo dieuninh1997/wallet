@@ -4,7 +4,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { updateUserSettings } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
-import { CommonColors, CommonSize, CommonStyles } from '../../utils/CommonStyles';
+import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
 import Consts from '../../utils/Consts';
 import UIUtils from '../../utils/UIUtils';
@@ -181,7 +181,8 @@ const styles = ScaledSheet.create({
   },
   textPopupHeader: {
     color: '#1f1f1f',
-    fontSize: '20@ms',
+    fontSize: '19@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   content: {
     flex: 1,
@@ -196,8 +197,9 @@ const styles = ScaledSheet.create({
   },
   textUsDollar: {
     marginLeft: '10@s',
-    fontSize: '18@ms',
+    fontSize: '16@ms',
     color: '#363f59',
+    ...Fonts.Ubuntu_Regular,
   },
   groupPeso: {
     alignItems: 'center',
@@ -222,6 +224,7 @@ const styles = ScaledSheet.create({
   textCancel: {
     color: '#000000',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   confirmContainer: {
     alignItems: 'center',
@@ -235,6 +238,7 @@ const styles = ScaledSheet.create({
   textConfirm: {
     color: '#000000',
     fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {
     marginTop: '5@s',

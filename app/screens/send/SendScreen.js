@@ -56,7 +56,7 @@ class SendScreen extends BaseScreen {
     this.state = {
       formSendCoin: {
         recievedAddress: '',
-        coinValue: 0.0,
+        coinValue: 0.0000,
         feeValue: feeSelected.value,
       },
       isShowMenuSelectFee: false,
@@ -156,16 +156,16 @@ class SendScreen extends BaseScreen {
     const { coinSelected } = this.state;
 
     if (!formSendCoin.recievedAddress) {
-      UIUtils.showToastMessage('Recieved address is required!');
+      UIUtils.showToastMessage(I18n.t('send.addressRequired'));
       return false;
     }
     if (!WalletService.isValidAddress(coinSelected.symbol, formSendCoin.recievedAddress)) {
-      UIUtils.showToastMessage('Recieved address is not valid!');
+      UIUtils.showToastMessage(I18n.t('send.addressInValid'));
       return false;
     }
 
     if (!formSendCoin.coinValue) {
-      UIUtils.showToastMessage('Coin value is not valid!');
+      UIUtils.showToastMessage(I18n.t('send.coinValueInValid'));
       return false;
     }
     return true;

@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Text,
   View,
-  Image
+  Image,
 } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import _ from 'lodash';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -26,7 +26,7 @@ export default class VerifyYourEmailModal extends React.Component {
     this.setModalVisible(false);
   }
 
-   render() {
+  render() {
     return (
       <View>
         <Modal
@@ -35,9 +35,10 @@ export default class VerifyYourEmailModal extends React.Component {
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
-          onBackdropPress={() => this.setModalVisible(false)}>
+          onBackdropPress={() => this.setModalVisible(false)}
+        >
           <View style={styles.popup}>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
               {this._renderFooter()}
@@ -47,14 +48,16 @@ export default class VerifyYourEmailModal extends React.Component {
       </View>
     );
   }
-   _renderHeader() {
+
+  _renderHeader() {
     return (
       <View style={styles.popupHeader}>
         <Text style={styles.popupHeaderText}>{I18n.t('resetPassword.verifyYourEmail')}</Text>
       </View>
     );
   }
-   _renderContent() {
+
+  _renderContent() {
     return (
       <View style={styles.content}>
         <View style={styles.email}>
@@ -62,12 +65,16 @@ export default class VerifyYourEmailModal extends React.Component {
         </View>
         <View style={styles.wrapText}>
           <Text style={styles.contentTextUp}>{I18n.t('resetPassword.checkEmailToResetPassword')}</Text>
-          <Text style={styles.contentText}>{I18n.t('genneralText.password').toLowerCase()}.</Text>
+          <Text style={styles.contentText}>
+            {I18n.t('genneralText.password').toLowerCase()}
+.
+          </Text>
         </View>
       </View>
     );
   }
-   _renderFooter() {
+
+  _renderFooter() {
     return (
       <View style={styles.footer}>
         <MangoGradientButton
@@ -80,8 +87,8 @@ export default class VerifyYourEmailModal extends React.Component {
     );
   }
 }
- const margin = 3;
- const styles = ScaledSheet.create({
+const margin = 3;
+const styles = ScaledSheet.create({
   popup: {
     width: '335@s',
     height: '313@s',
@@ -90,7 +97,7 @@ export default class VerifyYourEmailModal extends React.Component {
     margin: '10@s',
     padding: '20@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
   popupHeader: {
     alignItems: 'center',
@@ -106,7 +113,7 @@ export default class VerifyYourEmailModal extends React.Component {
   wrapText: {
     width: '250@s',
     alignItems: 'center',
-    marginBottom: '16.5@s'
+    marginBottom: '16.5@s',
   },
   contentTextUp: {
     marginTop: '20@s',
@@ -127,7 +134,7 @@ export default class VerifyYourEmailModal extends React.Component {
   },
   email: {
     alignItems: 'center',
-    marginTop: '15@s'
+    marginTop: '15@s',
   },
   footer: {
     alignItems: 'center',

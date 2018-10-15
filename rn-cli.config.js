@@ -3,7 +3,7 @@ const blacklist = require('metro-config/src/defaults/blacklist');
 
 module.exports = {
   extraNodeModules,
-  getBlacklistRE: function() {
+  getBlacklistRE() {
     return blacklist([
       /nodejs-assets\/.*/,
       /android\/.*/,

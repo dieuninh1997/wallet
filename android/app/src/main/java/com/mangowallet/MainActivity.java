@@ -1,4 +1,4 @@
-package com.mango_wallet;
+package com.mangowallet;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "mango_wallet";
+        return "MangoWallet";
     }
 }

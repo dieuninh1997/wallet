@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "mango_wallet.app"
-               BlueprintName = "mango_wallet"
-               ReferencedContainer = "container:mango_wallet.xcodeproj">
+               BuildableName = "MangoWallet.app"
+               BlueprintName = "MangoWallet"
+               ReferencedContainer = "container:MangoWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "mango_walletTests.xctest"
-               BlueprintName = "mango_walletTests"
-               ReferencedContainer = "container:mango_wallet.xcodeproj">
+               BuildableName = "MangoWalletTests.xctest"
+               BlueprintName = "MangoWalletTests"
+               ReferencedContainer = "container:MangoWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "mango_walletTests.xctest"
-               BlueprintName = "mango_walletTests"
-               ReferencedContainer = "container:mango_wallet.xcodeproj">
+               BuildableName = "MangoWalletTests.xctest"
+               BlueprintName = "MangoWalletTests"
+               ReferencedContainer = "container:MangoWallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mango_wallet.app"
-            BlueprintName = "mango_wallet"
-            ReferencedContainer = "container:mango_wallet.xcodeproj">
+            BuildableName = "MangoWallet.app"
+            BlueprintName = "MangoWallet"
+            ReferencedContainer = "container:MangoWallet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mango_wallet.app"
-            BlueprintName = "mango_wallet"
-            ReferencedContainer = "container:mango_wallet.xcodeproj">
+            BuildableName = "MangoWallet.app"
+            BlueprintName = "MangoWallet"
+            ReferencedContainer = "container:MangoWallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mango_wallet.app"
-            BlueprintName = "mango_wallet"
-            ReferencedContainer = "container:mango_wallet.xcodeproj">
+            BuildableName = "MangoWallet.app"
+            BlueprintName = "MangoWallet"
+            ReferencedContainer = "container:MangoWallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

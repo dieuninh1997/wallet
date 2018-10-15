@@ -45,7 +45,7 @@ Erc20Service.isValidAddress = address => EthUtil.isValidAddress(address);
 
 Erc20Service.isValidPrivateKey = (userPrivateKey) => {
   try {
-    const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'), new ethers.providers.InfuraProvider(Erc20Service.network));
+    const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'), new ethers.providers.EtherscanProvider(Erc20Service.network));
     console.log('wallet', wallet);
 
     return true;
@@ -55,7 +55,7 @@ Erc20Service.isValidPrivateKey = (userPrivateKey) => {
 };
 
 Erc20Service.importWalletFromPrivateKey = (userPrivateKey) => {
-  const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'), new ethers.providers.InfuraProvider(Erc20Service.network));
+  const wallet = new ethers.Wallet(Buffer.from(userPrivateKey, 'hex'), new ethers.providers.EtherscanProvider(Erc20Service.network));
 
   return {
     privateKey: userPrivateKey,
@@ -205,12 +205,12 @@ Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, a
 
     // privateKey = Buffer.from(privateKey, 'hex');
 
-    const wallet = new ethers.Wallet(privateKey, new ethers.providers.InfuraProvider(Erc20Service.network));
+    const wallet = new ethers.Wallet(privateKey, new ethers.providers.EtherscanProvider(Erc20Service.network));
 
     const contractAddress = Erc20Service.tokens[coin].address;
     const contractAbiFragment = await Erc20Service.getContractABI(contractAddress);
 
-    const contract = new ethers.Contract(contractAddress, contractAbiFragment, new ethers.providers.InfuraProvider(Erc20Service.network));
+    const contract = new ethers.Contract(contractAddress, contractAbiFragment, new ethers.providers.EtherscanProvider(Erc20Service.network));
     const contractWithSigner = contract.connect(wallet);
 
     const decimals = Erc20Service.tokens[coin].decimal;

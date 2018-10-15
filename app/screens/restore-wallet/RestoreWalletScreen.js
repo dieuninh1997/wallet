@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import crypto from 'crypto';
+import nodejs from 'nodejs-mobile-react-native';
 
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -41,6 +42,29 @@ class RestoreWalletScreen extends Component {
         mnemonic: null,
       },
     };
+    this.walletInfo = null;
+  }
+
+  componentDidMount = () => {
+    console.log('Hahaha');
+
+    this._generateWallet('inherit page blue cute hunt cry kitten uncover lecture define rotate beef');
+  }
+
+  _generateWallet = (mnemonic) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'haha',
+        (message) => {
+          console.log(`Wallet imported: ${message}`);
+          this.walletInfo = JSON.parse(message);
+        },
+      );
+      nodejs.channel.send(mnemonic);
+    } catch (error) {
+      console.log('RestoreWalletScreen._generateWallet: ', error);
+    }
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -60,8 +84,9 @@ class RestoreWalletScreen extends Component {
     if (!this._validateMnemonic(mnemonic)) {
       return;
     }
-
     try {
+      this._generateWallet(mnemonic);
+
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())
         .digest('hex');
@@ -74,7 +99,7 @@ class RestoreWalletScreen extends Component {
       await AppPreferences.saveToKeychain({
         access_token: restoreAccountInfo.data.accessToken,
         private_key: wallet.privateKey,
-        mnemonic: mnemonic
+        mnemonic,
       });
 
       AppConfig.PRIVATE_KEY = wallet.privateKey;

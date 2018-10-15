@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View, Text, ScrollView, TouchableWithoutFeedback, AsyncStorage, RefreshControl,
 } from 'react-native';
@@ -11,7 +11,6 @@ import EmailVerificationModal from './EmailVerificationModal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { CommonStyles, Fonts } from '../../utils/CommonStyles';
-import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import {
   getCurrentUser, getUserSettings, getUserSecuritySettings, updateUserSettings,
 } from '../../api/user/UserRequest';
@@ -283,7 +282,10 @@ export default class SettingScreen extends BaseScreen {
             <Text style={styles.textWalletID}>{I18n.t('setting.walletId')}</Text>
             <Text
               style={styles.textWalletAddress}
-              numberOfLines={1}>{walletId}</Text>
+              numberOfLines={1}
+            >
+              {walletId}
+            </Text>
           </View>
 
           <View style={styles.groupEmail}>
@@ -296,10 +298,10 @@ export default class SettingScreen extends BaseScreen {
                       {I18n.t('setting.verified')}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
                   <MaterialCommunityIcons
                     style={styles.iconChevronRight}
@@ -317,10 +319,10 @@ export default class SettingScreen extends BaseScreen {
                     {I18n.t('setting.verified')}
                   </Text>
                 ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  ))}
+                  <Text style={styles.textUnVerified}>
+                    {I18n.t('setting.unverified')}
+                  </Text>
+                ))}
 
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
@@ -351,7 +353,7 @@ export default class SettingScreen extends BaseScreen {
     const currencyLabel = currency ? I18n.t(`currency.${currency}.settingLabel`) : '';
 
     return (
-      <View >
+      <View>
         <Text style={styles.textPerferences}>{I18n.t('setting.perferences')}</Text>
         <View style={styles.tablePerferences}>
           <View style={styles.borderEmailNotification}>
@@ -388,7 +390,7 @@ export default class SettingScreen extends BaseScreen {
     const { navigation } = this.props;
 
     return (
-      <View >
+      <View>
         <Text style={styles.textSecurity}>{I18n.t('setting.security')}</Text>
         <View style={styles.tableSecurity}>
           <View style={styles.borderStepVerification}>
@@ -551,7 +553,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   textWalletAddress: {
-    fontSize: '14@ms',
+    fontSize: '13@ms',
     color: '#293350',
     marginTop: '7@s',
     ...Fonts.Ubuntu_Regular,

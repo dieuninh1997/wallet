@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import I18n from '../../i18n/i18n';
 import _ from 'lodash';
 import Moment from 'moment';
+import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors, Fonts, CommonSize } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
@@ -130,7 +130,7 @@ class TransactionsScreen extends BaseScreen {
 
     return (
       <View style={styles.transactionsContainer}>
-        {transactions.map(transactions => this._renderTransactonsYear(transactions))}
+        {transactions.map(transaction => this._renderTransactonsYear(transaction))}
         {UIUtils.createBottomPadding()}
       </View>
     );
@@ -147,14 +147,14 @@ class TransactionsScreen extends BaseScreen {
     navigation.navigate('TransactionDetailScreen', transaction);
   }
 
-  _renderTransactonsYear = (transactions) => {
+  _renderTransactonsYear = (transaction) => {
     const { address, coinSelected } = this.state;
 
     return (
-      <View key={transactions.year}>
-        <Text style={styles.textYear}>{ transactions.year }</Text>
+      <View key={transaction.year}>
+        <Text style={styles.textYear}>{ transaction.year }</Text>
         <FlatList
-          data={transactions.data}
+          data={transaction.data}
           renderItem={({ item }) => this._renderTransactonsItem(item, address, coinSelected)}
         />
       </View>
@@ -326,5 +326,5 @@ const styles = ScaledSheet.create({
     fontSize: CommonSize.headerFontSize,
     ...Fonts.Ubuntu_Light,
     marginTop: '30@s',
-  }
+  },
 });

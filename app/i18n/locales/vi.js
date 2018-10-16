@@ -83,6 +83,12 @@ export default {
     addressRequired: 'Recieved address is required!',
     addressInValid: 'Recieved address is not valid!',
     coinValueInValid: 'Coin value is not valid!',
+    titleSlowly: 'Slowly',
+    titleRegular: 'Regular',
+    titleFast: 'Fast',
+    speedSlowly: '30 + Minute',
+    speedRegular: '5 + Minute',
+    speedFast: '2 + Minute',
   },
   setting: {
     title: 'Cài đặt',
@@ -193,6 +199,11 @@ export default {
     manuallyEnterYourAccount: 'Manually enter your account and provided 16-digit key',
     useGoogleAuthenticator: 'Use Google Authenticator code to login',
     EnterBackupKeyIncorrect: 'Enter backup key incorrect!',
+    copyKey: 'Copy key',
+    passwordRequired: 'Password is required!',
+    smsCodeRequired: 'SMS code is required!',
+    googleOtpCodeRequired: 'Google auth code is required!',
+    googleOtpCodeRequiredNumber: 'Google auth is not a number!',
   },
   restoreWalletScreen: {
     title: 'Khôi phục tài khoản',
@@ -215,6 +226,7 @@ export default {
     enterPincode: 'Nhập mã PIN',
     incorrectPincode: 'Sai mã PIN',
     pleaseAgain: 'Hãy thử lại	',
+    touchID: 'Touch sensor to open your app',
   },
   addPinScreen: {
     title: 'Tạo mã PIN',

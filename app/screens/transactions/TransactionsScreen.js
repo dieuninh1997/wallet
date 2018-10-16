@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
-  RefreshControl,
+  RefreshControl
 } from 'react-native';
 import _ from 'lodash';
 import Moment from 'moment';
@@ -115,7 +115,7 @@ class TransactionsScreen extends BaseScreen {
 
   _getMoreData = (isFirst = false) => {
     const {
-      page, address, isProcess, coinSelected,
+      page, address, isProcess, coinSelected, perPage
     } = this.state;
     if (isProcess) {
       return;
@@ -123,7 +123,7 @@ class TransactionsScreen extends BaseScreen {
     this.setState({
       isProcess: true,
     });
-    this._getTransactions(coinSelected.symbol, address, isFirst ? 1 : page + 1, this.state.perPage, isFirst);
+    this._getTransactions(coinSelected.symbol, address, isFirst ? 1 : page + 1, perPage, isFirst);
   }
 
   _renderTransactonsList = () => {

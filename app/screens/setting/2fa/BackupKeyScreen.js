@@ -4,12 +4,14 @@ import {
   TextInput,
   View,
   Image,
+  Clipboard
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
+import UIUtils from '../../../utils/UIUtils';
 
 export default class BackupKeyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,6 +42,12 @@ export default class BackupKeyScreen extends Component {
     navigation.navigate('EnterBackupKeyScreen', googleOtpKey);
   }
 
+  _handleCopyKey = () => {
+    const { googleOtpKey } = this.state;
+    Clipboard.setString(googleOtpKey);
+    UIUtils.showToastMessage(I18n.t('setting2fa.copyKey'));
+  }
+
   render() {
     const { googleOtpKey } = this.state;
 
@@ -65,6 +73,12 @@ export default class BackupKeyScreen extends Component {
         </View>
 
         <View style={styles.btnBlock}>
+          <MangoGradientButton
+            btnText={I18n.t('setting2fa.copyKey')}
+            btnStyle={styles.copyKey}
+            colorOptions={['#ffffff', '#ffffff', '#ffffff']}
+            onPress={() => this._handleCopyKey()}
+          />
           <MangoGradientButton
             btnText={I18n.t('backupPassphrase.btnNext')}
             btnStyle={styles.btnNext}
@@ -120,9 +134,16 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Medium,
   },
   btnBlock: {
+    flexDirection: 'row',
     marginTop: '40@s',
   },
   btnNext: {
+    width: '140@s',
+    height: '48@s',
+    marginBottom: '5@s',
+    marginHorizontal: '5@s',
+  },
+  copyKey: {
     width: '140@s',
     height: '48@s',
     marginBottom: '5@s',

@@ -72,6 +72,12 @@ export default {
     addressRequired: 'Recieved address is required!',
     addressInValid: 'Recieved address is not valid!',
     coinValueInValid: 'Coin value is not valid!',
+    titleSlowly: 'Slowly',
+    titleRegular: 'Regular',
+    titleFast: 'Fast',
+    speedSlowly: '30 + Minute',
+    speedRegular: '5 + Minute',
+    speedFast: '2 + Minute',
   },
   setting: {
     title: '設定',
@@ -181,6 +187,11 @@ export default {
     manuallyEnterYourAccount: 'Manually enter your account and provided 16-digit key',
     useGoogleAuthenticator: 'Use Google Authenticator code to login',
     EnterBackupKeyIncorrect: 'Enter backup key incorrect!',
+    copyKey: 'Copy key',
+    passwordRequired: 'Password is required!',
+    smsCodeRequired: 'SMS code is required!',
+    googleOtpCodeRequired: 'Google auth code is required!',
+    googleOtpCodeRequiredNumber: 'Google auth is not a number!',
   },
   restoreWalletScreen: {
     title: '  アカウントの復元',
@@ -200,6 +211,7 @@ export default {
     enterPincode: 'PINを入力して下さい',
     incorrectPincode: 'Incorrect PIN Code',
     pleaseAgain: 'Please try again	',
+    touchID: 'Touch sensor to open your app',
   },
   addPinScreen: {
     title: 'Add New PIN',

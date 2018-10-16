@@ -22,9 +22,60 @@ export default class GoogleAuthScreen extends Component {
     headerRight: <View />,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: '',
+      smsCode: '',
+      googleOtpCode: '',
+    };
+    this.PASSWORD = 'password';
+    this.SMSCODE = 'smsCode';
+    this.GOOGLEOTPCODE = 'googleOtpCode';
+  }
+
+  _onTextChanged = (type, text) => {
+    switch(type) {
+      case this.PASSWORD:
+        this.setState({password: text});
+        break;
+      case this.GOOGLEOTPCODE:
+        this.setState({googleOtpCode: text});
+        break;
+      default:
+        this.setState({smsCode: text});
+    }
+  }
+
+  _validateClient = () => {
+    const { password, smsCode, googleOtpCode } = this.state;
+    if (!password) {
+      UIUtils.showToastMessage(I18n.t('setting2fa.passwordRequired'));
+      return false;
+    }
+
+    if (!googleOtpCode) {
+      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequired'));
+      return false;
+    }
+
+    if (!UIUtils.validateNumber(googleOtpCode)) {
+      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequiredNumber'));
+      return false;
+    }
+
+    return true;
+  }
+
   _handleEnableGoogleOtp = async () => {
+    const { password, smsCode, googleOtpCode } = this.state;
+
+    if (!this._validateClient()) {
+      return;
+    }
+
     try {
-      const responseEnableGoogleOtp = await enableGoogleOtp(this.password._lastNativeText, this.googleOtpCode._lastNativeText);
+      const responseEnableGoogleOtp = await enableGoogleOtp(password, googleOtpCode);
       const { navigation } = this.props;
       navigation.navigate('SettingScreen');
     } catch (error) {
@@ -36,11 +87,11 @@ export default class GoogleAuthScreen extends Component {
     }
   }
 
-  _sendSms = () => {
-
-  }
+  _sendSms = () => {}
 
   render() {
+    const { password, smsCode, googleOtpCode } = this.state;
+
     return (
       <View style={styles.GoogleAuth}>
 
@@ -52,7 +103,8 @@ export default class GoogleAuthScreen extends Component {
           <TextInput
             editable
             secureTextEntry
-            ref={(input) => { this.password = input }}
+            onChangeText = {(text)=> this._onTextChanged(this.PASSWORD, text)}
+            value = {password}
             style={styles.inputText}
             placeholder={I18n.t('setting2fa.loginPassword')}
           />
@@ -65,6 +117,8 @@ export default class GoogleAuthScreen extends Component {
           />
           <TextInput
             editable
+            onChangeText = {(text)=> this._onTextChanged(this.SMSCODE, text)}
+            value = {smsCode}
             style={[styles.inputText, styles.width137, styles.marginRight27]}
             placeholder={I18n.t('setting2fa.smsAuthCode')}
           />
@@ -85,7 +139,8 @@ export default class GoogleAuthScreen extends Component {
           <TextInput
             editable
             maxLength={6}
-            ref={(input) => { this.googleOtpCode = input }}
+            onChangeText = {(text)=> this._onTextChanged(this.GOOGLEOTPCODE, text)}
+            value = {googleOtpCode}
             style={[styles.inputText, styles.width165]}
             placeholder={I18n.t('setting2fa.googleAuthCode')}
           />

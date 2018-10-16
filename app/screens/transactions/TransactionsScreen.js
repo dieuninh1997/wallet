@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
+  RefreshControl
 } from 'react-native';
 import _ from 'lodash';
 import Moment from 'moment';
@@ -114,7 +115,7 @@ class TransactionsScreen extends BaseScreen {
 
   _getMoreData = (isFirst = false) => {
     const {
-      page, address, isProcess, coinSelected,
+      page, address, isProcess, coinSelected, perPage
     } = this.state;
     if (isProcess) {
       return;
@@ -122,7 +123,7 @@ class TransactionsScreen extends BaseScreen {
     this.setState({
       isProcess: true,
     });
-    this._getTransactions(coinSelected.symbol, address, isFirst ? 1 : page + 1, this.state.perPage, isFirst);
+    this._getTransactions(coinSelected.symbol, address, isFirst ? 1 : page + 1, perPage, isFirst);
   }
 
   _renderTransactonsList = () => {
@@ -204,7 +205,7 @@ class TransactionsScreen extends BaseScreen {
   )
 
   render() {
-    const { transactions } = this.state;
+    const { transactions, isProcess } = this.state;
     return (
       <View style={styles.container}>
         <MangoDropdown />
@@ -216,10 +217,13 @@ class TransactionsScreen extends BaseScreen {
             if (e.nativeEvent.contentOffset.y > e.nativeEvent.contentSize.height - paddingToBottom) {
               this._getMoreData();
             }
-            if (e.nativeEvent.contentOffset.y === 0) {
-              this._getMoreData(true);
-            }
           }}
+          refreshControl={(
+            <RefreshControl
+              refreshing={isProcess}
+              onRefresh={() => this._getMoreData(true)}
+            />
+          )}
         >
           {transactions && transactions.length ? this._renderTransactonsList() : null}
           {transactions && transactions.length === 0 ? <Text style={styles.noTransactionAvailable}>{ I18n.t('transactions.noTransactionAvailable') }</Text> : null}

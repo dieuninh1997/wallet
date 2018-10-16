@@ -32,8 +32,6 @@ class MangoDropdown extends BaseScreen {
     super.componentDidMount();
     try {
       const indexCoin = await AppPreferences.getCoinSelected();
-      console.log('coinSelected', indexCoin);
-
       const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
 
       this.setState({

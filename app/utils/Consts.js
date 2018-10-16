@@ -67,4 +67,10 @@ export default class Consts {
     //   symbol: 'btc',
     // },
   ];
+
+  static MANGO_STEP_OVAL = {
+    first: 'first',
+    second: 'second',
+    last: 'last',
+  }
 }

@@ -422,9 +422,6 @@ export default class SettingScreen extends BaseScreen {
               <View style={styles.borderChangePassword}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.recoveryPhrase')}</Text>
                 <View style={styles.activiRightGroup}>
-                  <Text style={styles.textUnVerified}>
-                    {I18n.t('setting.unconfirmed')}
-                  </Text>
                   <MaterialCommunityIcons
                     style={styles.iconChevronRight}
                     name="chevron-right"

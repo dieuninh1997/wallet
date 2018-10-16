@@ -120,7 +120,7 @@ class RestoreWalletScreen extends Component {
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', wallet.address);
-      navigation.navigate('MainScreen');
+      navigation.navigate('AddPinScreen');
     } catch (error) {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);

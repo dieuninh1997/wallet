@@ -19,7 +19,6 @@ import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
 import BackPressHandler from '../../utils/BackPressHandler';
 
-const { width } = Dimensions.get('window');
 const CURRENCY_SYMBOLS = {
   USD: '$',
   JPY: '¥',
@@ -202,9 +201,9 @@ class DashboardScreen extends BaseScreen {
   }
 
   _renderPieChart = () => {
-    let btcValue = this._getCoinValue('BTC');
-    let ethValue = this._getCoinValue('ETH');
-    let mgcValue = this._getCoinValue('MGC');
+    const btcValue = this._getCoinValue('BTC');
+    const ethValue = this._getCoinValue('ETH');
+    const mgcValue = this._getCoinValue('MGC');
 
     let data = [];
     if (!btcValue && !ethValue && !mgcValue) {
@@ -220,7 +219,7 @@ class DashboardScreen extends BaseScreen {
         {
           population: 1,
           color: { r: 255, g: 216, b: 47 },
-        }
+        },
       ];
     } else {
       if (btcValue) {

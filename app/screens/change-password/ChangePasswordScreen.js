@@ -267,7 +267,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#f5f7fa',
     justifyContent: 'center',
     height: '40@s',
-    width: '75@s',
+    width: '90@s',
     borderRadius: '20@s',
   },
   textCancel: {
@@ -281,7 +281,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     height: '40@s',
     marginLeft: '10@s',
-    width: '90@s',
+    width: '86@s',
     borderRadius: '20@s',
   },
   textUpdate: {

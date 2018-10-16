@@ -299,7 +299,7 @@ const styles = ScaledSheet.create({
 
   btnTextCreateWalletStyle: {
     color: '#1F42B3',
-    fontSize: '20@ms',
+    fontSize: '19@ms',
     ...Fonts.Ubuntu_Regular,
   },
 

@@ -97,7 +97,7 @@ class LoginScreen extends Component {
 
   _handleForgotPassword = () => {
     const { navigation } = this.props;
-    navigation.navigate('DownloadAndInstallScreen');
+    navigation.navigate('ForgotPasswordScreen');
   }
 
   _handlerLoginWithTouchId = () => {

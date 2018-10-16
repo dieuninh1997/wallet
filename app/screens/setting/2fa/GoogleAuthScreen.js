@@ -10,6 +10,8 @@ import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
+import { enableGoogleOtp } from '../../../api/user/UserRequest';
+import UIUtils from '../../../utils/UIUtils';
 
 export default class GoogleAuthScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,9 +22,18 @@ export default class GoogleAuthScreen extends Component {
     headerRight: <View />,
   });
 
-  _handleNext = () => {
-    const { navigation } = this.props;
-    navigation.navigate('DownloadAndInstallScreen');
+  _handleEnableGoogleOtp = async () => {
+    try {
+      const responseEnableGoogleOtp = await enableGoogleOtp(this.password._lastNativeText, this.googleOtpCode._lastNativeText);
+      const { navigation } = this.props;
+      navigation.navigate('SettingScreen');
+    } catch (error) {
+      if (error.errors) {
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        UIUtils.showToastMessage(error.message);
+      }
+    }
   }
 
   _sendSms = () => {
@@ -41,6 +52,7 @@ export default class GoogleAuthScreen extends Component {
           <TextInput
             editable
             secureTextEntry
+            ref={(input) => { this.password = input }}
             style={styles.inputText}
             placeholder={I18n.t('setting2fa.loginPassword')}
           />
@@ -72,6 +84,8 @@ export default class GoogleAuthScreen extends Component {
           />
           <TextInput
             editable
+            maxLength={6}
+            ref={(input) => { this.googleOtpCode = input }}
             style={[styles.inputText, styles.width165]}
             placeholder={I18n.t('setting2fa.googleAuthCode')}
           />
@@ -81,7 +95,7 @@ export default class GoogleAuthScreen extends Component {
           <MangoGradientButton
             btnText={I18n.t('backupPassphrase.btnNext')}
             btnStyle={styles.btnNext}
-            onPress={() => this._handleNext()}
+            onPress={() => this._handleEnableGoogleOtp()}
           />
         </View>
       </View>

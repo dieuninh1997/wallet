@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import crypto from 'crypto';
+import nodejs from 'nodejs-mobile-react-native';
 
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -41,6 +42,23 @@ class RestoreWalletScreen extends Component {
         mnemonic: null,
       },
     };
+    this.walletInfo = null;
+  }
+
+  _generateWallet = (mnemonic) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'message',
+        (message) => {
+          console.log(`Wallet imported: ${message}`);
+          this.walletInfo = JSON.parse(message);
+        },
+      );
+      nodejs.channel.send(mnemonic);
+    } catch (error) {
+      console.log('RestoreWalletScreen._generateWallet: ', error);
+    }
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -50,49 +68,6 @@ class RestoreWalletScreen extends Component {
     this.setState({
       restoreInfo,
     });
-  }
-
-  _handleClickRestore = async () => {
-    const { restoreInfo } = this.state;
-    const { navigation } = this.props;
-    const { mnemonic } = restoreInfo;
-
-    if (!this._validateMnemonic(mnemonic)) {
-      return;
-    }
-
-    try {
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
-
-      const restoreAccountInfo = await restoreAccount(mnemonicHash);
-      console.log('restoreAccountInfo', restoreAccountInfo);
-
-      const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
-
-      await AppPreferences.saveToKeychain({
-        access_token: restoreAccountInfo.data.accessToken,
-        private_key: wallet.privateKey,
-        mnemonic: mnemonic
-      });
-
-      AppConfig.PRIVATE_KEY = wallet.privateKey;
-      AppConfig.MNEMONIC = mnemonic;
-      AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
-
-      window.GlobalSocket.connect();
-      Keyboard.dismiss();
-
-      await AsyncStorage.setItem('address', wallet.address);
-      navigation.navigate('MainScreen');
-    } catch (error) {
-      if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
-      } else {
-        UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`));
-      }
-    }
   }
 
   _validateMnemonic = (mnemonic) => {
@@ -108,6 +83,51 @@ class RestoreWalletScreen extends Component {
     }
 
     return true;
+  }
+
+  _handleClickRestore = async () => {
+    const { restoreInfo } = this.state;
+    const { navigation } = this.props;
+    const { mnemonic } = restoreInfo;
+
+    if (!this._validateMnemonic(mnemonic)) {
+      return;
+    }
+    try {
+      this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic }));
+
+      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
+        .update(AppConfig.getClientSecret())
+        .digest('hex');
+
+      const restoreAccountInfo = await restoreAccount(mnemonicHash);
+      console.log('restoreAccountInfo', restoreAccountInfo);
+
+      // const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
+      const wallet = this.walletInfo;
+
+      await AppPreferences.saveToKeychain({
+        access_token: restoreAccountInfo.data.accessToken,
+        private_key: wallet.privateKey,
+        mnemonic,
+      });
+
+      AppConfig.PRIVATE_KEY = wallet.privateKey;
+      AppConfig.MNEMONIC = mnemonic;
+      AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
+
+      window.GlobalSocket.connect();
+      Keyboard.dismiss();
+
+      await AsyncStorage.setItem('address', wallet.address);
+      navigation.navigate('AddPinScreen');
+    } catch (error) {
+      if (error.errors) {
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`));
+      }
+    }
   }
 
   _renderFormRestore() {

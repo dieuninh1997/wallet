@@ -20,12 +20,29 @@ export default class BackupKeyScreen extends Component {
     headerRight: <View />,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      googleOtpKey: '',
+    };
+  }
+
+  componentDidMount = () => {
+    const { params } = this.props.navigation.state;
+    this.setState({
+      googleOtpKey: params,
+    });
+  }
+
   _handleNext = () => {
     const { navigation } = this.props;
-    navigation.navigate('EnterBackupKeyScreen');
+    const { googleOtpKey } = this.state;
+    navigation.navigate('EnterBackupKeyScreen', googleOtpKey);
   }
 
   render() {
+    const { googleOtpKey } = this.state;
+
     return (
       <View style={styles.BackupKey}>
         <View style={styles.imageBlock}>
@@ -41,7 +58,7 @@ export default class BackupKeyScreen extends Component {
 
         <View style={styles.inputBlock}>
           <TextInput
-            value="85S4W57WRDS3SA"
+            value={googleOtpKey}
             editable = {false}
             style={styles.inputText}
           />
@@ -97,7 +114,8 @@ const styles = ScaledSheet.create({
   },
   inputText: {
     width: '265@s',
-    fontSize: '28@ms',
+    fontSize: '22@ms',
+    textAlign: 'center',
     color: 'rgb(38, 48, 77)',
     ...Fonts.Ubuntu_Medium,
   },

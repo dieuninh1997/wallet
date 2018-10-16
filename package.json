@@ -1,5 +1,5 @@
 {
-  "name": "mango_wallet",
+  "name": "MangoWallet",
   "version": "0.0.1",
   "rnpm": {
     "assets": [
@@ -31,7 +31,7 @@
     "microevent": "^1.0.0",
     "moment": "2.22.2",
     "node-libs-react-native": "https://github.com/Sotatek-NhuanHoang/node-libs-react-native",
-    "nodejs-mobile-react-native": "^0.3.0",
+    "nodejs-mobile-react-native": "0.3.0",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-blur": "^3.2.2",
@@ -52,7 +52,7 @@
     "react-native-share": "^1.1.2",
     "react-native-simple-radio-button": "^2.7.3",
     "react-native-switch": "^1.5.0",
-    "react-native-touch-id": "4.0.5",
+    "react-native-touch-id": "https://github.com/Sotatek-ManhPham/react-native-touch-id.git",
     "react-native-vector-icons": "5.0.0",
     "react-navigation": "2.16.0",
     "readable-stream": "3.0.3",

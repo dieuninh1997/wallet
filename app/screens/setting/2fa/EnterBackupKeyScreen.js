@@ -10,6 +10,7 @@ import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
+import UIUtils from '../../../utils/UIUtils';
 
 export default class EnterBackupKeyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,7 +21,33 @@ export default class EnterBackupKeyScreen extends Component {
     headerRight: <View />,
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      googleOtpKeyOrigin: '',
+    };
+  }
+
+  componentDidMount = () => {
+    const { params } = this.props.navigation.state;
+    console.log('EnterBackupKeyScreen =================>', params);
+    this.setState({
+      googleOtpKeyOrigin: params,
+    });
+  }
+
+  _validateGoogleOtpKey = () => {
+    const { googleOtpKeyOrigin } = this.state;
+    return googleOtpKeyOrigin === this.googleOtpKeyInput._lastNativeText;
+  }
+
   _handleNext = () => {
+    this.googleOtpKeyInput.clear();
+    if (!this._validateGoogleOtpKey()) {
+      UIUtils.showToastMessage(I18n.t('setting2fa.EnterBackupKeyIncorrect'));
+      return;
+    }
+
     const { navigation } = this.props;
     navigation.navigate('SetupCodeFirstScreen');
   }
@@ -43,6 +70,7 @@ export default class EnterBackupKeyScreen extends Component {
           <TextInput
             editable
             secureTextEntry
+            ref={(input) => { this.googleOtpKeyInput = input }}
             style={styles.inputText}
           />
         </View>

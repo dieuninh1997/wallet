@@ -1,4 +1,4 @@
-package com.mango_wallet;
+package com.mangowallet;
 
 import android.app.Application;
 

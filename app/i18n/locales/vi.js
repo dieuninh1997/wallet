@@ -80,6 +80,9 @@ export default {
     confirmationTextDefault: 'Nhập 12 từ bí mật để khôi phục tài khoản và giao dịch.',
     confirmationText: 'Bạn có chắc chắn muốn gửi {{amount}} {{coinName}} tới địa chỉ {{address}}?',
     submitted: 'Submitted',
+    addressRequired: 'Recieved address is required!',
+    addressInValid: 'Recieved address is not valid!',
+    coinValueInValid: 'Coin value is not valid!',
   },
   setting: {
     title: 'Cài đặt',
@@ -189,6 +192,7 @@ export default {
     launchGoogleAuthenticator: 'Launch Google Authenticator',
     manuallyEnterYourAccount: 'Manually enter your account and provided 16-digit key',
     useGoogleAuthenticator: 'Use Google Authenticator code to login',
+    EnterBackupKeyIncorrect: 'Enter backup key incorrect!',
   },
   restoreWalletScreen: {
     title: 'Khôi phục tài khoản',

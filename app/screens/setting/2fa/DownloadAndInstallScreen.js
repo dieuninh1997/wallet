@@ -10,6 +10,8 @@ import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize } from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
+import { createGoogleOtpSecret } from '../../../api/user/UserRequest';
+import UIUtils from '../../../utils/UIUtils';
 
 export default class DownloadAndInstallScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -20,9 +22,22 @@ export default class DownloadAndInstallScreen extends Component {
     headerRight: <View />,
   });
 
-  _handleNext = () => {
+  _handleNext = (googleOtpKey) => {
     const { navigation } = this.props;
-    navigation.navigate('BackupKeyScreen');
+    navigation.navigate('BackupKeyScreen', googleOtpKey);
+  }
+
+  _handleCreateOtp = async () => {
+    try {
+      const responseOtp = await createGoogleOtpSecret();
+      this._handleNext(responseOtp.data.key);
+    } catch (error) {
+      if (error.errors) {
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+      } else {
+        UIUtils.showToastMessage(error.message);
+      }
+    }
   }
 
   render() {
@@ -47,7 +62,7 @@ export default class DownloadAndInstallScreen extends Component {
           <MangoGradientButton
             btnText={I18n.t('backupPassphrase.btnNext')}
             btnStyle={styles.btnNext}
-            onPress={() => this._handleNext()}
+            onPress={() => this._handleCreateOtp()}
           />
         </View>
       </View>

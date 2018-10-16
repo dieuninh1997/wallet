@@ -55,8 +55,8 @@ class SendScreen extends BaseScreen {
 
     this.state = {
       formSendCoin: {
-        recievedAddress: null,
-        coinValue: 0.0,
+        recievedAddress: '',
+        coinValue: 0.0000,
         feeValue: feeSelected.value,
       },
       isShowMenuSelectFee: false,
@@ -156,16 +156,16 @@ class SendScreen extends BaseScreen {
     const { coinSelected } = this.state;
 
     if (!formSendCoin.recievedAddress) {
-      UIUtils.showToastMessage('Recieved address is required!');
+      UIUtils.showToastMessage(I18n.t('send.addressRequired'));
       return false;
     }
     if (!WalletService.isValidAddress(coinSelected.symbol, formSendCoin.recievedAddress)) {
-      UIUtils.showToastMessage('Recieved address is not valid!');
+      UIUtils.showToastMessage(I18n.t('send.addressInValid'));
       return false;
     }
 
     if (!formSendCoin.coinValue) {
-      UIUtils.showToastMessage('Coin value is not valid!');
+      UIUtils.showToastMessage(I18n.t('send.coinValueInValid'));
       return false;
     }
     return true;
@@ -175,7 +175,7 @@ class SendScreen extends BaseScreen {
     this.setState({
       feeSelected: SendScreen.LIST_FEE[0],
       formSendCoin: {
-        recievedAddress: null,
+        recievedAddress: '',
         coinValue: 0.0000,
         feeValue: SendScreen.LIST_FEE[0].value,
       },
@@ -279,7 +279,7 @@ class SendScreen extends BaseScreen {
             placeholder={I18n.t('send.walletAddress')}
             underlineColorAndroid="transparent"
             style={styles.inputTextAddress}
-            value={formSendCoin.recievedAddress}
+            value={formSendCoin.recievedAddress.toString()}
             onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.RECIEVED_ADDRESS, value)}
           />
         </View>
@@ -291,7 +291,7 @@ class SendScreen extends BaseScreen {
               editable
               placeholder="0.0000"
               underlineColorAndroid="transparent"
-              value={formSendCoin.coinValue}
+              value={formSendCoin.coinValue.toString()}
               style={styles.inputText}
               onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.COIN_VALUE, value)}
             />

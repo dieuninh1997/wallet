@@ -19,7 +19,7 @@ import {
 } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { register, login } from '../../api/user/UserRequest';
+import { register } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
@@ -62,7 +62,7 @@ export default class CreateWalletBaseScreen extends Component {
           this.walletInfo = JSON.parse(message);
         },
       );
-      nodejs.channel.send('generateWallet');
+      nodejs.channel.send(JSON.stringify({ action: 'generateWallet', data: '' }));
     } catch (error) {
       console.log('CreateByEmailScreen._generateWallet: ', error);
     }
@@ -134,7 +134,7 @@ export default class CreateWalletBaseScreen extends Component {
       await AppPreferences.saveToKeychain({
         access_token: loginInfo.accessToken,
         private_key: privateKey,
-        mnemonic: mnemonic
+        mnemonic,
       });
 
       AppConfig.PRIVATE_KEY = privateKey;

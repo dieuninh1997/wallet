@@ -191,6 +191,7 @@ export default {
     enterPincode: 'PINを入力して下さい',
     incorrectPincode: 'Incorrect PIN Code',
     pleaseAgain: 'Please try again	',
+    touchID: 'Touch sensor to open your app',
   },
   addPinScreen: {
     title: 'Add New PIN',

@@ -206,6 +206,7 @@ export default {
     enterPincode: 'Nhập mã PIN',
     incorrectPincode: 'Sai mã PIN',
     pleaseAgain: 'Hãy thử lại	',
+    touchID: 'Touch sensor to open your app',
   },
   addPinScreen: {
     title: 'Tạo mã PIN',

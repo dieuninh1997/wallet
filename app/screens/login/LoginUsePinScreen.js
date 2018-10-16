@@ -65,13 +65,13 @@ export default class LoginUsePinScreen extends Component {
     const optionalConfigObject = {
       title: 'Login by Touch ID',
       color: '#e00606',
-      sensorDescription: 'Touch sensor to open your app', // Android
+      sensorDescription: I18n.t('loginUserPin.touchID'), // Android
       cancelText: 'Cancel', // Android
       fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
       unifiedErrors: false, // use unified error messages (default false)
     };
 
-    TouchID.authenticate('Touch sensor to open your app', optionalConfigObject)
+    TouchID.authenticate(I18n.t('loginUserPin.touchID'), optionalConfigObject)
       .then(() => {
         navigation.navigate('MainScreen');
       })

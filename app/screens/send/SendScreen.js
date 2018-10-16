@@ -13,6 +13,7 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import { getPrices } from '../../api/common/BaseRequest';
 import MangoDropdown from '../common/MangoDropdown';
 import WalletService from '../../services/wallet';
 import UIUtils from '../../utils/UIUtils';
@@ -32,19 +33,19 @@ class SendScreen extends BaseScreen {
 
   static LIST_FEE = [
     {
-      title: 'Slowly',
+      title: I18n.t('send.titleSlowly'),
       value: 3.0,
-      time: '30 + Minute',
+      time: I18n.t('send.speedSlowly'),
     },
     {
-      title: 'Regular',
+      title: I18n.t('send.titleRegular'),
       value: 5.0,
-      time: '5 + Minute',
+      time: I18n.t('send.speedRegular'),
     },
     {
-      title: 'Fast',
+      title: I18n.t('send.titleFast'),
       value: 20.0,
-      time: '2 + Minute',
+      time: I18n.t('send.speedFast'),
     },
   ];
 
@@ -64,6 +65,8 @@ class SendScreen extends BaseScreen {
       listFee,
       coinSelected: Consts.LIST_COIN[0],
       currency: 'USD',
+      prices: {},
+      realValueCoin: 0,
     };
   }
 
@@ -80,33 +83,51 @@ class SendScreen extends BaseScreen {
       });
       console.log('<-----------listFeeNew----------->', listFeeNew);
       formSendCoin.feeValue = listFeeNew[0].value;
-
-      await this._loadData();
-
       this.setState({
         listFee: listFeeNew,
         feeSelected: listFeeNew[0],
         formSendCoin,
       });
+      await this._loadData();
     } catch (error) {
       console.log('SendScreen.componentDidMount._error: ', error);
     }
   }
 
-  componentDidUpdate(previousProps) {
-    if (this.props.isFocused && !previousProps.isFocused) {
-      this._resetFormSendCoin();
-    }
-  }
+  // componentDidUpdate(previousProps) {
+  //   if (this.props.isFocused && !previousProps.isFocused) {
+  //     this._resetFormSendCoin();
+  //   }
+  // }
 
   async _loadData() {
     await this._loadCoinSelected();
     await this._loadUserSettings();
+    await this._loadPrices();
+  }
+
+  async _loadPrices() {
+    const { coinSelected, formSendCoin } = this.state;
+    const prices = await getPrices(coinSelected.name);
+
+    this.setState({ prices });
+    this._setRealValueCoin(formSendCoin.coinValue);
+  }
+
+  _setRealValueCoin = (value) => {
+    try {
+      const { coinSelected, prices, currency } = this.state;
+      const newPrice = prices.RAW[coinSelected.name][currency].PRICE;
+      this.setState({
+        realValueCoin: parseFloat(value * newPrice).toFixed(2),
+      });
+    } catch (error) {
+      console.log('SendScreen._setRealValueCoin._erorr: ', error);
+    }
   }
 
   _loadCoinSelected = async () => {
     const indexCoin = await AppPreferences.getCoinSelected();
-    console.log('coinSelected', indexCoin);
     const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
     this.setState({
       coinSelected,
@@ -152,6 +173,16 @@ class SendScreen extends BaseScreen {
     });
   }
 
+  _handleChangeCoinValue = (value) => {
+    const { formSendCoin } = this.state;
+    formSendCoin.coinValue = value;
+
+    this._setRealValueCoin(value);
+    this.setState({
+      formSendCoin,
+    });
+  }
+
   _validateSendCoin = (formSendCoin = {}) => {
     const { coinSelected } = this.state;
 
@@ -176,9 +207,10 @@ class SendScreen extends BaseScreen {
       feeSelected: SendScreen.LIST_FEE[0],
       formSendCoin: {
         recievedAddress: '',
-        coinValue: 0.0000,
+        coinValue: 0.00,
         feeValue: SendScreen.LIST_FEE[0].value,
       },
+      realValueCoin: 0,
     });
   }
 
@@ -265,7 +297,7 @@ class SendScreen extends BaseScreen {
 
   _renderFormSend = () => {
     const {
-      formSendCoin, feeSelected, coinSelected, currency,
+      formSendCoin, feeSelected, coinSelected, currency, realValueCoin,
     } = this.state;
     return (
       <View style={styles.formSendContainer}>
@@ -289,11 +321,12 @@ class SendScreen extends BaseScreen {
             <Text style={styles.inputTextLabel}>{coinSelected.name}</Text>
             <TextInput
               editable
-              placeholder="0.0000"
+              keyboardType="numeric"
+              placeholder="0.00"
               underlineColorAndroid="transparent"
               value={formSendCoin.coinValue.toString()}
               style={styles.inputText}
-              onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.COIN_VALUE, value)}
+              onChangeText={value => this._handleChangeCoinValue(value.replace(/[^0-9\.]/g, ''))}
             />
           </View>
           <View
@@ -305,8 +338,8 @@ class SendScreen extends BaseScreen {
             <Text style={styles.inputTextLabel}>{currency}</Text>
             <TextInput
               editable={false}
-              placeholder="0.0000"
-              value={formSendCoin.coinValue.toString()}
+              placeholder="0.00"
+              value={`${realValueCoin}`}
               underlineColorAndroid="transparent"
               style={styles.inputText}
             />

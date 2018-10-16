@@ -72,6 +72,12 @@ export default {
     addressRequired: 'Recieved address is required!',
     addressInValid: 'Recieved address is not valid!',
     coinValueInValid: 'Coin value is not valid!',
+    titleSlowly: 'Slowly',
+    titleRegular: 'Regular',
+    titleFast: 'Fast',
+    speedSlowly: '30 + Minute',
+    speedRegular: '5 + Minute',
+    speedFast: '2 + Minute',
   },
   setting: {
     title: '設定',

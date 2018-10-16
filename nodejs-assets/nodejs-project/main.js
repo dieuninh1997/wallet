@@ -6,18 +6,20 @@ const rn_bridge = require('rn-bridge');
 const ethers = require('ethers');
 
 // Echo every message received from react-native.
-rn_bridge.channel.on('message', (message) => {
-  rn_bridge.channel.send(handleMessage(message));
+rn_bridge.channel.on('message', async (message) => {
+  rn_bridge.channel.send(await handleMessage(message));
 });
 
-rn_bridge.channel.on('haha', async (mnemonic) => {
-  rn_bridge.channel.send(await importWalletFromMnemonic(mnemonic));
-});
+async function handleMessage(message) {
+  const { action, data } = JSON.parse(message);
 
-function handleMessage(message) {
-  switch (message) {
+  switch (action) {
   case 'generateWallet':
     return generateWallet();
+  case 'importWalletFromMnemonic':
+    return await importWalletFromMnemonic(data);
+  default:
+    return true;
   }
 }
 
@@ -30,8 +32,9 @@ function generateWallet() {
 async function importWalletFromMnemonic(mnemonic) {
   try {
     const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
+    console.log('Wallet', wallet.signingKey);
 
-    return JSON.stringify(wallet);
+    return JSON.stringify(wallet.signingKey);
   } catch (error) {
     throw new Error('Invalid mnemonic');
   }

@@ -62,7 +62,7 @@ export default class CreateWalletBaseScreen extends Component {
           this.walletInfo = JSON.parse(message);
         },
       );
-      nodejs.channel.send('generateWallet');
+      nodejs.channel.send(JSON.stringify({ action: 'generateWallet', data: '' }));
     } catch (error) {
       console.log('CreateByEmailScreen._generateWallet: ', error);
     }

@@ -80,6 +80,9 @@ export default {
     confirmationTextDefault: 'Enter your 12 backup words with spaces to recover your funds & transactions',
     confirmationText: 'Are you sure want to send {{amount}} {{coinName}} to addresss {{address}}?',
     submitted: 'Submitted',
+    addressRequired: 'Recieved address is required!',
+    addressInValid: 'Recieved address is not valid!',
+    coinValueInValid: 'Coin value is not valid!',
   },
   setting: {
     title: 'Settings',

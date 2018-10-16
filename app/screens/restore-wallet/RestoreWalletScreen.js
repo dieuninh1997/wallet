@@ -45,17 +45,11 @@ class RestoreWalletScreen extends Component {
     this.walletInfo = null;
   }
 
-  componentDidMount = () => {
-    console.log('Hahaha');
-
-    this._generateWallet('inherit page blue cute hunt cry kitten uncover lecture define rotate beef');
-  }
-
   _generateWallet = (mnemonic) => {
     try {
       nodejs.start('main.js');
       nodejs.channel.addListener(
-        'haha',
+        'message',
         (message) => {
           console.log(`Wallet imported: ${message}`);
           this.walletInfo = JSON.parse(message);
@@ -76,6 +70,21 @@ class RestoreWalletScreen extends Component {
     });
   }
 
+  _validateMnemonic = (mnemonic) => {
+    if (!mnemonic) {
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.mnemonicRequired'));
+      return false;
+    }
+
+    const words = mnemonic.split(' ');
+    if (words.length !== 12) {
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'));
+      return false;
+    }
+
+    return true;
+  }
+
   _handleClickRestore = async () => {
     const { restoreInfo } = this.state;
     const { navigation } = this.props;
@@ -85,7 +94,7 @@ class RestoreWalletScreen extends Component {
       return;
     }
     try {
-      this._generateWallet(mnemonic);
+      this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic }));
 
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())
@@ -94,7 +103,8 @@ class RestoreWalletScreen extends Component {
       const restoreAccountInfo = await restoreAccount(mnemonicHash);
       console.log('restoreAccountInfo', restoreAccountInfo);
 
-      const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
+      // const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
+      const wallet = this.walletInfo;
 
       await AppPreferences.saveToKeychain({
         access_token: restoreAccountInfo.data.accessToken,
@@ -118,21 +128,6 @@ class RestoreWalletScreen extends Component {
         UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`));
       }
     }
-  }
-
-  _validateMnemonic = (mnemonic) => {
-    if (!mnemonic) {
-      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.mnemonicRequired'));
-      return false;
-    }
-
-    const words = mnemonic.split(' ');
-    if (words.length !== 12) {
-      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'));
-      return false;
-    }
-
-    return true;
   }
 
   _renderFormRestore() {

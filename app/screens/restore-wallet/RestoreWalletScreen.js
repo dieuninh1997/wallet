@@ -41,24 +41,25 @@ class RestoreWalletScreen extends Component {
         mnemonic: null,
       },
     };
-    this.walletInfo = null;
   }
 
-  _generateWallet = async (mnemonic) => {
+  _generateWallet = mnemonic => new Promise((resolve, reject) => {
     try {
       nodejs.start('main.js');
       nodejs.channel.addListener(
         'message',
         (message) => {
           console.log(`Wallet imported: ${message}`);
-          this.walletInfo = JSON.parse(message);
+          // this.walletInfo = ;
+          resolve(JSON.parse(message));
         },
       );
       nodejs.channel.send(mnemonic);
     } catch (error) {
       console.log('RestoreWalletScreen._generateWallet: ', error);
+      reject(error);
     }
-  }
+  })
 
   _handleChangeInput = (typeInput, value) => {
     const { restoreInfo } = this.state;
@@ -97,25 +98,25 @@ class RestoreWalletScreen extends Component {
         .update(AppConfig.getClientSecret())
         .digest('hex');
 
-      const [a, restoreAccountInfo] = await Promise.all([
+      const [wallet, restoreAccountInfo] = await Promise.all([
         this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic })),
         restoreAccount(mnemonicHash),
       ]);
 
       await AppPreferences.saveToKeychain({
         access_token: restoreAccountInfo.data.accessToken,
-        private_key: this.walletInfo.privateKey,
+        private_key: wallet.privateKey,
         mnemonic,
       });
 
-      AppConfig.PRIVATE_KEY = this.walletInfo.privateKey;
+      AppConfig.PRIVATE_KEY = wallet.privateKey;
       AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
 
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
-      await AsyncStorage.setItem('address', this.walletInfo.address);
+      await AsyncStorage.setItem('address', wallet.address);
       navigation.navigate('AddPinScreen');
     } catch (error) {
       console.log('restoreWalletScreen.errors: ', error);

@@ -17,7 +17,6 @@ import I18n from '../../i18n/i18n';
 import MangoGradientButton from '../common/MangoGradientButton';
 import AppConfig from '../../utils/AppConfig';
 import { restoreAccount } from '../../api/user/UserRequest';
-import WalletService from '../../services/wallet';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 
@@ -45,7 +44,7 @@ class RestoreWalletScreen extends Component {
     this.walletInfo = null;
   }
 
-  _generateWallet = (mnemonic) => {
+  _generateWallet = async (mnemonic) => {
     try {
       nodejs.start('main.js');
       nodejs.channel.addListener(
@@ -94,34 +93,32 @@ class RestoreWalletScreen extends Component {
       return;
     }
     try {
-      this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic }));
-
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())
         .digest('hex');
 
-      const restoreAccountInfo = await restoreAccount(mnemonicHash);
-      console.log('restoreAccountInfo', restoreAccountInfo);
-
-      // const wallet = await WalletService.importWalletFromMnemonic('eth', mnemonic);
-      const wallet = this.walletInfo;
+      const [a, restoreAccountInfo] = await Promise.all([
+        this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic })),
+        restoreAccount(mnemonicHash),
+      ]);
 
       await AppPreferences.saveToKeychain({
         access_token: restoreAccountInfo.data.accessToken,
-        private_key: wallet.privateKey,
+        private_key: this.walletInfo.privateKey,
         mnemonic,
       });
 
-      AppConfig.PRIVATE_KEY = wallet.privateKey;
+      AppConfig.PRIVATE_KEY = this.walletInfo.privateKey;
       AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
 
       window.GlobalSocket.connect();
       Keyboard.dismiss();
 
-      await AsyncStorage.setItem('address', wallet.address);
+      await AsyncStorage.setItem('address', this.walletInfo.address);
       navigation.navigate('AddPinScreen');
     } catch (error) {
+      console.log('restoreWalletScreen.errors: ', error);
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {

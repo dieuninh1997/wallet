@@ -24,13 +24,19 @@ const CURRENCY_SYMBOLS = {
   JPY: '¥',
   PHP: '₱',
 };
-const COINS = ['BTC', 'ETH'];
+// const COINS = ['BTC', 'ETH'];
+const COINS = ['ETH'];
 const WALLET_COIN = 'MGC';
 const ALL_COINS = [WALLET_COIN, ...COINS];
 const COIN_COLORS = {
   [WALLET_COIN]: '#FFD82F',
   BTC: '#FFA034',
   ETH: '#2650BF',
+};
+const CHART_COLORS = {
+  [WALLET_COIN]: { r: 255, g: 216, b: 47 },
+  BTC: { r: 255, g: 169, b: 52 },
+  ETH: { r: 38, g: 80, b: 191 },
 };
 
 class DashboardScreen extends BaseScreen {
@@ -173,11 +179,11 @@ class DashboardScreen extends BaseScreen {
 
   _getPrice(coin) {
     if (coin === WALLET_COIN) {
-      const btcPrice = this._getPrice('BTC');
-      if (btcPrice) {
-        return btcPrice * 0.0013;
+      const ethPrice = this._getPrice('ETH');
+      if (ethPrice) {
+        return ethPrice * 0.023;
       }
-      return btcPrice;
+      return ethPrice;
     }
     return this._getRawObject(coin).PRICE;
   }
@@ -201,44 +207,31 @@ class DashboardScreen extends BaseScreen {
   }
 
   _renderPieChart = () => {
-    const btcValue = this._getCoinValue('BTC');
-    const ethValue = this._getCoinValue('ETH');
-    const mgcValue = this._getCoinValue('MGC');
+    const allCoins = [].concat(ALL_COINS).reverse();
+
+    let values = [];
+    for (const coin of allCoins) {
+      values.push(this._getCoinValue(coin));
+    }
+
+    const isAllValueZero = !Math.max(...values);
 
     let data = [];
-    if (!btcValue && !ethValue && !mgcValue) {
-      data = [
-        {
+    if (isAllValueZero) {
+      for (const coin of allCoins) {
+        data.push({
           population: 1,
-          color: { r: 255, g: 169, b: 52 },
-        },
-        {
-          population: 1,
-          color: { r: 38, g: 80, b: 191 },
-        },
-        {
-          population: 1,
-          color: { r: 255, g: 216, b: 47 },
-        },
-      ];
+          color: CHART_COLORS[coin]
+        });
+      }
     } else {
-      if (btcValue) {
-        data.push({
-          population: btcValue,
-          color: { r: 255, g: 169, b: 52 },
-        });
-      }
-      if (ethValue) {
-        data.push({
-          population: ethValue,
-          color: { r: 38, g: 80, b: 191 },
-        });
-      }
-      if (mgcValue) {
-        data.push({
-          population: mgcValue,
-          color: { r: 255, g: 216, b: 47 },
-        });
+      for (const i in allCoins) {
+        if (values[i] > 0) {
+          data.push({
+            population: values[i],
+            color: CHART_COLORS[allCoins[i]]
+          });
+        }
       }
     }
 

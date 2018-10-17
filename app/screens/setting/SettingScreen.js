@@ -40,11 +40,7 @@ export default class SettingScreen extends BaseScreen {
     super(props);
     this.state = {
       payload: {
-        emailNotification: false,
         swipeReceive: false,
-      },
-      userSetting: {
-        emailNotification: false,
       },
       walletId: null,
       user: {},
@@ -140,17 +136,6 @@ export default class SettingScreen extends BaseScreen {
       this.setState({
         userSettings: settings,
       });
-      for (const setting of settings) {
-        if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
-          const emailNotification = (parseInt(setting.value, 10) === 1);
-
-          this.setState({
-            userSetting: {
-              emailNotification,
-            },
-          });
-        }
-      }
       AppPreferences.saveUserSettings(settings);
     } catch (error) {
       console.log('SettingScreen._loadUserSettings', error);
@@ -178,6 +163,17 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
+  _getEmailNotificationSetting() {
+    const { userSettings } = this.state;
+    for (const setting of userSettings) {
+      if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
+        return (parseInt(setting.value) === 1);
+      }
+    }
+
+    return true; // default value
+  }
+
   _onChangeSwitch = (title) => {
     const { payload } = this.state;
 
@@ -185,23 +181,20 @@ export default class SettingScreen extends BaseScreen {
     this.setState({ payload });
   }
 
-  _onChangeSwitchEmailNotification = async () => {
-    const { userSetting } = this.state;
-    const email_notification = (!userSetting.emailNotification) ? 1 : 0;
+  _onChangeSwitchEmailNotification = async (value) => {
+    const emailNotification = value ? 1 : 0;
+    this._updateLocalUserSetting(Consts.USER_SETTINGS.EMAIL_NOTIFICATION, emailNotification);
+
     const params = {
-      email_notification,
+      email_notification: emailNotification,
     };
 
     try {
       const response = await updateUserSettings(params);
       const { message } = response;
 
-      this.setState({
-        userSetting: {
-          emailNotification: !userSetting.emailNotification,
-        },
-      });
       UIUtils.showToastMessage(message);
+      this._loadUserSettings();
     } catch (error) {
       UIUtils.showToastMessage(error.message);
       console.log('LocalCurrencyScreen._onClickConfirm', error);
@@ -217,19 +210,22 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onLocalCurrencyUpdated = (currency) => {
+    this._updateLocalUserSetting(Consts.USER_SETTINGS.CURRENCY, currency);
+    this.notify(Events.USER_SETTINGS_UPDATED);
+    this._loadUserSettings();
+  }
+
+  _updateLocalUserSetting(key, value) {
     const { userSettings } = this.state;
 
     for (const setting of userSettings) {
-      if (setting.key === Consts.USER_SETTINGS.CURRENCY) {
-        setting.value = currency;
+      if (setting.key === key) {
+        setting.value = value;
       }
     }
     this.setState({
       userSettings,
     });
-
-    this.notify(Events.USER_SETTINGS_UPDATED);
-    this._loadUserSettings();
   }
 
   _isEmailVerified = () => {
@@ -348,6 +344,7 @@ export default class SettingScreen extends BaseScreen {
 
   _renderReference() {
     const { payload, userSetting } = this.state;
+    const emailNotification = this._getEmailNotificationSetting();
 
     const currency = this._getLocalCurrency();
     const currencyLabel = currency ? I18n.t(`currency.${currency}.settingLabel`) : '';
@@ -362,7 +359,7 @@ export default class SettingScreen extends BaseScreen {
               containerStyle={styles.switchBorder}
               backgroundActive="#16ec7e"
               backgroundInactive="#fff"
-              value={userSetting.emailNotification}
+              value={emailNotification}
               innerCircleStyle={styles.innerCircle}
               changeValueImmediately
               onValueChange={value => this._onChangeSwitchEmailNotification(value)}

@@ -267,7 +267,8 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderProfile = () => {
-    const { walletId, userSecuritySettings } = this.state;
+    const { walletId, user, userSecuritySettings } = this.state;
+    const emailVerified = userSecuritySettings && userSecuritySettings.email_verified;
 
     return (
       <View>
@@ -289,20 +290,20 @@ export default class SettingScreen extends BaseScreen {
               <View style={styles.borderEmailMobileNumber}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.email')}</Text>
                 <View style={styles.activiRightGroup}>
-                  {userSecuritySettings && (userSecuritySettings.email_verified ? (
+                  {emailVerified ? (
                     <Text style={styles.textVerified}>
-                      {I18n.t('setting.verified')}
+                      {user.email}
                     </Text>
                   ) : (
                     <Text style={styles.textUnVerified}>
                       {I18n.t('setting.unverified')}
                     </Text>
-                  ))}
+                  )}
 
-                  <MaterialCommunityIcons
+                  {!emailVerified && <MaterialCommunityIcons
                     style={styles.iconChevronRight}
                     name="chevron-right"
-                  />
+                  />}
                 </View>
               </View>
             </TouchableWithoutFeedback>

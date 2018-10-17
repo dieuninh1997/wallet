@@ -7,10 +7,11 @@ import I18n from '../../i18n/i18n';
 import { CommonStyles } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
+import MangoBackButton from '../common/MangoBackButton';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = () => ({
-    headerLeft: <View />,
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('addPinScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,

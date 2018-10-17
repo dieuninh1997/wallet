@@ -31,6 +31,7 @@ export function register(registerInfo = {}) {
   const params = {
     email: registerInfo.email,
     passport_number: registerInfo.passport_number,
+    phone_number: registerInfo.phone_number,
     password: registerInfo.password,
     password_confirmation: registerInfo.password_confirmation,
     agree_term: 1,

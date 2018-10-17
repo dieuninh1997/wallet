@@ -19,7 +19,7 @@ export default class SetupCodeComponent extends Component {
     } = this.props;
     const imageLinks = [
       require('../../../../assets/setting/group2.png'),
-      require('../../../../assets/setting/group2.png'),
+      require('../../../../assets/setting/group3.png'),
       require('../../../../assets/setting/group4.png'),
     ];
     let imageSource;

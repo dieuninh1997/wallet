@@ -932,9 +932,9 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				0360CF2DF72D43F49704938E /* Embed Frameworks */,
-				A858CE99FC2F424392010E23 /* Build NodeJS Mobile Native Modules */,
-				4DEB024F35AB403886166390 /* Sign NodeJS Mobile Native Modules */,
-				E88449D871E047E0B4D50113 /* Remove NodeJS Mobile Framework Simulator Strips */,
+				1EB9D401D4B64923AF34C4BF /* Build NodeJS Mobile Native Modules */,
+				12308712CFC04C5FA5EB2A3B /* Sign NodeJS Mobile Native Modules */,
+				A5DB3E9C2B0940C782AB8241 /* Remove NodeJS Mobile Framework Simulator Strips */,
 			);
 			buildRules = (
 			);

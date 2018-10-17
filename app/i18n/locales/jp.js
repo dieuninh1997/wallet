@@ -78,6 +78,7 @@ export default {
     speedSlowly: '30 + Minute',
     speedRegular: '5 + Minute',
     speedFast: '2 + Minute',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   setting: {
     title: '設定',
@@ -120,6 +121,7 @@ export default {
     title: 'リクエスト',
     copyAddress: 'アドレスのコピー',
     copied: 'コピーしました',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   transactions: {
     title: 'トランザクション',
@@ -216,5 +218,8 @@ export default {
     important: '※紛失注意！※ 紛失した場合、復元できません。\n※共有注意！※ このファイルを悪意あるWebサイトで使用するとあなたの資金が盗まれます。',
     btnCopy: 'Copy',
     btnNext: 'Next',
+  },
+  exit: {
+    content: 'Please click BACK again to exit',
   },
 };

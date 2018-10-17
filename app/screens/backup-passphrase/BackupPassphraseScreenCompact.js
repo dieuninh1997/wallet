@@ -10,7 +10,7 @@ import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
-import { CommonStyles, CommonColors, CommonSize } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, Fonts } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
@@ -67,7 +67,6 @@ class BackupPassphraseScreenCompact extends Component {
 
   _renderQrCodeSection = () => {
     const { mnemonic } = this.state;
-    console.log('Mnemonic: ', mnemonic);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
@@ -77,17 +76,18 @@ class BackupPassphraseScreenCompact extends Component {
           </Text>
         </View>
 
-        <View style={styles.qrCodeContainer}>
-          {!mnemonic ? null : (
-            <QRCode
-              value={mnemonic}
-              size={scale(200)}
-            />
-          )}
-        </View>
-
-        <View style={styles.addressContainer}>
-          <Text style={styles.txtMnemonic}>{mnemonic}</Text>
+        <View style={styles.qrCodeSectionContainer}>
+          <View style={styles.qrCodeContainer}>
+            {!mnemonic ? null : (
+              <QRCode
+                value={mnemonic}
+                size={scale(230)}
+              />
+            ) }
+          </View>
+          <View style={styles.addressContainer}>
+            <Text style={styles.addressText}>{mnemonic}</Text>
+          </View>
         </View>
 
         <View style={styles.viewMnemonic}>
@@ -143,7 +143,6 @@ const styles = ScaledSheet.create({
   contentContainer: {
     padding: '10@s',
   },
-
   // Section qrCode
   qrCodeSectionContainer: {
     justifyContent: 'center',
@@ -151,35 +150,36 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeContainer: {
-    width: '220@s',
-    height: '220@s',
+    width: '290@s',
+    height: '290@s',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
     backgroundColor: CommonColors.headerBarBgColor,
-    elevation: 4,
+    ...UIUtils.generateShadowStyle(),
   },
 
-  qrCodeImage: {
-    width: '200@s',
-    height: '200@s',
+  addressContainer: {
+    width: '250@s',
+    borderBottomLeftRadius: '8@s',
+    borderBottomRightRadius: '8@s',
+    paddingHorizontal: '16@s',
+    paddingVertical: '12@s',
+    backgroundColor: '#E4E9F1',
+    marginBottom: '20@s',
+  },
+
+  addressText: {
+    textAlign: 'center',
+    color: '#2f64d1',
+    fontSize: '15@ms',
+    ...Fonts.Ubuntu_Light,
   },
 
   viewMnemonic: {
     marginLeft: '20@s',
     marginRight: '20@s',
     marginBottom: '10@s',
-    // height: '300@s',
-  },
-
-  addressContainer: {
-    width: '260@s',
-    borderRadius: '8@s',
-    backgroundColor: '#E4E9F1',
-    marginBottom: '10@s',
-    marginTop: '10@s',
-    marginRight: '20@s',
-    marginLeft: '20@s',
   },
 
   // Section button
@@ -208,19 +208,14 @@ const styles = ScaledSheet.create({
 
   btnCopyAddress: {
     width: '140@s',
-    marginBottom: '10@s',
+    marginBottom: '15@s',
+    marginHorizontal: '5@s',
   },
 
   txtNote: {
-    fontSize: '14@s',
+    textAlign: 'center',
+    fontSize: '14@ms',
     color: CommonColors.highlightRed,
-  },
-
-  txtMnemonic: {
-    fontSize: '16@s',
-    color: CommonColors.highlightBlue,
-    fontWeight: 'bold',
-    paddingHorizontal: '10@s',
-    paddingVertical: '10@s',
+    ...Fonts.Ubuntu_Light,
   },
 });

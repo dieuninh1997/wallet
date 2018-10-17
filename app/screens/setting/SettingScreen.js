@@ -300,10 +300,12 @@ export default class SettingScreen extends BaseScreen {
                     </Text>
                   )}
 
-                  {!emailVerified && <MaterialCommunityIcons
-                    style={styles.iconChevronRight}
-                    name="chevron-right"
-                  />}
+                  {!emailVerified && (
+                    <MaterialCommunityIcons
+                      style={styles.iconChevronRight}
+                      name="chevron-right"
+                    />
+                  )}
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -460,7 +462,7 @@ export default class SettingScreen extends BaseScreen {
               </View>
             ) : null}
 
-            <View style={styles.borderUseFaceID}>
+            {/* <View style={styles.borderUseFaceID}>
               <Text style={styles.titleSetting}>{I18n.t('setting.swipeToReceive')}</Text>
               <View style={styles.activiRightGroup}>
                 <Switch
@@ -473,7 +475,7 @@ export default class SettingScreen extends BaseScreen {
                   onValueChange={() => this._onChangeSwitch(SettingScreen.TITLE_SWITCH.swipeReceive)}
                 />
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
@@ -525,6 +527,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   tableProfile: {
+    flexDirection: 'column',
     borderRadius: '13@s',
     borderColor: '#e0e4eb',
     backgroundColor: '#FFF',
@@ -532,7 +535,6 @@ const styles = ScaledSheet.create({
     marginLeft: '16@s',
     marginRight: '16@s',
     marginTop: '10@s',
-    flexDirection: 'column',
   },
   borderWalletId: {
     borderBottomWidth: '1@s',
@@ -649,7 +651,6 @@ const styles = ScaledSheet.create({
     height: '45@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
-    borderBottomWidth: '1@s',
     borderColor: '#ced4dd',
   },
   groupUseFaceID: {
@@ -662,6 +663,8 @@ const styles = ScaledSheet.create({
     height: '49@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
+    borderTopWidth: '1@s',
+    borderColor: '#ced4dd',
   },
   activiRightGroup: {
     flexDirection: 'row',

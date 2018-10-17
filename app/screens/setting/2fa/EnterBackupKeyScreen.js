@@ -30,7 +30,6 @@ export default class EnterBackupKeyScreen extends Component {
 
   componentDidMount = () => {
     const { params } = this.props.navigation.state;
-    console.log('EnterBackupKeyScreen =================>', params);
     this.setState({
       googleOtpKeyOrigin: params,
     });
@@ -62,13 +61,13 @@ export default class EnterBackupKeyScreen extends Component {
         </View>
 
         <View style={styles.textBlock}>
-          <Text style={styles.textGuide}>Please enter the 16-digit key you just backed up.</Text>
+          <Text style={styles.textGuide}>{I18n.t('setting2fa.enterGoogleOtpKey')}</Text>
         </View>
 
         <View style={styles.inputBlock}>
           <TextInput
             editable
-            secureTextEntry
+            placeholder={I18n.t('setting2fa.enterBackupKey')}
             ref={(input) => { this.googleOtpKeyInput = input }}
             style={styles.inputText}
           />

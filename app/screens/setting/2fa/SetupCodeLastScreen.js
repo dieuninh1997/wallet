@@ -23,7 +23,7 @@ export default class SetupCodeLastScreen extends Component {
 
   _handleNext = () => {
     const { navigation } = this.props;
-    navigation.navigate('GoogleAuthScreen');
+    navigation.navigate('GoogleAuthScreen', false);
   }
 
   render() {

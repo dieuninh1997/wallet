@@ -51,8 +51,8 @@ export default class MangoTabBar extends Component {
             onPress={() => this._onTabPress(0)}
           >
             <Image
-              style={[styles.tab, activeTab === 0 ? styles.tabActive : {}]}
-              resizeMode="center"
+              style={activeTab === 0 ? styles.tabActive : styles.tab}
+              resizeMode="stretch"
               source={activeTab === 0 ? MangoTabImages.dashboardTabFocused : MangoTabImages.dashboardTab}
             />
           </TouchableOpacity>
@@ -61,8 +61,8 @@ export default class MangoTabBar extends Component {
             onPress={() => this._onTabPress(1)}
           >
             <Image
-              style={[styles.tab, activeTab === 1 ? styles.tabActive : {}]}
-              resizeMode="center"
+              style={activeTab === 1 ? styles.centerTabActive : styles.centerTab}
+              resizeMode="stretch"
               source={activeTab === 1 ? MangoTabImages.requestTabFocused : MangoTabImages.requestTab}
             />
           </TouchableOpacity>
@@ -71,8 +71,8 @@ export default class MangoTabBar extends Component {
             onPress={() => this._onTabPress(2)}
           >
             <Image
-              style={[styles.tab, activeTab === 2 ? styles.tabActive : {}]}
-              resizeMode="center"
+              style={activeTab === 2 ? styles.centerTabActive : styles.centerTab}
+              resizeMode="stretch"
               source={activeTab === 2 ? MangoTabImages.sendTabFocused : MangoTabImages.sendTab}
             />
           </TouchableOpacity>
@@ -81,8 +81,8 @@ export default class MangoTabBar extends Component {
             onPress={() => this._onTabPress(3)}
           >
             <Image
-              style={[styles.tab, activeTab === 3 ? styles.tabActive : {}]}
-              resizeMode="center"
+              style={activeTab === 3 ? styles.tabActive : styles.tab}
+              resizeMode="stretch"
               source={activeTab === 3 ? MangoTabImages.transactionTabFocused : MangoTabImages.transactionTab}
             />
           </TouchableOpacity>
@@ -97,6 +97,20 @@ const { width, height } = Dimensions.get('window');
 const tabbarHeight = scale(119);
 const tabbarTop = height - tabbarHeight - CommonSize.headerHeight - UIUtils.getStatusBarHeight()
                   + UIUtils.getIphoneXBottomInsetHeight() - UIUtils.getBottomInsetHeight();
+
+const tabStyle = {
+  width: scale(48),
+  height: scale(48),
+  marginLeft: scale(15),
+  marginRight: scale(15),
+}
+
+const activeTabStyle = {
+  width: scale(86),
+  height: scale(86),
+  marginLeft: -scale(4),
+  marginRight: -scale(4),
+}
 
 const styles = ScaledSheet.create({
   tabbar: {
@@ -115,8 +129,8 @@ const styles = ScaledSheet.create({
     backgroundColor: '#0000',
   },
   tabs: {
-    flex: 1,
     width: '100%',
+    height: '100@s',
     marginTop: '20@s',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -126,12 +140,19 @@ const styles = ScaledSheet.create({
     left: 0,
   },
   tab: {
-    width: '86@s',
-    height: '86@s',
-    marginLeft: -scale(4),
-    marginRight: -scale(4),
+    ...tabStyle,
+    marginTop: '2@s'
   },
   tabActive: {
-    marginTop: '5@s',
+    ...activeTabStyle,
+    marginTop: '18@s'
   },
+  centerTab: {
+    ...tabStyle,
+    marginBottom: '2@s'
+  },
+  centerTabActive: {
+    ...activeTabStyle,
+    marginTop: '10@s'
+  }
 });

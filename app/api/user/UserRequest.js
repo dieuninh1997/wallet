@@ -119,8 +119,8 @@ export function enableGoogleOtp(password, otp) {
   return post(url, params);
 }
 
-export function disableGoogleOtp(otp) {
+export function disableGoogleOtp(password, otp) {
   const url = '/disable-otp';
-  const params = { otp };
+  const params = { password, otp };
   return post(url, params);
 }

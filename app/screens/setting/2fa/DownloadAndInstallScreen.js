@@ -52,9 +52,9 @@ export default class DownloadAndInstallScreen extends Component {
         </View>
 
         <View style={styles.textBlock}>
-          <Text style={styles.textGuide}>Please download and install
-            <Text style={styles.textLink} onPress={() => Linking.openURL(googleAuthLink)}> Google Authenticator </Text>
-            on your phone to begin.
+          <Text style={styles.textGuide}>{I18n.t('setting2fa.downloadAndInstall')}
+            <Text style={styles.textLink} onPress={() => Linking.openURL(googleAuthLink)}> {I18n.t('setting2fa.googleAuthenticator')} </Text>
+            {I18n.t('setting2fa.onYourPhone')}
           </Text>
         </View>
 

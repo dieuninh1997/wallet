@@ -10,7 +10,7 @@ import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
-import { enableGoogleOtp } from '../../../api/user/UserRequest';
+import { enableGoogleOtp, disableGoogleOtp } from '../../../api/user/UserRequest';
 import UIUtils from '../../../utils/UIUtils';
 
 export default class GoogleAuthScreen extends Component {
@@ -28,10 +28,18 @@ export default class GoogleAuthScreen extends Component {
       password: '',
       smsCode: '',
       googleOtpCode: '',
+      googleOtpStatus: false,
     };
     this.PASSWORD = 'password';
     this.SMSCODE = 'smsCode';
     this.GOOGLEOTPCODE = 'googleOtpCode';
+  }
+
+  componentDidMount = () => {
+    const { params } = this.props.navigation.state;
+    this.setState({
+      googleOtpStatus: params,
+    });
   }
 
   _onTextChanged = (type, text) => {
@@ -68,16 +76,16 @@ export default class GoogleAuthScreen extends Component {
   }
 
   _handleEnableGoogleOtp = async () => {
-    const { password, smsCode, googleOtpCode } = this.state;
+    const { password, smsCode, googleOtpCode, googleOtpStatus } = this.state;
 
     if (!this._validateClient()) {
       return;
     }
 
     try {
-      const responseEnableGoogleOtp = await enableGoogleOtp(password, googleOtpCode);
+      const responseEnableGoogleOtp = googleOtpStatus ? await disableGoogleOtp(password, googleOtpCode) : await enableGoogleOtp(password, googleOtpCode);
       const { navigation } = this.props;
-      navigation.navigate('SettingScreen');
+      navigation.navigate('SettingScreen', true);
     } catch (error) {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
@@ -90,7 +98,7 @@ export default class GoogleAuthScreen extends Component {
   _sendSms = () => {}
 
   render() {
-    const { password, smsCode, googleOtpCode } = this.state;
+    const { password, smsCode, googleOtpCode, googleOtpStatus } = this.state;
 
     return (
       <View style={styles.GoogleAuth}>
@@ -148,7 +156,7 @@ export default class GoogleAuthScreen extends Component {
 
         <View style={styles.btnBlock}>
           <MangoGradientButton
-            btnText={I18n.t('backupPassphrase.btnNext')}
+            btnText={googleOtpStatus ? I18n.t('setting.disabled') : I18n.t('setting.enabled')}
             btnStyle={styles.btnNext}
             onPress={() => this._handleEnableGoogleOtp()}
           />

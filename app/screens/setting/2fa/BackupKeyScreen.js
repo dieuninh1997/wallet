@@ -61,7 +61,7 @@ export default class BackupKeyScreen extends Component {
         </View>
 
         <View style={styles.textBlock}>
-          <Text style={styles.textGuide}>Please save this key on paper. This key will allow you to recover your Google Authentication in case of phone loss.</Text>
+          <Text style={styles.textGuide}>{I18n.t('setting2fa.saveKeyOnPaper')}</Text>
         </View>
 
         <View style={styles.inputBlock}>

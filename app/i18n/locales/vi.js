@@ -204,6 +204,11 @@ export default {
     smsCodeRequired: 'SMS code is required!',
     googleOtpCodeRequired: 'Google auth code is required!',
     googleOtpCodeRequiredNumber: 'Google auth is not a number!',
+    saveKeyOnPaper: 'Please save this key on paper. This key will allow you to recover your Google Authentication in case of phone loss.',
+    downloadAndInstall: 'Please download and install',
+    googleAuthenticator: 'Google Authenticator',
+    onYourPhone: 'on your phone to begin.',
+    enterGoogleOtpKey: 'Please enter the 16-digit key you just backed up.',
   },
   restoreWalletScreen: {
     title: 'Khôi phục tài khoản',

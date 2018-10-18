@@ -143,10 +143,13 @@ EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amo
 
     const transactionGas = await wallet.estimateGas(transactionInfo);
     const transaction = await wallet.sendTransaction(transactionInfo);
-    return {
-      transaction,
-      fee: transactionGas.toNumber() * 0.00000002,
-    };
+    const transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
+    transaction.transactionUrl = transactionUrl
+    // return {
+    //   transaction,
+    //   fee: transactionGas.toNumber() * 0.00000002,
+    // };
+    return transaction;
   } catch (error) {
     throw error;
   }

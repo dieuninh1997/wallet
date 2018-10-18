@@ -24,6 +24,7 @@ import BaseScreen from '../BaseScreen';
 import Consts from '../../utils/Consts';
 import AppPreferences from '../../utils/AppPreferences';
 import { getUserSettings } from '../../api/user/UserRequest';
+import { sendMailTransaction } from '../../api/transaction-history/TransactionRequest';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
@@ -227,6 +228,15 @@ class SendScreen extends BaseScreen {
       console.log('SendScreen.transaction: ', transaction);
 
       UIUtils.showToastMessage(I18n.t('send.submitted'));
+
+      const params = {
+        destination_address: walletAddress,
+        amount: formSendCoin.coinValue,
+        transaction_url: transaction.transactionUrl,
+        coin_name: coinSelected.name,
+      };
+      const sendMailTransactionR = await sendMailTransaction(params);
+
       this._resetFormSendCoin();
     } catch (error) {
       UIUtils.showToastMessage(error.message);

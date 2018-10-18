@@ -67,6 +67,10 @@ class RequestScreen extends Component {
         <View style={styles.addressContainer}>
           <Text style={styles.addressText}>{walletAddress}</Text>
         </View>
+
+        <View style={styles.textNoticeContainer}>
+          <Text style={styles.textNotice}>{I18n.t('request.notice')}</Text>
+        </View>
       </View>
     );
   }
@@ -119,6 +123,7 @@ const styles = ScaledSheet.create({
 
   contentContainer: {
     padding: '10@s',
+    alignItems: 'center',
   },
 
   // Section qrCode
@@ -128,8 +133,8 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeContainer: {
-    width: '280@s',
-    height: '280@s',
+    width: '300@s',
+    height: '300@s',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8@s',
@@ -138,12 +143,12 @@ const styles = ScaledSheet.create({
   },
 
   qrCodeImage: {
-    width: '260@s',
-    height: '260@s',
+    width: '290@s',
+    height: '290@s',
   },
 
   addressContainer: {
-    width: '240@s',
+    width: '260@s',
     borderBottomLeftRadius: '8@s',
     borderBottomRightRadius: '8@s',
     paddingHorizontal: '16@s',
@@ -159,9 +164,22 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Light,
   },
 
+  textNoticeContainer: {
+    width: '320@s',
+    marginBottom: '15@s',
+  },
+
+  textNotice: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+
   groupBtnContainer: {
     flexDirection: 'row',
     width: '320@s',
+    paddingTop: '3@s',
     justifyContent: 'space-between',
   },
 
@@ -171,6 +189,7 @@ const styles = ScaledSheet.create({
     borderRadius: '28@s',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: '4@s',
     backgroundColor: CommonColors.headerBarBgColor,
     ...UIUtils.generateShadowStyle(),
   },

@@ -362,6 +362,10 @@ class SendScreen extends BaseScreen {
 
           </View>
         </TouchableWithoutFeedback>
+
+        <View style={styles.textNoticeContainer}>
+          <Text style={styles.textNotice}>{I18n.t('send.notice')}</Text>
+        </View>
       </View>
     );
   }
@@ -546,11 +550,23 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Light,
   },
 
+  textNoticeContainer: {
+    marginTop: '15@s',
+    width: '320@s',
+  },
+
+  textNotice: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: '14@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+
   // Section button continue
   buttonFixBottom: {
     // flex: 1,
     // justifyContent: 'flex-end',
-    marginTop: '130@s',
+    marginTop: '100@s',
     marginBottom: '10@s',
   },
 
@@ -561,6 +577,7 @@ const styles = ScaledSheet.create({
     marginHorizontal: '5@s',
     marginBottom: '10@s',
   },
+
   btnContinuee: {
     width: '262@s',
     height: '64@s',

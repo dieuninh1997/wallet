@@ -18,3 +18,8 @@ export function getOrdersPending(params) {
   const url = '/orders/pending';
   return get(url, params);
 }
+
+export function sendMailTransaction(params) {
+  const url = '/transaction-notify-email';
+  return post(url, params);
+}

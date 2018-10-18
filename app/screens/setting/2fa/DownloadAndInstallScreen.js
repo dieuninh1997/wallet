@@ -12,6 +12,7 @@ import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import { createGoogleOtpSecret } from '../../../api/user/UserRequest';
 import UIUtils from '../../../utils/UIUtils';
+import Consts from '../../../utils/Consts';
 
 export default class DownloadAndInstallScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -41,7 +42,7 @@ export default class DownloadAndInstallScreen extends Component {
   }
 
   render() {
-    const googleAuthLink = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
+    const googleAuthLink = Consts.GOOGLE_AUTHEN_LINK;
     return (
       <View style={styles.downloadAndInstall}>
         <View style={styles.imageBlock}>

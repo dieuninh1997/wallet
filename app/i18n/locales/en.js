@@ -89,6 +89,7 @@ export default {
     speedSlowly: '30 + Minute',
     speedRegular: '5 + Minute',
     speedFast: '2 + Minute',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   setting: {
     title: 'Settings',
@@ -132,6 +133,7 @@ export default {
     title: 'Request',
     copyAddress: 'Copy Address',
     copied: 'Copied success',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   transactions: {
     title: 'Transactions',
@@ -253,8 +255,11 @@ export default {
   backupPassphrase: {
     title: 'Backup your Passphrase',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
-    important: '**Do not lose it!** It cannot be recovered if you lose it.',
+    important: 'Do not lose it! It cannot be recovered if you lose it.',
     btnCopy: 'Copy',
     btnNext: 'Next',
+  },
+  exit: {
+    content: 'Please click BACK again to exit',
   },
 };

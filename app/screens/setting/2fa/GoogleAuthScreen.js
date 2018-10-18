@@ -83,7 +83,7 @@ export default class GoogleAuthScreen extends Component {
     }
 
     try {
-      const responseEnableGoogleOtp = googleOtpStatus ? await disableGoogleOtp(password, googleOtpCode) : await enableGoogleOtp(password, googleOtpCode);
+      const responseEnableGoogleOtp = googleOtpStatus ? await disableGoogleOtp(password, smsCode, googleOtpCode) : await enableGoogleOtp(password, smsCode, googleOtpCode);
       const { navigation } = this.props;
       navigation.navigate('SettingScreen', true);
     } catch (error) {

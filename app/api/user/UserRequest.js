@@ -113,14 +113,14 @@ export function createGoogleOtpSecret() {
   return post(url);
 }
 
-export function enableGoogleOtp(password, otp) {
+export function enableGoogleOtp(password, smsCode, otp) {
   const url = '/enable-otp';
-  const params = { password, otp };
+  const params = { password, smsCode, otp };
   return post(url, params);
 }
 
-export function disableGoogleOtp(password, otp) {
+export function disableGoogleOtp(password, smsCode, otp) {
   const url = '/disable-otp';
-  const params = { password, otp };
+  const params = { password, smsCode, otp };
   return post(url, params);
 }

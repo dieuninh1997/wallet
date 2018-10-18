@@ -89,6 +89,7 @@ export default {
     speedSlowly: '30 + Minute',
     speedRegular: '5 + Minute',
     speedFast: '2 + Minute',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   setting: {
     title: 'Cài đặt',
@@ -130,8 +131,9 @@ export default {
   },
   request: {
     title: 'Nhận',
-    copyAddress: 'Copy địa chỉ',
-    copied: 'Copied thành công',
+    copyAddress: 'Sao chép địa chỉ',
+    copied: 'Sao chép thành công',
+    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   transactions: {
     title: 'Giao dịch',
@@ -253,8 +255,11 @@ export default {
   backupPassphrase: {
     title: 'Sao lưu khóa bảo mật',
     note: 'Hãy sao lưu các từ bên dưới theo thứ tự. Những từ này sẽ cho phép bạn khôi phục ví.\n',
-    important: '**Đừng làm mất!** Bạn không thể khôi phục ví nếu mất nó.',
+    important: 'Đừng làm mất! Bạn không thể khôi phục ví nếu mất nó.',
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',
+  },
+  exit: {
+    content: 'Please click BACK again to exit',
   },
 };

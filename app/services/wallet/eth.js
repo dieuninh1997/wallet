@@ -143,28 +143,13 @@ EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amo
 
     const transactionGas = await wallet.estimateGas(transactionInfo);
     const transaction = await wallet.sendTransaction(transactionInfo);
-    const transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
-    transaction.transactionUrl = transactionUrl
-    // return {
-    //   transaction,
-    //   fee: transactionGas.toNumber() * 0.00000002,
-    // };
+    transaction.transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
+
     return transaction;
   } catch (error) {
     throw error;
   }
 };
-
-// EthService.sendTransaction = async (transaction, privateKey) => {
-//   try {
-//     const wallet = new ethers.Wallet(Buffer.from(privateKey, 'hex'));
-//     wallet.provider = ethers.providers.getDefaultProvider(provider);
-
-//     await wallet.sendTransaction(transaction);
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 EthService.getCurrentGasPrices = async () => {
   try {

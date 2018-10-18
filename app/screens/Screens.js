@@ -1,5 +1,6 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
+import LoginFacebook from './login/LoginFacebook';
 import MainScreen from './main/MainScreen';
 import CreateWalletScreen from './createwallet/CreateWalletScreen';
 import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
@@ -27,6 +28,7 @@ import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
 import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
 
 export default {
+  // LoginFacebook: { screen: LoginFacebook },
   SplashScreen: { screen: SplashScreen },
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },
@@ -45,13 +47,13 @@ export default {
   BackupPassphraseScreenCompact: { screen: BackupPassphraseScreenCompact },
   TransactionDetailScreen: { screen: TransactionDetailScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
-  TermsConditionScreen: {screen: TermsConditionScreen},
-  AddPinScreen: {screen: AddPinScreen},
-  BackupKeyScreen: {screen: BackupKeyScreen},
-  DownloadAndInstallScreen: {screen: DownloadAndInstallScreen},
-  EnterBackupKeyScreen: {screen: EnterBackupKeyScreen},
-  GoogleAuthScreen: {screen: GoogleAuthScreen},
-  SetupCodeFirstScreen: {screen: SetupCodeFirstScreen},
-  SetupCodeSecondScreen: {screen: SetupCodeSecondScreen},
-  SetupCodeLastScreen: {screen: SetupCodeLastScreen},
+  TermsConditionScreen: { screen: TermsConditionScreen },
+  AddPinScreen: { screen: AddPinScreen },
+  BackupKeyScreen: { screen: BackupKeyScreen },
+  DownloadAndInstallScreen: { screen: DownloadAndInstallScreen },
+  EnterBackupKeyScreen: { screen: EnterBackupKeyScreen },
+  GoogleAuthScreen: { screen: GoogleAuthScreen },
+  SetupCodeFirstScreen: { screen: SetupCodeFirstScreen },
+  SetupCodeSecondScreen: { screen: SetupCodeSecondScreen },
+  SetupCodeLastScreen: { screen: SetupCodeLastScreen },
 };

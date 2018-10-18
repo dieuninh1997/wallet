@@ -217,6 +217,7 @@ Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, a
     const numberOfTokens = ethers.utils.parseUnits(amount.toString(), decimals);
 
     const transaction = await contractWithSigner.transfer(receiveAddress, numberOfTokens, options);
+    transaction.transactionUrl = urljoin(Erc20Service.broadcastTransactionUrl, 'tx', transaction.hash);
     return transaction;
   } catch (error) {
     throw error;

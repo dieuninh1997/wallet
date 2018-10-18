@@ -67,4 +67,12 @@ export default class Consts {
     //   symbol: 'btc',
     // },
   ];
+
+  static MANGO_STEP_OVAL = {
+    first: 'first',
+    second: 'second',
+    last: 'last',
+  }
+
+  static GOOGLE_AUTHEN_LINK = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
 }

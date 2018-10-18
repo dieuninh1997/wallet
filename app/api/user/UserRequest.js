@@ -107,3 +107,20 @@ export function getUserSettings() {
   };
   return get(url, params);
 }
+
+export function createGoogleOtpSecret() {
+  const url = '/create-otp-secret';
+  return post(url);
+}
+
+export function enableGoogleOtp(password, smsCode, otp) {
+  const url = '/enable-otp';
+  const params = { password, smsCode, otp };
+  return post(url, params);
+}
+
+export function disableGoogleOtp(password, smsCode, otp) {
+  const url = '/disable-otp';
+  const params = { password, smsCode, otp };
+  return post(url, params);
+}

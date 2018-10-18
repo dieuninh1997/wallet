@@ -53,6 +53,10 @@ export default class SettingScreen extends BaseScreen {
     };
   }
 
+  componentWillReceiveProps(props) {
+    this._onRefresh();
+  }
+
   componentDidMount = async () => {
     try {
       const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
@@ -207,6 +211,12 @@ export default class SettingScreen extends BaseScreen {
 
   _showchangePassword = () => {
     this._changePassword.setModalVisible(true);
+  }
+
+  _showSettingGoogleOtp = () => {
+    const { userSecuritySettings } = this.state;
+    const { navigation } = this.props;
+    userSecuritySettings && userSecuritySettings.otp_verified ? navigation.navigate('GoogleAuthScreen', true) : navigation.navigate('DownloadAndInstallScreen');
   }
 
   _onLocalCurrencyUpdated = (currency) => {
@@ -386,25 +396,27 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderSecurity() {
-    const { payload, isSupportedTouchId, isEnableTouchId } = this.state;
+    const { payload, isSupportedTouchId, isEnableTouchId, userSecuritySettings } = this.state;
     const { navigation } = this.props;
 
     return (
       <View>
         <Text style={styles.textSecurity}>{I18n.t('setting.security')}</Text>
         <View style={styles.tableSecurity}>
-          <View style={styles.borderStepVerification}>
-            <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
-            <View style={styles.activiRightGroup}>
-              <Text style={styles.textUnVerified}>
-                {I18n.t('setting.disabled')}
-              </Text>
-              <MaterialCommunityIcons
-                style={styles.iconChevronRight}
-                name="chevron-right"
-              />
+          <TouchableWithoutFeedback onPress={() => this._showSettingGoogleOtp()}>
+            <View style={styles.borderStepVerification}>
+              <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
+              <View style={styles.activiRightGroup}>
+                <Text style={styles.textUnVerified}>
+                  {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.disabled') : I18n.t('setting.enabled')}
+                </Text>
+                <MaterialCommunityIcons
+                  style={styles.iconChevronRight}
+                  name="chevron-right"
+                />
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           <View style={styles.groupChangePassword}>
             <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
               <View style={styles.borderChangePassword}>

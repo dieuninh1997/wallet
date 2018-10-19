@@ -4,6 +4,7 @@ import {
   TextInput,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
@@ -52,35 +53,37 @@ export default class EnterBackupKeyScreen extends Component {
 
   render() {
     return (
-      <View style={styles.EnterBackupKey}>
-        <View style={styles.imageBlock}>
-          <Image
-            source={require('../../../../assets/setting/noted.png')}
-            style={styles.image}
-          />
-        </View>
+      <ScrollView style = {{flex:1}} ref = 'scroll' contentContainerStyle={{ flexGrow: 1 }} >
+        <View style={styles.EnterBackupKey}>
+          <View style={styles.imageBlock}>
+            <Image
+              source={require('../../../../assets/setting/noted.png')}
+              style={styles.image}
+            />
+          </View>
 
-        <View style={styles.textBlock}>
-          <Text style={styles.textGuide}>{I18n.t('setting2fa.enterGoogleOtpKey')}</Text>
-        </View>
+          <View style={styles.textBlock}>
+            <Text style={styles.textGuide}>{I18n.t('setting2fa.enterGoogleOtpKey')}</Text>
+          </View>
 
-        <View style={styles.inputBlock}>
-          <TextInput
-            editable
-            placeholder={I18n.t('setting2fa.enterBackupKey')}
-            ref={(input) => { this.googleOtpKeyInput = input }}
-            style={styles.inputText}
-          />
-        </View>
+          <View style={styles.inputBlock}>
+            <TextInput
+              editable
+              placeholder={I18n.t('setting2fa.enterBackupKey')}
+              ref={(input) => { this.googleOtpKeyInput = input }}
+              style={styles.inputText}
+            />
+          </View>
 
-        <View style={styles.btnBlock}>
-          <MangoGradientButton
-            btnText={I18n.t('backupPassphrase.btnNext')}
-            btnStyle={styles.btnNext}
-            onPress={() => this._handleNext()}
-          />
+          <View style={styles.btnBlock}>
+            <MangoGradientButton
+              btnText={I18n.t('backupPassphrase.btnNext')}
+              btnStyle={styles.btnNext}
+              onPress={() => this._handleNext()}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

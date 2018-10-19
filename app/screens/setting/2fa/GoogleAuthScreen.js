@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   Image,
+  ScrollView
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
@@ -101,67 +102,69 @@ export default class GoogleAuthScreen extends Component {
     const { password, smsCode, googleOtpCode, googleOtpStatus } = this.state;
 
     return (
-      <View style={styles.GoogleAuth}>
+      <ScrollView style = {{flex:1}} ref = 'scroll' contentContainerStyle={{ flexGrow: 1 }} >
+        <View style={styles.GoogleAuth}>
 
-        <View style={styles.inputBlock}>
-          <Image
-            source={require('../../../../assets/setting/key.png')}
-            style={styles.image}
-          />
-          <TextInput
-            editable
-            secureTextEntry
-            onChangeText = {(text)=> this._onTextChanged(this.PASSWORD, text)}
-            value = {password}
-            style={styles.inputText}
-            placeholder={I18n.t('setting2fa.loginPassword')}
-          />
-        </View>
+          <View style={styles.inputBlock}>
+            <Image
+              source={require('../../../../assets/setting/key.png')}
+              style={styles.image}
+            />
+            <TextInput
+              editable
+              secureTextEntry
+              onChangeText = {(text)=> this._onTextChanged(this.PASSWORD, text)}
+              value = {password}
+              style={styles.inputText}
+              placeholder={I18n.t('setting2fa.loginPassword')}
+            />
+          </View>
 
-        <View style={styles.inputBlock}>
-          <Image
-            source={require('../../../../assets/setting/smsAuth.png')}
-            style={styles.image}
-          />
-          <TextInput
-            editable
-            onChangeText = {(text)=> this._onTextChanged(this.SMSCODE, text)}
-            value = {smsCode}
-            style={[styles.inputText, styles.width137, styles.marginRight27]}
-            placeholder={I18n.t('setting2fa.smsAuthCode')}
-          />
-          <MangoGradientButton
-            btnText={I18n.t('setting2fa.sendSms')}
-            colorOptions={['#4e73e4', '#2150de', '#1c43b8']}
-            btnStyle={styles.btnSendSms}
-            buttonTextStyle={styles.textWhite}
-            onPress={() => this._sendSms()}
-          />
-        </View>
+          <View style={styles.inputBlock}>
+            <Image
+              source={require('../../../../assets/setting/smsAuth.png')}
+              style={styles.image}
+            />
+            <TextInput
+              editable
+              onChangeText = {(text)=> this._onTextChanged(this.SMSCODE, text)}
+              value = {smsCode}
+              style={[styles.inputText, styles.width137, styles.marginRight27]}
+              placeholder={I18n.t('setting2fa.smsAuthCode')}
+            />
+            <MangoGradientButton
+              btnText={I18n.t('setting2fa.sendSms')}
+              colorOptions={['#4e73e4', '#2150de', '#1c43b8']}
+              btnStyle={styles.btnSendSms}
+              buttonTextStyle={styles.textWhite}
+              onPress={() => this._sendSms()}
+            />
+          </View>
 
-        <View style={styles.inputBlock}>
-          <Image
-            source={require('../../../../assets/setting/graphicGauthLogo.png')}
-            style={styles.image}
-          />
-          <TextInput
-            editable
-            maxLength={6}
-            onChangeText = {(text)=> this._onTextChanged(this.GOOGLEOTPCODE, text)}
-            value = {googleOtpCode}
-            style={[styles.inputText, styles.width165]}
-            placeholder={I18n.t('setting2fa.googleAuthCode')}
-          />
-        </View>
+          <View style={styles.inputBlock}>
+            <Image
+              source={require('../../../../assets/setting/graphicGauthLogo.png')}
+              style={styles.image}
+            />
+            <TextInput
+              editable
+              maxLength={6}
+              onChangeText = {(text)=> this._onTextChanged(this.GOOGLEOTPCODE, text)}
+              value = {googleOtpCode}
+              style={[styles.inputText, styles.width165]}
+              placeholder={I18n.t('setting2fa.googleAuthCode')}
+            />
+          </View>
 
-        <View style={styles.btnBlock}>
-          <MangoGradientButton
-            btnText={googleOtpStatus ? I18n.t('setting.disabled') : I18n.t('setting.enabled')}
-            btnStyle={styles.btnNext}
-            onPress={() => this._handleEnableGoogleOtp()}
-          />
+          <View style={styles.btnBlock}>
+            <MangoGradientButton
+              btnText={googleOtpStatus ? I18n.t('setting.disabled') : I18n.t('setting.enabled')}
+              btnStyle={styles.btnNext}
+              onPress={() => this._handleEnableGoogleOtp()}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

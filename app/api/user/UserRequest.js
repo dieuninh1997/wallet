@@ -37,6 +37,7 @@ export function register(registerInfo = {}) {
     mnemonic: registerInfo.mnemonic,
     login_type: registerInfo.login_type,
     eth_address: registerInfo.eth_address,
+    facebook_access_token: registerInfo.facebook_access_token,
   };
   console.log('params', params);
 
@@ -84,7 +85,7 @@ export function restoreAccount(mnemonic) {
 export function sendVerificationEmail(email) {
   const url = '/send-email-verification';
   const params = {
-    email
+    email,
   };
   return post(url, params);
 }

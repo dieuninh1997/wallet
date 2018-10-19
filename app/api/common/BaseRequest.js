@@ -75,6 +75,14 @@ function _getHeader() {
   };
 }
 
+function _getHeaderImage() {
+  return {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${AppConfig.ACCESS_TOKEN}`,
+  };
+}
+
 async function _processResponse(response) {
   await _checkResponseCode(response);
 
@@ -138,4 +146,16 @@ export async function getPrices(coin) {
   } catch (error) {
     console.log('LoadWalletAPI._error:', error);
   }
+}
+
+export async function postImage(url, formData) {
+
+  const response = await fetch(_getFullUrl(url), {
+    method: 'POST',
+    headers: _getHeaderImage(),
+    body: formData,
+  });
+
+  console.log('postImage', url, formData);
+  return await _processResponse(response);
 }

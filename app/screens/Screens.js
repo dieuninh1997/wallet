@@ -28,6 +28,8 @@ import SetupCodeFirstScreen from './setting/2fa/SetupCodeFirstScreen';
 import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
 import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
 import GoogleOtpVerifyScreen from './login/GoogleOtpVerifyScreen';
+import PassportNumberVerifyScreen from './passport-number-verify/PassportNumberVerifyScreen';
+import UploadPassportNumber from './passport-number-verify/UploadPassportNumber';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -60,4 +62,6 @@ export default {
   SetupCodeLastScreen: { screen: SetupCodeLastScreen },
   GoogleOtpVerifyScreen: { screen: GoogleOtpVerifyScreen },
   LoginBaseScreen: { screen: LoginBaseScreen },
+  UploadPassportNumber: {screen: UploadPassportNumber},
+  PassportNumberVerifyScreen: { screen: PassportNumberVerifyScreen },
 };

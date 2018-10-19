@@ -1,7 +1,8 @@
 import AppConfig from '../../utils/AppConfig';
 import {
-  get, post, put,
+  get, post, put, postImage,
 } from '../common/BaseRequest';
+import I18n from '../../i18n/i18n';
 
 export function login(email, password, otp = '', loginType = 1, accessToken = '') {
   const params = {
@@ -128,14 +129,25 @@ export function disableGoogleOtp(password, smsCode, otp) {
   return post(url, params);
 }
 
-export function sendPhoneVerificationCode(phone_number){
+export function sendPhoneVerificationCode(phone_number) {
   const url = '/send-phone-verification';
   params = { phone_number };
   return post(url, params)
 }
 
-export function verifyPhoneNumber(otp){
+export function verifyPhoneNumber(otp) {
   const url = '/verify-phone-number';
   params = { otp };
   return post(url, params);
+}
+
+export function verifyPassport(passport_number, image, image2) {
+  const url = '/verify-passport';
+  const data = new FormData();
+  
+  data.append('passport_number', passport_number);
+  data.append('image', image);
+  data.append('image2', image2);
+  data.append('lang', I18n.locale);
+  return postImage(url, data);
 }

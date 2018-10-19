@@ -111,6 +111,7 @@ export default {
     unconfirmed: '未確認',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'ペソ (₱)',
+    passportNumber: 'パスポート番号',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -271,5 +272,20 @@ export default {
     resend: '再送する',
     verify: '確認する',
     message: 'Please enter phone number',
+  },
+  PassportNumberVerifyScreen: {
+    title: 'Passport Number',
+    enterPassportNumber: 'Enter passport number',
+    selectImage: 'Select Image',
+    continue: 'Continue',
+    messengerPassport: 'Please enter passport number',
+    messengerImage: 'Please select image',
+  },
+  uploadPassportNumber: {
+    title: 'Passport Number',
+    selectImage: 'Select Image',
+    submit: 'Submit',
+    submitSuccess: 'submit success',
+    messengerImage: 'Please select image',
   },
 };

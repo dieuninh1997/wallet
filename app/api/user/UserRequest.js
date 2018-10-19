@@ -3,7 +3,7 @@ import {
   get, post, put,
 } from '../common/BaseRequest';
 
-export function login(email, password, otp = '', login_type = 1) {
+export function login(email, password, otp = '', login_type = 1, accessToken = '') {
   const params = {
     grant_type: 'password',
     client_id: AppConfig.getClientId(),
@@ -13,6 +13,7 @@ export function login(email, password, otp = '', login_type = 1) {
     scope: '*',
     otp,
     login_type,
+    facebook_access_token: accessToken,
   };
   console.log('params', params);
 

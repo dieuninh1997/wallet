@@ -5,10 +5,13 @@ import {
   Image,
   ScrollView,
   TextInput,
-  TouchableOpacity,
   Keyboard,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import TouchID from 'react-native-touch-id';
+import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk';
+
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -19,7 +22,7 @@ import {
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
-import AppConfig from '../../utils/AppConfig';
+import Consts from '../../utils/Consts';
 
 class LoginScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -56,12 +59,6 @@ class LoginScreen extends Component {
     };
   }
 
-  componentDidMount = () => {
-    // if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
-    //   this._handlerLoginWithTouchId();
-    // }
-  }
-
   _handleClickLogin = async () => {
     const { loginInfo } = this.state;
     const { navigation } = this.props;
@@ -72,23 +69,57 @@ class LoginScreen extends Component {
       console.log('responseUser', responseUser);
 
       AppPreferences.saveToKeychain({
-        access_token: responseUser.access_token
+        access_token: responseUser.access_token,
       });
       window.GlobalSocket.connect();
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen');
     } catch (error) {
-      if(error.error == 'invalid_otp') {
-        const { loginInfo } = this.state;
-        const { navigation } = this.props;
-        const { email, password } = loginInfo;
-        navigation.navigate('GoogleOtpVerifyScreen', {email, password});
+      if (error.error === 'invalid_otp') {
+        navigation.navigate('GoogleOtpVerifyScreen', { email, password });
         return;
       }
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
         UIUtils.showToastMessage(error.message);
+      }
+    }
+  }
+
+  _handleLoginByFacebook = async () => {
+    const { navigation } = this.props;
+
+    try {
+      await LoginManager.logOut();
+      const loginInfo = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+      console.log('loginInfo', loginInfo);
+
+      if (loginInfo.isCancelled) {
+        return;
+      }
+
+      const accessTokenRaw = await AccessToken.getCurrentAccessToken();
+      const { accessToken } = accessTokenRaw;
+      const responseUser = await login('', '', '', 3, accessToken);
+      console.log('responseUser', responseUser);
+
+      AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token,
+      });
+
+      window.GlobalSocket.connect();
+      Keyboard.dismiss();
+      navigation.navigate('RestoreWalletScreen');
+    } catch (errors) {
+      if (errors.error === 'invalid_otp') {
+        navigation.navigate('GoogleOtpVerifyScreen', { email, password });
+        return;
+      }
+      if (errors.errors) {
+        UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]]);
+      } else {
+        UIUtils.showToastMessage(errors.message);
       }
     }
   }
@@ -105,27 +136,6 @@ class LoginScreen extends Component {
   _handleForgotPassword = () => {
     const { navigation } = this.props;
     navigation.navigate('ForgotPasswordScreen');
-  }
-
-  _handlerLoginWithTouchId = () => {
-    const { navigation } = this.props;
-
-    const optionalConfigObject = {
-      title: 'Authentication Required',
-      color: '#e00606',
-      sensorDescription: 'Open',
-      cancelText: 'Cancel',
-      fallbackLabel: 'Show Passcode',
-      unifiedErrors: false,
-    };
-
-    TouchID.authenticate('Touch to unlock your phone', optionalConfigObject)
-      .then(() => {
-        navigation.navigate('DashboardScreen');
-      })
-      .catch(() => {
-        UIUtils.showToastMessage('Authentication Failed');
-      });
   }
 
   _renderFormLogin = () => (
@@ -176,19 +186,6 @@ class LoginScreen extends Component {
     </View>
   )
 
-  // _renderBtnLoginWithTouchId = () => (
-  //   <View style={{ alignSelf: 'center' }}>
-  //     <TouchableOpacity
-  //       onPress={() => this._handlerLoginWithTouchId()}
-  //     >
-  //       <Image
-  //         source={require('../../../assets/fingerprint/fingerprint.png')}
-  //         style={styles.fingerPrintImage}
-  //       />
-  //     </TouchableOpacity>
-  //   </View>
-  // )
-
   _renderBtnLogin = () => (
     <MangoGradientButton
       btnText={I18n.t('signin.title')}
@@ -202,8 +199,19 @@ class LoginScreen extends Component {
       <View style={styles.container}>
         <ScrollView>
           {this._renderFormLogin()}
+
+          <TouchableWithoutFeedback
+            onPress={this._handleLoginByFacebook}
+          >
+            <View style={styles.loginWithFacebookContainer}>
+              <View style={styles.loginWithFacebookButtonContainer}>
+                <Image style={styles.imageIconFacebook} source={require('../../../assets/facebook/facebook-white.png')} />
+                <Text style={styles.textLoginWithFacebook}>{I18n.t('signin.loginFacebook')}</Text>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+
           {this._renderBtnLogin()}
-          {/* { AppConfig.ACCESS_TOKEN ? this._renderBtnLoginWithTouchId() : null } */}
           {this._renderBtnForgotPassword()}
         </ScrollView>
 
@@ -300,7 +308,39 @@ const styles = ScaledSheet.create({
     width: '247@s',
     height: '48@s',
     marginBottom: '24@s',
-    marginTop: '21@s',
+    marginTop: '16@s',
     alignSelf: 'center',
+  },
+
+  loginWithFacebookContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: '1@s',
+    borderColor: '#e4e8ed',
+  },
+
+  loginWithFacebookButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1976D2',
+    height: '40@s',
+    borderRadius: '20@s',
+    marginVertical: '16@s',
+    ...UIUtils.generatePopupShadow(),
+  },
+
+  imageIconFacebook: {
+    width: '24@s',
+    height: '24@s',
+    marginLeft: '32@s',
+    marginRight: '16@s',
+  },
+
+  textLoginWithFacebook: {
+    color: '#FFF',
+    fontSize: '14@ms',
+    marginRight: '32@s',
+    ...Fonts.Ubuntu_Light,
   },
 });

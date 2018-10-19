@@ -31,6 +31,7 @@ export default {
     inputWalletId: 'Wallet ID',
     inputPassword: 'Passwords',
     btnCreate: 'Create',
+    loginFacebook: 'Login With Facebook',
   },
   createWallet: {
     signin: 'Sign In',

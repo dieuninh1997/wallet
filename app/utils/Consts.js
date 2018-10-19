@@ -29,7 +29,7 @@ export default class Consts {
     PHONE_NUMBER: 0,
     EMAIL: 1,
     PASSPORT: 2,
-    FACEBOOK: 3
+    FACEBOOK: 3,
   };
 
   static USER_SETTINGS = {
@@ -75,4 +75,6 @@ export default class Consts {
   }
 
   static GOOGLE_AUTHEN_LINK = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
+
+  static FACEBOOK_LOGIN_PERMISSIONS = ['public_profile, email']
 }

@@ -26,6 +26,7 @@ import GoogleAuthScreen from './setting/2fa/GoogleAuthScreen';
 import SetupCodeFirstScreen from './setting/2fa/SetupCodeFirstScreen';
 import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
 import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
+import GoogleOtpVerifyScreen from './login/GoogleOtpVerifyScreen';
 
 export default {
   // LoginFacebook: { screen: LoginFacebook },
@@ -47,13 +48,14 @@ export default {
   BackupPassphraseScreenCompact: { screen: BackupPassphraseScreenCompact },
   TransactionDetailScreen: { screen: TransactionDetailScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
-  TermsConditionScreen: { screen: TermsConditionScreen },
-  AddPinScreen: { screen: AddPinScreen },
-  BackupKeyScreen: { screen: BackupKeyScreen },
-  DownloadAndInstallScreen: { screen: DownloadAndInstallScreen },
-  EnterBackupKeyScreen: { screen: EnterBackupKeyScreen },
-  GoogleAuthScreen: { screen: GoogleAuthScreen },
-  SetupCodeFirstScreen: { screen: SetupCodeFirstScreen },
-  SetupCodeSecondScreen: { screen: SetupCodeSecondScreen },
-  SetupCodeLastScreen: { screen: SetupCodeLastScreen },
+  TermsConditionScreen: {screen: TermsConditionScreen},
+  AddPinScreen: {screen: AddPinScreen},
+  BackupKeyScreen: {screen: BackupKeyScreen},
+  DownloadAndInstallScreen: {screen: DownloadAndInstallScreen},
+  EnterBackupKeyScreen: {screen: EnterBackupKeyScreen},
+  GoogleAuthScreen: {screen: GoogleAuthScreen},
+  SetupCodeFirstScreen: {screen: SetupCodeFirstScreen},
+  SetupCodeSecondScreen: {screen: SetupCodeSecondScreen},
+  SetupCodeLastScreen: {screen: SetupCodeLastScreen},
+  GoogleOtpVerifyScreen: {screen: GoogleOtpVerifyScreen},
 };

@@ -78,6 +78,13 @@ class LoginScreen extends Component {
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen');
     } catch (error) {
+      if(error.error == 'invalid_otp') {
+        const { loginInfo } = this.state;
+        const { navigation } = this.props;
+        const { email, password } = loginInfo;
+        navigation.navigate('GoogleOtpVerifyScreen', {email, password});
+        return;
+      }
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {

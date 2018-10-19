@@ -25,6 +25,7 @@ import GoogleAuthScreen from './setting/2fa/GoogleAuthScreen';
 import SetupCodeFirstScreen from './setting/2fa/SetupCodeFirstScreen';
 import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
 import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
+import GoogleOtpVerifyScreen from './login/GoogleOtpVerifyScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -54,4 +55,5 @@ export default {
   SetupCodeFirstScreen: {screen: SetupCodeFirstScreen},
   SetupCodeSecondScreen: {screen: SetupCodeSecondScreen},
   SetupCodeLastScreen: {screen: SetupCodeLastScreen},
+  GoogleOtpVerifyScreen: {screen: GoogleOtpVerifyScreen},
 };

@@ -171,6 +171,7 @@ export default {
     date: 'Date',
     ok: 'Ok',
     password: 'Password',
+    submit: 'Submit',
   },
   resetPassword: {
     forgotPassword: 'Forgot Password',
@@ -204,6 +205,7 @@ export default {
     copyKey: 'Copy key',
     passwordRequired: 'Password is required!',
     smsCodeRequired: 'SMS code is required!',
+    smsCodeRequiredNumber: 'SMS code is not a number!',
     googleOtpCodeRequired: 'Google auth code is required!',
     googleOtpCodeRequiredNumber: 'Google auth is not a number!',
     saveKeyOnPaper: 'Please save this key on paper. This key will allow you to recover your Google Authentication in case of phone loss.',
@@ -211,6 +213,10 @@ export default {
     googleAuthenticator: 'Google Authenticator',
     onYourPhone: 'on your phone to begin.',
     enterGoogleOtpKey: 'Please enter the 16-digit key you just backed up.',
+  },
+  googleOtp2faVerify: {
+    title: '2FA Authenticator',
+    smsAuthenticator: 'SMS Authenticator',
   },
   restoreWalletScreen: {
     title: 'Restore Account',

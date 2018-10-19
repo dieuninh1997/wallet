@@ -25,6 +25,7 @@ import Consts from '../../utils/Consts';
 import AppPreferences from '../../utils/AppPreferences';
 import { getUserSettings } from '../../api/user/UserRequest';
 import { sendMailTransaction } from '../../api/transaction-history/TransactionRequest';
+import MangoLoading from '../common/MangoLoading';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
@@ -58,7 +59,7 @@ class SendScreen extends BaseScreen {
     this.state = {
       formSendCoin: {
         recievedAddress: '',
-        coinValue: 0.0000,
+        coinValue: '0',
         feeValue: feeSelected.value,
       },
       isShowMenuSelectFee: false,
@@ -68,6 +69,7 @@ class SendScreen extends BaseScreen {
       currency: 'USD',
       prices: {},
       realValueCoin: 0,
+      isLoading: false,
     };
   }
 
@@ -208,7 +210,7 @@ class SendScreen extends BaseScreen {
       feeSelected: SendScreen.LIST_FEE[0],
       formSendCoin: {
         recievedAddress: '',
-        coinValue: 0.00,
+        coinValue: '0',
         feeValue: SendScreen.LIST_FEE[0].value,
       },
       realValueCoin: 0,
@@ -217,6 +219,10 @@ class SendScreen extends BaseScreen {
 
   _handleSendCoin = async () => {
     try {
+      this.setState({
+        isLoading: true,
+      });
+
       const { formSendCoin, coinSelected } = this.state;
 
       const walletAddress = await AsyncStorage.getItem('address');
@@ -227,7 +233,6 @@ class SendScreen extends BaseScreen {
       const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
 
-      UIUtils.showToastMessage(I18n.t('send.submitted'));
 
       const params = {
         destination_address: walletAddress,
@@ -235,10 +240,16 @@ class SendScreen extends BaseScreen {
         transaction_url: transaction.transactionUrl,
         coin_name: coinSelected.name,
       };
-      const sendMailTransactionR = await sendMailTransaction(params);
+      await sendMailTransaction(params);
 
       this._resetFormSendCoin();
+
+      this.setState({ isLoading: false });
+      UIUtils.showToastMessage(I18n.t('send.submitted'));
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
       UIUtils.showToastMessage(error.message);
       console.log('SendScreen._error: ', error);
     }
@@ -393,10 +404,13 @@ class SendScreen extends BaseScreen {
   )
 
   render() {
-    const { isShowMenuSelectFee, formSendCoin, coinSelected } = this.state;
+    const {
+      isShowMenuSelectFee, formSendCoin, coinSelected, isLoading,
+    } = this.state;
 
     return (
       <View style={[styles.container]}>
+        {isLoading ? <MangoLoading /> : null}
         <ConfirmationModal
           ref={ref => this._confirmModal = ref}
           contentText={I18n.t('send.confirmationText', { amount: formSendCoin.coinValue, coinName: coinSelected.name, address: formSendCoin.recievedAddress })}

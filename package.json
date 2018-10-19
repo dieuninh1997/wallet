@@ -52,6 +52,7 @@
     "react-native-root-toast": "3.0.1",
     "react-native-share": "^1.1.2",
     "react-native-simple-radio-button": "^2.7.3",
+    "react-native-spinkit": "1.1.1",
     "react-native-switch": "^1.5.0",
     "react-native-touch-id": "https://github.com/Sotatek-ManhPham/react-native-touch-id.git",
     "react-native-vector-icons": "5.0.0",

@@ -19,6 +19,7 @@ import AppConfig from '../../utils/AppConfig';
 import { restoreAccount } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
+import MangoLoading from '../common/MangoLoading';
 
 class RestoreWalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,6 +41,7 @@ class RestoreWalletScreen extends Component {
       restoreInfo: {
         mnemonic: null,
       },
+      isLoading: false,
     };
   }
 
@@ -94,6 +96,10 @@ class RestoreWalletScreen extends Component {
       return;
     }
     try {
+      this.setState({
+        isLoading: true,
+      });
+
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
         .update(AppConfig.getClientSecret())
         .digest('hex');
@@ -117,8 +123,16 @@ class RestoreWalletScreen extends Component {
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', wallet.address);
+
+      this.setState({
+        isLoading: false,
+      });
+
       navigation.navigate('AddPinScreen');
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
       console.log('restoreWalletScreen.errors: ', error);
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
@@ -146,8 +160,12 @@ class RestoreWalletScreen extends Component {
   }
 
   render() {
+    const { isLoading } = this.state;
+
     return (
       <View style={styles.container}>
+        {isLoading ? <MangoLoading /> : null}
+
         <ScrollView>
           {this._renderFormRestore()}
         </ScrollView>

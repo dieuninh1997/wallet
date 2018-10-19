@@ -1,6 +1,5 @@
 import LandingScreen from './landing/LandingScreen';
 import LoginScreen from './login/LoginScreen';
-import LoginFacebook from './login/LoginFacebook';
 import MainScreen from './main/MainScreen';
 import CreateWalletScreen from './createwallet/CreateWalletScreen';
 import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
@@ -28,7 +27,6 @@ import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
 import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
 
 export default {
-  // LoginFacebook: { screen: LoginFacebook },
   SplashScreen: { screen: SplashScreen },
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },

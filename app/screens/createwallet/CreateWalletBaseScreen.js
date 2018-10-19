@@ -24,7 +24,7 @@ import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
-
+import MangoLoading from '../common/MangoLoading';
 
 export default class CreateWalletBaseScreen extends Component {
   static WALLET_INFO = {
@@ -44,6 +44,7 @@ export default class CreateWalletBaseScreen extends Component {
         password: null,
         passwordConfirm: null,
       },
+      isLoading: false,
     };
     this.walletInfo = null;
   }
@@ -118,6 +119,10 @@ export default class CreateWalletBaseScreen extends Component {
     try {
       this._validateForm();
 
+      this.setState({
+        isLoading: true,
+      });
+
       const { privateKey, address, mnemonic } = this.walletInfo;
 
       const mnemonicHash = crypto.createHmac('sha256', mnemonic)
@@ -145,10 +150,15 @@ export default class CreateWalletBaseScreen extends Component {
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', address);
-
+      this.setState({
+        isLoading: false,
+      });
       UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
       navigation.navigate('BackupPassphraseScreenCompact');
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
       } else {
@@ -282,8 +292,11 @@ export default class CreateWalletBaseScreen extends Component {
   )
 
   render() {
+    const { isLoading } = this.state;
+
     return (
       <View style={styles.container}>
+        { isLoading ? <MangoLoading /> : null}
         <ScrollView>
           {this._renderRegisterFrom()}
           {this._renderTermsAndConditions()}

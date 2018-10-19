@@ -30,6 +30,7 @@ export default {
     forgotPassword: 'パスワードを忘れた方',
     inputWalletId: 'ウォレットID',
     inputPassword: 'パスワード',
+    loginFacebook: 'Login With Facebook',
   },
   createWallet: {
     signin: 'サインイン',

@@ -31,6 +31,7 @@ export default {
     inputWalletId: 'Địa chỉ ví/tài khoản',
     inputPassword: 'Mật khẩu',
     btnCreate: 'Tạo ví',
+    loginFacebook: 'Login With Facebook',
   },
   createWallet: {
     signin: 'Đăng nhập',

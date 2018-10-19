@@ -81,7 +81,6 @@ export default class CreateWalletScreen extends Component {
     const { navigation } = this.props;
 
     try {
-      console.log('LoginManager', LoginManager);
       await LoginManager.logOut();
       await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
       const accessTokenFacebook = await AccessToken.getCurrentAccessToken();

@@ -179,7 +179,7 @@ export default {
     check_export: 'Check Export',
   },
   setting2fa: {
-    downloadAndInstall: 'Download and Install',
+    downloadAndInstallTitle: 'Download and Install',
     backupKey: 'Backup Key',
     enterBackupKey: 'Enter Backup Key',
     setupCode: 'Setup Code',

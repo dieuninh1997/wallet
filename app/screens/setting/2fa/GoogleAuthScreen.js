@@ -120,13 +120,13 @@ export default class GoogleAuthScreen extends Component {
             />
           </View>
 
-          <View style={styles.inputBlock}>
+          <View style={[styles.inputBlock, googleOtpCode ? styles.inputDisable : null]}>
             <Image
               source={require('../../../../assets/setting/smsAuth.png')}
               style={styles.image}
             />
             <TextInput
-              editable
+              editable={!googleOtpCode}
               onChangeText = {(text)=> this._onTextChanged(this.SMSCODE, text)}
               value = {smsCode}
               style={[styles.inputText, styles.width137, styles.marginRight27]}
@@ -141,13 +141,13 @@ export default class GoogleAuthScreen extends Component {
             />
           </View>
 
-          <View style={styles.inputBlock}>
+          <View style={[styles.inputBlock, smsCode ? styles.inputDisable : null]}>
             <Image
               source={require('../../../../assets/setting/graphicGauthLogo.png')}
               style={styles.image}
             />
             <TextInput
-              editable
+              editable={!smsCode}
               maxLength={6}
               onChangeText = {(text)=> this._onTextChanged(this.GOOGLEOTPCODE, text)}
               value = {googleOtpCode}
@@ -225,5 +225,8 @@ const styles = ScaledSheet.create({
     color: '#ffffff',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular,
+  },
+  inputDisable: {
+    backgroundColor: 'rgb(230, 235, 242)'
   }
 });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, Text, Image, TextInput, Clipboard, Linking,
+  View, Text, Image, Clipboard, Linking,
 } from 'react-native';
 import Moment from 'moment';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -29,8 +29,8 @@ export default class TransactionDetailScreen extends Component {
   }
 
   componentDidMount = () => {
-    const { params } = this.props.navigation.state;
-    console.log('params', params);
+    const { navigation } = this.props;
+    const { params } = navigation.state;
 
     this.setState({
       transaction: params,
@@ -49,13 +49,9 @@ export default class TransactionDetailScreen extends Component {
     Linking.openURL(urlLink);
   }
 
-  _showIconCoin = (transaction) => {
-    return transaction.coinInfo.name === 'ETH' ? require('../../../assets/eth/eth.png') : require('../../../assets/mango-coin/mangocoin.png');
-  }
+  _showIconCoin = transaction => (transaction.coinInfo.name === 'ETH' ? require('../../../assets/eth/eth.png') : require('../../../assets/mango-coin/mangocoin.png'))
 
-  _showIconIsSend = (transaction) => {
-    return transaction.isSend ? require('../../../assets/send/sent.png') : require('../../../assets/recieved/received.png');
-  }
+  _showIconIsSend = transaction => (transaction.isSend ? require('../../../assets/send/sent.png') : require('../../../assets/recieved/received.png'))
 
   render() {
     const { transaction } = this.state;
@@ -277,7 +273,7 @@ const styles = ScaledSheet.create({
     width: '28@s',
     height: '28@s',
     marginRight: '16@s',
-    bottom: '5@s'
+    bottom: '5@s',
   },
   blurImage: {
     opacity: 0.3,

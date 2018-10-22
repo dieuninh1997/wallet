@@ -31,6 +31,12 @@ export default {
     inputWalletId: 'ウォレットID',
     inputPassword: 'パスワード',
     loginFacebook: 'Login With Facebook',
+    signInByPhone: 'Sign In With Phone',
+    signInByEmail: 'Sign In With Email Address',
+    signInByPassport: 'Sign In With Passport',
+    passportNumber: 'Passport Number',
+    phoneNumber: 'Phone Number',
+    emailAddress: 'Email Address',
   },
   createWallet: {
     signin: 'サインイン',

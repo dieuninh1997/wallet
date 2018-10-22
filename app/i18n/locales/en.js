@@ -32,11 +32,17 @@ export default {
     inputPassword: 'Passwords',
     btnCreate: 'Create',
     loginFacebook: 'Login With Facebook',
+    signInByPhone: 'Sign In With Phone',
+    signInByEmail: 'Sign In With Email Address',
+    signInByPassport: 'Sign In With Passport',
+    passportNumber: 'Passport Number',
+    phoneNumber: 'Phone Number',
+    emailAddress: 'Email Address',
   },
   createWallet: {
     signin: 'Sign In',
     title: 'Create A Wallet',
-    phoneNumber: 'Phone number',
+    phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
     passportNumber: 'Passport Number',
     facebook: 'Facebook',
@@ -156,7 +162,7 @@ export default {
     changePinSuccess: 'Change pin code success',
     currentPin: 'Current PIN',
     incorrectPincode: 'Incorrect PIN Code',
-    pleaseAgain: 'Please try again	',
+    pleaseAgain: 'Please try again ',
     newPin: 'New PIN',
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
@@ -239,7 +245,7 @@ export default {
   loginUserPin: {
     enterPincode: 'Enter your PIN code',
     incorrectPincode: 'Incorrect PIN Code',
-    pleaseAgain: 'Please try again	',
+    pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
   },
   addPinScreen: {
@@ -268,5 +274,13 @@ export default {
   },
   exit: {
     content: 'Please click BACK again to exit',
+  },
+  loginListScreen: {
+    title: 'Sign In With',
+    createWallet: 'Create',
+    phoneNumber: 'Phone number',
+    emailAddress: 'Email Address',
+    passportNumber: 'Passport Number',
+    facebook: 'Facebook',
   },
 };

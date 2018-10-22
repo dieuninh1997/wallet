@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
-  View, Text, Image, TouchableOpacity, AsyncStorage,
+  View, Text, Image, TouchableOpacity, Keyboard,
 } from 'react-native';
-import nodejs from 'nodejs-mobile-react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import crypto from 'crypto';
 
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
@@ -12,117 +10,71 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonStyles, Fonts, CommonSize } from '../../utils/CommonStyles';
 import UIUtils from '../../utils/UIUtils';
 import Consts from '../../utils/Consts';
-import { register } from '../../api/user/UserRequest';
-import AppConfig from '../../utils/AppConfig';
+import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 
-export default class CreateWalletScreen extends Component {
+export default class LoginListScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('createWallet.title'),
+    title: I18n.t('loginListScreen.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: (
       <TouchableOpacity
         style={styles.viewRedirectSignin}
-        onPress={() => { navigation.navigate('LoginListScreen'); }}
+        onPress={() => { navigation.navigate('CreateWalletScreen'); }}
       >
         <View>
-          <Text style={styles.textBtnRedirectSignin}>{I18n.t('createWallet.signin')}</Text>
+          <Text style={styles.textBtnRedirectSignin}>{I18n.t('loginListScreen.createWallet')}</Text>
         </View>
       </TouchableOpacity>
     ),
   })
 
-  constructor(props) {
-    super(props);
-
-    this.walletInfo = null;
-  }
-
   static SCREEN = {
-    CREATE_BY_EMAIL: 'CreateWalletByEmailScreen',
-    CREATE_BY_PHONE: 'CreateWalletPhoneNumberScreen',
-    CREATE_BY_PASSPORT: 'CreateWalletByPassportScreen',
+    SIGNIN_BY_PHONE: 'phone',
+    SIGNIN_BY_EMAIL: 'email',
+    SIGNIN_BY_PASSPORT: 'passport',
   }
 
-  componentDidMount = async () => {
-    await this._generateWallet();
-  }
-
-  _generateWallet = () => new Promise((resolve, reject) => {
-    try {
-      nodejs.start('main.js');
-      nodejs.channel.addListener(
-        'message',
-        (message) => {
-          console.log(`Wallet created: ${message}`);
-          this.walletInfo = JSON.parse(message);
-          resolve(JSON.parse(message));
-        },
-      );
-      nodejs.channel.send(JSON.stringify({ action: 'generateWallet', data: '' }));
-    } catch (error) {
-      console.log('CreateByEmailScreen._generateWallet: ', error);
-      reject(error);
-    }
-  })
-
-  _handleClickCreateWallet = (screen) => {
+  _handleClickLogin = (screen) => {
     const { navigation } = this.props;
-
-    navigation.navigate(screen);
+    navigation.navigate('LoginBaseScreen', { screen });
   }
 
-  _handleClickCreateWalletByFacebook = async () => {
-    if (!this.walletInfo) {
-      return;
-    }
+  _handleLoginByFacebook = async () => {
     const { navigation } = this.props;
 
     try {
       await LoginManager.logOut();
-      await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
-      const accessTokenFacebook = await AccessToken.getCurrentAccessToken();
+      const loginInfo = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
 
-      const { privateKey, address, mnemonic } = this.walletInfo;
+      if (loginInfo.isCancelled) {
+        return;
+      }
 
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
+      const accessTokenRaw = await AccessToken.getCurrentAccessToken();
+      const { accessToken } = accessTokenRaw;
+      const responseUser = await login('', '', '', 3, accessToken);
+      console.log('responseUser', responseUser);
 
-
-      const registerInfo = {
-        mnemonic: mnemonicHash,
-        login_type: Consts.LOGIN_TYPES.FACEBOOK,
-        eth_address: address,
-        facebook_access_token: accessTokenFacebook.accessToken,
-      };
-
-      const response = await register(registerInfo);
-      const loginInfo = response.data;
-
-      await AppPreferences.saveToKeychain({
-        access_token: loginInfo.accessToken,
-        private_key: privateKey,
-        mnemonic,
+      AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token,
       });
 
-      AppConfig.PRIVATE_KEY = privateKey;
-      AppConfig.MNEMONIC = mnemonic;
-      AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
-
-      await AsyncStorage.setItem('address', address);
-
-      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
-      navigation.navigate('BackupPassphraseScreenCompact');
-    } catch (error) {
-      if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
-      } else {
-        UIUtils.showToastMessage(error.message);
+      window.GlobalSocket.connect();
+      Keyboard.dismiss();
+      navigation.navigate('RestoreWalletScreen');
+    } catch (errors) {
+      if (errors.error === 'invalid_otp') {
+        navigation.navigate('GoogleOtpVerifyScreen', { email, password });
+        return;
       }
-      console.log(error);
+      if (errors.errors) {
+        UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]]);
+      } else {
+        UIUtils.showToastMessage(errors.message);
+      }
     }
   }
 
@@ -134,25 +86,26 @@ export default class CreateWalletScreen extends Component {
         </View>
 
         <View style={styles.groupBtnContainer}>
+
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
-            // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
+            onPress={() => this._handleClickLogin(LoginListScreen.SCREEN.SIGNIN_BY_PHONE)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/phone/phone.png')} />
-            <Text style={styles.textCreateDisable}>
-              {I18n.t('createWallet.phoneNumber')}
+            <Text style={styles.textCreateEnable}>
+              {I18n.t('loginListScreen.phoneNumber')}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             activeOpacity={0.6}
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
-            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_EMAIL)}
+            onPress={() => this._handleClickLogin(LoginListScreen.SCREEN.SIGNIN_BY_EMAIL)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/email/email.png')} />
             <Text style={styles.textCreateEnable}>
-              {I18n.t('createWallet.emailAddress')}
+              {I18n.t('loginListScreen.emailAddress')}
             </Text>
           </TouchableOpacity>
 
@@ -160,22 +113,22 @@ export default class CreateWalletScreen extends Component {
           <TouchableOpacity
             activeOpacity={0.6}
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
-            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PASSPORT)}
+            onPress={() => this._handleClickLogin(LoginListScreen.SCREEN.SIGNIN_BY_PASSPORT)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/passport/passport.png')} />
             <Text style={styles.textCreateEnable}>
-              {I18n.t('createWallet.passportNumber')}
+              {I18n.t('loginListScreen.passportNumber')}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             activeOpacity={0.6}
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
-            onPress={() => this._handleClickCreateWalletByFacebook()}
+            onPress={this._handleLoginByFacebook}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/facebook/facebook.png')} />
             <Text style={styles.textCreateEnable}>
-              {I18n.t('createWallet.facebook')}
+              {I18n.t('loginListScreen.facebook')}
             </Text>
           </TouchableOpacity>
         </View>

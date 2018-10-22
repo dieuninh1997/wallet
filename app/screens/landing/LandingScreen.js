@@ -172,7 +172,7 @@ class LandingScreen extends Component {
         title={I18n.t('landing.signin')}
         btnStyle={styles.btnAuthContainer}
         btnTextStyle={styles.btnTextAuthStyle}
-        onPressBtn={() => this._navigateScreen('LoginScreen')}
+        onPressBtn={() => this._navigateScreen('LoginListScreen')}
       />
       <MangoButton
         title={I18n.t('landing.restoreAccount')}

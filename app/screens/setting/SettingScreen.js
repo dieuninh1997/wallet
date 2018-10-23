@@ -20,6 +20,7 @@ import Events from '../../utils/Events';
 import UIUtils from '../../utils/UIUtils';
 import LocalCurrencyScreen from '../localCurrency/LocalCurrencyScreen';
 import ChangePasswordScreen from '../change-password/ChangePasswordScreen';
+import MobileNumberModal from '../mobile-number-verification/MobileNumberModal';
 import BaseScreen from '../BaseScreen';
 
 export default class SettingScreen extends BaseScreen {
@@ -238,6 +239,24 @@ export default class SettingScreen extends BaseScreen {
     });
   }
 
+  _onMobileNumber = () => {
+   const{ userSecuritySettings } = this.state;
+   const email_verified = userSecuritySettings.email_verified;
+   const bank_account_verified = userSecuritySettings.bank_account_verified;
+   const identity_verified = userSecuritySettings.identity_verified;
+   const otp_verified = userSecuritySettings.otp_verified;
+
+   this.setState({
+    userSecuritySettings: {
+      email_verified,
+      phone_verified: 1,
+      bank_account_verified,
+      identity_verified,
+      otp_verified,
+    }
+   });
+  }
+
   _isEmailVerified = () => {
     const { userSecuritySettings } = this.state;
     return !userSecuritySettings || userSecuritySettings.email_verified;
@@ -320,25 +339,27 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </TouchableWithoutFeedback>
 
-            <View style={styles.borderEmailMobileNumber}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
-              <View style={styles.activiRightGroup}>
-                {userSecuritySettings && (userSecuritySettings.phone_verified ? (
-                  <Text style={styles.textVerified}>
-                    {I18n.t('setting.verified')}
-                  </Text>
-                ) : (
-                  <Text style={styles.textUnVerified}>
-                    {I18n.t('setting.unverified')}
-                  </Text>
-                ))}
+            <TouchableWithoutFeedback onPress={() => this._MobleNumberModal.setModalVisibleUpdate(true)}>
+              <View style={styles.borderEmailMobileNumber}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
+                <View style={styles.activiRightGroup}>
+                  {userSecuritySettings && (userSecuritySettings.phone_verified ? (
+                    <Text style={styles.textVerified}>
+                      {I18n.t('setting.verified')}
+                    </Text>
+                  ) : (
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
 
-                <MaterialCommunityIcons
-                  style={styles.iconChevronRight}
-                  name="chevron-right"
-                />
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </View>
 
           <View style={styles.borderLogintoWeb}>
@@ -521,6 +542,9 @@ export default class SettingScreen extends BaseScreen {
         <ChangePasswordScreen
           ref={ref => this._changePassword = ref}
         />
+        <MobileNumberModal 
+        ref={ref => this._MobleNumberModal = ref} 
+        onMobileNumber={this._onMobileNumber}/>
       </View>
     );
   }

@@ -127,3 +127,15 @@ export function disableGoogleOtp(password, smsCode, otp) {
   const params = { password, smsCode, otp };
   return post(url, params);
 }
+
+export function sendPhoneVerificationCode(phone_number){
+  const url = '/send-phone-verification';
+  params = { phone_number };
+  return post(url, params)
+}
+
+export function verifyPhoneNumber(otp){
+  const url = '/verify-phone-number';
+  params = { otp };
+  return post(url, params);
+}

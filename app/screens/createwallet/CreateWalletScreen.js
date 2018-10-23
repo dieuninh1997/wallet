@@ -219,7 +219,7 @@ const styles = ScaledSheet.create({
   },
 
   groupBtnContainer: {
-    flex: 1,
+    flex: 1
   },
 
   btnCreateWalletContainer: {

@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback, AsyncStorage, Image, ScrollView, Keyboard
+  View, TouchableOpacity, TextInput, Image,
 } from 'react-native';
-import { CheckBox } from 'react-native-elements';
-import crypto from 'crypto';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import EthService from '../../services/wallet/eth';
-import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 import { CommonStyles, CommonColors, CommonSize, Fonts } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
-import WalletService from '../../services/wallet';
-import UIUtils from '../../utils/UIUtils';
 import Consts from '../../utils/Consts';
-import AppPreferences from '../../utils/AppPreferences';
-import AppConfig from '../../utils/AppConfig';
-import { register, login } from '../../api/user/UserRequest';
 import CreateWalletBaseScreen from './CreateWalletBaseScreen';
 
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
@@ -32,110 +23,10 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
 
   getLoginType = () => Consts.LOGIN_TYPES.PHONE_NUMBER
 
-  static WALLET_INFO = {
-    PHONE: 'phoneNumber',
-    PASSWORD: 'password',
-    PASSWORD_CONFIRM: 'passwordConfirm',
-    PNB: 'phoneNBwithDialCode'
-  };
-  constructor(props) {
-    super(props);
-    this.state = {
-      cca2: 'vn',
-      isChecked: false,
-      createWalletInfo: {
-        phoneNumber: null,
-        password: null,
-        passwordConfirm: null,
-        phoneNBwithDialCode: null,
-      },
-    };
-    this.countryPicker = {}
-  }
-
-  /* _handleChangeInput = (typeInput, value) => {
-    const { createWalletInfo } = this.state;
-
-    createWalletInfo[typeInput] = value;
-    this.setState({
-      createWalletInfo,
-    });
-  } */
 
   _handlePressFlag = () => {
     this.countryPicker.openModal();
   }
-
-  /* _handleToggleCheckBox = () => {
-    const { isChecked } = this.state;
-
-    this.setState({
-      isChecked: !isChecked,
-    });
-  } */
-
-/*   _onBtnTerms = () => {
-    this.props.navigation.navigate('TermsConditionScreen');
-  }
-
-  _handleClickCreateWallet = async () => {
-    const { navigation } = this.props;
-    const { isChecked, createWalletInfo } = this.state;
-    console.log('success');
-
-    try {
-      if (!isChecked) {
-        throw new Error('Please read and accept terms and conditions!');
-      }
-      if (!this.isValidNumber()){
-        throw new Error('Phone number is not valid');
-      }
-
-      if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
-        throw new Error('Password must match password confirmation!');
-      }
-
-      const { privateKey, address, mnemonic } = EthService.generateWallet();
-
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
-
-      const registerInfo = {
-        phone_number: createWalletInfo.phoneNBwithDialCode,
-        password: createWalletInfo.password,
-        password_confirmation: createWalletInfo.passwordConfirm,
-        mnemonic: mnemonicHash,
-        login_type: 0,
-        eth_address: address,
-      };
-      const response = await register(registerInfo);
-      const loginInfo = response.data;
-      //const loginInfo = await login(registerInfo.phone_number, registerInfo.password, '', 0);
-
-      //window.GlobalSocket.connect();
-      Keyboard.dismiss();
-
-      await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
-      await AppPreferences.saveToKeychain('private_key', privateKey);
-      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
-
-      await AsyncStorage.setItem('address', address);
-      UIUtils.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
-
-      navigation.navigate('BackupPassphraseScreen');
-      
-    } catch (error) {
-      if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
-      } else {
-        UIUtils.showToastMessage(error.message);
-      }
-    }
-
-  } */
-  
-
   
   selectCountry = (country) => {
     const parseCountry = country.cca2.toLowerCase();
@@ -155,7 +46,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
   isValidNumber = () => {
     const {createWalletInfo} = this.state;
     const phoneNumber = this.phone.state.formattedNumber + createWalletInfo.phoneNumber;
-    createWalletInfo.phoneNBwithDialCode = phoneNumber;
+    createWalletInfo.phone_number = phoneNumber;
     this.setState({
       createWalletInfo,
     })
@@ -183,8 +74,8 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
         <View style={styles.inputDialCode}>
           <PhoneInput
             ref= {(ref) => this.phone = ref}
-            style={{width: 62, marginLeft: -15}}
-            textStyle={{fontSize: 18, textAlign: 'center'}}
+            style={styles.dialCode}
+            textStyle={styles.dialCodeText}
             flagStyle={{display: "none"}}
           />
           <TouchableOpacity 
@@ -217,87 +108,6 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
       </View>
     </View>
   )}
-
-
-  //  render() {
-  //   return (
-  //     <View style={styles.container}>
-  //       <ScrollView>
-  //         <View style={styles.formLoginContainer}>
-  //           <View style={styles.inputTextNumber}>
-  //             <View style={styles.country}>
-  //               <View style={styles.inputDialCode}>
-  //                 <PhoneInput
-  //                   ref= {(ref) => this.phone = ref}
-  //                   style={{width: 62, marginLeft: -15}}
-  //                   textStyle={{fontSize: 18, textAlign: 'center'}}
-  //                   flagStyle={{display: "none"}}
-  //                 />
-  //                 <TouchableOpacity 
-  //                   onPress={this._handlePressFlag}
-  //                   style={{marginLeft: 3}}
-  //                 >
-  //                   <Image
-  //                     source={require('../../../assets/arrow-down/down-arrow.png')}
-  //                     style={styles.arrow}
-  //                   />
-  //                 </TouchableOpacity>
-  //               </View>
-  //               <CountryPicker
-  //                 ref={(ref)=> {this.countryPicker = ref;}}
-  //                 onChange={value => this.selectCountry(value)}
-  //                 translation="eng"
-  //                 cca2={this.state.cca2}
-  //                 >
-  //                 <View/>
-  //               </CountryPicker>
-  //             </View>
-  //             <View style={styles.inputContainer}>
-  //               <TextInput
-  //                 style={styles.inputText}
-  //                 keyboardType="phone-pad"
-  //                 underlineColorAndroid="transparent"
-  //                 placeholder={I18n.t('createWallet.phoneNumber')}
-  //                 onChangeText={(value)=>this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
-  //               />
-  //             </View>
-  //           </View>
-  //           <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
-  //             <Image
-  //               source={require('../../../assets/password/key.png')}
-  //               style={styles.inputImageIcon}
-  //             />
-  //             <TextInput
-  //               placeholder={I18n.t('createWalletByEmailScreen.inputPassword')}
-  //               editable
-  //               secureTextEntry
-  //               underlineColorAndroid="transparent"
-  //               style={styles.inputText}
-  //               onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PASSWORD, value)}
-  //             />
-  //           </View>
-
-  //           <View style={styles.inputContainer}>
-  //             <Image
-  //               source={require('../../../assets/password/key.png')}
-  //               style={styles.inputImageIcon}
-  //             />
-  //             <TextInput
-  //               placeholder={I18n.t('createWalletByEmailScreen.inputPasswordConfirm')}
-  //               editable
-  //               secureTextEntry
-  //               underlineColorAndroid="transparent"
-  //               style={[styles.inputText]}
-  //               onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PASSWORD_CONFIRM, value)}
-  //             />
-  //           </View>
-  //         </View>
-  //         {this._renderTermsAndConditions()}
-  //       </ScrollView>
-  //       {this._renderButtonCreate()}
-  //     </View>
-  //   );
-  // } 
 }
 const styles = ScaledSheet.create({
   container: {
@@ -394,4 +204,13 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  dialCode: {
+    width: '60@s', 
+    marginLeft: -17,
+  },
+  dialCodeText: { 
+    textAlign: 'center',
+    fontSize: CommonSize.inputFontSize,
+    ...Fonts.Ubuntu_Light,
+  }
 });

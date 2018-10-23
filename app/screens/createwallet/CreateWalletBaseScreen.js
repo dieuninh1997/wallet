@@ -47,6 +47,7 @@ export default class CreateWalletBaseScreen extends Component {
         passwordConfirm: null,
         phoneNumber: null,
       },
+      cca2: 'vn',
       isLoading: false,
     };
     this.walletInfo = null;
@@ -139,8 +140,6 @@ export default class CreateWalletBaseScreen extends Component {
       const response = await register(registerInfo);
       const loginInfo = response.data;
 
-      // const loginInfo = await login(this.getUsername(), registerInfo.password, '', this.getLoginType());
-
       await AppPreferences.saveToKeychain({
         access_token: loginInfo.accessToken,
         private_key: privateKey,
@@ -151,7 +150,6 @@ export default class CreateWalletBaseScreen extends Component {
       AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
 
-      // window.GlobalSocket.connect();
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', address);

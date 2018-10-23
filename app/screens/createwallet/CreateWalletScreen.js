@@ -82,7 +82,12 @@ export default class CreateWalletScreen extends Component {
 
     try {
       await LoginManager.logOut();
-      await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+      const loginInfoFace = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+
+      if (loginInfoFace.isCancelled) {
+        return;
+      }
+
       const accessTokenFacebook = await AccessToken.getCurrentAccessToken();
 
       const { privateKey, address, mnemonic } = this.walletInfo;
@@ -219,7 +224,7 @@ const styles = ScaledSheet.create({
   },
 
   groupBtnContainer: {
-    flex: 1
+    flex: 1,
   },
 
   btnCreateWalletContainer: {

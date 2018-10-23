@@ -240,21 +240,21 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onMobileNumber = () => {
-   const{ userSecuritySettings } = this.state;
-   const email_verified = userSecuritySettings.email_verified;
-   const bank_account_verified = userSecuritySettings.bank_account_verified;
-   const identity_verified = userSecuritySettings.identity_verified;
-   const otp_verified = userSecuritySettings.otp_verified;
+    const { userSecuritySettings } = this.state;
+    const email_verified = userSecuritySettings.email_verified;
+    const bank_account_verified = userSecuritySettings.bank_account_verified;
+    const identity_verified = userSecuritySettings.identity_verified;
+    const otp_verified = userSecuritySettings.otp_verified;
 
-   this.setState({
-    userSecuritySettings: {
-      email_verified,
-      phone_verified: 1,
-      bank_account_verified,
-      identity_verified,
-      otp_verified,
-    }
-   });
+    this.setState({
+      userSecuritySettings: {
+        email_verified,
+        phone_verified: 1,
+        bank_account_verified,
+        identity_verified,
+        otp_verified,
+      },
+    });
   }
 
   _isEmailVerified = () => {
@@ -348,10 +348,10 @@ export default class SettingScreen extends BaseScreen {
                       {I18n.t('setting.verified')}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
                   <MaterialCommunityIcons
                     style={styles.iconChevronRight}
@@ -417,7 +417,9 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderSecurity() {
-    const { payload, isSupportedTouchId, isEnableTouchId, userSecuritySettings } = this.state;
+    const {
+      payload, isSupportedTouchId, isEnableTouchId, userSecuritySettings,
+    } = this.state;
     const { navigation } = this.props;
 
     return (
@@ -428,8 +430,8 @@ export default class SettingScreen extends BaseScreen {
             <View style={styles.borderStepVerification}>
               <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
               <View style={styles.activiRightGroup}>
-                <Text style={styles.textUnVerified}>
-                  {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.disabled') : I18n.t('setting.enabled')}
+                <Text style={[userSecuritySettings && userSecuritySettings.otp_verified ? styles.textVerified : styles.textUnVerified]}>
+                  {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.enabled') : I18n.t('setting.disabled')}
                 </Text>
                 <MaterialCommunityIcons
                   style={styles.iconChevronRight}
@@ -542,9 +544,10 @@ export default class SettingScreen extends BaseScreen {
         <ChangePasswordScreen
           ref={ref => this._changePassword = ref}
         />
-        <MobileNumberModal 
-        ref={ref => this._MobleNumberModal = ref} 
-        onMobileNumber={this._onMobileNumber}/>
+        <MobileNumberModal
+          ref={ref => this._MobleNumberModal = ref}
+          onMobileNumber={this._onMobileNumber}
+        />
       </View>
     );
   }

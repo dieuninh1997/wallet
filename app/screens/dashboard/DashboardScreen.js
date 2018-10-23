@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, Image, RefreshControl,
+  View, Text, ScrollView, Dimensions, Image, RefreshControl, TouchableOpacity
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import SocketIOClient from 'socket.io-client';
@@ -18,26 +18,7 @@ import UIUtils from '../../utils/UIUtils';
 import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
 import BackPressHandler from '../../utils/BackPressHandler';
-
-const CURRENCY_SYMBOLS = {
-  USD: '$',
-  JPY: '¥',
-  PHP: '₱',
-};
-// const COINS = ['BTC', 'ETH'];
-const COINS = ['ETH'];
-const WALLET_COIN = 'MGC';
-const ALL_COINS = [WALLET_COIN, ...COINS];
-const COIN_COLORS = {
-  [WALLET_COIN]: '#FFD82F',
-  BTC: '#FFA034',
-  ETH: '#2650BF',
-};
-const CHART_COLORS = {
-  [WALLET_COIN]: { r: 255, g: 216, b: 47 },
-  BTC: { r: 255, g: 169, b: 52 },
-  ETH: { r: 38, g: 80, b: 191 },
-};
+import ChartModal from './ChartModal';
 
 class DashboardScreen extends BaseScreen {
   static _updateCoinValue = (newValue = []) => {
@@ -51,6 +32,29 @@ class DashboardScreen extends BaseScreen {
       prices: {},
       currency: 'USD',
       refreshing: false,
+    };
+
+    this.CURRENCY_SYMBOLS = {
+      USD: '$',
+      JPY: '¥',
+      PHP: '₱',
+    };
+
+  // const COINS = ['BTC', 'ETH'];
+    this.COINS = ['ETH'];
+    this.WALLET_COIN = 'MGC';
+    this.ALL_COINS = [this.WALLET_COIN, ...this.COINS];
+    
+    this.COIN_COLORS = {
+      [this.WALLET_COIN]: '#FFD82F',
+      BTC: '#FFA034',
+      ETH: '#2650BF',
+    };
+
+    this.CHART_COLORS = {
+      [this.WALLET_COIN]: { r: 255, g: 216, b: 47 },
+      BTC: { r: 255, g: 169, b: 52 },
+      ETH: { r: 38, g: 80, b: 191 },
     };
   }
 
@@ -104,7 +108,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   async _loadPrices() {
-    const coinList = COINS.reduce((a, b) => `${a},${b}`);
+    const coinList = this.COINS.reduce((a, b) => `${a},${b}`);
     const prices = await getPrices(coinList);
     this.setState({ prices });
   }
@@ -153,7 +157,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _getDisplayPC(coin) {
-    if (coin === WALLET_COIN) {
+    if (coin === this.WALLET_COIN) {
       const pcChange = this._getPrecentChange(coin);
       if (pcChange) {
         return formatCoin(pcChange, 'USD', 0);
@@ -164,7 +168,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _getPrecentChange(coin) {
-    if (coin === WALLET_COIN) {
+    if (coin === this.WALLET_COIN) {
       return (this._getPrecentChange('BTC') || 0) * 1.3;
     }
     return this._getRawObject(coin).CHANGEPCT24HOUR;
@@ -178,7 +182,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _getPrice(coin) {
-    if (coin === WALLET_COIN) {
+    if (coin === this.WALLET_COIN) {
       const ethPrice = this._getPrice('ETH');
       if (ethPrice) {
         return ethPrice * 0.023;
@@ -191,7 +195,7 @@ class DashboardScreen extends BaseScreen {
   _getCurrencySymbol() {
     const { currency } = this.state;
 
-    return CURRENCY_SYMBOLS[currency] || '';
+    return this.CURRENCY_SYMBOLS[currency] || '';
   }
 
   _getCoinValue(coin) {
@@ -207,7 +211,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _renderPieChart = () => {
-    const allCoins = [].concat(ALL_COINS).reverse();
+    const allCoins = [].concat(this.ALL_COINS).reverse();
 
     let values = [];
     for (const coin of allCoins) {
@@ -221,7 +225,7 @@ class DashboardScreen extends BaseScreen {
       for (const coin of allCoins) {
         data.push({
           population: 1,
-          color: CHART_COLORS[coin]
+          color: this.CHART_COLORS[coin]
         });
       }
     } else {
@@ -229,7 +233,7 @@ class DashboardScreen extends BaseScreen {
         if (values[i] > 0) {
           data.push({
             population: values[i],
-            color: CHART_COLORS[allCoins[i]]
+            color: this.CHART_COLORS[allCoins[i]]
           });
         }
       }
@@ -270,7 +274,7 @@ class DashboardScreen extends BaseScreen {
 
     return (
       <View style={styles.itemGroup} key={coin}>
-        <View style={[{ backgroundColor: COIN_COLORS[coin] }, styles.itemColor]} />
+        <View style={[{ backgroundColor: this.COIN_COLORS[coin] }, styles.itemColor]} />
         <Text style={styles.itemCount}>{amount}</Text>
         <Text style={styles.itemCountCoin}>
           {formatCoin(balance, coin, 0)}
@@ -282,37 +286,40 @@ class DashboardScreen extends BaseScreen {
   }
 
   _renderItemWallet(coin) {
+    let { currency } = this.state;
     const isPriceDown = this._getPrecentChange(coin) < 0;
     return (
-      <View style={styles.walletContainer} key={coin}>
-        <View style={styles.walletGroup}>
-          <Text style={styles.walletFullname}>{getCoinFullName(coin)}</Text>
-          <Text style={styles.walletPrice}>{this._getDisplayPrice(coin)}</Text>
+      <TouchableOpacity key={coin} onPress={() => this._chartModal.show(currency, coin, this)}>
+        <View style={styles.walletContainer}>
+          <View style={styles.walletGroup}>
+            <Text style={styles.walletFullname}>{getCoinFullName(coin)}</Text>
+            <Text style={styles.walletPrice}>{this._getDisplayPrice(coin)}</Text>
 
-          {this._hasData() && (
-            <View style={styles.changeGroup}>
-              {isPriceDown
-                ? <Image source={require('../../../assets/icon-change-price/changeDown.png')} style={styles.imgChangePrice} />
-                : <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice} />
-              }
-              <Text style={isPriceDown ? styles.walletPriceDown : styles.walletPriceUp}>
-                {this._getDisplayPC(coin)}
-              </Text>
-            </View>
-          )}
-        </View>
+            {this._hasData() && (
+              <View style={styles.changeGroup}>
+                {isPriceDown
+                  ? <Image source={require('../../../assets/icon-change-price/changeDown.png')} style={styles.imgChangePrice} />
+                  : <Image source={require('../../../assets/icon-change-price/changeUp.png')} style={styles.imgChangePrice} />
+                }
+                <Text style={isPriceDown ? styles.walletPriceDown : styles.walletPriceUp}>
+                  {this._getDisplayPC(coin)}
+                </Text>
+              </View>
+            )}
+          </View>
 
-        <View>
-          <Image source={require('../../../assets/dashboard/chart.png')} style={styles.chart} />
+          <View>
+            <Image source={require('../../../assets/dashboard/chart.png')} style={styles.chart} />
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   _renderListWallet() {
     return (
       <View style={styles.listWallet}>
-        {ALL_COINS.map(coin => this._renderItemWallet(coin))}
+        {this.ALL_COINS.map(coin => this._renderItemWallet(coin))}
       </View>
     );
   }
@@ -320,7 +327,7 @@ class DashboardScreen extends BaseScreen {
   _renderInforData() {
     return (
       <View style={styles.inforGroup}>
-        {ALL_COINS.map(coin => this._renderItemInforData(coin))}
+        {this.ALL_COINS.map(coin => this._renderItemInforData(coin))}
       </View>
     );
   }
@@ -329,7 +336,7 @@ class DashboardScreen extends BaseScreen {
     const { currency } = this.state;
     let total = '';
     if (this._hasData()) {
-      for (const coin of ALL_COINS) {
+      for (const coin of this.ALL_COINS) {
         total = (total || 0) + this._getCoinValue(coin);
       }
       total = this._getCurrencySymbol() + formatCoin(total, currency, 0);
@@ -346,21 +353,30 @@ class DashboardScreen extends BaseScreen {
   render() {
     const { refreshing } = this.state;
     return (
-      <ScrollView
-        contentContainerStyle={styles.dashboardScreen}
-        showsHorizontalScrollIndicator={false}
-        refreshControl={(
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => this._onRefresh()}
-          />
-        )}
-      >
-        {this._renderPieChart()}
-        {this._renderInforData()}
-        {this._renderListWallet()}
-        {UIUtils.createBottomPadding()}
-      </ScrollView>
+      <View>
+        <ScrollView
+          contentContainerStyle={styles.dashboardScreen}
+          showsHorizontalScrollIndicator={false}
+          refreshControl={(
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => this._onRefresh()}
+            />
+          )}
+        >
+          {this._renderPieChart()}
+          {this._renderInforData()}
+          {this._renderListWallet()}
+          {UIUtils.createBottomPadding()}
+        </ScrollView>
+        {this._renderChart()}
+      </View>
+    );
+  }
+
+  _renderChart() {
+    return (
+      <ChartModal ref={ref => this._chartModal = ref} />
     );
   }
 }

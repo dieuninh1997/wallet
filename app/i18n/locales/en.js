@@ -80,6 +80,9 @@ export default {
     title: 'Dashboard',
     balance: 'Balance',
   },
+  chart: {
+    allTime: 'All time'
+  },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',

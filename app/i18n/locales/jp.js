@@ -69,6 +69,9 @@ export default {
     title: 'ダッシュボード',
     balance: '残高',
   },
+  chart: {
+    allTime: 'All time'
+  },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',

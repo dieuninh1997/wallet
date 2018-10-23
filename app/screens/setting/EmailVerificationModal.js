@@ -19,7 +19,7 @@ import { sendVerificationEmail } from '../../api/user/UserRequest';
 export default class EmailVerificationModal extends React.Component {
   state = {
     email: '',
-    emailEditable: false,
+    emailEditable: true,
     modalVisible: false,
     error: ''
   };
@@ -35,7 +35,7 @@ export default class EmailVerificationModal extends React.Component {
     this.setState({
       email,
       modalVisible: true,
-      emailEditable: !email
+      // emailEditable: !email
     });
     this.closeCallback = callback;
   }

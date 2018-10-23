@@ -29,7 +29,7 @@ import MangoLoading from '../common/MangoLoading';
 export default class CreateWalletBaseScreen extends Component {
   static WALLET_INFO = {
     EMAIL: 'email',
-    PHONE: 'phone_number',
+    PHONE: 'phoneNumber',
     PASSPORT: 'passport',
     PASSWORD: 'password',
     PASSWORD_CONFIRM: 'passwordConfirm',
@@ -45,6 +45,7 @@ export default class CreateWalletBaseScreen extends Component {
         phone_number: null,
         password: null,
         passwordConfirm: null,
+        phoneNumber: null,
       },
       isLoading: false,
     };
@@ -84,6 +85,8 @@ export default class CreateWalletBaseScreen extends Component {
       return createWalletInfo.email;
     case Consts.LOGIN_TYPES.PASSPORT:
       return createWalletInfo.passport;
+    case Consts.LOGIN_TYPES.PHONE_NUMBER:
+      return createWalletInfo.phone_number;
     default:
       throw new Error(`Unknown login type: ${loginType}`);
     }
@@ -207,6 +210,9 @@ export default class CreateWalletBaseScreen extends Component {
       break;
     case Consts.LOGIN_TYPES.PASSPORT:
       registerInfo.passport_number = username;
+      break;
+    case Consts.LOGIN_TYPES.PHONE_NUMBER:
+      registerInfo.phone_number = username;
       break;
     default:
       throw new Error(`Unknown login type: ${loginType}`);

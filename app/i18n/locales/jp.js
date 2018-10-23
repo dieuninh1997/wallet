@@ -261,4 +261,15 @@ export default {
   exit: {
     content: 'Please click BACK again to exit',
   },
+  mobileNumberVerification: {
+    title: '携帯電話番号を確認',
+    contentUpdate: 'この携帯電話番号は2段階認証を有効にするために使用され、セキュリティ対策に役立ちます。',
+    contentVerify: '携帯電話に確認コードをSMSで送信しました。 携帯電話番号を確認するためのコードを入力して下さい。',
+    phoneNumber: '電話番号',
+    cancel: 'キャンセル',
+    update: '更新する',
+    resend: '再送する',
+    verify: '確認する',
+    message: 'Please enter phone number',
+  },
 };

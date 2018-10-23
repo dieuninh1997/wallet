@@ -23,6 +23,7 @@
     "ethereumjs-util": "5.2.0",
     "ethereumjs-wallet": "0.6.2",
     "ethers": "3.0.29",
+    "google-libphonenumber": "^3.1.15",
     "hdkey": "1.1.0",
     "laravel-echo": "^1.4.0",
     "lodash": "4.17.11",
@@ -97,5 +98,10 @@
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
     "vm": "vm-browserify"
+  },
+  "rnpm": {
+    "assests": [
+      "./assets/fonts"
+    ]
   }
 }

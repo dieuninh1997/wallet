@@ -283,7 +283,7 @@ const styles = ScaledSheet.create({
 
   btnGroupContainer: {
     alignItems: 'center',
-    paddingTop: '100@s',
+    paddingTop: '80@s'
   },
 
   btnCreateWalletContainer: {
@@ -317,6 +317,22 @@ const styles = ScaledSheet.create({
   btnTextAuthStyle: {
     fontSize: '16@ms',
     color: CommonColors.headerBarBgColor,
-    ...Fonts.Ubuntu_Regular,
+    fontSize: '18@s'
   },
+
+  modalListLanguage: {
+    position: 'absolute',
+    justifyContent: 'center',
+    top: '28@s',
+    left: '105@s',
+    width: '128@s',
+    borderRadius: '8@s',
+    backgroundColor: CommonColors.headerBarBgColor,
+  },
+
+  imageBackground: {
+    width: '100%' ,
+    height: '100%',
+    top: 0,
+  }
 });

@@ -136,11 +136,11 @@ export default class CreateWalletScreen extends Component {
         <View style={styles.groupBtnContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
-            // onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
+            onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
-            <Image style={styles.iconCreateWallet} source={require('../../../assets/phone/phone.png')} />
-            <Text style={styles.textCreateDisable}>
+            <Image style={styles.iconCreateWallet} source={require('../../../assets/createwalet/phone.png')} />
+            <Text style={styles.textCreateEnable}>
               {I18n.t('createWallet.phoneNumber')}
             </Text>
           </TouchableOpacity>
@@ -214,8 +214,8 @@ const styles = ScaledSheet.create({
   },
 
   imageWallet: {
-    width: '290@s',
-    height: '260@s',
+    width: '300@s',
+    height: '274@s',
   },
 
   groupBtnContainer: {

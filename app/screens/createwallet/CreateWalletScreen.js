@@ -6,7 +6,6 @@ import nodejs from 'nodejs-mobile-react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import crypto from 'crypto';
 
-import { Button } from 'react-native-elements';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';

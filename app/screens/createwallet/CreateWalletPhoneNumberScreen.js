@@ -46,6 +46,14 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
     }
   }
 
+  _initialCountry = () => {
+    switch (I18n.locale) {
+    case 'vi': return 'vn';
+    case 'jp': return 'jp';
+    case 'en': return 'ph';
+    }
+  }
+
   isValidNumber = () => {
     const { createWalletInfo } = this.state;
     const phoneNumber = this.phone.state.formattedNumber + createWalletInfo.phoneNumber;
@@ -74,7 +82,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
       <View style={styles.country}>
         <View style={styles.inputDialCode}>
           <PhoneInput
-            initialCountry="vn"
+            initialCountry={this._initialCountry()}
             ref={ref => this.phone = ref}
             style={styles.dialCode}
             textStyle={styles.dialCodeText}

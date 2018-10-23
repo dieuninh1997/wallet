@@ -32,7 +32,7 @@ export default {
     inputPassword: 'Passwords',
     btnCreate: 'Create',
     loginFacebook: 'Login With Facebook',
-    signInByPhone: 'Sign In With Phone',
+    signInByPhone: 'Sign In With Phone Number',
     signInByEmail: 'Sign In With Email Address',
     signInByPassport: 'Sign In With Passport',
     passportNumber: 'Passport Number',

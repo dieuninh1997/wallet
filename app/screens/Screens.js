@@ -8,6 +8,8 @@ import CreateWalletByPassportScreen from './createwallet/CreateWalletByPassportS
 import SettingScreen from './setting/SettingScreen';
 import SplashScreen from './SplashScreen';
 import LoginUsePinScreen from './login/LoginUsePinScreen';
+import LoginListScreen from './login/LoginListScreen';
+import LoginBaseScreen from './login/LoginBaseScreen';
 import ChangePinScreen from './pin/ChangePinScreen';
 import ForgotPasswordScreen from './auth/ForgotPasswordScreen';
 import ChangePasswordScreen from './change-password/ChangePasswordScreen';
@@ -32,6 +34,7 @@ export default {
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
+  LoginListScreen: { screen: LoginListScreen },
   MainScreen: { screen: MainScreen },
   LandingScreen: { screen: LandingScreen },
   CreateWalletScreen: { screen: CreateWalletScreen },
@@ -46,14 +49,15 @@ export default {
   BackupPassphraseScreenCompact: { screen: BackupPassphraseScreenCompact },
   TransactionDetailScreen: { screen: TransactionDetailScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
-  TermsConditionScreen: {screen: TermsConditionScreen},
-  AddPinScreen: {screen: AddPinScreen},
-  BackupKeyScreen: {screen: BackupKeyScreen},
-  DownloadAndInstallScreen: {screen: DownloadAndInstallScreen},
-  EnterBackupKeyScreen: {screen: EnterBackupKeyScreen},
-  GoogleAuthScreen: {screen: GoogleAuthScreen},
-  SetupCodeFirstScreen: {screen: SetupCodeFirstScreen},
-  SetupCodeSecondScreen: {screen: SetupCodeSecondScreen},
-  SetupCodeLastScreen: {screen: SetupCodeLastScreen},
-  GoogleOtpVerifyScreen: {screen: GoogleOtpVerifyScreen},
+  TermsConditionScreen: { screen: TermsConditionScreen },
+  AddPinScreen: { screen: AddPinScreen },
+  BackupKeyScreen: { screen: BackupKeyScreen },
+  DownloadAndInstallScreen: { screen: DownloadAndInstallScreen },
+  EnterBackupKeyScreen: { screen: EnterBackupKeyScreen },
+  GoogleAuthScreen: { screen: GoogleAuthScreen },
+  SetupCodeFirstScreen: { screen: SetupCodeFirstScreen },
+  SetupCodeSecondScreen: { screen: SetupCodeSecondScreen },
+  SetupCodeLastScreen: { screen: SetupCodeLastScreen },
+  GoogleOtpVerifyScreen: { screen: GoogleOtpVerifyScreen },
+  LoginBaseScreen: { screen: LoginBaseScreen },
 };

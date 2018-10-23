@@ -1519,7 +1519,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		A858CE99FC2F424392010E23 /* Build NodeJS Mobile Native Modules */ = {
+		1EB9D401D4B64923AF34C4BF /* Build NodeJS Mobile Native Modules */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1587,7 +1587,7 @@ fi
 popd
 ";
 		};
-		4DEB024F35AB403886166390 /* Sign NodeJS Mobile Native Modules */ = {
+		12308712CFC04C5FA5EB2A3B /* Sign NodeJS Mobile Native Modules */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1647,7 +1647,7 @@ find \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -path \"*/*.framework/*\" -del
 find \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.framework\" -type d -delete
 ";
 		};
-		E88449D871E047E0B4D50113 /* Remove NodeJS Mobile Framework Simulator Strips */ = {
+		A5DB3E9C2B0940C782AB8241 /* Remove NodeJS Mobile Framework Simulator Strips */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

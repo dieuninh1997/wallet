@@ -17,7 +17,7 @@ import Consts from '../../../utils/Consts';
 export default class DownloadAndInstallScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('setting2fa.downloadAndInstall'),
+    title: I18n.t('setting2fa.downloadAndInstallTitle'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,

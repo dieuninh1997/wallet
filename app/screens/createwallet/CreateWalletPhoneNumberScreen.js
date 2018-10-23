@@ -1,72 +1,130 @@
 import React, { Component } from 'react';
 import {
-  View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback, AsyncStorage,
+  View, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback, AsyncStorage, Image, ScrollView, Keyboard
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import crypto from 'crypto';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import bip39 from 'bip39';
-import hdkey from 'hdkey';
+import EthService from '../../services/wallet/eth';
+import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, CommonColors, CommonSize, Fonts } from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import WalletService from '../../services/wallet';
 import UIUtils from '../../utils/UIUtils';
+import Consts from '../../utils/Consts';
+import AppPreferences from '../../utils/AppPreferences';
+import AppConfig from '../../utils/AppConfig';
+import { register, login } from '../../api/user/UserRequest';
+import CreateWalletBaseScreen from './CreateWalletBaseScreen';
 
-export default class CreateWalletPhoneNumberScreen extends Component {
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScreen {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
     title: I18n.t('createByPhoneNumber.title'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
-    headerRight: (<View />),
+    headerRight: <View />,
   })
 
+  getLoginType = () => Consts.LOGIN_TYPES.PHONE_NUMBER
+
+  static WALLET_INFO = {
+    PHONE: 'phoneNumber',
+    PASSWORD: 'password',
+    PASSWORD_CONFIRM: 'passwordConfirm',
+    PNB: 'phoneNBwithDialCode'
+  };
   constructor(props) {
     super(props);
     this.state = {
       cca2: 'vn',
-      isChecked: true,
+      isChecked: false,
+      createWalletInfo: {
+        phoneNumber: null,
+        password: null,
+        passwordConfirm: null,
+        phoneNBwithDialCode: null,
+      },
     };
+    this.countryPicker = {}
   }
+
+  /* _handleChangeInput = (typeInput, value) => {
+    const { createWalletInfo } = this.state;
+
+    createWalletInfo[typeInput] = value;
+    this.setState({
+      createWalletInfo,
+    });
+  } */
 
   _handlePressFlag = () => {
     this.countryPicker.openModal();
   }
 
-  _handleToggleCheckBox = () => {
+  /* _handleToggleCheckBox = () => {
     const { isChecked } = this.state;
 
     this.setState({
       isChecked: !isChecked,
     });
-  }
+  } */
 
-  _onBtnTerms = () => {
+/*   _onBtnTerms = () => {
     this.props.navigation.navigate('TermsConditionScreen');
   }
 
   _handleClickCreateWallet = async () => {
     const { navigation } = this.props;
-    console.log('hahah');
+    const { isChecked, createWalletInfo } = this.state;
+    console.log('success');
 
     try {
-      const generatedMnemonic = bip39.generateMnemonic();
-      const seed = bip39.mnemonicToSeedHex(generatedMnemonic);
-      const generatedPrivateKey = hdkey.fromMasterSeed(seed).privateKey.toString('hex');
+      if (!isChecked) {
+        throw new Error('Please read and accept terms and conditions!');
+      }
+      if (!this.isValidNumber()){
+        throw new Error('Phone number is not valid');
+      }
 
-      const {
-        privateKey, address, mnemonic, keystore,
-      } = await WalletService.importWalletFromPrivateKey('nanj', generatedPrivateKey, generatedMnemonic, '123456');
-      console.log('address', address);
+      if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
+        throw new Error('Password must match password confirmation!');
+      }
 
-      AsyncStorage.setItem('address', address);
-      AsyncStorage.setItem('privateKey', privateKey);
-      AsyncStorage.setItem('mnemonic', mnemonic);
-      AsyncStorage.setItem('keystore', keystore);
+      const { privateKey, address, mnemonic } = EthService.generateWallet();
 
-      navigation.navigate('MainScreen');
+      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
+        .update(AppConfig.getClientSecret())
+        .digest('hex');
+
+      const registerInfo = {
+        phone_number: createWalletInfo.phoneNBwithDialCode,
+        password: createWalletInfo.password,
+        password_confirmation: createWalletInfo.passwordConfirm,
+        mnemonic: mnemonicHash,
+        login_type: 0,
+        eth_address: address,
+      };
+      const response = await register(registerInfo);
+      const loginInfo = response.data;
+      //const loginInfo = await login(registerInfo.phone_number, registerInfo.password, '', 0);
+
+      //window.GlobalSocket.connect();
+      Keyboard.dismiss();
+
+      await AppPreferences.saveToKeychain('access_token', loginInfo.access_token);
+      await AppPreferences.saveToKeychain('private_key', privateKey);
+      await AppPreferences.saveToKeychain('mnemonic', mnemonic);
+
+      await AsyncStorage.setItem('address', address);
+      UIUtils.showToastMessage(I18n.t('createWalletByPassportScreen.createWaletSuccess'));
+
+      navigation.navigate('BackupPassphraseScreen');
+      
     } catch (error) {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
@@ -74,106 +132,179 @@ export default class CreateWalletPhoneNumberScreen extends Component {
         UIUtils.showToastMessage(error.message);
       }
     }
-  }
 
+  } */
+  
+
+  
   selectCountry = (country) => {
     const parseCountry = country.cca2.toLowerCase();
-
     this.phone.selectCountry(parseCountry);
     this.setState({ cca2: country.cca2 });
   }
 
-  render() {
-    const { isChecked, cca2 } = this.state;
+  parse(number, iso2) {
+    try {
+      return phoneUtil.parse(number, iso2);
+    } catch (err) {
+      console.log(`Exception was thrown: ${err.toString()}`);
+      return null;
+    }
+  }
+
+  isValidNumber = () => {
+    const {createWalletInfo} = this.state;
+    const phoneNumber = this.phone.state.formattedNumber + createWalletInfo.phoneNumber;
+    createWalletInfo.phoneNBwithDialCode = phoneNumber;
+    this.setState({
+      createWalletInfo,
+    })
+    console.log(this.state.createWalletInfo);
+    const phoneInfo = this.parse(phoneNumber, this.state.cca2);
+
+    if (phoneInfo) {
+      return phoneUtil.isValidNumber(phoneInfo);
+    }
+
+    return false;
+  }
+
+  _validateUsername = () => {
+    if (!this.isValidNumber()){
+      throw new Error('Phone number is not valid');
+    }
+  }
+
+  _renderUsernameInput = () => {
 
     return (
-      <View style={styles.container}>
-        <View style={styles.inputTextNumber}>
-          <View style={styles.country}>
-            <PhoneInput
-              ref={(ref) => { this.phone = ref; }}
-              onPressFlag={this._handlePressFlag}
+    <View style={styles.inputTextNumber}>
+      <View style={styles.country}>
+        <View style={styles.inputDialCode}>
+          <PhoneInput
+            ref= {(ref) => this.phone = ref}
+            style={{width: 62, marginLeft: -15}}
+            textStyle={{fontSize: 18, textAlign: 'center'}}
+            flagStyle={{display: "none"}}
+          />
+          <TouchableOpacity 
+            onPress={this._handlePressFlag}
+            style={{marginLeft: 3}}
+          >
+            <Image
+              source={require('../../../assets/arrow-down/down-arrow.png')}
+              style={styles.arrow}
             />
-            <CountryPicker
-              ref={(ref) => {
-                this.countryPicker = ref;
-              }}
-              onChange={value => this.selectCountry(value)}
-              translation="eng"
-              cca2={cca2}
-            >
-              <View />
-            </CountryPicker>
-          </View>
-          <TextInput
-            style={styles.phoneNumber}
-            keyboardType="numeric"
-            underlineColorAndroid="transparent"
-            placeholder="Phone number"
-          />
-        </View>
-
-        <View style={styles.checkBoxAccept}>
-          <CheckBox
-            containerStyle={styles.checkboxs}
-            checked={isChecked}
-            checkedIcon="check-square"
-            uncheckedIcon="square"
-            checkedColor="#1c43b8"
-            onPress={() => this._handleToggleCheckBox()}
-          />
-          <TouchableWithoutFeedback
-            activeOpacity={0.5}
-            onPress={() => this._onBtnTerms()}
-          >
-            <View
-              style={styles.touchIAccept}
-            >
-              <Text style={styles.textIAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
-              <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <View style={styles.viewcreate}>
-          <TouchableOpacity
-            style={styles.createWallet}
-            onPress={() => this._handleClickCreateWallet()}
-          >
-            <Text style={styles.textCreate}>
-              {I18n.t('createByPhoneNumber.createWallet')}
-            </Text>
           </TouchableOpacity>
         </View>
+        <CountryPicker
+          ref={(ref)=> this.countryPicker = ref}
+          onChange={value => this.selectCountry(value)}
+          translation="eng"
+          cca2={this.state.cca2}
+        >
+         <View/>
+        </CountryPicker>
       </View>
-    );
-  }
-}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputText}
+          keyboardType="phone-pad"
+          underlineColorAndroid="transparent"
+          placeholder={I18n.t('createWallet.phoneNumber')}
+          onChangeText={(value)=>this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
+        />
+      </View>
+    </View>
+  )}
 
+
+  //  render() {
+  //   return (
+  //     <View style={styles.container}>
+  //       <ScrollView>
+  //         <View style={styles.formLoginContainer}>
+  //           <View style={styles.inputTextNumber}>
+  //             <View style={styles.country}>
+  //               <View style={styles.inputDialCode}>
+  //                 <PhoneInput
+  //                   ref= {(ref) => this.phone = ref}
+  //                   style={{width: 62, marginLeft: -15}}
+  //                   textStyle={{fontSize: 18, textAlign: 'center'}}
+  //                   flagStyle={{display: "none"}}
+  //                 />
+  //                 <TouchableOpacity 
+  //                   onPress={this._handlePressFlag}
+  //                   style={{marginLeft: 3}}
+  //                 >
+  //                   <Image
+  //                     source={require('../../../assets/arrow-down/down-arrow.png')}
+  //                     style={styles.arrow}
+  //                   />
+  //                 </TouchableOpacity>
+  //               </View>
+  //               <CountryPicker
+  //                 ref={(ref)=> {this.countryPicker = ref;}}
+  //                 onChange={value => this.selectCountry(value)}
+  //                 translation="eng"
+  //                 cca2={this.state.cca2}
+  //                 >
+  //                 <View/>
+  //               </CountryPicker>
+  //             </View>
+  //             <View style={styles.inputContainer}>
+  //               <TextInput
+  //                 style={styles.inputText}
+  //                 keyboardType="phone-pad"
+  //                 underlineColorAndroid="transparent"
+  //                 placeholder={I18n.t('createWallet.phoneNumber')}
+  //                 onChangeText={(value)=>this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
+  //               />
+  //             </View>
+  //           </View>
+  //           <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
+  //             <Image
+  //               source={require('../../../assets/password/key.png')}
+  //               style={styles.inputImageIcon}
+  //             />
+  //             <TextInput
+  //               placeholder={I18n.t('createWalletByEmailScreen.inputPassword')}
+  //               editable
+  //               secureTextEntry
+  //               underlineColorAndroid="transparent"
+  //               style={styles.inputText}
+  //               onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PASSWORD, value)}
+  //             />
+  //           </View>
+
+  //           <View style={styles.inputContainer}>
+  //             <Image
+  //               source={require('../../../assets/password/key.png')}
+  //               style={styles.inputImageIcon}
+  //             />
+  //             <TextInput
+  //               placeholder={I18n.t('createWalletByEmailScreen.inputPasswordConfirm')}
+  //               editable
+  //               secureTextEntry
+  //               underlineColorAndroid="transparent"
+  //               style={[styles.inputText]}
+  //               onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PASSWORD_CONFIRM, value)}
+  //             />
+  //           </View>
+  //         </View>
+  //         {this._renderTermsAndConditions()}
+  //       </ScrollView>
+  //       {this._renderButtonCreate()}
+  //     </View>
+  //   );
+  // } 
+}
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#F5F7FA',
-  },
-  inputTextNumber: {
-    borderRadius: '30@s',
-    borderWidth: '2@s',
-    flexDirection: 'row',
-    borderColor: '#eef0f4',
-    backgroundColor: '#FFFFFF',
-    height: '60@s',
-    marginLeft: '30@s',
-    marginRight: '30@s',
-    marginTop: '50@s',
-    alignSelf: 'stretch',
-  },
-  checkboxs: {
-    alignItems: 'center',
-    backgroundColor: '#F5F7FA',
-    borderWidth: 0,
-    width: '50@s',
-    borderRadius: 0,
   },
   createWallet: {
     borderRadius: '25@s',
@@ -200,12 +331,12 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingLeft: '20@s',
     borderColor: '#eef0f4',
-    width: '100@s',
-    height: '60@s',
+    width: '87.5@s',
+    height: '56@s',
   },
   phoneNumber: {
-    width: '215@s',
-    fontSize: '20@s',
+    fontSize: '18@s',
+    fontWeight: '100',
     color: '#c4c4c4',
     paddingLeft: '15@s',
   },
@@ -215,23 +346,52 @@ const styles = ScaledSheet.create({
   textCountry: {
     fontWeight: 'bold',
   },
-  textIAccept: {
-    color: '#4d4e4e',
-    fontSize: '16@s',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  checkBoxAccept: {
+  inputContainer: {
+    flex: 1,
+    width: '340@s',
     flexDirection: 'row',
-    marginTop: '15@s',
-  },
-  textTerms: {
-    color: '#6580ce',
-    fontSize: '16@s',
+    paddingHorizontal: '20@s',
     alignItems: 'center',
-    alignSelf: 'center',
   },
-  touchIAccept: {
+  inputTextNumber: {
+    flex: 1,
     flexDirection: 'row',
+    width: '330@s',
+    alignItems: 'center'
+  },
+  inputImageIcon: {
+    width: '24@s',
+    height: '24@s',
+    marginRight: '10@s',
+  },
+  formLoginContainer: {
+    marginTop: '46@s',
+    height: '170@s',
+    alignItems: 'center',
+    backgroundColor: CommonColors.headerBarBgColor,
+    borderRadius: '25@s',
+    borderWidth: 1,
+    borderColor: CommonColors.customBorderColor,
+  },
+  inputWalletIdContainer: {
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: CommonColors.customBorderColor,
+  },
+  inputText: {
+    flex: 7,
+    fontSize: CommonSize.inputFontSize,
+    ...Fonts.Ubuntu_Light,
+  },
+  arrow: {
+    width: '15@s',
+    height: '15@s',
+    paddingLeft: '0@s',
+    opacity: 0.5,
+  },
+  inputDialCode: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
 });

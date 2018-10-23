@@ -18,7 +18,6 @@ import { CommonColors, CommonStyles, Fonts } from '../../utils/CommonStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import { sendPhoneVerificationCode, verifyPhoneNumber } from '../../api/user/UserRequest';
-import { __await } from 'tslib';
 
 export default class MobileNumberModal extends React.Component {
   constructor(props){
@@ -256,6 +255,7 @@ export default class MobileNumberModal extends React.Component {
           <TextInput
             keyboardType="numeric"
             value={codeVerify}
+            maxLength={6}
             onChangeText={this._onTextChangeVerify}
             style={styles.textCodeVerify}
             placeholder='Enter code' />

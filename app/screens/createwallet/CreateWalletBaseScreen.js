@@ -29,6 +29,7 @@ import MangoLoading from '../common/MangoLoading';
 export default class CreateWalletBaseScreen extends Component {
   static WALLET_INFO = {
     EMAIL: 'email',
+    PHONE: 'phone_number',
     PASSPORT: 'passport',
     PASSWORD: 'password',
     PASSWORD_CONFIRM: 'passwordConfirm',
@@ -41,6 +42,7 @@ export default class CreateWalletBaseScreen extends Component {
       createWalletInfo: {
         email: null,
         passport: null,
+        phone_number: null,
         password: null,
         passwordConfirm: null,
       },

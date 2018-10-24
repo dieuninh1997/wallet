@@ -100,10 +100,5 @@
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
     "vm": "vm-browserify"
-  },
-  "rnpm": {
-    "assests": [
-      "./assets/fonts"
-    ]
   }
 }

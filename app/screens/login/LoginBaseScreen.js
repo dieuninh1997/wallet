@@ -120,7 +120,9 @@ class LoginScreen extends Component {
     switch (I18n.locale) {
     case 'vi': return 'vn';
     case 'jp': return 'jp';
-    case 'en': return 'ph';
+    case 'en': return 'gb';
+    case 'ta': return 'ph';
+    case 'vis': return 'ph';
     }
   }
 

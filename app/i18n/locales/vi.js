@@ -125,6 +125,7 @@ export default {
     unconfirmed: 'Chưa xác nhận',
     usDollar: 'Tiền Mỹ ($)',
     philippinesPeso: 'Tiền Philippines (₱)',
+    passportNumber: 'Số hộ chiếu',
   },
   emailVerification: {
     title: 'Kiểm tra Email',
@@ -288,5 +289,20 @@ export default {
     resend: 'Resend',
     verify: 'Verify',
     message: 'Please enter phone number',
+  },
+  PassportNumberVerifyScreen: {
+    title: 'Passport Number',
+    enterPassportNumber: 'Enter passport number',
+    selectImage: 'Select Image',
+    continue: 'Continue',
+    messengerPassport: 'Please enter passport number',
+    messengerImage: 'Please select image',
+  },
+  uploadPassportNumber: {
+    title: 'Passport Number',
+    selectImage: 'Select Image',
+    submit: 'Submit',
+    submitSuccess: 'submit success',
+    messengerImage: 'Please select image',
   },
 };

@@ -125,6 +125,7 @@ export default {
     unconfirmed: 'Unconfirmed',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'Philippines Peso (₱)',
+    passportNumber: 'Passport Number',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -296,5 +297,20 @@ export default {
     emailAddress: 'Email Address',
     passportNumber: 'Passport Number',
     facebook: 'Facebook',
+  },
+  PassportNumberVerifyScreen: {
+    title: 'Passport Number',
+    enterPassportNumber: 'Enter passport number',
+    selectImage: 'Select Image',
+    continue: 'Continue',
+    messengerPassport: 'Please enter passport number',
+    messengerImage: 'Please select image',
+  },
+  uploadPassportNumber: {
+    title: 'Passport Number',
+    selectImage: 'Select Image',
+    submit: 'Submit',
+    submitSuccess: 'submit success',
+    messengerImage: 'Please select image',
   },
 };

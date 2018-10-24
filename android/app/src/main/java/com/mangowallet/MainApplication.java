@@ -26,6 +26,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
+import com.imagepicker.ImagePickerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new RNSpinkitPackage(),
+        new RNSpinkitPackage(),
         new FBSDKPackage(mCallbackManager),
         new RNNodeJsMobilePackage(),
         new RNSharePackage(),
@@ -60,7 +61,8 @@ public class MainApplication extends Application implements ReactApplication {
         new LinearGradientPackage(),
         new RNI18nPackage(),
         new VectorIconsPackage(),
-        new ReactNativeRestartPackage()
+        new ReactNativeRestartPackage(),
+        new ImagePickerPackage()
       );
     }
 

@@ -253,7 +253,7 @@ export default class SettingScreen extends BaseScreen {
         bank_account_verified,
         identity_verified,
         otp_verified,
-      },
+      }
     });
   }
 
@@ -324,10 +324,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.email}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  )}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -360,6 +360,28 @@ export default class SettingScreen extends BaseScreen {
                 </View>
               </View>
             </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback onPress={() => this.navigate('PassportNumberVerifyScreen')}>
+              <View style={styles.borderEmailMobileNumber}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.passportNumber')}</Text>
+                <View style={styles.activiRightGroup}>
+                  {userSecuritySettings && (userSecuritySettings.passport_verified ? (
+                    <Text style={styles.textVerified}>
+                      {I18n.t('setting.verified')}
+                    </Text>
+                  ) : (
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+
           </View>
 
           <View style={styles.borderLogintoWeb}>
@@ -546,8 +568,7 @@ export default class SettingScreen extends BaseScreen {
         />
         <MobileNumberModal
           ref={ref => this._MobleNumberModal = ref}
-          onMobileNumber={this._onMobileNumber}
-        />
+          onMobileNumber={this._onMobileNumber} />
       </View>
     );
   }
@@ -595,7 +616,6 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   groupEmail: {
-    height: '73@s',
     borderBottomWidth: '1@s',
     flexDirection: 'column',
     borderColor: '#ced4dd',

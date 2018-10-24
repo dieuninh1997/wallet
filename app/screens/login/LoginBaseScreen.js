@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import PhoneInput from 'react-native-phone-input';
+import CountryPicker from 'react-native-country-picker-modal';
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -68,6 +70,7 @@ class LoginScreen extends Component {
     }
 
     this.state = {
+      cca2: 'vn',
       loginInfo: {
         email: null,
         password: null,
@@ -103,6 +106,23 @@ class LoginScreen extends Component {
     }
   }
 
+  _handlePressFlag = () => {
+    this.countryPicker.openModal();
+  }
+
+  selectCountry = (country) => {
+    const parseCountry = country.cca2.toLowerCase();
+    this.phone.selectCountry(parseCountry);
+    this.setState({ cca2: country.cca2 });
+  }
+
+  _initialCountry = () => {
+    switch (I18n.locale) {
+    case 'vi': return 'vn';
+    case 'jp': return 'jp';
+    case 'en': return 'ph';
+    }
+  }
 
   _handleChangeInput = (typeInput, value) => {
     const { loginInfo } = this.state;
@@ -123,18 +143,44 @@ class LoginScreen extends Component {
     switch (this.signinType) {
     case '0':
       imageShow = (
-        <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
-          <Image
-            source={require('../../../assets/wallet/wallet.png')}
-            style={styles.inputImageIcon}
-          />
-          <TextInput
-            placeholder={I18n.t('signin.phoneNumber')}
-            editable
-            underlineColorAndroid="transparent"
-            style={styles.inputText}
-            onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, value)}
-          />
+        <View style={[styles.inputTextNumber, styles.inputWalletIdContainer]}>
+          <View style={styles.country}>
+            <View style={styles.inputDialCode}>
+              <PhoneInput
+                ref={ref => this.phone = ref}
+                style={styles.dialCode}
+                textStyle={styles.dialCodeText}
+                flagStyle={{ display: 'none' }}
+                initialCountry={this._initialCountry()}
+              />
+              <TouchableOpacity
+                onPress={this._handlePressFlag}
+                style={{ marginLeft: 3 }}
+              >
+                <Image
+                  source={require('../../../assets/arrow-down/down-arrow.png')}
+                  style={styles.arrow}
+                />
+              </TouchableOpacity>
+            </View>
+            <CountryPicker
+              ref={ref => this.countryPicker = ref}
+              onChange={value => this.selectCountry(value)}
+              translation="eng"
+              cca2={this.state.cca2}
+            >
+              <View />
+            </CountryPicker>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputText}
+              keyboardType="phone-pad"
+              underlineColorAndroid="transparent"
+              placeholder={I18n.t('createWallet.phoneNumber')}
+              onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, this.phone.state.formattedNumber + value)}
+            />
+          </View>
         </View>
       );
       break;
@@ -326,5 +372,39 @@ const styles = ScaledSheet.create({
     marginBottom: '24@s',
     marginTop: '16@s',
     alignSelf: 'center',
+  },
+  arrow: {
+    width: '15@s',
+    height: '15@s',
+    paddingLeft: '0@s',
+    opacity: 0.5,
+  },
+  inputDialCode: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dialCode: {
+    width: '60@s',
+    marginLeft: -17,
+  },
+  dialCodeText: {
+    textAlign: 'center',
+    fontSize: '18@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+  country: {
+    borderRightWidth: '1@s',
+    justifyContent: 'center',
+    paddingLeft: '20@s',
+    borderColor: '#eef0f4',
+    width: '87.5@s',
+    height: '56@s',
+  },
+  inputTextNumber: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '330@s',
+    alignItems: 'center',
   },
 });

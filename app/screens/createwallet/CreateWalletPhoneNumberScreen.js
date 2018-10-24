@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View, TouchableOpacity, TextInput, Image,
 } from 'react-native';
@@ -6,12 +6,15 @@ import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
-import { CommonStyles, CommonColors, CommonSize, Fonts } from '../../utils/CommonStyles';
+import {
+  CommonStyles, CommonColors, CommonSize, Fonts,
+} from '../../utils/CommonStyles';
 import I18n from '../../i18n/i18n';
 import Consts from '../../utils/Consts';
 import CreateWalletBaseScreen from './CreateWalletBaseScreen';
 
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+
 export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScreen {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
@@ -27,7 +30,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
   _handlePressFlag = () => {
     this.countryPicker.openModal();
   }
-  
+
   selectCountry = (country) => {
     const parseCountry = country.cca2.toLowerCase();
     this.phone.selectCountry(parseCountry);
@@ -43,13 +46,21 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
     }
   }
 
+  _initialCountry = () => {
+    switch (I18n.locale) {
+    case 'vi': return 'vn';
+    case 'jp': return 'jp';
+    case 'en': return 'ph';
+    }
+  }
+
   isValidNumber = () => {
-    const {createWalletInfo} = this.state;
+    const { createWalletInfo } = this.state;
     const phoneNumber = this.phone.state.formattedNumber + createWalletInfo.phoneNumber;
     createWalletInfo.phone_number = phoneNumber;
     this.setState({
       createWalletInfo,
-    })
+    });
     console.log(this.state.createWalletInfo);
     const phoneInfo = this.parse(phoneNumber, this.state.cca2);
 
@@ -61,26 +72,25 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
   }
 
   _validateUsername = () => {
-    if (!this.isValidNumber()){
+    if (!this.isValidNumber()) {
       throw new Error('Phone number is not valid');
     }
   }
 
-  _renderUsernameInput = () => {
-
-    return (
+  _renderUsernameInput = () => (
     <View style={styles.inputTextNumber}>
       <View style={styles.country}>
         <View style={styles.inputDialCode}>
           <PhoneInput
-            ref= {(ref) => this.phone = ref}
+            initialCountry={this._initialCountry()}
+            ref={ref => this.phone = ref}
             style={styles.dialCode}
             textStyle={styles.dialCodeText}
-            flagStyle={{display: "none"}}
+            flagStyle={{ display: 'none' }}
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={this._handlePressFlag}
-            style={{marginLeft: 3}}
+            style={{ marginLeft: 3 }}
           >
             <Image
               source={require('../../../assets/arrow-down/down-arrow.png')}
@@ -89,12 +99,12 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
           </TouchableOpacity>
         </View>
         <CountryPicker
-          ref={(ref)=> this.countryPicker = ref}
+          ref={ref => this.countryPicker = ref}
           onChange={value => this.selectCountry(value)}
           translation="eng"
           cca2={this.state.cca2}
         >
-         <View/>
+          <View />
         </CountryPicker>
       </View>
       <View style={styles.inputContainer}>
@@ -103,11 +113,11 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
           keyboardType="phone-pad"
           underlineColorAndroid="transparent"
           placeholder={I18n.t('createWallet.phoneNumber')}
-          onChangeText={(value)=>this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
+          onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
         />
       </View>
     </View>
-  )}
+  )
 }
 const styles = ScaledSheet.create({
   container: {
@@ -167,7 +177,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: '330@s',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   inputImageIcon: {
     width: '24@s',
@@ -202,15 +212,15 @@ const styles = ScaledSheet.create({
   inputDialCode: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   dialCode: {
-    width: '60@s', 
+    width: '60@s',
     marginLeft: -17,
   },
-  dialCodeText: { 
+  dialCodeText: {
     textAlign: 'center',
     fontSize: CommonSize.inputFontSize,
     ...Fonts.Ubuntu_Light,
-  }
+  },
 });

@@ -80,6 +80,9 @@ export default {
     title: 'Dashboard',
     balance: 'Số dư',
   },
+  chart: {
+    allTime: 'All time'
+  },
   send: {
     title: 'Gửi',
     walletAddress: 'Địa chỉ ví',

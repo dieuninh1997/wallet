@@ -67,6 +67,14 @@ export default class ChartModal extends React.Component {
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => this.setModalVisible(false)}>
+            <Image
+              source={require('../../../assets/common/close.png')}
+              resizeMode='stretch'
+              style={styles.closeImage} />
+          </TouchableOpacity>
           <IndicatorViewPager
             ref={ref => this._viewPager = ref}
             initialPage={page}
@@ -190,6 +198,22 @@ const popupWidth = width - 2 * scale(16);
 const styles = ScaledSheet.create({
   modal: {
     margin: 0
+  },
+
+  closeButton: {
+    width: '44@s',
+    height: '44@s',
+    alignSelf: 'flex-end',
+    marginRight: '16@s',
+    backgroundColor: 'white',
+    borderRadius: '22@s',
+    ...UIUtils.generatePopupShadow()
+  },
+
+  closeImage: {
+    width: '36@s',
+    height: '36@s',
+    margin: '4@s'
   },
 
   viewPager: {

@@ -5,24 +5,25 @@ import {
   Text,
   TouchableOpacity,
   View,
-  WebView
+  WebView,
 } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import { IndicatorViewPager, PagerDotIndicator } from 'rn-viewpager';
-import _ from 'lodash';
 import I18n from '../../i18n/i18n';
-import { formatCoin, getCoinName, getCoinFullName } from '../../utils/Filters';
+import { getCoinFullName } from '../../utils/Filters';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import AppConfig from '../../utils/AppConfig';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
+import {
+  CommonColors, Fonts,
+} from '../../utils/CommonStyles';
 
 export default class ChartModal extends React.Component {
   state = {
     currency: 'USD',
     timeRange: 4,
-    modalVisible: false
+    modalVisible: false,
   };
 
   TIME_RANGS = ['all', '12m', '1m', '7d', '1d'];
@@ -40,7 +41,7 @@ export default class ChartModal extends React.Component {
     this.setState({
       currency,
       coin,
-      modalVisible: true
+      modalVisible: true,
     });
   }
 
@@ -66,20 +67,24 @@ export default class ChartModal extends React.Component {
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
-          onBackdropPress={() => this.setModalVisible(false)}>
+          onBackdropPress={() => this.setModalVisible(false)}
+        >
           <TouchableOpacity
             style={styles.closeButton}
-            onPress={() => this.setModalVisible(false)}>
+            onPress={() => this.setModalVisible(false)}
+          >
             <Image
               source={require('../../../assets/common/close.png')}
-              resizeMode='stretch'
-              style={styles.closeImage} />
+              resizeMode="stretch"
+              style={styles.closeImage}
+            />
           </TouchableOpacity>
           <IndicatorViewPager
             ref={ref => this._viewPager = ref}
             initialPage={page}
             style={styles.viewPager}
-            indicator={this._renderDotIndicator()}>
+            indicator={this._renderDotIndicator()}
+          >
             {allCoins.map(coin => this._renderPage(coin))}
           </IndicatorViewPager>
         </Modal>
@@ -89,11 +94,14 @@ export default class ChartModal extends React.Component {
 
   _renderDotIndicator() {
     const allCoins = this._parent ? this._parent.ALL_COINS : [];
-    return <PagerDotIndicator
-              style={styles.indicator}
-              pageCount={allCoins.length}
-              dotStyle={styles.dotStyle}
-              selectedDotStyle={styles.selectedDotStyle}/>;
+    return (
+      <PagerDotIndicator
+        style={styles.indicator}
+        pageCount={allCoins.length}
+        dotStyle={styles.dotStyle}
+        selectedDotStyle={styles.selectedDotStyle}
+      />
+    );
   }
 
   _renderPage(coin) {
@@ -109,7 +117,7 @@ export default class ChartModal extends React.Component {
   }
 
   _renderCoinInfo(coin) {
-    let hasData = this._parent && this._parent._hasData();
+    const hasData = this._parent && this._parent._hasData();
     let isPriceDown = false;
     let price = ' ';
     let changePercent = ' ';
@@ -125,17 +133,25 @@ export default class ChartModal extends React.Component {
         <Text style={styles.coinName}>{getCoinFullName(coin)}</Text>
         <View style={styles.priceGroup}>
           <Text style={styles.price}>{price}</Text>
-          { hasData &&
-            <View>
-              { isPriceDown
-                  ? <Image
+          { hasData
+            && (
+              <View>
+                { isPriceDown
+                  ? (
+                    <Image
                       source={require('../../../assets/icon-change-price/changeDown.png')}
-                      style={styles.changeImage} />
-                  : <Image
+                      style={styles.changeImage}
+                    />
+                  )
+                  : (
+                    <Image
                       source={require('../../../assets/icon-change-price/changeUp.png')}
-                      style={styles.changeImage} />
-              }
-            </View>
+                      style={styles.changeImage}
+                    />
+                  )
+                }
+              </View>
+            )
           }
           <Text style={isPriceDown ? styles.priceDown : styles.priceUp}>{changePercent}</Text>
         </View>
@@ -149,21 +165,22 @@ export default class ChartModal extends React.Component {
         <WebView
           ref={ref => this._webView = ref}
           source={{ uri: this._getChartUrl(coin) }}
-          style={styles.webView} />
+          style={styles.webView}
+        />
       </View>
     );
   }
 
   _getChartUrl(coin) {
-    let { currency, timeRange } = this.state;
-    let range = this.TIME_RANGS[timeRange];
-    let params = `coin=${coin}&currency=${currency}&range=${range}`;
+    const { currency, timeRange } = this.state;
+    const range = this.TIME_RANGS[timeRange];
+    const params = `coin=${coin}&currency=${currency}&range=${range}`;
 
     return `${AppConfig.getAssetServer()}/chart?${params}`;
   }
 
   _renderTimeRanges() {
-    let { timeRange } = this.state;
+    const { timeRange } = this.state;
     return (
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => this._onPressTimeRange(0)}>
@@ -197,7 +214,7 @@ const popupWidth = width - 2 * scale(16);
 
 const styles = ScaledSheet.create({
   modal: {
-    margin: 0
+    margin: 0,
   },
 
   closeButton: {
@@ -207,23 +224,23 @@ const styles = ScaledSheet.create({
     marginRight: '16@s',
     backgroundColor: 'white',
     borderRadius: '22@s',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
 
   closeImage: {
     width: '36@s',
     height: '36@s',
-    margin: '4@s'
+    margin: '4@s',
   },
 
   viewPager: {
     width: '100%',
     height: '456@s',
-    marginBottom: '20@s'
+    marginBottom: '20@s',
   },
 
   indicator: {
-    bottom: -scale(17)
+    bottom: -scale(17),
   },
 
   dotStyle: {
@@ -232,7 +249,7 @@ const styles = ScaledSheet.create({
     marginLeft: '6@s',
     marginRight: '6@s',
     borderRadius: '6@s',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
 
   selectedDotStyle: {
@@ -243,11 +260,11 @@ const styles = ScaledSheet.create({
     borderRadius: '10@s',
     borderWidth: '4@s',
     borderColor: 'white',
-    backgroundColor: '#0000'
+    backgroundColor: '#0000',
   },
 
   page: {
-    flex: 1
+    flex: 1,
   },
   popup: {
     width: popupWidth,
@@ -256,7 +273,7 @@ const styles = ScaledSheet.create({
     backgroundColor: 'white',
     borderRadius: '8@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
 
   coinName: {
@@ -264,26 +281,26 @@ const styles = ScaledSheet.create({
     marginLeft: '24@s',
     fontSize: '18@ms',
     color: '#26304d',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
 
   priceGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: '8@s'
+    marginTop: '8@s',
   },
 
   price: {
     marginLeft: '24@s',
     fontSize: '36@ms',
     color: '#26304d',
-    ...Fonts.Ubuntu_Medium
+    ...Fonts.Ubuntu_Medium,
   },
 
   changeImage: {
     width: '11@s',
     height: '11@s',
-    marginLeft: '12@s'
+    marginLeft: '12@s',
   },
 
   priceUp: {
@@ -304,12 +321,12 @@ const styles = ScaledSheet.create({
     flex: 1,
     overflow: 'hidden',
     borderColor: 'white',
-    borderWidth: 1
+    borderWidth: 1,
   },
 
   webView: {
     flex: 1,
-    margin: -5
+    margin: -5,
   },
 
   footer: {
@@ -320,7 +337,7 @@ const styles = ScaledSheet.create({
     marginTop: '5@s',
     marginBottom: '15@s',
     marginLeft: '20@s',
-    marginRight: '20@s'
+    marginRight: '20@s',
   },
 
   timeButton: {
@@ -330,12 +347,12 @@ const styles = ScaledSheet.create({
     paddingRight: '8@s',
     paddingTop: '1@s',
     paddingBottom: '1@s',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
 
   selectedTimeButton: {
     color: 'white',
     backgroundColor: '#2f64d1',
-    borderRadius: '15@s'
-  }
+    borderRadius: '15@s',
+  },
 });

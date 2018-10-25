@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
+import {
+  CommonStyles, Fonts, CommonSize, CommonColors,
+} from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import UIUtils from '../../../utils/UIUtils';
@@ -48,12 +50,12 @@ export default class EnterBackupKeyScreen extends Component {
     }
 
     const { navigation } = this.props;
-    navigation.navigate('SetupCodeFirstScreen');
+    navigation.navigate('StepCodeScreen');
   }
 
   render() {
     return (
-      <ScrollView style = {{flex:1}} ref = 'scroll' contentContainerStyle={{ flexGrow: 1 }} >
+      <ScrollView style={{ flex: 1 }} ref="scroll" contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.EnterBackupKey}>
           <View style={styles.imageBlock}>
             <Image
@@ -70,7 +72,7 @@ export default class EnterBackupKeyScreen extends Component {
             <TextInput
               editable
               placeholder={I18n.t('setting2fa.enterBackupKey')}
-              ref={(input) => { this.googleOtpKeyInput = input }}
+              ref={(input) => { this.googleOtpKeyInput = input; }}
               style={styles.inputText}
             />
           </View>
@@ -105,7 +107,7 @@ const styles = ScaledSheet.create({
   },
   textBlock: {
     alignItems: 'center',
-    marginBottom: '44@s'
+    marginBottom: '44@s',
   },
   textGuide: {
     width: '271@s',
@@ -122,7 +124,7 @@ const styles = ScaledSheet.create({
     borderRadius: '26@s',
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   inputText: {
     width: '265@s',
@@ -138,5 +140,5 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
-  }
+  },
 });

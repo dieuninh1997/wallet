@@ -155,7 +155,7 @@ export default {
     changePinSuccess: 'Change pin code success',
     currentPin: 'Current PIN',
     incorrectPincode: 'Incorrect PIN Code',
-    pleaseAgain: 'Please try again	',
+    pleaseAgain: 'Please try again',
     newPin: 'New PIN',
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',

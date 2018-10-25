@@ -32,6 +32,7 @@ import MaintenanceScreen from './maintenance/MaintenanceScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
+  StepCodeScreen: { screen: StepCodeScreen },
   LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
@@ -60,6 +61,5 @@ export default {
   LoginBaseScreen: { screen: LoginBaseScreen },
   UploadPassportNumber: { screen: UploadPassportNumber },
   PassportNumberVerifyScreen: { screen: PassportNumberVerifyScreen },
-  StepCodeScreen: { screen: StepCodeScreen },
   MaintenanceScreen: { screen: MaintenanceScreen },
 };

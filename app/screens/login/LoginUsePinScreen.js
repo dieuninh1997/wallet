@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Vibration } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import TouchID from 'react-native-touch-id';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -8,9 +8,8 @@ import { CommonSize } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
-import BaseScreen from '../BaseScreen';
 
-export default class LoginUsePinScreen extends BaseScreen {
+export default class LoginUsePinScreen extends Component {
   static navigationOptions = () => ({
     headerLeft: <View />,
     headerStyle: styles.header,
@@ -21,18 +20,18 @@ export default class LoginUsePinScreen extends BaseScreen {
     isShowError: false,
   };
 
-  isRootScreen() {
-    return true;
+  isRootScreen() {	
+    return true;	
   }
 
   async componentDidMount() {
-    super.componentDidMount();
     const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
+
 
     await hasUserSetPinCode();
     await this._getCodePin();
-    if (isEnableTouchId) {
-      this._renderLoginByTouchId();
+    if(isEnableTouchId) {
+      this._renderLoginByTouchId()
     }
   }
 
@@ -71,35 +70,30 @@ export default class LoginUsePinScreen extends BaseScreen {
       fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
       unifiedErrors: false,
     };
+
     TouchID.authenticate(I18n.t('loginUserPin.touchID'), optionalConfigObject)
       .then(() => {
         navigation.navigate('MainScreen');
       })
       .catch((error) => {
         console.log(error.code);
-
-        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {
-          UIUtils.showToastMessage('Your touch ID is disable in a few minute');
-          return;
-        }
-
-        if (error.code === 'AUTHENTICATION_CANCELED') {
-          return;
-        }
-
-        this._renderLoginByTouchId();
+        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {	          
+          this.setState({ isEnableTouchId: false });
+          UIUtils.showToastMessage('Your touch ID is disable in a few minute');	
+          return;	
+        }	
+        if (error.code === 'AUTHENTICATION_CANCELED') {	
+          return;	
+        }	
+         this._renderLoginByTouchId();
       });
   }
 
   render() {
-    const {
-      isShowError,
-    } = this.state;
+    const { isShowError } = this.state;
 
     return (
       <View style={styles.container}>
-
-        <View style={styles.containerPassword} />
         <PINCode
           status="enter"
           passwordLength={6}
@@ -108,19 +102,9 @@ export default class LoginUsePinScreen extends BaseScreen {
           handleResultEnterPin={value => this._checkValuePin(value)}
           timeLocked={10000}
           numbersButtonOverlayColor="#fcd800"
-          stylePinCodeMainContainer={styles.pinCodeContainer}
-          styleMainContainer={styles.mainContainer}
-          colorPassword="#ece2a8"
           stylePinCodeButtonNumber="#000"
           stylePinCodeHiddenPasswordSizeEmpty={scale(20)}
           stylePinCodeHiddenPasswordSizeFull={scale(20)}
-          stylePinCodeButtonCircle={styles.buttonCircle}
-          buttonDeleteText
-          stylePinCodeColumnDeleteButton={styles.buttonDelete}
-          stylePinCodeTextTitle={styles.textTitlePinCode}
-          stylePinCodeRowButtons={styles.pincodeRowButton}
-          stylePinCodeTextButtonCircle={styles.textButtonCircle}
-          stylePinCodeHiddenPasswordCircle={styles.borderPassword}
           titleEnter={I18n.t('loginUserPin.enterPincode')}
           titleAttemptFailed={I18n.t('loginUserPin.incorrectPincode')}
           subtitleError={I18n.t('loginUserPin.pleaseAgain')}
@@ -145,71 +129,6 @@ const styles = ScaledSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f5f7fa',
-  },
-  mainContainer: {
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pinCodeContainer: {
-    backgroundColor: 'transparent',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: '30@s',
-  },
-  textTitlePinCode: {
-    fontSize: '20@ms',
-    fontWeight: '200',
-    textAlign: 'center',
-    paddingTop: '10@s',
-  },
-  buttonDelete: {
-    backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '60@s',
-    paddingTop: '11@s',
-    height: '60@s',
-    borderRadius: '30@s',
-    marginBottom: '10@s',
-    marginLeft: '2@s',
-    marginRight: '2@s',
-    elevation: '6@s',
-  },
-  buttonCircle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '60@s',
-    height: '60@s',
-    backgroundColor: '#ffffff',
-    borderRadius: '30@s',
-    elevation: '6@s',
-  },
-  containerPassword: {
-    width: '100%',
-    height: '184@s',
-    position: 'absolute',
-    backgroundColor: '#fcd800',
-  },
-  borderPassword: {
-    backgroundColor: '#ffffff',
-    flexDirection: 'row',
-    height: '74@s',
-    borderRadius: '37@s',
-    paddingBottom: '27@s',
-    width: '319@s',
-    marginBottom: '70@s',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pincodeRowButton: {
-    marginTop: '13@s',
-  },
-  textButtonCircle: {
-    fontSize: '30@ms',
-    fontWeight: '400',
-    color: '#26304c',
   },
   pincodeTitle: {
     fontSize: '16@ms',

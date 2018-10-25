@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import I18n from '../../i18n/i18n';
+import DeviceInfo from 'react-native-device-info';
 
 export async function get(url, params = {}) {
   params.lang = I18n.locale;
@@ -72,6 +74,8 @@ function _getHeader() {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     Authorization: `Bearer ${AppConfig.ACCESS_TOKEN}`,
+    'x-client-version': DeviceInfo.getBuildNumber(),
+    'x-client-platform': Platform.OS
   };
 }
 
@@ -102,11 +106,22 @@ async function _processResponse(response) {
 }
 
 async function _checkResponseCode(response) {
-  console.log('response:', response);
   if (!response.ok) {
     // if (response.status === 401) {
     //   throw new Error(Consts.NOT_LOGIN);
     // }
+
+        console.log('----------- update required', response.status, window.rootScreen);
+
+    if (response.status === 426) {
+      if (window.rootScreen) {
+        const params = {
+          code: response.status
+        }
+        window.rootScreen.navigateAndClearStack('MaintenanceScreen', params);
+      }
+      throw new Error(Consts.ERRORS.UPDATE_REQUIRED);
+    }
 
     const content = await
     response.text();

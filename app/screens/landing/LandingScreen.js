@@ -13,8 +13,9 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoButton from '../common/MangoButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import BaseScreen from '../BaseScreen';
 
-class LandingScreen extends Component {
+class LandingScreen extends BaseScreen {
   static navigationOptions = () => ({
     header: null,
   })
@@ -22,7 +23,9 @@ class LandingScreen extends Component {
   static LIST_LANGUAGE = [
     { key: 'en', name: 'English', show: 'Eng' },
     { key: 'jp', name: 'Japanese', show: 'Jp' },
+    { key: 'ta', name: 'Tagalog', show: 'Ta' },
     { key: 'vi', name: 'Vietnamese', show: 'Vi' },
+    { key: 'vis', name: 'Visayan', show: 'Vis' },
   ];
 
   constructor(props) {
@@ -38,6 +41,10 @@ class LandingScreen extends Component {
     };
   }
 
+  isRootScreen() {
+    return true;
+  }
+
   componentWillMount = async () => {
     await this._getLanguage();
   }
@@ -48,8 +55,14 @@ class LandingScreen extends Component {
     const value = await AsyncStorage.getItem('user_locale');
     let languageSelect = 0;
     switch (value) {
-    case 'vi':
+    case 'vis':
+      languageSelect = 4;
+      break;
+    case 'ta':
       languageSelect = 2;
+      break;
+    case 'vi':
+      languageSelect = 3;
       break;
     case 'jp':
       languageSelect = 1;
@@ -232,7 +245,7 @@ const styles = ScaledSheet.create({
     top: '28@s',
     left: '60@s',
     width: '220@s',
-    height: '180@s',
+    height: '300@s',
     paddingTop: '8@s',
   },
 
@@ -283,7 +296,7 @@ const styles = ScaledSheet.create({
 
   btnGroupContainer: {
     alignItems: 'center',
-    paddingTop: '80@s'
+    paddingTop: '80@s',
   },
 
   btnCreateWalletContainer: {
@@ -317,7 +330,7 @@ const styles = ScaledSheet.create({
   btnTextAuthStyle: {
     fontSize: '16@ms',
     color: CommonColors.headerBarBgColor,
-    fontSize: '18@s'
+    // fontSize: '18@s',
   },
 
   modalListLanguage: {
@@ -331,8 +344,8 @@ const styles = ScaledSheet.create({
   },
 
   imageBackground: {
-    width: '100%' ,
+    width: '100%',
     height: '100%',
     top: 0,
-  }
+  },
 });

@@ -155,7 +155,7 @@ export default {
     changePinSuccess: 'Change pin code success',
     currentPin: 'Current PIN',
     incorrectPincode: 'Incorrect PIN Code',
-    pleaseAgain: 'Please try again	',
+    pleaseAgain: 'Please try again',
     newPin: 'New PIN',
     confirmNewPin: 'Confirm New PIN',
     confirmFail: 'Your entries did not match',
@@ -291,4 +291,8 @@ export default {
     submitSuccess: 'submit success',
     messengerImage: 'Please select image',
   },
+  http: {
+    _426: 'Update Required',
+    _503: 'Server Maintenance.'
+  }
 };

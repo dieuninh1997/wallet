@@ -18,19 +18,21 @@ export default class LoginUsePinScreen extends Component {
   state = {
     codePin: null,
     isShowError: false,
-    isEnableTouchId: false,
   };
+
+  isRootScreen() {	
+    return true;	
+  }
 
   async componentDidMount() {
     const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
-    console.log('isEnableTouchId', isEnableTouchId);
 
-    this.setState({
-      isEnableTouchId: isEnableTouchId === 'true',
-    });
 
     await hasUserSetPinCode();
     await this._getCodePin();
+    if(isEnableTouchId) {
+      this._renderLoginByTouchId()
+    }
   }
 
   _checkValuePin(value) {
@@ -63,12 +65,10 @@ export default class LoginUsePinScreen extends Component {
     const { navigation } = this.props;
 
     const optionalConfigObject = {
-      title: 'Login by Touch ID',
       color: '#e00606',
-      sensorDescription: I18n.t('loginUserPin.touchID'), // Android
       cancelText: 'Cancel', // Android
       fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
-      unifiedErrors: false, // use unified error messages (default false)
+      unifiedErrors: false,
     };
 
     TouchID.authenticate(I18n.t('loginUserPin.touchID'), optionalConfigObject)
@@ -76,19 +76,24 @@ export default class LoginUsePinScreen extends Component {
         navigation.navigate('MainScreen');
       })
       .catch((error) => {
-        console.log('error', error);
-        if (error.details === 'cancelled') {
+        console.log(error.code);
+        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {	          
           this.setState({ isEnableTouchId: false });
-        }
+          UIUtils.showToastMessage('Your touch ID is disable in a few minute');	
+          return;	
+        }	
+        if (error.code === 'AUTHENTICATION_CANCELED') {	
+          return;	
+        }	
+         this._renderLoginByTouchId();
       });
   }
 
   render() {
-    const { isShowError, isEnableTouchId } = this.state;
+    const { isShowError } = this.state;
 
     return (
       <View style={styles.container}>
-        {isEnableTouchId ? this._renderLoginByTouchId() : null}
         <PINCode
           status="enter"
           passwordLength={6}

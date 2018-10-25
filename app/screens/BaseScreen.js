@@ -21,16 +21,22 @@ export default class BaseScreen extends React.Component {
   navigateAndClearStack(screen, params) {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: screen })],
+      actions: [NavigationActions.navigate({ routeName: screen, params })],
     });
     this.props.navigation.dispatch(resetAction);
   }
 
   _onError(err, navigation) {
+  }
 
+  isRootScreen() {
+    return false;
   }
 
   componentDidMount() {
+    if (this.isRootScreen()) {
+      window.rootScreen = this;
+    }
     const socketEventHandlers = this.getSocketEventHandlers();
     for (const event in socketEventHandlers) {
       const handler = socketEventHandlers[event];

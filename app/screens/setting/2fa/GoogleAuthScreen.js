@@ -4,11 +4,13 @@ import {
   View,
   TextInput,
   Image,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
+import {
+  CommonStyles, Fonts, CommonSize, CommonColors,
+} from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import { enableGoogleOtp, disableGoogleOtp } from '../../../api/user/UserRequest';
@@ -44,15 +46,15 @@ export default class GoogleAuthScreen extends Component {
   }
 
   _onTextChanged = (type, text) => {
-    switch(type) {
-      case this.PASSWORD:
-        this.setState({password: text});
-        break;
-      case this.GOOGLEOTPCODE:
-        this.setState({googleOtpCode: text});
-        break;
-      default:
-        this.setState({smsCode: text});
+    switch (type) {
+    case this.PASSWORD:
+      this.setState({ password: text });
+      break;
+    case this.GOOGLEOTPCODE:
+      this.setState({ googleOtpCode: text });
+      break;
+    default:
+      this.setState({ smsCode: text });
     }
   }
 
@@ -77,7 +79,9 @@ export default class GoogleAuthScreen extends Component {
   }
 
   _handleEnableGoogleOtp = async () => {
-    const { password, smsCode, googleOtpCode, googleOtpStatus } = this.state;
+    const {
+      password, smsCode, googleOtpCode, googleOtpStatus,
+    } = this.state;
 
     if (!this._validateClient()) {
       return;
@@ -99,10 +103,12 @@ export default class GoogleAuthScreen extends Component {
   _sendSms = () => {}
 
   render() {
-    const { password, smsCode, googleOtpCode, googleOtpStatus } = this.state;
+    const {
+      password, smsCode, googleOtpCode, googleOtpStatus,
+    } = this.state;
 
     return (
-      <ScrollView style = {{flex:1}} ref = 'scroll' contentContainerStyle={{ flexGrow: 1 }} >
+      <ScrollView style={{ flex: 1 }} ref="scroll" contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.GoogleAuth}>
 
           <View style={styles.inputBlock}>
@@ -113,8 +119,8 @@ export default class GoogleAuthScreen extends Component {
             <TextInput
               editable
               secureTextEntry
-              onChangeText = {(text)=> this._onTextChanged(this.PASSWORD, text)}
-              value = {password}
+              onChangeText={text => this._onTextChanged(this.PASSWORD, text)}
+              value={password}
               style={styles.inputText}
               placeholder={I18n.t('setting2fa.loginPassword')}
             />
@@ -127,8 +133,8 @@ export default class GoogleAuthScreen extends Component {
             />
             <TextInput
               editable={!googleOtpCode}
-              onChangeText = {(text)=> this._onTextChanged(this.SMSCODE, text)}
-              value = {smsCode}
+              onChangeText={text => this._onTextChanged(this.SMSCODE, text)}
+              value={smsCode}
               style={[styles.inputText, styles.width137, styles.marginRight27]}
               placeholder={I18n.t('setting2fa.smsAuthCode')}
             />
@@ -149,8 +155,8 @@ export default class GoogleAuthScreen extends Component {
             <TextInput
               editable={!smsCode}
               maxLength={6}
-              onChangeText = {(text)=> this._onTextChanged(this.GOOGLEOTPCODE, text)}
-              value = {googleOtpCode}
+              onChangeText={text => this._onTextChanged(this.GOOGLEOTPCODE, text)}
+              value={googleOtpCode}
               style={[styles.inputText, styles.width165]}
               placeholder={I18n.t('setting2fa.googleAuthCode')}
             />
@@ -185,7 +191,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
     alignItems: 'center',
-    marginBottom: '24@s'
+    marginBottom: '24@s',
   },
   image: {
     marginLeft: '20@s',
@@ -209,13 +215,13 @@ const styles = ScaledSheet.create({
     marginHorizontal: '5@s',
   },
   width137: {
-    width: '137@s'
+    width: '137@s',
   },
   width165: {
-    width: '165@s'
+    width: '165@s',
   },
   marginRight27: {
-    marginRight: '27@s'
+    marginRight: '27@s',
   },
   btnSendSms: {
     width: '103@s',
@@ -227,6 +233,6 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   inputDisable: {
-    backgroundColor: 'rgb(230, 235, 242)'
-  }
+    backgroundColor: 'rgb(230, 235, 242)',
+  },
 });

@@ -6,16 +6,16 @@ import {
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
-import MangoBackButton from '../../common/MangoBackButton';
+import {
+  Fonts,
+} from '../../../utils/CommonStyles';
 import MangoGradientButton from '../../common/MangoGradientButton';
-import MangoStepOval from '../../common/MangoStepOval';
 import Consts from '../../../utils/Consts';
 
 export default class SetupCodeComponent extends Component {
   render() {
     const {
-      imageStep, textGuide, nextStep,
+      imageStep, textGuide, nextScreen,
     } = this.props;
     const imageLinks = [
       require('../../../../assets/setting/group2.png'),
@@ -43,19 +43,16 @@ export default class SetupCodeComponent extends Component {
           <Text style={styles.textGuide}>{textGuide}</Text>
         </View>
 
-        <View style={styles.stepGuide}>
-          <MangoStepOval
-            stepOval={imageStep}
-          />
-        </View>
+        {imageStep === Consts.MANGO_STEP_OVAL.last ? (
+          <View style={styles.btnBlock}>
+            <MangoGradientButton
+              btnText={I18n.t('backupPassphrase.btnNext')}
+              btnStyle={styles.btnNext}
+              onPress={nextScreen}
+            />
+          </View>
+        ) : null}
 
-        <View style={styles.btnBlock}>
-          <MangoGradientButton
-            btnText={I18n.t('backupPassphrase.btnNext')}
-            btnStyle={styles.btnNext}
-            onPress={() => nextStep()}
-          />
-        </View>
       </View>
     );
   }
@@ -64,7 +61,6 @@ export default class SetupCodeComponent extends Component {
 const styles = ScaledSheet.create({
   setupCodeComponent: {
     paddingTop: '44@s',
-    flex: 1,
     alignItems: 'center',
     backgroundColor: 'rgb(245, 247, 250)',
   },
@@ -78,7 +74,7 @@ const styles = ScaledSheet.create({
   },
   textBlock: {
     alignItems: 'center',
-    marginBottom: '30@s'
+    marginBottom: '30@s',
   },
   textGuide: {
     width: '271@s',
@@ -92,12 +88,11 @@ const styles = ScaledSheet.create({
 
   },
   btnBlock: {
-    marginTop: '30@s',
   },
   btnNext: {
     width: '140@s',
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
-  }
+  },
 });

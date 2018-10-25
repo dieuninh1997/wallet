@@ -24,12 +24,11 @@ import BackupKeyScreen from './setting/2fa/BackupKeyScreen';
 import DownloadAndInstallScreen from './setting/2fa/DownloadAndInstallScreen';
 import EnterBackupKeyScreen from './setting/2fa/EnterBackupKeyScreen';
 import GoogleAuthScreen from './setting/2fa/GoogleAuthScreen';
-import SetupCodeFirstScreen from './setting/2fa/SetupCodeFirstScreen';
-import SetupCodeSecondScreen from './setting/2fa/SetupCodeSecondScreen';
-import SetupCodeLastScreen from './setting/2fa/SetupCodeLastScreen';
 import GoogleOtpVerifyScreen from './login/GoogleOtpVerifyScreen';
 import PassportNumberVerifyScreen from './passport-number-verify/PassportNumberVerifyScreen';
 import UploadPassportNumber from './passport-number-verify/UploadPassportNumber';
+import StepCodeScreen from './setting/2fa/StepCodeScreen';
+import MaintenanceScreen from './maintenance/MaintenanceScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -57,11 +56,10 @@ export default {
   DownloadAndInstallScreen: { screen: DownloadAndInstallScreen },
   EnterBackupKeyScreen: { screen: EnterBackupKeyScreen },
   GoogleAuthScreen: { screen: GoogleAuthScreen },
-  SetupCodeFirstScreen: { screen: SetupCodeFirstScreen },
-  SetupCodeSecondScreen: { screen: SetupCodeSecondScreen },
-  SetupCodeLastScreen: { screen: SetupCodeLastScreen },
   GoogleOtpVerifyScreen: { screen: GoogleOtpVerifyScreen },
   LoginBaseScreen: { screen: LoginBaseScreen },
-  UploadPassportNumber: {screen: UploadPassportNumber},
+  UploadPassportNumber: { screen: UploadPassportNumber },
   PassportNumberVerifyScreen: { screen: PassportNumberVerifyScreen },
+  StepCodeScreen: { screen: StepCodeScreen },
+  MaintenanceScreen: { screen: MaintenanceScreen },
 };

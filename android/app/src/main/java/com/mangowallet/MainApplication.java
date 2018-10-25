@@ -3,6 +3,7 @@ package com.mangowallet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.react.rnspinkit.RNSpinkitPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -49,6 +50,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RNSpinkitPackage(),
+        new RNDeviceInfo(),
         new RNSpinkitPackage(),
         new FBSDKPackage(mCallbackManager),
         new RNNodeJsMobilePackage(),

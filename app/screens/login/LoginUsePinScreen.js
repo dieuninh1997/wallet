@@ -8,8 +8,9 @@ import { CommonSize } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
+import BaseScreen from '../BaseScreen';
 
-export default class LoginUsePinScreen extends Component {
+export default class LoginUsePinScreen extends BaseScreen {
   static navigationOptions = () => ({
     headerLeft: <View />,
     headerStyle: styles.header,
@@ -20,7 +21,12 @@ export default class LoginUsePinScreen extends Component {
     isShowError: false,
   };
 
+  isRootScreen() {
+    return true;
+  }
+
   async componentDidMount() {
+    super.componentDidMount();
     const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
 
     await hasUserSetPinCode();

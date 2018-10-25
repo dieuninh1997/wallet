@@ -64,6 +64,10 @@ class DashboardScreen extends BaseScreen {
     this.setState({ refreshing: false });
   }
 
+  isRootScreen() {
+    return true;
+  }
+
   async componentDidMount() {
     super.componentDidMount();
     BackPressHandler.handleBackAction();

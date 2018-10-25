@@ -28,6 +28,7 @@ import GoogleOtpVerifyScreen from './login/GoogleOtpVerifyScreen';
 import PassportNumberVerifyScreen from './passport-number-verify/PassportNumberVerifyScreen';
 import UploadPassportNumber from './passport-number-verify/UploadPassportNumber';
 import StepCodeScreen from './setting/2fa/StepCodeScreen';
+import MaintenanceScreen from './maintenance/MaintenanceScreen';
 
 export default {
   SplashScreen: { screen: SplashScreen },
@@ -60,4 +61,5 @@ export default {
   UploadPassportNumber: { screen: UploadPassportNumber },
   PassportNumberVerifyScreen: { screen: PassportNumberVerifyScreen },
   StepCodeScreen: { screen: StepCodeScreen },
+  MaintenanceScreen: { screen: MaintenanceScreen },
 };

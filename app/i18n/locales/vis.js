@@ -294,4 +294,23 @@ export default {
     passportNumber: 'Numero sa pasaporte',
     facebook: 'Facebook',
   },
+  PassportNumberVerifyScreen: {
+    title: 'Passport Number',
+    enterPassportNumber: 'Enter passport number',
+    selectImage: 'Select Image',
+    continue: 'Continue',
+    messengerPassport: 'Please enter passport number',
+    messengerImage: 'Please select image',
+  },
+  uploadPassportNumber: {
+    title: 'Passport Number',
+    selectImage: 'Select Image',
+    submit: 'Submit',
+    submitSuccess: 'submit success',
+    messengerImage: 'Please select image',
+  },
+  http: {
+    _426: 'Update Required',
+    _503: 'Server Maintenance.'
+  }
 };

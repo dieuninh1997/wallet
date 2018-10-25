@@ -13,8 +13,9 @@ import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoButton from '../common/MangoButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
+import BaseScreen from '../BaseScreen';
 
-class LandingScreen extends Component {
+class LandingScreen extends BaseScreen {
   static navigationOptions = () => ({
     header: null,
   })
@@ -38,6 +39,10 @@ class LandingScreen extends Component {
       listLanguage,
       isShowListLanguage: false,
     };
+  }
+
+  isRootScreen() {
+    return true;
   }
 
   componentWillMount = async () => {

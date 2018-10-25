@@ -305,4 +305,8 @@ export default {
     submitSuccess: 'submit success',
     messengerImage: 'Please select image',
   },
+  http: {
+    _426: 'Update Required',
+    _503: 'Server Maintenance.'
+  }
 };

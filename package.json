@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@haskkor/react-native-pincode": "^1.6.4",
+    "@haskkor/react-native-pincode": "https://github.com/Sotatek-AnhNguyen/react-native-pincode.git",
     "axios": "0.18.0",
     "babel-polyfill": "6.26.0",
     "bignumber.js": "7.2.1",

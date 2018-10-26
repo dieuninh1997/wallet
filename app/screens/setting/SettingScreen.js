@@ -54,7 +54,7 @@ export default class SettingScreen extends BaseScreen {
     };
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {
     this._onRefresh();
   }
 
@@ -172,7 +172,7 @@ export default class SettingScreen extends BaseScreen {
     const { userSettings } = this.state;
     for (const setting of userSettings) {
       if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
-        return (parseInt(setting.value) === 1);
+        return (parseInt(setting.value, 10) === 1);
       }
     }
 
@@ -253,7 +253,7 @@ export default class SettingScreen extends BaseScreen {
         bank_account_verified,
         identity_verified,
         otp_verified,
-      }
+      },
     });
   }
 
@@ -277,8 +277,12 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
+  _navigateToBackupPassphrase = () => {
+    this.props.navigation.replace('BackupPassphraseScreen');
+  }
+
   _onPressBackupPassphrase = () => {
-    this.props.navigation.navigate('BackupPassphraseScreen');
+    this.props.navigation.navigate('LoginUsePinScreen', { navigateScreen: 'BackupPassphraseScreen' });
   }
 
   _handleChangeUseTouchId = async () => {
@@ -324,10 +328,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.email}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    )}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -370,10 +374,10 @@ export default class SettingScreen extends BaseScreen {
                       {I18n.t('setting.verified')}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
                   <MaterialCommunityIcons
                     style={styles.iconChevronRight}
                     name="chevron-right"
@@ -568,7 +572,8 @@ export default class SettingScreen extends BaseScreen {
         />
         <MobileNumberModal
           ref={ref => this._MobleNumberModal = ref}
-          onMobileNumber={this._onMobileNumber} />
+          onMobileNumber={this._onMobileNumber}
+        />
       </View>
     );
   }

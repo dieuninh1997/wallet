@@ -20,8 +20,8 @@ export default class LoginUsePinScreen extends Component {
     isShowError: false,
   };
 
-  isRootScreen() {	
-    return true;	
+  isRootScreen() {
+    return true;
   }
 
   async componentDidMount() {
@@ -30,21 +30,26 @@ export default class LoginUsePinScreen extends Component {
 
     await hasUserSetPinCode();
     await this._getCodePin();
-    if(isEnableTouchId) {
-      this._renderLoginByTouchId()
+    if (isEnableTouchId) {
+      this._renderLoginByTouchId();
     }
   }
 
   _checkValuePin(value) {
     const { codePin } = this.state;
     const { navigation } = this.props;
-
     if (codePin === value) {
-      navigation.navigate('MainScreen');
-    } else {
-      this.setState({ isShowError: true });
-      UIUtils.showToastMessage('Error Code Pin!');
+      const { params } = navigation.state;
+      if (params && params.navigateScreen) {
+        navigation.replace(params.navigateScreen);
+        return;
+      }
+      navigation.replace('MainScreen');
+      return;
     }
+    this.setState({ isShowError: true });
+    UIUtils.showToastMessage('Error Code Pin!');
+
     setTimeout(() => this.setState({ isShowError: false }), 1000);
   }
 
@@ -73,19 +78,23 @@ export default class LoginUsePinScreen extends Component {
 
     TouchID.authenticate(I18n.t('loginUserPin.touchID'), optionalConfigObject)
       .then(() => {
-        navigation.navigate('MainScreen');
+        const { params } = navigation.state;
+        if (params && params.navigateScreen) {
+          navigation.replace(params.navigateScreen);
+          return;
+        }
+        navigation.replace('MainScreen');
       })
       .catch((error) => {
         console.log(error.code);
-        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {	          
-          this.setState({ isEnableTouchId: false });
-          UIUtils.showToastMessage('Your touch ID is disable in a few minute');	
-          return;	
-        }	
-        if (error.code === 'AUTHENTICATION_CANCELED') {	
-          return;	
-        }	
-         this._renderLoginByTouchId();
+        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {
+          UIUtils.showToastMessage('Your touch ID is disable in a few minute');
+          return;
+        }
+        if (error.code === 'AUTHENTICATION_CANCELED') {
+          return;
+        }
+        this._renderLoginByTouchId();
       });
   }
 

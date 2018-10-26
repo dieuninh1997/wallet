@@ -122,6 +122,7 @@ class LoginScreen extends Component {
     case 'jp': return 'jp';
     case 'en': return 'gb';
     case 'ta': return 'ph';
+    case 'il': return 'ph';
     case 'vis': return 'ph';
     }
   }

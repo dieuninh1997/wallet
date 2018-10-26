@@ -4,6 +4,7 @@ import vi from './locales/vi';
 import jp from './locales/jp';
 import ta from './locales/ta';
 import vis from './locales/vis';
+import il from './locales/il';
 
 I18n.defaultLocale = 'en';
 I18n.locale = 'en';
@@ -15,5 +16,6 @@ I18n.translations = {
   jp,
   ta,
   vis,
+  il,
 };
 export default I18n;

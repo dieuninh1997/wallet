@@ -21,6 +21,7 @@ class LandingScreen extends Component {
 
   static LIST_LANGUAGE = [
     { key: 'en', name: 'English', show: 'Eng' },
+    { key: 'il', name: 'Ilocano', show: 'Il' },
     { key: 'jp', name: 'Japanese', show: 'Jp' },
     { key: 'ta', name: 'Tagalog', show: 'Ta' },
     { key: 'vi', name: 'Vietnamese', show: 'Vi' },
@@ -51,15 +52,18 @@ class LandingScreen extends Component {
     let languageSelect = 0;
     switch (value) {
     case 'vis':
+      languageSelect = 5;
+      break;
+    case 'vi':
       languageSelect = 4;
       break;
     case 'ta':
-      languageSelect = 2;
-      break;
-    case 'vi':
       languageSelect = 3;
       break;
     case 'jp':
+      languageSelect = 2;
+      break;
+    case 'il':
       languageSelect = 1;
       break;
     default:
@@ -240,7 +244,7 @@ const styles = ScaledSheet.create({
     top: '28@s',
     left: '60@s',
     width: '220@s',
-    height: '300@s',
+    height: '330@s',
     paddingTop: '8@s',
   },
 
@@ -325,7 +329,6 @@ const styles = ScaledSheet.create({
   btnTextAuthStyle: {
     fontSize: '16@ms',
     color: CommonColors.headerBarBgColor,
-    // fontSize: '18@s',
   },
 
   modalListLanguage: {

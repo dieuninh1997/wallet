@@ -81,7 +81,7 @@ export default {
     balance: 'Balance',
   },
   chart: {
-    allTime: 'All time'
+    allTime: 'All time',
   },
   send: {
     title: 'Send',

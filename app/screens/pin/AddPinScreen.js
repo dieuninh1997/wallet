@@ -4,7 +4,7 @@ import PINCode from '@haskkor/react-native-pincode';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
@@ -90,5 +90,6 @@ const styles = ScaledSheet.create({
   pincodeTitle: {
     fontSize: '16@ms',
     textAlign: 'center',
+    ...Fonts.Ubuntu_Light,
   },
 });

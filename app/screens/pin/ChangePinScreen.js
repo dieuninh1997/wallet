@@ -5,7 +5,7 @@ import MangoBackButton from '../common/MangoBackButton';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
-import { CommonStyles } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import Consts from '../../utils/Consts';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -142,5 +142,6 @@ const styles = ScaledSheet.create({
   pincodeTitle: {
     fontSize: '16@ms',
     textAlign: 'center',
+    ...Fonts.Ubuntu_Light,
   },
 });

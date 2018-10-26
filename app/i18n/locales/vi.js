@@ -81,7 +81,7 @@ export default {
     balance: 'Số dư',
   },
   chart: {
-    allTime: 'All time'
+    allTime: 'All time',
   },
   send: {
     title: 'Gửi',
@@ -251,6 +251,7 @@ export default {
     incorrectPincode: 'Sai mã PIN',
     pleaseAgain: 'Hãy thử lại	',
     touchID: 'Touch sensor to open your app',
+    touchIdDisabled: 'Your touch ID is disable in a few minute',
   },
   addPinScreen: {
     title: 'Tạo mã PIN',
@@ -307,6 +308,6 @@ export default {
   },
   http: {
     _426: 'Update Required',
-    _503: 'Server Maintenance.'
-  }
+    _503: 'Server Maintenance.',
+  },
 };

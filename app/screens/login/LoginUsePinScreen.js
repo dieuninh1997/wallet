@@ -80,15 +80,16 @@ export default class LoginUsePinScreen extends Component {
       .then(() => {
         const { params } = navigation.state;
         if (params && params.navigateScreen) {
-          navigation.replace(params.navigateScreen);
-          return;
+          const { navigateScreen } = params;
+          return navigateScreen(navigation);
         }
+
         navigation.replace('MainScreen');
       })
       .catch((error) => {
         console.log(error.code);
         if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {
-          UIUtils.showToastMessage('Your touch ID is disable in a few minute');
+          UIUtils.showToastMessage(I18n.t('loginUserPin.touchIdDisabled'));
           return;
         }
         if (error.code === 'AUTHENTICATION_CANCELED') {

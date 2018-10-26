@@ -249,6 +249,7 @@ export default {
     incorrectPincode: 'Maling PIN',
     pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
+    touchIdDisabled: 'Your touch ID is disable in a few minute',
   },
   addPinScreen: {
     title: 'Magdagdag ng bagong PIN',

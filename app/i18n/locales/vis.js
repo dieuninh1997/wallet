@@ -247,6 +247,7 @@ export default {
     incorrectPincode: 'Sayop nga PIN',
     pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
+    touchIdDisabled: 'Your touch ID is disable in a few minute',
   },
   addPinScreen: {
     title: 'Add New PIN',
@@ -311,6 +312,6 @@ export default {
   },
   http: {
     _426: 'Update Required',
-    _503: 'Server Maintenance.'
-  }
+    _503: 'Server Maintenance.',
+  },
 };

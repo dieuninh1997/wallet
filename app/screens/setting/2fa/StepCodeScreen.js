@@ -49,12 +49,12 @@ export default class StepCodeScreen extends Component {
           <SetupCodeComponent
             imageStep={Consts.MANGO_STEP_OVAL.first}
             textGuide={textGuideFirst}
-            nextScreen={() => true}
+            nextScreen={this._handleNext}
           />
           <SetupCodeComponent
             imageStep={Consts.MANGO_STEP_OVAL.second}
             textGuide={textGuideSecond}
-            nextScreen={() => true}
+            nextScreen={this._handleNext}
           />
           <SetupCodeComponent
             imageStep={Consts.MANGO_STEP_OVAL.last}

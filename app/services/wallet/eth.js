@@ -154,7 +154,6 @@ EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amo
 EthService.getCurrentGasPrices = async () => {
   try {
     const response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
-
     return {
       slowly: response.data.safeLow / 10,
       regular: response.data.average / 10,

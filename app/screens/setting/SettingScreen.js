@@ -54,7 +54,7 @@ export default class SettingScreen extends BaseScreen {
     };
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {
     this._onRefresh();
   }
 
@@ -172,7 +172,7 @@ export default class SettingScreen extends BaseScreen {
     const { userSettings } = this.state;
     for (const setting of userSettings) {
       if (setting.key === Consts.USER_SETTINGS.EMAIL_NOTIFICATION) {
-        return (parseInt(setting.value) === 1);
+        return (parseInt(setting.value, 10) === 1);
       }
     }
 
@@ -288,10 +288,14 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
+  _navigateToBackupPassphrase = () => {
+      this.props.navigation.replace('BackupPassphraseScreen');
+  }
+
   _onPressMobileVerify = () => {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
-      this._MobleNumberModal.setModalVisibleUpdate(true) 
+      this._MobleNumberModal.setModalVisibleUpdate(true)
     }
   }
 
@@ -303,7 +307,7 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onPressBackupPassphrase = () => {
-    this.props.navigation.navigate('BackupPassphraseScreen');
+    this.props.navigation.navigate('LoginUsePinScreen', { navigateScreen: 'BackupPassphraseScreen' });
   }
 
   _handleChangeUseTouchId = async () => {
@@ -378,7 +382,7 @@ export default class SettingScreen extends BaseScreen {
                       </Text>
                     ))}
 
-                 {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
+                  {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
                       name="chevron-right" />
@@ -425,7 +429,7 @@ export default class SettingScreen extends BaseScreen {
     );
   }
 
-  _renderReference() {
+  _renderReference = () => {
     const { payload, userSetting } = this.state;
     const emailNotification = this._getEmailNotificationSetting();
 
@@ -595,7 +599,8 @@ export default class SettingScreen extends BaseScreen {
         />
         <MobileNumberModal
           ref={ref => this._MobleNumberModal = ref}
-          onMobileNumber={this._onMobileNumber} />
+          onMobileNumber={this._onMobileNumber}
+        />
       </View>
     );
   }

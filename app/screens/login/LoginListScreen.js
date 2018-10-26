@@ -56,7 +56,6 @@ export default class LoginListScreen extends Component {
       const accessTokenRaw = await AccessToken.getCurrentAccessToken();
       const { accessToken } = accessTokenRaw;
       const responseUser = await login('', '', '', 3, accessToken);
-      console.log('responseUser', responseUser);
 
       AppPreferences.saveToKeychain({
         access_token: responseUser.access_token,
@@ -82,7 +81,7 @@ export default class LoginListScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.imageWalletContainer}>
-          <Image style={styles.imageWallet} source={require('../../../assets/wallet-create/graphicWallet.png')} resizeMode="stretch" />
+          <Image style={styles.imageWallet} source={require('../../../assets/wallet-login/graphicLogin.png')} resizeMode="stretch" />
         </View>
 
         <View style={styles.groupBtnContainer}>

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  AsyncStorage,
   ImageBackground,
   SafeAreaView,
 } from 'react-native';
@@ -14,8 +13,6 @@ import AppConfig from '../utils/AppConfig';
 import AppPreferences from '../utils/AppPreferences';
 import Consts from '../utils/Consts';
 import BaseScreen from './BaseScreen';
-import { getUserSecuritySettings, getUserSettings } from '../api/user/UserRequest';
-import { CommonColors, Fonts } from '../utils/CommonStyles';
 
 export default class SplashScreen extends BaseScreen {
   static navigationOptions = () => ({
@@ -43,6 +40,10 @@ export default class SplashScreen extends BaseScreen {
     } catch (err) {
       console.log('CheckStatusPin._error:', err);
     }
+  }
+
+  _navigateAfterEnterValidPincode = () => {
+    this.props.navigation.replace('MainScreen');
   }
 
   async _initMangoApp() {

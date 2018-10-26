@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
@@ -51,7 +52,17 @@ export default class SetupCodeComponent extends Component {
               onPress={nextScreen}
             />
           </View>
-        ) : null}
+        ) : (
+          <View style={styles.skipContainer}>
+            <MangoGradientButton
+              btnText="Skip"
+              btnStyle={styles.copyKey}
+              buttonTextStyle={styles.textSkip}
+              colorOptions={['#ffffff', '#ffffff', '#ffffff']}
+              onPress={nextScreen}
+            />
+          </View>
+        )}
 
       </View>
     );
@@ -92,6 +103,19 @@ const styles = ScaledSheet.create({
   btnNext: {
     width: '140@s',
     height: '48@s',
+    marginBottom: '5@s',
+    marginHorizontal: '5@s',
+  },
+  skipContainer: {
+    marginBottom: '20@s',
+  },
+  textSkip: {
+    color: '#2f64d1',
+    fontSize: '18@ms',
+  },
+  copyKey: {
+    width: '100@s',
+    height: '34@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
   },

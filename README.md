@@ -22,6 +22,10 @@ $ cd nodejs-assets/nodejs-project && npm install
 $ npm install -g react-native-cli
 ```
 
+  - Install Facebook SDK: follow instructions at https://github.com/facebook/react-native-fbsdk
+    + Download SDK https://developers.facebook.com/docs/react-native
+    + Make sure that the Facebook SDK frameworks are installed in ~/Documents/FacebookSDK.
+
 ### Test it out
 #### Android
 ```sh

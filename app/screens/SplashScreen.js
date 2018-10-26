@@ -42,10 +42,6 @@ export default class SplashScreen extends BaseScreen {
     }
   }
 
-  _navigateAfterEnterValidPincode = (navigation) => {
-    navigation.replace('MainScreen');
-  }
-
   async _initMangoApp() {
     const { isEnableCodePin } = this.state;
 
@@ -54,7 +50,7 @@ export default class SplashScreen extends BaseScreen {
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
         if (isEnableCodePin) {
-          this.navigateAndClearStack('LoginUsePinScreen', { navigateScreen: this._navigateAfterEnterValidPincode });
+          this.navigateAndClearStack('LoginUsePinScreen');
         } else {
           this.navigateAndClearStack('MainScreen');
         }

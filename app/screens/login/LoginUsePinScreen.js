@@ -27,10 +27,9 @@ export default class LoginUsePinScreen extends Component {
   async componentDidMount() {
     const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
 
-
     await hasUserSetPinCode();
     await this._getCodePin();
-    if (isEnableTouchId) {
+    if (isEnableTouchId === 'true') {
       this._renderLoginByTouchId();
     }
   }
@@ -41,9 +40,10 @@ export default class LoginUsePinScreen extends Component {
     if (codePin === value) {
       const { params } = navigation.state;
       if (params && params.navigateScreen) {
-        navigation.replace(params.navigateScreen);
-        return;
+        const { navigateScreen } = params;
+        return navigateScreen(navigation);
       }
+
       navigation.replace('MainScreen');
       return;
     }

@@ -217,7 +217,7 @@ export default class SettingScreen extends BaseScreen {
   _showSettingGoogleOtp = () => {
     const { userSecuritySettings } = this.state;
     const { navigation } = this.props;
-    userSecuritySettings && userSecuritySettings.otp_verified ? navigation.navigate('GoogleAuthScreen', true) : navigation.navigate('DownloadAndInstallScreen');
+    return userSecuritySettings && userSecuritySettings.otp_verified ? navigation.navigate('GoogleAuthScreen', true) : navigation.navigate('DownloadAndInstallScreen');
   }
 
   _onLocalCurrencyUpdated = (currency) => {
@@ -240,11 +240,10 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onMobileNumber = () => {
-    const { userSecuritySettings, user } = this.state;
-    const email_verified = userSecuritySettings.email_verified;
-    const bank_account_verified = userSecuritySettings.bank_account_verified;
-    const identity_verified = userSecuritySettings.identity_verified;
-    const otp_verified = userSecuritySettings.otp_verified;
+    const { userSecuritySettings } = this.state;
+    const {
+      email_verified, bank_account_verified, identity_verified, otp_verified,
+    } = userSecuritySettings;
 
     this.setState({
       userSecuritySettings: {
@@ -288,14 +287,10 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
-  _navigateToBackupPassphrase = () => {
-      this.props.navigation.replace('BackupPassphraseScreen');
-  }
-
   _onPressMobileVerify = () => {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
-      this._MobleNumberModal.setModalVisibleUpdate(true)
+      this._MobleNumberModal.setModalVisibleUpdate(true);
     }
   }
 
@@ -306,8 +301,12 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
+  _navigateToBackupPassphrase = (navigation) => {
+    navigation.replace('BackupPassphraseScreen');
+  }
+
   _onPressBackupPassphrase = () => {
-    this.props.navigation.navigate('LoginUsePinScreen', { navigateScreen: 'BackupPassphraseScreen' });
+    this.props.navigation.navigate('LoginUsePinScreen', { navigateScreen: this._navigateToBackupPassphrase });
   }
 
   _handleChangeUseTouchId = async () => {
@@ -353,10 +352,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.email}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    )}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -377,15 +376,16 @@ export default class SettingScreen extends BaseScreen {
                       {user.phone_number}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
                   {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
-                      name="chevron-right" />
+                      name="chevron-right"
+                    />
                   )}
                 </View>
               </View>
@@ -400,14 +400,15 @@ export default class SettingScreen extends BaseScreen {
                       {user.passport_number}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
                   {!(userSecuritySettings && userSecuritySettings.passport_verified) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
-                      name="chevron-right" />
+                      name="chevron-right"
+                    />
                   )}
                 </View>
               </View>
@@ -430,7 +431,6 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _renderReference = () => {
-    const { payload, userSetting } = this.state;
     const emailNotification = this._getEmailNotificationSetting();
 
     const currency = this._getLocalCurrency();
@@ -471,7 +471,7 @@ export default class SettingScreen extends BaseScreen {
 
   _renderSecurity() {
     const {
-      payload, isSupportedTouchId, isEnableTouchId, userSecuritySettings,
+      isSupportedTouchId, isEnableTouchId, userSecuritySettings,
     } = this.state;
     const { navigation } = this.props;
 

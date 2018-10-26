@@ -240,7 +240,7 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onMobileNumber = () => {
-    const { userSecuritySettings } = this.state;
+    const { userSecuritySettings, user } = this.state;
     const email_verified = userSecuritySettings.email_verified;
     const bank_account_verified = userSecuritySettings.bank_account_verified;
     const identity_verified = userSecuritySettings.identity_verified;
@@ -253,13 +253,24 @@ export default class SettingScreen extends BaseScreen {
         bank_account_verified,
         identity_verified,
         otp_verified,
-      }
+      },
     });
+    this._loadUserInfo();
   }
 
   _isEmailVerified = () => {
     const { userSecuritySettings } = this.state;
     return !userSecuritySettings || userSecuritySettings.email_verified;
+  }
+
+  _isPassportVerify = () => {
+    const { userSecuritySettings } = this.state;
+    return !userSecuritySettings || userSecuritySettings.passport_verified;
+  }
+
+  _isMobileVerify = () => {
+    const { userSecuritySettings } = this.state;
+    return !userSecuritySettings || userSecuritySettings.phone_verified;
   }
 
   _isUserDataLoaded = () => {
@@ -274,6 +285,20 @@ export default class SettingScreen extends BaseScreen {
         this.user = undefined;
         this._loadUserInfo();
       });
+    }
+  }
+
+  _onPressMobileVerify = () => {
+    const { user } = this.state;
+    if (!this._isMobileVerify() && (!!user)) {
+      this._MobleNumberModal.setModalVisibleUpdate(true) 
+    }
+  }
+
+  _onPressVerifyPassport = () => {
+    const { user } = this.state;
+    if (!this._isPassportVerify() && (!!user)) {
+      this.navigate('PassportNumberVerifyScreen');
     }
   }
 
@@ -339,45 +364,47 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback onPress={() => this._MobleNumberModal.setModalVisibleUpdate(true)}>
+            <TouchableWithoutFeedback onPress={this._onPressMobileVerify}>
               <View style={styles.borderEmailMobileNumber}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
                 <View style={styles.activiRightGroup}>
                   {userSecuritySettings && (userSecuritySettings.phone_verified ? (
                     <Text style={styles.textVerified}>
-                      {I18n.t('setting.verified')}
-                    </Text>
-                  ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  ))}
-
-                  <MaterialCommunityIcons
-                    style={styles.iconChevronRight}
-                    name="chevron-right"
-                  />
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback onPress={() => this.navigate('PassportNumberVerifyScreen')}>
-              <View style={styles.borderEmailMobileNumber}>
-                <Text style={styles.titleSetting}>{I18n.t('setting.passportNumber')}</Text>
-                <View style={styles.activiRightGroup}>
-                  {userSecuritySettings && (userSecuritySettings.passport_verified ? (
-                    <Text style={styles.textVerified}>
-                      {I18n.t('setting.verified')}
+                      {user.phone_number}
                     </Text>
                   ) : (
                       <Text style={styles.textUnVerified}>
                         {I18n.t('setting.unverified')}
                       </Text>
                     ))}
-                  <MaterialCommunityIcons
-                    style={styles.iconChevronRight}
-                    name="chevron-right"
-                  />
+
+                 {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
+                    <MaterialCommunityIcons
+                      style={styles.iconChevronRight}
+                      name="chevron-right" />
+                  )}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback onPress={this._onPressVerifyPassport}>
+              <View style={styles.borderEmailMobileNumber}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.passportNumber')}</Text>
+                <View style={styles.activiRightGroup}>
+                  {userSecuritySettings && (userSecuritySettings.passport_verified ? (
+                    <Text style={styles.textVerified}>
+                      {user.passport_number}
+                    </Text>
+                  ) : (
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
+                  {!(userSecuritySettings && userSecuritySettings.passport_verified) && (
+                    <MaterialCommunityIcons
+                      style={styles.iconChevronRight}
+                      name="chevron-right" />
+                  )}
                 </View>
               </View>
             </TouchableWithoutFeedback>
@@ -730,7 +757,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   textVerified: {
-    marginRight: '5@s',
+    marginRight: '10@s',
     color: '#85ec81',
     fontSize: '14@ms',
     ...Fonts.Ubuntu_Regular,

@@ -297,4 +297,8 @@ export default {
     passportNumber: 'Numero ng pasaporte',
     facebook: 'Facebook',
   },
+  mangoHeader: {
+    settings: 'Settings',
+    signout: 'Sign out',
+  },
 };

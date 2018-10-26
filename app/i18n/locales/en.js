@@ -318,4 +318,8 @@ export default {
     _426: 'Update Required',
     _503: 'Server Maintenance.',
   },
+  mangoHeader: {
+    settings: 'Settings',
+    signout: 'Sign out',
+  },
 };

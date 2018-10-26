@@ -4,16 +4,29 @@ import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import TouchID from 'react-native-touch-id';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import { CommonSize } from '../../utils/CommonStyles';
+import { CommonSize, CommonStyles } from '../../utils/CommonStyles';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 import I18n from '../../i18n/i18n';
+import MangoBackButton from '../common/MangoBackButton';
 
 export default class LoginUsePinScreen extends Component {
-  static navigationOptions = () => ({
-    headerLeft: <View />,
-    headerStyle: styles.header,
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    if (params && params.navigateScreen) {
+      return {
+        headerLeft: <MangoBackButton navigation={navigation} />,
+        title: I18n.t('loginUserPin.enterPincode'),
+        headerTitleStyle: CommonStyles.headerTitle,
+        headerStyle: CommonStyles.header,
+        headerRight: <View />,
+      };
+    }
+    return {
+      headerLeft: <View />,
+      headerStyle: styles.header,
+    };
+  };
 
   state = {
     codePin: null,

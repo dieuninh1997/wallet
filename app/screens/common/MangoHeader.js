@@ -6,6 +6,8 @@ import Modal from 'react-native-modal';
 import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import AppPreferences from '../../utils/AppPreferences';
+import { Fonts } from '../../utils/CommonStyles';
+import I18n from '../../i18n/i18n';
 
 class MangoHeader extends React.Component {
   state = {
@@ -39,8 +41,8 @@ class MangoHeader extends React.Component {
   _renderIconToggleMenu() {
     return (
       <TouchableWithoutFeedback onPress={() => this._toggleMenu()}>
-        <View style = {styles.viewMenu}>
-          <Image source={require('../../../assets/menu/menu.png')} style={styles.imgMenu} />
+        <View style={styles.viewMenu}>
+          <Image source={require('../../../assets/menu/hamburger.png')} style={styles.imgMenu} />
         </View>
       </TouchableWithoutFeedback>
     );
@@ -65,12 +67,12 @@ class MangoHeader extends React.Component {
     const menus = [
       {
         source: require('../../../assets/setting/settings.png'),
-        title: 'Settings',
+        title: I18n.t('mangoHeader.settings'),
         routerName: 'SettingScreen',
       },
       {
         source: require('../../../assets/sing-out/logout.png'),
-        title: 'Sign out',
+        title: I18n.t('mangoHeader.signout'),
         routerName: 'LandingScreen',
       },
     ];
@@ -114,45 +116,36 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
   },
   imgMenu: {
-    width: '20@s',
-    height: '20@s',
-    marginLeft: '17@s',
+    width: '28@s',
+    height: '28@s',
+    marginLeft: '16@s',
   },
   menuGroup: {
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '20@s',
-    paddingRight: '20@s',
-    height: '100@s',
-    width: '140@s',
+    paddingTop: '10@s',
+    paddingBottom: '10@s',
+    paddingRight: '26@s',
+    height: '110@s',
+    width: '160@s',
     position: 'absolute',
     top: '20@s',
     backgroundColor: '#FFFFFF',
-    borderRadius: '10@s',
-  },
-  imgGroup: {
-    flexDirection: 'column',
-    flex: 1,
+    borderRadius: '8@s',
   },
   contentMenuOption: {
     color: '#000000',
-    fontSize: '15@s',
-    marginLeft: '15@s',
+    fontSize: '18@ms',
+    marginLeft: '8@s',
+    ...Fonts.Ubuntu_Light,
   },
   imgMenuOption: {
-    width: '20@s',
-    height: '20@s',
+    width: '34@s',
+    height: '34@s',
   },
   itemMenuGroup: {
-    flexDirection: 'row',
     flex: 1,
-  },
-  absolute: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

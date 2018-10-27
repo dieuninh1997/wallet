@@ -67,6 +67,8 @@ class CommonColors {
   static modalBackdropColor = '#232931';
 
   static modalBackdropAlpha = 0.5;
+
+  static borderColor = '#E4E8ED';
 }
 
 class CommonSize {

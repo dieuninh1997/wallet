@@ -34,7 +34,6 @@ export default class CreateWalletByPassportScreen extends CreateWalletBaseScreen
       <TextInput
         placeholder={I18n.t('createWalletByPassportScreen.inputEmail')}
         editable
-        keyboardType="numeric"
         underlineColorAndroid="transparent"
         style={styles.inputText}
         onChangeText={value => this._handleChangeInput(CreateWalletByPassportScreen.WALLET_INFO.PASSPORT, value)}

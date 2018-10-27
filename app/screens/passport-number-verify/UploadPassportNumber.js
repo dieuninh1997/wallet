@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, TextInput, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, ScrollView, Image, Text, TouchableOpacity } from 'react-native';
 import I18n from '../../i18n/i18n';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonColors} from '../../utils/CommonStyles';
 import BaseScreen from '../BaseScreen';
 import MangoBackButton from '../common/MangoBackButton';
+import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import ImagePicker from 'react-native-image-picker';
 import { verifyPassport } from '../../api/user/UserRequest';
 import UIUtils from '../../utils/UIUtils';
+import { DH_CHECK_P_NOT_SAFE_PRIME } from 'constants';
 
 export default class UploadPassportNumber extends BaseScreen {
   static navigationOptions = ({ navigation }) => ({
@@ -98,34 +100,54 @@ export default class UploadPassportNumber extends BaseScreen {
     const { passportSamle } = this.state;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.groupPassportSamle}>
-          {passportSamle === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle02.png')}></Image> :
-            <Image style={styles.passportSamle} source={passportSamle} />
-          }
-          <TouchableWithoutFeedback onPress={() => this.selectPhotoTapped()}>
-            <View style={styles.uploadContainer}>
-              <Text style={styles.textUpload}>{I18n.t('uploadPassportNumber.selectImage')}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <TouchableWithoutFeedback onPress={() => this.onClickSubmit()}>
-          <View style={styles.continueContainer}>
-            <Text style={styles.textContinue}> {I18n.t('uploadPassportNumber.submit')}</Text>
+      <ScrollView style={styles.containerMain}>
+        <View style={styles.container}>
+
+          <Text style={styles.txtNote}>{I18n.t("PassportNumberVerifyScreen.instruction")}</Text>
+
+          <View style={styles.groupPassportSamle}>
+            {passportSamle === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle02.png')}></Image> :
+              <Image style={styles.passportSamle} source={passportSamle} />
+            }
+
+            <TouchableOpacity 
+              activeOpacity={0.5}
+              style={styles.btnUpContainer}
+              onPress={() => this.selectPhotoTapped()}>
+              <View style = {styles.viewUpload}>
+                <Text style={styles.txtUpload}>{I18n.t('uploadPassportNumber.selectImage')}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
-      </View>
+
+          <MangoGradientButton
+            btnText={I18n.t('uploadPassportNumber.submit')}
+            btnStyle={styles.btnSubmit}
+            onPress={() => this.onClickSubmit()}
+          />
+
+        </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = ScaledSheet.create({
-  container: {
+  containerMain: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f5f7fa',
+    backgroundColor: CommonColors.screenBgColor,
   },
+  container: {
+    alignItems: 'center',
+  },
+  txtNote: {
+    textAlign: 'center',
+    fontSize: '14@ms',
+    color: '#000',
+    ...Fonts.Ubuntu_Light,
+    padding: '20@s',
+  },
+
   groupPassportSamle: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -135,7 +157,7 @@ const styles = ScaledSheet.create({
     width: '280@s',
     height: '320@s',
     borderWidth: '1@s',
-    borderColor: '#abb1bd',
+    borderColor: CommonColors.borderColor,
   },
   uploadContainer: {
     backgroundColor: '#fff',
@@ -146,9 +168,7 @@ const styles = ScaledSheet.create({
     borderRadius: '20@s',
     marginTop: '20@s',
   },
-  textUpload: {
-
-  },
+  
   continueContainer: {
     alignItems: 'center',
     backgroundColor: '#fbc405',
@@ -159,7 +179,38 @@ const styles = ScaledSheet.create({
     width: '145@s',
     borderRadius: '20@s',
   },
-  textContinue: {
 
+  btnUpContainer: {
+    height: '36@s',
+    borderRadius: '28@s',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: '10@s',
+    marginRight: '10@s',
+    marginBottom: '20@s',
+    marginTop: '20@s',
+    backgroundColor: CommonColors.headerBarBgColor,
+    ...UIUtils.generateShadowStyle(),
   },
+
+  viewUpload: {
+    marginLeft: '10@s',
+    marginRight: '10@s',
+  },
+
+  txtUpload: {
+    textAlign: 'center',
+    fontSize: '14@ms',
+    color: '#000',
+    ...Fonts.Ubuntu_Light,
+    padding: '20@s',
+  },
+
+  btnSubmit: {
+    width: '220@s',
+    alignItems: 'center',
+    marginBottom: '10@s',
+    marginRight: '4@s',
+  },
+
 })

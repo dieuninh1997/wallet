@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TextInput, Image, Text, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, TextInput, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
 import I18n from '../../i18n/i18n';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
+import { CommonStyles, Fonts , CommonColors} from '../../utils/CommonStyles';
 import BaseScreen from '../BaseScreen';
 import MangoBackButton from '../common/MangoBackButton';
+import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import ImagePicker from 'react-native-image-picker';
 import UIUtils from '../../utils/UIUtils';
@@ -87,15 +88,13 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
     const { avatarSource } = this.state;
 
     return (
-      <View style={styles.containerMain}>
-        <ScrollView>
+        <ScrollView style={styles.containerMain}>
           <View style={styles.container}>
 
             <View style={styles.groupPassportNumberInput}>
               <Image style={styles.iconPassportNumber} source={require('../../../assets/passport-number-verify/passport.png')} />
               <TextInput
                 style={styles.passportNumberInput}
-                keyboardType="numeric"
                 onChangeText={text => this.setState({ passportNumber: text })}
                 placeholder={I18n.t('PassportNumberVerifyScreen.enterPassportNumber')} />
             </View>
@@ -104,21 +103,24 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
               {avatarSource === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle01.png')} /> :
                 <Image style={styles.passportSamle} source={avatarSource} />
               }
-              <TouchableWithoutFeedback onPress={() => this.selectPhotoTapped()}>
-                <View style={styles.uploadContainer}>
-                  <Text style={styles.textUpload}>{I18n.t('PassportNumberVerifyScreen.selectImage')}</Text>
+              <Text style={styles.txtNote}>{I18n.t("PassportNumberVerifyScreen.instruction")}</Text>
+              <TouchableOpacity 
+                activeOpacity={0.5}
+                style={styles.btnUpContainer}
+                onPress={() => this.selectPhotoTapped()}>
+                <View style = {styles.viewUpload}>
+                  <Text style={styles.txtUpload}>{I18n.t('PassportNumberVerifyScreen.selectImage')}</Text>
                 </View>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             </View>
 
-            <TouchableWithoutFeedback onPress={() => this.onClickContinue()}>
-              <View style={styles.continueContainer}>
-                <Text style={styles.textContinue}> {I18n.t('PassportNumberVerifyScreen.continue')}</Text>
-              </View>
-            </TouchableWithoutFeedback>
+            <MangoGradientButton
+              btnText={I18n.t('PassportNumberVerifyScreen.continue')}
+              btnStyle={styles.btnContinue}
+              onPress={() => this.onClickContinue()}
+            />
           </View>
         </ScrollView>
-      </View>
     );
   }
 }
@@ -126,27 +128,33 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
 const styles = ScaledSheet.create({
   containerMain: {
     flex: 1,
+    backgroundColor: CommonColors.screenBgColor,
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#f5f7fa',
   },
   groupPassportNumberInput: {
     flexDirection: 'row',
-    marginLeft: '50@s',
-    marginRight: '50@s',
-    margin: '20@s',
-    borderWidth: '1@s',
-    borderColor: '#abb1bd',
-    borderRadius: '10@s',
-    backgroundColor: '#fff',
+    width: '340@s',
+    height: '48@s',
+    borderRadius: '29@s',
+    borderWidth: 1,
+    borderColor: '#cad1db',
+    paddingHorizontal: '22@s',
+    alignItems: 'center',
+    marginTop: '32@s',
+    marginBottom: '16@s',
+    backgroundColor: CommonColors.headerBarBgColor,
   },
   iconPassportNumber: {
-    width: '50@s',
-    height: '50@s',
+    width: '21@s',
+    height: '18@s',
+    marginRight: '5@s',
   },
   passportNumberInput: {
-    width: '100%',
+    width: '94%',
+    fontSize: '18@ms',
+    ...Fonts.Ubuntu_Light,
   },
   groupPassportSamle: {
     flexDirection: 'column',
@@ -159,18 +167,47 @@ const styles = ScaledSheet.create({
     borderWidth: '1@s',
     borderColor: '#abb1bd',
   },
-  uploadContainer: {
-    backgroundColor: '#fff',
-    width: '110@s',
-    height: '40@s',
+
+  btnUpContainer: {
+    height: '36@s',
+    borderRadius: '28@s',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '20@s',
-    marginTop: '20@s',
+    marginLeft: '10@s',
+    marginRight: '10@s',
+    marginBottom: '20@s',
+    backgroundColor: CommonColors.headerBarBgColor,
+    ...UIUtils.generateShadowStyle(),
   },
-  textUpload: {
 
+  viewUpload: {
+    marginLeft: '10@s',
+    marginRight: '10@s',
   },
+
+  txtUpload: {
+    textAlign: 'center',
+    fontSize: '14@ms',
+    color: '#000',
+    ...Fonts.Ubuntu_Light,
+    padding: '20@s',
+  },
+
+  txtNote: {
+    textAlign: 'center',
+    fontSize: '14@ms',
+    color: '#000',
+    ...Fonts.Ubuntu_Light,
+    padding: '20@s',
+  },
+
+  btnContinue: {
+    width: '220@s',
+    alignItems: 'center',
+    marginBottom: '10@s',
+    marginRight: '4@s',
+  },
+  
   continueContainer: {
     alignItems: 'center',
     backgroundColor: '#fbc405',
@@ -181,8 +218,5 @@ const styles = ScaledSheet.create({
     marginBottom: '30@s',
     width: '145@s',
     borderRadius: '20@s',
-  },
-  textContinue: {
-
   },
 })

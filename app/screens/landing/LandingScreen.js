@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoButton from '../common/MangoButton';
@@ -44,6 +45,11 @@ class LandingScreen extends BaseScreen {
 
   isRootScreen() {
     return true;
+  }
+
+  componentDidMount = () => {
+    super.componentDidMount();
+    SplashScreen.hide();
   }
 
   componentWillMount = async () => {

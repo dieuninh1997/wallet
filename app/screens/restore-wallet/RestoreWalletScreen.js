@@ -96,6 +96,11 @@ class RestoreWalletScreen extends Component {
       return;
     }
     try {
+      const { params } = navigation.state;
+      // if (params && params.loginInfo) {
+
+      // }
+
       this.setState({
         isLoading: true,
       });
@@ -106,7 +111,7 @@ class RestoreWalletScreen extends Component {
 
       const [wallet, restoreAccountInfo] = await Promise.all([
         this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic })),
-        restoreAccount(mnemonicHash),
+        restoreAccount(mnemonicHash, params && params.loginInfo ? params.loginInfo : {}),
       ]);
 
       await AppPreferences.saveToKeychain({

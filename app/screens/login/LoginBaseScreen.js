@@ -7,6 +7,7 @@ import {
   TextInput,
   Keyboard,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 
 import PhoneInput from 'react-native-phone-input';
@@ -22,7 +23,7 @@ import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
 
-class LoginScreen extends Component {
+class LoginBaseScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
     let titleShow = '';
@@ -87,12 +88,18 @@ class LoginScreen extends Component {
     try {
       const responseUser = await login(email, password, otp = '', loginType = this.signinType);
 
+      loginInfo.loginType = this.signinType;
+      console.log('====================================');
+      console.log('Login info', loginInfo);
+      console.log('====================================');
+
       AppPreferences.saveToKeychain({
         access_token: responseUser.access_token,
       });
+
       window.GlobalSocket.connect();
       Keyboard.dismiss();
-      navigation.navigate('RestoreWalletScreen');
+      navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (error) {
       if (error.error === 'invalid_otp') {
         navigation.navigate('GoogleOtpVerifyScreen', { email, password });
@@ -181,7 +188,7 @@ class LoginScreen extends Component {
               keyboardType="phone-pad"
               underlineColorAndroid="transparent"
               placeholder={I18n.t('createWallet.phoneNumber')}
-              onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, this.phone.state.formattedNumber + value)}
+              onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, this.phone.state.formattedNumber + value)}
             />
           </View>
         </View>
@@ -199,7 +206,7 @@ class LoginScreen extends Component {
             editable
             underlineColorAndroid="transparent"
             style={styles.inputText}
-            onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, value)}
+            onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
           />
         </View>
       );
@@ -216,7 +223,7 @@ class LoginScreen extends Component {
             editable
             underlineColorAndroid="transparent"
             style={styles.inputText}
-            onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.EMAIL, value)}
+            onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
           />
         </View>
       );
@@ -242,7 +249,7 @@ class LoginScreen extends Component {
           secureTextEntry
           underlineColorAndroid="transparent"
           style={styles.inputText}
-          onChangeText={value => this._handleChangeInput(LoginScreen.LOGIN_INFO.PASSWORD, value)}
+          onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.PASSWORD, value)}
         />
       </View>
     </View>
@@ -285,7 +292,7 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+export default LoginBaseScreen;
 
 const styles = ScaledSheet.create({
   container: {

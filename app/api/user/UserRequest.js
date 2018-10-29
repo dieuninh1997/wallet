@@ -77,10 +77,12 @@ export function changePassword(password, newPassword, otp) {
   return put(url, params);
 }
 
-export function restoreAccount(mnemonic) {
+export function restoreAccount(mnemonic, loginInfo = {}) {
   const url = '/restore-account';
   const params = {
     mnemonic,
+    username: loginInfo.email,
+    login_type: loginInfo.loginType,
   };
   return post(url, params);
 }
@@ -132,7 +134,7 @@ export function disableGoogleOtp(password, smsCode, otp) {
 export function sendPhoneVerificationCode(phone_number) {
   const url = '/send-phone-verification';
   params = { phone_number };
-  return post(url, params)
+  return post(url, params);
 }
 
 export function verifyPhoneNumber(otp) {
@@ -144,7 +146,7 @@ export function verifyPhoneNumber(otp) {
 export function verifyPassport(passport_number, image, image2) {
   const url = '/verify-passport';
   const data = new FormData();
-  
+
   data.append('passport_number', passport_number);
   data.append('image', image);
   data.append('image2', image2);

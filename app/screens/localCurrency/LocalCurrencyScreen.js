@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, AsyncStorage } from 'react-native';
+import {
+  View, Text, TouchableOpacity,
+} from 'react-native';
+import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
+import Modal from 'react-native-modal';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { updateUserSettings } from '../../api/user/UserRequest';
 import I18n from '../../i18n/i18n';
-import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
-import { RadioGroup, RadioButton } from 'react-native-flexi-radio-button';
+import {
+  CommonColors, CommonSize, CommonStyles, Fonts,
+} from '../../utils/CommonStyles';
 import Consts from '../../utils/Consts';
 import UIUtils from '../../utils/UIUtils';
-import Modal from 'react-native-modal';
 
 class LocalCurrencyScreen extends Component {
   constructor(props) {
@@ -26,13 +30,13 @@ class LocalCurrencyScreen extends Component {
     this.setState({ modalVisible: visible });
   }
 
-  show(currency, callback) {
+  show(currency) {
     console.log(currency);
-    let radioValue = Consts.CURRENCIES.indexOf(currency) || 0;
+    const radioValue = Consts.CURRENCIES.indexOf(currency) || 0;
     this.setState({
       currency,
       radioValue,
-      modalVisible: true
+      modalVisible: true,
     });
   }
 
@@ -58,7 +62,7 @@ class LocalCurrencyScreen extends Component {
 
     try {
       const response = await updateUserSettings(params);
-      const message = response.message;
+      const { message } = response;
 
       onLocalCurrencyUpdated(currency);
       this.setModalVisible(false);
@@ -74,21 +78,21 @@ class LocalCurrencyScreen extends Component {
   render() {
     const { modalVisible, error } = this.state;
     let height = modalHeight;
-    if (!!error) {
+    if (error) {
       height += scale(20);
     }
 
     return (
       <View style={styles.container}>
         <Modal
-          animationType='slide'
+          animationType="slide"
           isVisible={modalVisible}
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
           onBackdropPress={() => this.setModalVisible(false)}
         >
-          <View style={[styles.popup, { height: height }]}>
+          <View style={[styles.popup, { height }]}>
             <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
@@ -97,7 +101,7 @@ class LocalCurrencyScreen extends Component {
           </View>
         </Modal>
       </View>
-    )
+    );
   }
 
   _renderHeader() {
@@ -105,7 +109,7 @@ class LocalCurrencyScreen extends Component {
       <View style={styles.popupHeader}>
         <Text style={styles.textPopupHeader}>{I18n.t('localCurrencyScreen.title')}</Text>
       </View>
-    )
+    );
   }
 
   _renderContent() {
@@ -114,28 +118,28 @@ class LocalCurrencyScreen extends Component {
     return (
       <View style={styles.content}>
         <RadioGroup
-          color='#2f64d1'
+          color="#2f64d1"
           size={scale(22)}
           selectedIndex={radioValue}
           style={styles.groupRadio}
-          onSelect={(index, value) => this._onChooseCurrency(index, value)}>
+          onSelect={(index, value) => this._onChooseCurrency(index, value)}
+        >
           {
-            Consts.CURRENCIES.map((currency, index) => {
-              return (
-                <RadioButton
-                  key={currency}
-                  style={styles.groupDolla}
-                  value={currency}
-                  color='#2f64d1'>
-                  <Text style={styles.textUsDollar}>{I18n.t(`currency.${currency}.settingLabel`)}</Text>
-                </RadioButton>
-              )
-            })
+            Consts.CURRENCIES.map(currency => (
+              <RadioButton
+                key={currency}
+                style={styles.groupDolla}
+                value={currency}
+                color="#2f64d1"
+              >
+                <Text style={styles.textUsDollar}>{I18n.t(`currency.${currency}.settingLabel`)}</Text>
+              </RadioButton>
+            ))
           }
         </RadioGroup>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
-    )
+    );
   }
 
   _renderFooter() {
@@ -143,18 +147,25 @@ class LocalCurrencyScreen extends Component {
       <View style={styles.footer}>
         <TouchableOpacity
           onPress={() => this._onClickCancel()}
-          style={styles.cancelContainer}>
-          <Text style={styles.textCancel}> {I18n.t('localCurrencyScreen.cancel')}</Text>
+          style={styles.cancelContainer}
+        >
+          <Text style={styles.textCancel}>
+            {' '}
+            {I18n.t('localCurrencyScreen.cancel')}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => this._onClickConfirm()}
-          style={styles.confirmContainer}>
-          <Text style={styles.textConfirm}> {I18n.t('localCurrencyScreen.confirm')}</Text>
+          style={styles.confirmContainer}
+        >
+          <Text style={styles.textConfirm}>
+            {' '}
+            {I18n.t('localCurrencyScreen.confirm')}
+          </Text>
         </TouchableOpacity>
       </View>
-    )
+    );
   }
-
 }
 
 export default LocalCurrencyScreen;
@@ -164,7 +175,7 @@ const modalHeight = scale(213);
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    width: '375@s'
+    width: '375@s',
   },
   popup: {
     width: CommonSize.popupWidth,
@@ -172,7 +183,7 @@ const styles = ScaledSheet.create({
     borderRadius: '10@s',
     margin: '16@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
   popupHeader: {
     justifyContent: 'center',
@@ -211,7 +222,7 @@ const styles = ScaledSheet.create({
     marginBottom: '17@s',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cancelContainer: {
     alignItems: 'center',
@@ -246,4 +257,4 @@ const styles = ScaledSheet.create({
     marginTop: '5@s',
     marginLeft: '24@s',
   },
-})
+});

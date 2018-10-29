@@ -1,5 +1,4 @@
 import LandingScreen from './landing/LandingScreen';
-import LoginScreen from './login/LoginScreen';
 import MainScreen from './main/MainScreen';
 import CreateWalletScreen from './createwallet/CreateWalletScreen';
 import CreateWalletPhoneNumberScreen from './createwallet/CreateWalletPhoneNumberScreen';
@@ -33,7 +32,6 @@ import MaintenanceScreen from './maintenance/MaintenanceScreen';
 export default {
   SplashScreen: { screen: SplashScreen },
   StepCodeScreen: { screen: StepCodeScreen },
-  LoginScreen: { screen: LoginScreen },
   RestoreWalletScreen: { screen: RestoreWalletScreen },
   LoginUsePinScreen: { screen: LoginUsePinScreen },
   LoginListScreen: { screen: LoginListScreen },

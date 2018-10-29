@@ -6,9 +6,8 @@ import AppPreferences from './app/utils/AppPreferences';
 import I18n from './app/i18n/i18n';
 import GlobalSocket from './app/socket/GlobalSocket';
 import EventBus from './app/socket/EventBus';
-import TransactionsScreen from './app/screens/transactions/TransactionsScreen';
+// import TransactionsScreen from './app/screens/transactions/TransactionsScreen';
 import AppConfig from './app/utils/AppConfig';
-import LoginScreen from './app/screens/login/LoginScreen';
 import Consts from './app/utils/Consts';
 
 
@@ -16,8 +15,7 @@ MicroEvent.mixin(GlobalSocket);
 MicroEvent.mixin(EventBus);
 
 async function initApp() {
-  MicroEvent.mixin(LoginScreen);
-  MicroEvent.mixin(TransactionsScreen);
+  // MicroEvent.mixin(TransactionsScreen);
   await initI18n();
   window.EventBus = new EventBus();
   return await initMasterdata();

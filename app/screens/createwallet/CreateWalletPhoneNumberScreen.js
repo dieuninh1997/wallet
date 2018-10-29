@@ -173,7 +173,7 @@ const styles = ScaledSheet.create({
     flex: 1,
     width: '340@s',
     flexDirection: 'row',
-    paddingHorizontal: '20@s',
+    paddingHorizontal: '10@s',
     alignItems: 'center',
   },
   inputTextNumber: {
@@ -185,7 +185,7 @@ const styles = ScaledSheet.create({
   inputImageIcon: {
     width: '24@s',
     height: '24@s',
-    marginRight: '10@s',
+    marginRight: '5@s',
   },
   formLoginContainer: {
     marginTop: '46@s',

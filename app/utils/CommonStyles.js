@@ -74,7 +74,7 @@ class CommonColors {
 class CommonSize {
   static inputHeight = '43@s';
 
-  static inputFontSize = '20@ms';
+  static inputFontSize = '18@ms';
 
   static formLabelFontSize = '14@ms';
 

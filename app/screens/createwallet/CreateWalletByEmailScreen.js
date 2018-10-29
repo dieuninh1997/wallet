@@ -61,14 +61,14 @@ const styles = ScaledSheet.create({
     flex: 1,
     width: '330@s',
     flexDirection: 'row',
-    paddingHorizontal: '20@s',
+    paddingHorizontal: '10@s',
     alignItems: 'center',
   },
 
   inputImageIcon: {
-    width: '28@s',
-    height: '28@s',
-    marginRight: '10@s',
+    width: '24@s',
+    height: '24@s',
+    marginRight: '5@s',
   },
 
   inputText: {

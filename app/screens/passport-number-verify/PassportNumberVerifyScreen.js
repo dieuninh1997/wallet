@@ -20,12 +20,22 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
+    const { params } = this.props.navigation.state;
 
     this.state = {
       avatarSource: null,
       fileNameImage: null,
-      passportNumber: null,
+      passportNumber: params.passportNumber,
+      editPassportNumber: true,
     };
+  }
+
+  componentDidMount = () => {
+    const { passportNumber } = this.state;
+
+    if(passportNumber){
+      this.setState({editPassportNumber: false})
+    }
   }
 
   selectPhotoTapped = () => {
@@ -85,16 +95,18 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
   }
 
   render() {
-    const { avatarSource } = this.state;
-
+    const { avatarSource, passportNumber, editPassportNumber } = this.state;
+  
     return (
         <ScrollView style={styles.containerMain}>
           <View style={styles.container}>
 
-            <View style={styles.groupPassportNumberInput}>
+            <View style={editPassportNumber ? styles.groupPassportNumberInput : styles.groupPassportNumberInputNoEdit}>
               <Image style={styles.iconPassportNumber} source={require('../../../assets/passport-number-verify/passport.png')} />
               <TextInput
                 style={styles.passportNumberInput}
+                value={passportNumber}
+                editable={editPassportNumber}
                 onChangeText={text => this.setState({ passportNumber: text })}
                 placeholder={I18n.t('PassportNumberVerifyScreen.enterPassportNumber')} />
             </View>
@@ -145,6 +157,19 @@ const styles = ScaledSheet.create({
     marginTop: '32@s',
     marginBottom: '16@s',
     backgroundColor: CommonColors.headerBarBgColor,
+  },
+  groupPassportNumberInputNoEdit: {
+    flexDirection: 'row',
+    width: '340@s',
+    height: '48@s',
+    borderRadius: '29@s',
+    borderWidth: 1,
+    borderColor: '#cad1db',
+    paddingHorizontal: '22@s',
+    alignItems: 'center',
+    marginTop: '32@s',
+    marginBottom: '16@s',
+    backgroundColor: CommonColors.screenBgColor,
   },
   iconPassportNumber: {
     width: '21@s',

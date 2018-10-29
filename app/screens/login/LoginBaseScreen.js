@@ -256,7 +256,7 @@ class LoginScreen extends Component {
       >
         <Image
           source={require('../../../assets/forgot-password/forgotPass.png')}
-          style={styles.inputImageIcon}
+          style={styles.iconForgotPass}
         />
         <Text style={styles.btnForgotPassText}>{I18n.t('signin.forgotPassword')}</Text>
       </TouchableOpacity>
@@ -323,6 +323,13 @@ const styles = ScaledSheet.create({
     marginRight: '10@s',
   },
 
+  iconForgotPass: {
+    width: '24@s',
+    height: '24@s',
+    marginRight: '5@s',
+    marginLeft: '10@s',
+  },
+
   fingerPrintImage: {
     width: '50@s',
     height: '50@s',
@@ -341,7 +348,6 @@ const styles = ScaledSheet.create({
 
   btnForgotPass: {
     flexDirection: 'row',
-    width: '158@s',
     height: '40@s',
     borderRadius: '20@s',
     justifyContent: 'center',
@@ -366,6 +372,7 @@ const styles = ScaledSheet.create({
   btnForgotPassText: {
     color: '#26304d',
     fontSize: '14@ms',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Light,
   },
 

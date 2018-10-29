@@ -52,6 +52,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
     case 'jp': return 'jp';
     case 'ta': return 'ph';
     case 'vis': return 'ph';
+    case 'il': return 'ph';
     case 'en': return 'gb';
     }
   }

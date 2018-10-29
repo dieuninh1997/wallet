@@ -227,7 +227,6 @@ const styles = ScaledSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '86@s',
     height: '40@s',
     borderRadius: '28@s',
     backgroundColor: '#f5f7fa'
@@ -237,6 +236,8 @@ const styles = ScaledSheet.create({
   },
   buttonText: {
     color: '#000',
+    marginRight: '10@s',
+    marginLeft: '10@s',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular
   },

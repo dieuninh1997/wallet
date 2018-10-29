@@ -767,13 +767,11 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   textVerified: {
-    marginRight: '10@s',
     color: '#85ec81',
     fontSize: '14@ms',
     ...Fonts.Ubuntu_Regular,
   },
   textUnVerified: {
-    marginRight: '5@s',
     color: '#e63d2e',
     fontSize: '14@ms',
     ...Fonts.Ubuntu_Regular,

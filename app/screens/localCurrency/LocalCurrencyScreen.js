@@ -218,12 +218,13 @@ const styles = ScaledSheet.create({
     backgroundColor: '#f5f7fa',
     justifyContent: 'center',
     height: '40@s',
-    width: '90@s',
     borderRadius: '20@s',
   },
   textCancel: {
     color: '#000000',
     fontSize: '16@ms',
+    marginRight: '10@s',
+    marginLeft: '10@s',
     ...Fonts.Ubuntu_Regular,
   },
   confirmContainer: {
@@ -232,12 +233,13 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     height: '40@s',
     marginLeft: '12@s',
-    width: '95@s',
     borderRadius: '20@s',
   },
   textConfirm: {
     color: '#000000',
     fontSize: '16@ms',
+    marginRight: '10@s',
+    marginLeft: '10@s',
     ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {

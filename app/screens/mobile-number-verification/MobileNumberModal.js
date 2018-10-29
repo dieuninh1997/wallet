@@ -408,7 +408,6 @@ const styles = ScaledSheet.create({
   cancelUpdate: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '86@s',
     height: '40@s',
     borderRadius: '28@s',
     backgroundColor: '#f5f7fa',
@@ -417,7 +416,6 @@ const styles = ScaledSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '86@s',
     height: '40@s',
     borderRadius: '28@s',
     backgroundColor: '#f5f7fa'
@@ -428,6 +426,8 @@ const styles = ScaledSheet.create({
   buttonText: {
     color: '#000',
     fontSize: '16@ms',
+    marginLeft: '10@s',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Regular
   },
   errorMessage: {

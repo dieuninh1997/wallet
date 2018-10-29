@@ -76,6 +76,7 @@ export default class BackupKeyScreen extends Component {
           <MangoGradientButton
             btnText={I18n.t('setting2fa.copyKey')}
             btnStyle={styles.copyKey}
+            buttonTextStyle={styles.btnText}
             colorOptions={['#ffffff', '#ffffff', '#ffffff']}
             onPress={() => this._handleCopyKey()}
           />
@@ -143,8 +144,11 @@ const styles = ScaledSheet.create({
     marginBottom: '5@s',
     marginHorizontal: '5@s',
   },
+  btnText:{
+    marginLeft: '10@s',
+    marginRight: '10@s',
+  },
   copyKey: {
-    width: '140@s',
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',

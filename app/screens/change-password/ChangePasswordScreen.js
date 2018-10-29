@@ -226,14 +226,14 @@ const styles = ScaledSheet.create({
   imageKey: {
     height: '30@s',
     width: '30@s',
-    marginLeft: '20@s',
+    marginLeft: '10@s',
   },
   textCurrenPassword: {
-    marginLeft: '10@s',
-    fontSize: '16@ms',
+    marginLeft: '5@s',
+    fontSize: '14@ms',
     width: '100%',
     color: '#a6a6a6',
-    marginRight: '20@s',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Light
   },
   newPasswordGroup: {
@@ -267,12 +267,13 @@ const styles = ScaledSheet.create({
     backgroundColor: '#f5f7fa',
     justifyContent: 'center',
     height: '40@s',
-    width: '90@s',
     borderRadius: '20@s',
   },
   textCancel: {
     color: '#000000',
     fontSize: '16@ms',
+    marginLeft: '10@s',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Regular,
   },
   updateContainer: {
@@ -281,12 +282,13 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     height: '40@s',
     marginLeft: '10@s',
-    width: '86@s',
     borderRadius: '20@s',
   },
   textUpdate: {
     color: '#000000',
     fontSize: '16@ms',
+    marginLeft: '10@s',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {

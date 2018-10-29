@@ -201,8 +201,8 @@ const styles = ScaledSheet.create({
 
   viewRedirectSignin: {
     flexDirection: 'row',
-    width: '80@s',
     height: '100%',
+    marginRight: '5@s',
     justifyContent: 'center',
     alignItems: 'center',
   },

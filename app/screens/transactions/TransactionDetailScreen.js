@@ -158,6 +158,7 @@ export default class TransactionDetailScreen extends Component {
           <MangoGradientButton
             btnText={I18n.t('transactionDetail.copy_txid')}
             btnStyle={styles.btnCopyTxid}
+            buttonTextStyle={styles.btnText}
             colorOptions={['#ffffff', '#ffffff', '#ffffff']}
             onPress={() => this._handleCopyTxid()}
           />
@@ -256,7 +257,6 @@ const styles = ScaledSheet.create({
   },
   btnCopyTxid: {
     marginBottom: '10@s',
-    width: '149@s',
     height: '48@s',
     marginRight: '9@s',
     backgroundColor: '#ffffff',
@@ -268,6 +268,10 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginRight: '9@s',
     marginHorizontal: '5@s',
+  },
+  btnText:{
+    marginLeft: '10@s',
+    marginRight: '10@s',
   },
   iconIsSend: {
     width: '28@s',

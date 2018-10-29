@@ -296,8 +296,12 @@ export default class SettingScreen extends BaseScreen {
 
   _onPressVerifyPassport = () => {
     const { user } = this.state;
+    const params = {
+      passportNumber: user.passport_number,
+    };
+
     if (!this._isPassportVerify() && (!!user)) {
-      this.navigate('PassportNumberVerifyScreen');
+      this.navigate('PassportNumberVerifyScreen', params);
     }
   }
 
@@ -326,6 +330,7 @@ export default class SettingScreen extends BaseScreen {
   _renderProfile = () => {
     const { walletId, user, userSecuritySettings } = this.state;
     const emailVerified = userSecuritySettings && userSecuritySettings.email_verified;
+    const passportVerify = userSecuritySettings && userSecuritySettings.passport_verified;
 
     return (
       <View>
@@ -395,7 +400,7 @@ export default class SettingScreen extends BaseScreen {
               <View style={styles.borderEmailMobileNumber}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.passportNumber')}</Text>
                 <View style={styles.activiRightGroup}>
-                  {userSecuritySettings && (userSecuritySettings.passport_verified ? (
+                  { (passportVerify) ? (
                     <Text style={styles.textVerified}>
                       {user.passport_number}
                     </Text>
@@ -403,8 +408,8 @@ export default class SettingScreen extends BaseScreen {
                     <Text style={styles.textUnVerified}>
                       {I18n.t('setting.unverified')}
                     </Text>
-                  ))}
-                  {!(userSecuritySettings && userSecuritySettings.passport_verified) && (
+                  )}
+                  {!(passportVerify) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
                       name="chevron-right"

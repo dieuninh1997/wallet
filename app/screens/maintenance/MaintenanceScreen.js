@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  AppState, View, Text, Dimensions, WebView
+  AppState, View, Text, Dimensions, WebView,
 } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import RNRestart from 'react-native-restart';
@@ -28,7 +28,7 @@ class MaintenanceScreen extends BaseScreen {
     const code = navigation.getParam('code');
     this.state = {
       code,
-      appState: AppState.currentState
+      appState: AppState.currentState,
     };
   }
 
@@ -46,16 +46,16 @@ class MaintenanceScreen extends BaseScreen {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       this._checkServerStatus();
     }
-    this.setState({appState: nextAppState});
+    this.setState({ appState: nextAppState });
   }
 
   _checkServerStatus = async () => {
-     try {
+    try {
       await getServerStatus();
       RNRestart.Restart();
-     } catch (error) {
+    } catch (error) {
       console.log('MaintenanceScreen._checkServerStatus', error);
-     }
+    }
   }
 
   render() {
@@ -63,7 +63,8 @@ class MaintenanceScreen extends BaseScreen {
       <WebView
         ref={ref => this._webView = ref}
         source={{ uri: this._getUrl() }}
-        style={{flex: 1}} />
+        style={{ flex: 1 }}
+      />
     );
   }
 

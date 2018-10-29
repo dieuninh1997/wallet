@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { Platform } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import I18n from '../../i18n/i18n';
-import DeviceInfo from 'react-native-device-info';
 
 export async function get(url, params = {}) {
   params.lang = I18n.locale;
@@ -75,7 +75,7 @@ function _getHeader() {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${AppConfig.ACCESS_TOKEN}`,
     'x-client-version': DeviceInfo.getBuildNumber(),
-    'x-client-platform': Platform.OS
+    'x-client-platform': Platform.OS,
   };
 }
 
@@ -107,27 +107,19 @@ async function _processResponse(response) {
 
 async function _checkResponseCode(response) {
   if (!response.ok) {
-    // if (response.status === 401) {
-    //   throw new Error(Consts.NOT_LOGIN);
-    // }
-
-        console.log('----------- update required', response.status, window.rootScreen);
-
     if (response.status === 426) {
       if (window.rootScreen) {
         const params = {
-          code: response.status
-        }
+          code: response.status,
+        };
         window.rootScreen.navigateAndClearStack('MaintenanceScreen', params);
       }
       throw new Error(Consts.ERRORS.UPDATE_REQUIRED);
     }
-
-    const content = await
-    response.text();
     let data;
 
     try {
+      const content = await response.text();
       data = response ? JSON.parse(content) : {};
       _logResponse(response.status, data);
     } catch (error) {
@@ -164,7 +156,6 @@ export async function getPrices(coin) {
 }
 
 export async function postImage(url, formData) {
-
   const response = await fetch(_getFullUrl(url), {
     method: 'POST',
     headers: _getHeaderImage(),

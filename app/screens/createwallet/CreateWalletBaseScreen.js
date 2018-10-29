@@ -25,6 +25,7 @@ import UIUtils from '../../utils/UIUtils';
 import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import MangoLoading from '../common/MangoLoading';
+import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 
 export default class CreateWalletBaseScreen extends Component {
   static WALLET_INFO = {
@@ -267,8 +268,8 @@ export default class CreateWalletBaseScreen extends Component {
       <View style={styles.termAndConditionContainer}>
         <CheckBox
           containerStyle={styles.checkboxContainer}
-          iconRight
           checked={isChecked}
+          size={scale(20)}
           checkedIcon="check-square"
           uncheckedIcon="square"
           checkedColor="#1c43b8"
@@ -318,10 +319,12 @@ const styles = ScaledSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#F5F7FA',
+    backgroundColor: CommonColors.screenBgColor,
   },
 
   termAndConditionContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     marginTop: '10@s',
   },
@@ -329,7 +332,10 @@ const styles = ScaledSheet.create({
   checkboxContainer: {
     backgroundColor: 'transparent',
     padding: '0@s',
-    borderWidth: 0,
+    marginLeft: '0@s',
+    marginRight: '0@s',
+    borderWidth: '0@s',
+    width: '22@s',
   },
 
   textTermAndConditions: {

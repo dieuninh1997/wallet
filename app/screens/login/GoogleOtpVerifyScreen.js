@@ -4,11 +4,13 @@ import {
   View,
   TextInput,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../utils/CommonStyles';
+import {
+  CommonStyles, Fonts, CommonSize, CommonColors,
+} from '../../utils/CommonStyles';
 import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import UIUtils from '../../utils/UIUtils';
@@ -32,15 +34,21 @@ export default class GoogleOtpVerifyScreen extends Component {
       authenticatorCode: '',
       email: null,
       password: null,
+      loginType: null,
     };
   }
 
   componentDidMount = () => {
-    const { params } = this.props.navigation.state;
-    this.setState({
-      email: params.email,
-      password: params.password,
-    });
+    try {
+      const { params } = this.props.navigation.state;
+      this.setState({
+        email: params.email,
+        password: params.password,
+        loginType: params.loginType,
+      });
+    } catch (error) {
+      console.log('GoogleOtpVerifyScreen._componentDidMount._error: ', error);
+    }
   }
 
   _navigateTab = (isGoogleOtpTab) => {
@@ -53,12 +61,14 @@ export default class GoogleOtpVerifyScreen extends Component {
     }
     this.setState({
       isGoogleOtp: !isGoogleOtp,
-      authenticatorCode: ''
+      authenticatorCode: '',
     });
   }
 
   _handleSubmit = async () => {
-    const { email, password, authenticatorCode } = this.state;
+    const {
+      email, password, authenticatorCode, loginType,
+    } = this.state;
     const { navigation } = this.props;
 
     if (!this._validateClient()) {
@@ -66,13 +76,19 @@ export default class GoogleOtpVerifyScreen extends Component {
     }
 
     try {
-      const responseUser = await login(email, password, authenticatorCode);
+      const responseUser = await login(email, password, authenticatorCode, loginType);
       AppPreferences.saveToKeychain({
-        access_token: responseUser.access_token
+        access_token: responseUser.access_token,
       });
       window.GlobalSocket.connect();
       Keyboard.dismiss();
-      navigation.navigate('RestoreWalletScreen');
+      const loginInfo = {
+        email,
+        password,
+        loginType,
+      };
+
+      navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (error) {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
@@ -87,7 +103,7 @@ export default class GoogleOtpVerifyScreen extends Component {
   }
 
   _onTextChanged = (code) => {
-    this.setState({authenticatorCode: code});
+    this.setState({ authenticatorCode: code });
   }
 
   _validateClient = () => {
@@ -142,13 +158,13 @@ export default class GoogleOtpVerifyScreen extends Component {
     return (
       <View style={styles.googleOtpVerifyScreen}>
         <View style={styles.navigatorBlock}>
-          <TouchableOpacity onPress={() => this._navigateTab(true)} >
+          <TouchableOpacity onPress={() => this._navigateTab(true)}>
             <View style={styles.googleAuthen}>
               <Text style={[styles.textnavigator, isGoogleOtp ? styles.navigatorBorder : null]}>{I18n.t('setting2fa.googleAuthenticator')}</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this._navigateTab(false)} >
+          <TouchableOpacity onPress={() => this._navigateTab(false)}>
             <View style={styles.smsAuthen}>
               <Text style={[styles.textnavigator, styles.textRight, !isGoogleOtp ? styles.navigatorBorder : null]}>{I18n.t('googleOtp2faVerify.smsAuthenticator')}</Text>
             </View>
@@ -157,10 +173,11 @@ export default class GoogleOtpVerifyScreen extends Component {
 
         <View style={styles.inputBlock}>
           <TextInput
+            keyboardType="numeric"
             editable
             maxLength={6}
-            onChangeText = {(text)=> this._onTextChanged(text)}
-            value = {authenticatorCode}
+            onChangeText={text => this._onTextChanged(text)}
+            value={authenticatorCode}
             style={styles.inputText}
             placeholder={isGoogleOtp ? I18n.t('setting2fa.googleAuthCode') : I18n.t('setting2fa.smsAuthCode')}
           />
@@ -223,7 +240,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
     alignItems: 'center',
-    marginTop: '24@s'
+    marginTop: '24@s',
   },
   inputText: {
     width: '240@s',
@@ -248,5 +265,5 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '10@s',
-  }
+  },
 });

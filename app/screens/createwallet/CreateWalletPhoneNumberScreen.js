@@ -123,7 +123,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
                   </TouchableWithoutFeedback>
             </View>
           )}
-          hideAlphabetFilter={true}
+          hideAlphabetFilter
         >
           <View />
         </CountryPicker>

@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, TextInput, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View, TextInput, Image, Text, TouchableOpacity, ScrollView,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import I18n from '../../i18n/i18n';
-import { CommonStyles, Fonts , CommonColors} from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonColors } from '../../utils/CommonStyles';
 import BaseScreen from '../BaseScreen';
 import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import ImagePicker from 'react-native-image-picker';
 import UIUtils from '../../utils/UIUtils';
 import Consts from '../../utils/Consts';
 
@@ -35,8 +37,8 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
   componentDidMount = () => {
     const { passportNumber, loginType } = this.state;
 
-    if(passportNumber && (loginType === Consts.LOGIN_TYPES.PASSPORT)){
-      this.setState({editPassportNumber: false})
+    if (passportNumber && (loginType === Consts.LOGIN_TYPES.PASSPORT)) {
+      this.setState({ editPassportNumber: false });
     }
   }
 
@@ -46,8 +48,8 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
       maxWidth: 500,
       maxHeight: 500,
       storageOptions: {
-        skipBackup: true
-      }
+        skipBackup: true,
+      },
     };
 
     ImagePicker.showImagePicker(options, (response) => {
@@ -55,14 +57,11 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
 
       if (response.didCancel) {
         console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
+      } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
+      } else {
         const source = { uri: response.uri };
         const name = response.fileName;
 
@@ -82,15 +81,15 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
       passportNumber,
       avatarSource,
       fileNameImage,
-    }
+    };
 
     if (!passportNumber) {
-      UIUtils.showToastMessage(I18n.t('PassportNumberVerifyScreen.messengerPassport'));
+      UIUtils.showToastMessage(I18n.t('PassportNumberVerifyScreen.messengerPassport'), 'error');
       return;
     }
 
     if (!avatarSource) {
-      UIUtils.showToastMessage(I18n.t('PassportNumberVerifyScreen.messengerImage'));
+      UIUtils.showToastMessage(I18n.t('PassportNumberVerifyScreen.messengerImage'), 'error');
       return;
     }
     this.navigate('UploadPassportNumber', params);
@@ -98,43 +97,45 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
 
   render() {
     const { avatarSource, passportNumber, editPassportNumber } = this.state;
-  
+
     return (
-        <ScrollView style={styles.containerMain}>
-          <View style={styles.container}>
+      <ScrollView style={styles.containerMain}>
+        <View style={styles.container}>
 
-            <View style={editPassportNumber ? styles.groupPassportNumberInput : styles.groupPassportNumberInputNoEdit}>
-              <Image style={styles.iconPassportNumber} source={require('../../../assets/passport-number-verify/passport.png')} />
-              <TextInput
-                style={styles.passportNumberInput}
-                value={passportNumber}
-                editable={editPassportNumber}
-                onChangeText={text => this.setState({ passportNumber: text })}
-                placeholder={I18n.t('PassportNumberVerifyScreen.enterPassportNumber')} />
-            </View>
-
-            <View style={styles.groupPassportSamle}>
-              {avatarSource === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle01.png')} /> :
-                <Image style={styles.passportSamle} source={avatarSource} />
-              }
-              <Text style={styles.txtNote}>{I18n.t("PassportNumberVerifyScreen.instruction")}</Text>
-              <TouchableOpacity 
-                activeOpacity={0.5}
-                style={styles.btnUpContainer}
-                onPress={() => this.selectPhotoTapped()}>
-                <View style = {styles.viewUpload}>
-                  <Text style={styles.txtUpload}>{I18n.t('PassportNumberVerifyScreen.selectImage')}</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <MangoGradientButton
-              btnText={I18n.t('PassportNumberVerifyScreen.continue')}
-              btnStyle={styles.btnContinue}
-              onPress={() => this.onClickContinue()}
+          <View style={editPassportNumber ? styles.groupPassportNumberInput : styles.groupPassportNumberInputNoEdit}>
+            <Image style={styles.iconPassportNumber} source={require('../../../assets/passport-number-verify/passport.png')} />
+            <TextInput
+              style={styles.passportNumberInput}
+              value={passportNumber}
+              editable={editPassportNumber}
+              onChangeText={text => this.setState({ passportNumber: text })}
+              placeholder={I18n.t('PassportNumberVerifyScreen.enterPassportNumber')}
             />
           </View>
-        </ScrollView>
+
+          <View style={styles.groupPassportSamle}>
+            {avatarSource === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle01.png')} />
+              : <Image style={styles.passportSamle} source={avatarSource} />
+            }
+            <Text style={styles.txtNote}>{I18n.t('PassportNumberVerifyScreen.instruction')}</Text>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              style={styles.btnUpContainer}
+              onPress={() => this.selectPhotoTapped()}
+            >
+              <View style={styles.viewUpload}>
+                <Text style={styles.txtUpload}>{I18n.t('PassportNumberVerifyScreen.selectImage')}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <MangoGradientButton
+            btnText={I18n.t('PassportNumberVerifyScreen.continue')}
+            btnStyle={styles.btnContinue}
+            onPress={() => this.onClickContinue()}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -234,7 +235,7 @@ const styles = ScaledSheet.create({
     marginBottom: '10@s',
     marginRight: '4@s',
   },
-  
+
   continueContainer: {
     alignItems: 'center',
     backgroundColor: '#fbc405',
@@ -246,4 +247,4 @@ const styles = ScaledSheet.create({
     width: '145@s',
     borderRadius: '20@s',
   },
-})
+});

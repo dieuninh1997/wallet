@@ -91,9 +91,9 @@ export default class GoogleOtpVerifyScreen extends Component {
       navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (error) {
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message, 'error');
       }
     }
   }
@@ -109,12 +109,12 @@ export default class GoogleOtpVerifyScreen extends Component {
   _validateClient = () => {
     const { isGoogleOtp, authenticatorCode } = this.state;
     if (!authenticatorCode) {
-      UIUtils.showToastMessage(isGoogleOtp ? I18n.t('setting2fa.googleOtpCodeRequired') : I18n.t('setting2fa.smsCodeRequired'));
+      UIUtils.showToastMessage(isGoogleOtp ? I18n.t('setting2fa.googleOtpCodeRequired') : I18n.t('setting2fa.smsCodeRequired'), 'error');
       return false;
     }
 
     if (!UIUtils.validateNumber(authenticatorCode)) {
-      UIUtils.showToastMessage(isGoogleOtp ? I18n.t('setting2fa.googleOtpCodeRequiredNumber') : I18n.t('setting2fa.smsCodeRequiredNumber'));
+      UIUtils.showToastMessage(isGoogleOtp ? I18n.t('setting2fa.googleOtpCodeRequiredNumber') : I18n.t('setting2fa.smsCodeRequiredNumber'), 'error');
       return false;
     }
 

@@ -110,7 +110,7 @@ export default class ChangePinScreen extends Component {
       await AppPreferences.saveToKeychain({
         pin: codePin,
       });
-      UIUtils.showToastMessage(I18n.t('ChangePinScreen.changePinSuccess'));
+      UIUtils.showToastMessage(I18n.t('ChangePinScreen.changePinSuccess'), 'success');
       setTimeout(() => {
         navigation.navigate('SettingScreen');
       }, 1000);

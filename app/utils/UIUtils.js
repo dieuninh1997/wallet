@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Platform, StatusBar, View, Dimensions,
 } from 'react-native';
-import Toast from 'react-native-root-toast';
+import { RNToasty } from 'react-native-toasty';
 import { scale } from '../libs/reactSizeMatter/scalingUtils';
 
 export default class UIUtils {
@@ -60,15 +60,29 @@ export default class UIUtils {
     return (<View style={{ width: 0, height: scale(90) }} />);
   }
 
-  static showToastMessage(message) {
-    Toast.show(message, {
-      duration: Toast.durations.SHORT,
-      position: Toast.positions.CENTER,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      delay: 0,
-    });
+  static showToastMessage(message = '', type = 'normal', duration = 0) {
+    const options = {
+      title: message,
+      duration,
+    };
+
+    switch (type) {
+    case 'success':
+      RNToasty.Success(options);
+      break;
+    case 'info':
+      RNToasty.Info(options);
+      break;
+    case 'warning':
+      RNToasty.Warn(options);
+      break;
+    case 'error':
+      RNToasty.Error(options);
+      break;
+    default:
+      RNToasty.Normal(options);
+      break;
+    }
   }
 
   static validateEmail(email) {

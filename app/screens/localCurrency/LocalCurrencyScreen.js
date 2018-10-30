@@ -66,7 +66,7 @@ class LocalCurrencyScreen extends Component {
 
       onLocalCurrencyUpdated(currency);
       this.setModalVisible(false);
-      UIUtils.showToastMessage(message);
+      UIUtils.showToastMessage(message, 'success');
     } catch (error) {
       this.setState({
         error: error.message,

@@ -10,7 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 
 import nodejs from 'nodejs-mobile-react-native';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -132,10 +132,11 @@ export default class CreateWalletBaseScreen extends Component {
 
       const { privateKey, address, mnemonic } = this.walletInfo;
 
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
+      // const mnemonicHash = crypto.createHmac('sha256', mnemonic)
+      //   .update(AppConfig.getClientSecret())
+      //   .digest('hex');
 
+      const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
       const registerInfo = this._getRegisterInfo(mnemonicHash, address);
       const response = await register(registerInfo);
@@ -157,16 +158,16 @@ export default class CreateWalletBaseScreen extends Component {
       this.setState({
         isLoading: false,
       });
-      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
+      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'), 'success');
       navigation.navigate('BackupPassphraseScreenCompact');
     } catch (error) {
       this.setState({
         isLoading: false,
       });
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message, 'error');
       }
       console.log(error);
     }

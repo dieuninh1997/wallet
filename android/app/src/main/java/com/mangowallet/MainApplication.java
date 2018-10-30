@@ -3,6 +3,7 @@ package com.mangowallet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import ui.toasty.RNToastyPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.react.rnspinkit.RNSpinkitPackage;
@@ -51,6 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new RNToastyPackage(),
             new SplashScreenReactPackage(),
         new RNSpinkitPackage(),
         new RNDeviceInfo(),

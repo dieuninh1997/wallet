@@ -33,27 +33,46 @@ class SendScreen extends BaseScreen {
     COIN_VALUE: 'coinValue',
   }
 
-  static LIST_FEE = [
-    {
-      title: I18n.t('send.titleSlowly'),
-      value: 3.0,
-      time: I18n.t('send.speedSlowly'),
-    },
-    {
-      title: I18n.t('send.titleRegular'),
-      value: 5.0,
-      time: I18n.t('send.speedRegular'),
-    },
-    {
-      title: I18n.t('send.titleFast'),
-      value: 20.0,
-      time: I18n.t('send.speedFast'),
-    },
-  ];
+  // static LIST_FEE = [
+  //   {
+  //     title: I18n.t('send.titleSlowly'),
+  //     value: 3.0,
+  //     time: I18n.t('send.speedSlowly'),
+  //   },
+  //   {
+  //     title: I18n.t('send.titleRegular'),
+  //     value: 5.0,
+  //     time: I18n.t('send.speedRegular'),
+  //   },
+  //   {
+  //     title: I18n.t('send.titleFast'),
+  //     value: 20.0,
+  //     time: I18n.t('send.speedFast'),
+  //   },
+  // ];
 
   constructor(props) {
     super(props);
-    const listFee = SendScreen.LIST_FEE;
+    const listFee = [
+      {
+        symbol: 'slowly',
+        title: I18n.t('send.titleSlowly'),
+        value: 3.0,
+        time: I18n.t('send.speedSlowly'),
+      },
+      {
+        symbol: 'regular',
+        title: I18n.t('send.titleRegular'),
+        value: 5.0,
+        time: I18n.t('send.speedRegular'),
+      },
+      {
+        symbol: 'fast',
+        title: I18n.t('send.titleFast'),
+        value: 20.0,
+        time: I18n.t('send.speedFast'),
+      },
+    ];
     const feeSelected = listFee[0];
 
     this.state = {
@@ -81,7 +100,7 @@ class SendScreen extends BaseScreen {
       console.log('currentGasPrices', currentGasPrices);
 
       listFeeNew = listFee.map((fee) => {
-        fee.value = currentGasPrices[fee.title.toLowerCase()];
+        fee.value = currentGasPrices[fee.symbol];
         return fee;
       });
       console.log('<-----------listFeeNew----------->', listFeeNew);
@@ -190,28 +209,29 @@ class SendScreen extends BaseScreen {
     const { coinSelected } = this.state;
 
     if (!formSendCoin.recievedAddress) {
-      UIUtils.showToastMessage(I18n.t('send.addressRequired'));
+      UIUtils.showToastMessage(I18n.t('send.addressRequired'), 'error');
       return false;
     }
     if (!WalletService.isValidAddress(coinSelected.symbol, formSendCoin.recievedAddress)) {
-      UIUtils.showToastMessage(I18n.t('send.addressInValid'));
+      UIUtils.showToastMessage(I18n.t('send.addressInValid'), 'error');
       return false;
     }
 
     if (!formSendCoin.coinValue) {
-      UIUtils.showToastMessage(I18n.t('send.coinValueInValid'));
+      UIUtils.showToastMessage(I18n.t('send.coinValueInValid'), 'error');
       return false;
     }
     return true;
   }
 
   _resetFormSendCoin = () => {
+    const { listFee } = this.state;
     this.setState({
-      feeSelected: SendScreen.LIST_FEE[0],
+      feeSelected: listFee[0],
       formSendCoin: {
         recievedAddress: '',
         coinValue: '0',
-        feeValue: SendScreen.LIST_FEE[0].value,
+        feeValue: listFee[0].value,
       },
       realValueCoin: 0,
     });
@@ -227,8 +247,6 @@ class SendScreen extends BaseScreen {
 
       const walletAddress = await AsyncStorage.getItem('address');
       const privateKey = AppConfig.PRIVATE_KEY;
-      console.log('walletAddress', walletAddress);
-      console.log('privateKey', privateKey);
 
       const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
@@ -240,17 +258,18 @@ class SendScreen extends BaseScreen {
         transaction_url: transaction.transactionUrl,
         coin_name: coinSelected.name,
       };
+
       await sendMailTransaction(params);
 
       this._resetFormSendCoin();
 
       this.setState({ isLoading: false });
-      UIUtils.showToastMessage(I18n.t('send.submitted'));
+      UIUtils.showToastMessage(I18n.t('send.submitted'), 'success');
     } catch (error) {
       this.setState({
         isLoading: false,
       });
-      UIUtils.showToastMessage(error.message);
+      UIUtils.showToastMessage(error.message, 'error');
       console.log('SendScreen._error: ', error);
     }
   }

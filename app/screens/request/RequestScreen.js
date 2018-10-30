@@ -48,7 +48,7 @@ class RequestScreen extends Component {
     const { walletAddress } = this.state;
 
     Clipboard.setString(walletAddress);
-    UIUtils.showToastMessage(I18n.t('request.copied'));
+    UIUtils.showToastMessage(I18n.t('request.copied'), 'success');
   }
 
   _renderQrCodeSection = () => {

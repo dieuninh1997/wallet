@@ -101,8 +101,8 @@ android {
         applicationId "com.mangowallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0"
+        versionCode 6
+        versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -150,6 +150,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-toasty')
     compile project(':react-native-splash-screen')
     compile project(':react-native-device-info')
     compile project(':react-native-spinkit')

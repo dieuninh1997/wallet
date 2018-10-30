@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
@@ -92,10 +92,7 @@ export default class CreateWalletScreen extends Component {
 
       const { privateKey, address, mnemonic } = this.walletInfo;
 
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
-
+      const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
       const registerInfo = {
         mnemonic: mnemonicHash,
@@ -119,13 +116,13 @@ export default class CreateWalletScreen extends Component {
 
       await AsyncStorage.setItem('address', address);
 
-      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'));
+      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'), 'success');
       navigation.navigate('BackupPassphraseScreenCompact');
     } catch (error) {
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message, 'error');
       }
       console.log(error);
     }
@@ -141,7 +138,8 @@ export default class CreateWalletScreen extends Component {
         <View style={styles.groupBtnContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
+            disabled
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
             onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/createwalet/phone.png')} />

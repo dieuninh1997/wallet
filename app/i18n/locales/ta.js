@@ -52,6 +52,8 @@ export default {
     iAccept: 'Tinata nggap ko ang',
     termsAndConditions: ' mga tuntunin at kundisyon',
     createWallet: 'Gumawa ng Wallet',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'Gumawa ng account gmit ang email address',
@@ -288,6 +290,7 @@ export default {
     resend: 'I-send muli',
     verify: 'I-verify',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   loginListScreen: {
     title: 'Mag-sign In Gamit ang',

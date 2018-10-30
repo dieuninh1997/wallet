@@ -52,6 +52,8 @@ export default {
     iAccept: 'I accept the',
     termsAndConditions: ' terms and conditions',
     createWallet: 'Create Wallet',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'Create by Email Address',
@@ -290,6 +292,7 @@ export default {
     resend: 'Resend',
     verify: 'Verify',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   loginListScreen: {
     title: 'Sign In With',

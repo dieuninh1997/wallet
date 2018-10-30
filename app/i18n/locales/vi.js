@@ -52,6 +52,8 @@ export default {
     iAccept: 'Tôi chấp nhận',
     termsAndConditions: ' điều khoản dịch vụ.',
     createWallet: 'Tạo ví',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'Tạo ví bằng email',
@@ -290,6 +292,7 @@ export default {
     resend: 'Resend',
     verify: 'Verify',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   PassportNumberVerifyScreen: {
     title: 'Passport Number',

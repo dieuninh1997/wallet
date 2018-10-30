@@ -222,16 +222,20 @@ export default class MobileNumberModal extends React.Component {
               onChange={value => this.selectCountry(value)}
               translation="eng"
               filterable={true}
-              filterPlaceholder="Search phone code country"
               showCallingCode={true}
               renderFilter={({ value, onChange, onClose }) => (
                 <View style={styles.searchCountryPicker}>
-                  <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
-                  <TextInput
-                    placeholder="Search phone code country"
-                    style={styles.inputSearchCountryPicker}
-                    onChangeText={onChange}
-                    value={value} />
+                  <View style={styles.groupSearchCountryPicker}>
+                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+                    <TextInput
+                      placeholder={I18n.t('mobileNumberVerification.searchCountry')}
+                      style={styles.inputSearchCountryPicker}
+                      onChangeText={onChange}
+                      value={value} />
+                  </View>
+                  <TouchableWithoutFeedback onPress={onClose}>
+                    <Text style={styles.textCancelCountryPicker}>{I18n.t('mobileNumberVerification.cancel')}</Text>
+                  </TouchableWithoutFeedback>
                 </View>
               )}
               hideAlphabetFilter={true}
@@ -449,7 +453,7 @@ const styles = ScaledSheet.create({
     fontSize: '16@ms',
     marginLeft: '10@s',
     marginRight: '10@s',
-    ...Fonts.Ubuntu_Regular
+    ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {
     marginTop: '5@s'
@@ -478,17 +482,32 @@ const styles = ScaledSheet.create({
   searchCountryPicker: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: '20@s',
-    paddingRight: '20@s',
+    paddingLeft: '10@s',
+    paddingRight: '10@s',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '60@s',
     backgroundColor: CommonColors.screenBgColor,
   },
+  groupSearchCountryPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '15@s',
+    backgroundColor: '#fff',
+  },
   iconSearchCountryPicker: {
+    width: '30@s',
+    height: '30@s',
   },
   inputSearchCountryPicker: {
-    height: '50@s',
-    width: '100%',
+    height: '40@s',
+    width: '70%',
     marginLeft: '10@s',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Light,
   },
+  textCancelCountryPicker: {
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
+  }
 });

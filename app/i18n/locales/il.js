@@ -52,6 +52,8 @@ export default {
     iAccept: 'Aw-awatek iti',
     termsAndConditions: ' pagbatayan ken kondision',
     createWallet: 'Agaramid iti wallet',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'Agaramid iti account mangusar ti email address',
@@ -288,6 +290,7 @@ export default {
     resend: 'I-send manen',
     verify: 'I-verify',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   loginListScreen: {
     title: 'Mag-sign In With',

@@ -52,6 +52,8 @@ export default {
     iAccept: 'Akong gidawat ang',
     termsAndConditions: ' patakaran ug kondisyon',
     createWallet: 'Paghimo og wallet',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'Paghimo og account gamita ang email address',
@@ -286,6 +288,7 @@ export default {
     resend: 'Ipadala ug balik',
     verify: 'Pamatud-an',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   loginListScreen: {
     title: 'Sign In With',

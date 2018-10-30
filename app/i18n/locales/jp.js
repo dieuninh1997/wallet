@@ -51,6 +51,8 @@ export default {
     iAccept: 'に同意する',
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {
     title: 'メールアドレスで作成',
@@ -276,6 +278,7 @@ export default {
     resend: '再送する',
     verify: '確認する',
     message: 'Please enter phone number',
+    searchCountry: 'Please input Keywords',
   },
   PassportNumberVerifyScreen: {
     title: 'Passport Number',

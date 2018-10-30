@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Image,
   TouchableWithoutFeedback
 } from 'react-native';
 import Modal from "react-native-modal";
@@ -20,7 +21,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { sendPhoneVerificationCode, verifyPhoneNumber } from '../../api/user/UserRequest';
 
 export default class MobileNumberModal extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       phoneNumber: '',
@@ -83,7 +84,7 @@ export default class MobileNumberModal extends React.Component {
     const { phoneNumber, codePhoneCountry } = this.state;
     const phoneNumberFull = codePhoneCountry + phoneNumber;
 
-    if(!phoneNumber){
+    if (!phoneNumber) {
       this.setState({
         error: I18n.t('mobileNumberVerification.message')
       });
@@ -105,7 +106,7 @@ export default class MobileNumberModal extends React.Component {
     }
   }
 
-  _onUpdateVerify = async() => {
+  _onUpdateVerify = async () => {
     const { codeVerify } = this.state;
     const { onMobileNumber } = this.props;
 
@@ -220,6 +221,20 @@ export default class MobileNumberModal extends React.Component {
               }}
               onChange={value => this.selectCountry(value)}
               translation="eng"
+              filterable={true}
+              filterPlaceholder="Search phone code country"
+              showCallingCode={true}
+              renderFilter={({ value, onChange, onClose }) => (
+                <View style={styles.searchCountryPicker}>
+                  <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+                  <TextInput
+                    placeholder="Search phone code country"
+                    style={styles.inputSearchCountryPicker}
+                    onChangeText={onChange}
+                    value={value} />
+                </View>
+              )}
+              hideAlphabetFilter={true}
               cca2={cca2}>
               <View />
             </CountryPicker>
@@ -257,7 +272,7 @@ export default class MobileNumberModal extends React.Component {
             value={codeVerify}
             maxLength={6}
             onChangeText={this._onTextChangeVerify}
-            style={styles.textCodeVerify}
+            style={codeVerify ? styles.textCodeVerifyEnter : styles.textCodeVerify}
             placeholder='Enter code' />
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
@@ -354,7 +369,7 @@ const styles = ScaledSheet.create({
   },
   codePhoneNumber: {
     height: '22@s',
-    width: '45@s',
+    width: '49@s',
     alignItems: 'center',
     marginLeft: '7@s',
   },
@@ -388,6 +403,12 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
   },
   textCodeVerify: {
+    width: '150@s',
+    fontSize: '20@ms',
+    textAlign: 'center',
+    ...Fonts.Ubuntu_Light,
+  },
+  textCodeVerifyEnter: {
     width: '150@s',
     fontSize: '28@ms',
     textAlign: 'center',
@@ -441,6 +462,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     padding: '0@s',
     margin: '0@s',
+    marginTop: '5@s',
   },
   iconExpandMore: {
     fontSize: '25@ms',
@@ -452,5 +474,21 @@ const styles = ScaledSheet.create({
   },
   buttonTextResend: {
     color: '#fff'
+  },
+  searchCountryPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '20@s',
+    paddingRight: '20@s',
+    backgroundColor: CommonColors.screenBgColor,
+  },
+  iconSearchCountryPicker: {
+  },
+  inputSearchCountryPicker: {
+    height: '50@s',
+    width: '100%',
+    marginLeft: '10@s',
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
   },
 });

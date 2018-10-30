@@ -106,6 +106,20 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
           onChange={value => this.selectCountry(value)}
           translation="eng"
           cca2={this.state.cca2}
+          filterable={true}
+          filterPlaceholder="Search phone code country"
+          showCallingCode={true}
+          renderFilter={({ value, onChange, onClose }) => (
+            <View style={styles.searchCountryPicker}>
+              <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+              <TextInput
+                placeholder="Search phone code country"
+                style={styles.inputSearchCountryPicker}
+                onChangeText={onChange}
+                value={value} />
+            </View>
+          )}
+          hideAlphabetFilter={true}
         >
           <View />
         </CountryPicker>
@@ -222,8 +236,25 @@ const styles = ScaledSheet.create({
     marginLeft: -17,
   },
   dialCodeText: {
+    height: '50@s',
     textAlign: 'center',
     fontSize: CommonSize.inputFontSize,
+    ...Fonts.Ubuntu_Light,
+  },
+  searchCountryPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '20@s',
+    paddingRight: '20@s',
+    backgroundColor: CommonColors.screenBgColor,
+  },
+  iconSearchCountryPicker: {
+  },
+  inputSearchCountryPicker: {
+    height: '50@s',
+    width: '100%',
+    marginLeft: '10@s',
+    fontSize: '16@ms',
     ...Fonts.Ubuntu_Light,
   },
 });

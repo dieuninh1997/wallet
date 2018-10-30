@@ -290,7 +290,8 @@ export default class SettingScreen extends BaseScreen {
   _onPressMobileVerify = () => {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
-      this._MobleNumberModal.setModalVisibleUpdate(true);
+      //this._MobleNumberModal.setModalVisibleUpdate(true);
+      this._MobleNumberModal.show(user.phone_number.substr(3));
     }
   }
 

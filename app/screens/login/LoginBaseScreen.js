@@ -89,9 +89,6 @@ class LoginBaseScreen extends Component {
       const responseUser = await login(email, password, otp = '', loginType = this.signinType);
 
       loginInfo.loginType = this.signinType;
-      console.log('====================================');
-      console.log('Login info', loginInfo);
-      console.log('====================================');
 
       AppPreferences.saveToKeychain({
         access_token: responseUser.access_token,
@@ -102,7 +99,7 @@ class LoginBaseScreen extends Component {
       navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (error) {
       if (error.error === 'invalid_otp') {
-        navigation.navigate('GoogleOtpVerifyScreen', { email, password });
+        navigation.navigate('GoogleOtpVerifyScreen', { email, password, loginType: this.signinType });
         return;
       }
       if (error.errors) {

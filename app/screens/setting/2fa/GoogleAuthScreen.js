@@ -132,6 +132,7 @@ export default class GoogleAuthScreen extends Component {
               style={styles.image}
             />
             <TextInput
+              keyboardType="numeric"
               editable={!googleOtpCode}
               onChangeText={text => this._onTextChanged(this.SMSCODE, text)}
               value={smsCode}
@@ -153,6 +154,7 @@ export default class GoogleAuthScreen extends Component {
               style={styles.image}
             />
             <TextInput
+              keyboardType="numeric"
               editable={!smsCode}
               maxLength={6}
               onChangeText={text => this._onTextChanged(this.GOOGLEOTPCODE, text)}

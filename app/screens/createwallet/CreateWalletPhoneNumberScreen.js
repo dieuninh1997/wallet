@@ -106,20 +106,21 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
           onChange={value => this.selectCountry(value)}
           translation="eng"
           cca2={this.state.cca2}
-          filterable={true}
+          filterable
           filterPlaceholder="Search phone code country"
-          showCallingCode={true}
+          showCallingCode
           renderFilter={({ value, onChange, onClose }) => (
             <View style={styles.searchCountryPicker}>
-              <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+              <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
               <TextInput
                 placeholder="Search phone code country"
                 style={styles.inputSearchCountryPicker}
                 onChangeText={onChange}
-                value={value} />
+                value={value}
+              />
             </View>
           )}
-          hideAlphabetFilter={true}
+          hideAlphabetFilter
         >
           <View />
         </CountryPicker>

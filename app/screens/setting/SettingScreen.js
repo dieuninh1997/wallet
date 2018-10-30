@@ -291,7 +291,7 @@ export default class SettingScreen extends BaseScreen {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
       this._MobleNumberModal.setModalVisibleUpdate(true);
-      // this._MobleNumberModal.show(user.phone_number.substr(3));
+      //this._MobleNumberModal.show(user.phone_number.substr(3));
     }
   }
 

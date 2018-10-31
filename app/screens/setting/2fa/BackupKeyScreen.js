@@ -4,11 +4,13 @@ import {
   TextInput,
   View,
   Image,
-  Clipboard
+  Clipboard,
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
-import { CommonStyles, Fonts, CommonSize, CommonColors } from '../../../utils/CommonStyles';
+import {
+  CommonStyles, Fonts, CommonSize, CommonColors,
+} from '../../../utils/CommonStyles';
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import UIUtils from '../../../utils/UIUtils';
@@ -45,7 +47,7 @@ export default class BackupKeyScreen extends Component {
   _handleCopyKey = () => {
     const { googleOtpKey } = this.state;
     Clipboard.setString(googleOtpKey);
-    UIUtils.showToastMessage(I18n.t('setting2fa.copyKey'));
+    UIUtils.showToastMessage(I18n.t('setting2fa.copyKey'), 'success');
   }
 
   render() {
@@ -67,7 +69,7 @@ export default class BackupKeyScreen extends Component {
         <View style={styles.inputBlock}>
           <TextInput
             value={googleOtpKey}
-            editable = {false}
+            editable={false}
             style={styles.inputText}
           />
         </View>
@@ -108,7 +110,7 @@ const styles = ScaledSheet.create({
   },
   textBlock: {
     alignItems: 'center',
-    marginBottom: '24@s'
+    marginBottom: '24@s',
   },
   textGuide: {
     width: '335@s',
@@ -125,7 +127,7 @@ const styles = ScaledSheet.create({
     borderRadius: '26@s',
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   inputText: {
     width: '265@s',
@@ -144,7 +146,7 @@ const styles = ScaledSheet.create({
     marginBottom: '5@s',
     marginHorizontal: '5@s',
   },
-  btnText:{
+  btnText: {
     marginLeft: '10@s',
     marginRight: '10@s',
   },
@@ -152,5 +154,5 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
-  }
+  },
 });

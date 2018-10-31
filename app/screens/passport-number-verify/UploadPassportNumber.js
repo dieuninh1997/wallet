@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, ScrollView, Image, Text, TouchableOpacity } from 'react-native';
+import {
+  View, ScrollView, Image, Text, TouchableOpacity,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import I18n from '../../i18n/i18n';
-import { CommonStyles, Fonts, CommonColors} from '../../utils/CommonStyles';
+import { CommonStyles, Fonts, CommonColors } from '../../utils/CommonStyles';
 import BaseScreen from '../BaseScreen';
 import MangoBackButton from '../common/MangoBackButton';
 import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
-import ImagePicker from 'react-native-image-picker';
 import { verifyPassport } from '../../api/user/UserRequest';
 import UIUtils from '../../utils/UIUtils';
-import { DH_CHECK_P_NOT_SAFE_PRIME } from 'constants';
 
 export default class UploadPassportNumber extends BaseScreen {
   static navigationOptions = ({ navigation }) => ({
@@ -35,8 +36,8 @@ export default class UploadPassportNumber extends BaseScreen {
       maxWidth: 500,
       maxHeight: 500,
       storageOptions: {
-        skipBackup: true
-      }
+        skipBackup: true,
+      },
     };
 
     ImagePicker.showImagePicker(options, (response) => {
@@ -44,14 +45,11 @@ export default class UploadPassportNumber extends BaseScreen {
 
       if (response.didCancel) {
         console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
+      } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
+      } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
+      } else {
         const source = { uri: response.uri };
         const name = response.fileName;
 
@@ -70,9 +68,9 @@ export default class UploadPassportNumber extends BaseScreen {
     const { params } = this.props.navigation.state;
     const { passportSamle, fileName } = this.state;
     const passportNumber = params.passportNumber;
-    
-    if(!passportSamle){
-      UIUtils.showToastMessage(I18n.t('uploadPassportNumber.messengerImage'));
+
+    if (!passportSamle) {
+      UIUtils.showToastMessage(I18n.t('uploadPassportNumber.messengerImage'), 'error');
       return;
     }
     const image = {
@@ -88,10 +86,10 @@ export default class UploadPassportNumber extends BaseScreen {
 
     try {
       const response = await verifyPassport(passportNumber, image, image2);
-      UIUtils.showToastMessage(I18n.t('uploadPassportNumber.submitSuccess'));
-      navigation.navigate('SettingScreen')
+      UIUtils.showToastMessage(I18n.t('uploadPassportNumber.submitSuccess'), 'success');
+      navigation.navigate('SettingScreen');
     } catch (error) {
-      UIUtils.showToastMessage(error.message);
+      UIUtils.showToastMessage(error.message, 'error');
       console.log('uploadpassportverify', error.message);
     }
   }
@@ -103,18 +101,19 @@ export default class UploadPassportNumber extends BaseScreen {
       <ScrollView style={styles.containerMain}>
         <View style={styles.container}>
 
-          <Text style={styles.txtNote}>{I18n.t("PassportNumberVerifyScreen.instruction")}</Text>
+          <Text style={styles.txtNote}>{I18n.t('PassportNumberVerifyScreen.instruction')}</Text>
 
           <View style={styles.groupPassportSamle}>
-            {passportSamle === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle02.png')}></Image> :
-              <Image style={styles.passportSamle} source={passportSamle} />
+            {passportSamle === null ? <Image style={styles.passportSamle} source={require('../../../assets/passport-number-verify/PassportSamle02.png')} />
+              : <Image style={styles.passportSamle} source={passportSamle} />
             }
 
-            <TouchableOpacity 
+            <TouchableOpacity
               activeOpacity={0.5}
               style={styles.btnUpContainer}
-              onPress={() => this.selectPhotoTapped()}>
-              <View style = {styles.viewUpload}>
+              onPress={() => this.selectPhotoTapped()}
+            >
+              <View style={styles.viewUpload}>
                 <Text style={styles.txtUpload}>{I18n.t('uploadPassportNumber.selectImage')}</Text>
               </View>
             </TouchableOpacity>
@@ -168,7 +167,7 @@ const styles = ScaledSheet.create({
     borderRadius: '20@s',
     marginTop: '20@s',
   },
-  
+
   continueContainer: {
     alignItems: 'center',
     backgroundColor: '#fbc405',
@@ -213,4 +212,4 @@ const styles = ScaledSheet.create({
     marginRight: '4@s',
   },
 
-})
+});

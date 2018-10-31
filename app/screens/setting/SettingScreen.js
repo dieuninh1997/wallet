@@ -49,6 +49,7 @@ export default class SettingScreen extends BaseScreen {
       userSecuritySettings: null,
 
       refreshing: false,
+      isEnableCodePin: false,
       isSupportedTouchId: false,
       isEnableTouchId: false,
     };
@@ -76,9 +77,21 @@ export default class SettingScreen extends BaseScreen {
         });
 
       await this._loadLocalSettings();
+      await this._checkStatusPin();
       this._loadData();
     } catch (error) {
       console.log('SettingScreen._error: ', error);
+    }
+  }
+
+  _checkStatusPin = async () => {
+    try {
+      const checkCodePin = await AppPreferences.getGeneric();
+      const isEnableCodePin = checkCodePin && checkCodePin.password.includes(Consts.PIN);
+
+      this.setState({ isEnableCodePin });
+    } catch (err) {
+      console.log('CheckStatusPin._error:', err);
     }
   }
 
@@ -198,10 +211,10 @@ export default class SettingScreen extends BaseScreen {
       const response = await updateUserSettings(params);
       const { message } = response;
 
-      UIUtils.showToastMessage(message);
+      UIUtils.showToastMessage(message, 'success');
       this._loadUserSettings();
     } catch (error) {
-      UIUtils.showToastMessage(error.message);
+      UIUtils.showToastMessage(error.message, 'error');
       console.log('LocalCurrencyScreen._onClickConfirm', error);
     }
   }
@@ -291,7 +304,7 @@ export default class SettingScreen extends BaseScreen {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
       this._MobleNumberModal.setModalVisibleUpdate(true);
-      //this._MobleNumberModal.show(user.phone_number.substr(3));
+      // this._MobleNumberModal.show(user.phone_number.substr(3));
     }
   }
 
@@ -312,6 +325,12 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _onPressBackupPassphrase = () => {
+    const { isEnableCodePin } = this.state;
+
+    if (!isEnableCodePin) {
+      this.props.navigation.navigate('BackupPassphraseScreen');
+      return;
+    }
     this.props.navigation.navigate('LoginUsePinScreen', { navigateScreen: this._navigateToBackupPassphrase });
   }
 
@@ -374,8 +393,8 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback onPress={this._onPressMobileVerify}>
-              <View style={styles.borderEmailMobileNumber}>
+            <TouchableWithoutFeedback disabled onPress={this._onPressMobileVerify}>
+              <View style={styles.borderDisableItem}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
                 <View style={styles.activiRightGroup}>
                   {userSecuritySettings && (userSecuritySettings.phone_verified ? (
@@ -670,6 +689,15 @@ const styles = ScaledSheet.create({
     paddingLeft: '14@s',
     paddingRight: '12@s',
   },
+  borderDisableItem: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '36@s',
+    paddingLeft: '14@s',
+    paddingRight: '12@s',
+    backgroundColor: '#e6ebf2',
+  },
   borderLogintoWeb: {
     paddingLeft: '14@s',
     paddingRight: '12@s',
@@ -677,6 +705,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     height: '47@s',
     justifyContent: 'space-between',
+    backgroundColor: '#e6ebf2',
   },
   textPerferences: {
     fontSize: '13@ms',

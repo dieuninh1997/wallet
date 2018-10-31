@@ -7,7 +7,7 @@ import {
   AsyncStorage,
   ScrollView,
 } from 'react-native';
-import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 import nodejs from 'nodejs-mobile-react-native';
 
 import MangoBackButton from '../common/MangoBackButton';
@@ -74,13 +74,13 @@ class RestoreWalletScreen extends Component {
 
   _validateMnemonic = (mnemonic) => {
     if (!mnemonic) {
-      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.mnemonicRequired'));
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.mnemonicRequired'), 'error');
       return false;
     }
 
     const words = mnemonic.split(' ');
     if (words.length !== 12) {
-      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'));
+      UIUtils.showToastMessage(I18n.t('restoreWalletScreen.invalidMnemonic'), 'error');
       return false;
     }
 
@@ -97,17 +97,12 @@ class RestoreWalletScreen extends Component {
     }
     try {
       const { params } = navigation.state;
-      // if (params && params.loginInfo) {
-
-      // }
 
       this.setState({
         isLoading: true,
       });
 
-      const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-        .update(AppConfig.getClientSecret())
-        .digest('hex');
+      const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
       const [wallet, restoreAccountInfo] = await Promise.all([
         this._generateWallet(JSON.stringify({ action: 'importWalletFromMnemonic', data: mnemonic })),
@@ -140,9 +135,9 @@ class RestoreWalletScreen extends Component {
       });
       console.log('restoreWalletScreen.errors: ', error);
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`));
+        UIUtils.showToastMessage(I18n.t(`restoreWalletScreen.errors.${error.message}`), 'error');
       }
     }
   }

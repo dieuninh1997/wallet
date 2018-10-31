@@ -83,6 +83,7 @@ export function restoreAccount(mnemonic, loginInfo = {}) {
     mnemonic,
     username: loginInfo.email,
     login_type: loginInfo.loginType,
+    facebook_access_token: loginInfo.accessToken,
   };
   return post(url, params);
 }

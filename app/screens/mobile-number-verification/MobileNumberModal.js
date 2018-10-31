@@ -5,19 +5,19 @@ import {
   TouchableOpacity,
   View,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
 import _ from 'lodash';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
 import { CommonColors, CommonStyles, Fonts } from '../../utils/CommonStyles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import LinearGradient from 'react-native-linear-gradient';
 import { sendPhoneVerificationCode, verifyPhoneNumber } from '../../api/user/UserRequest';
 
 export default class MobileNumberModal extends React.Component {
@@ -59,7 +59,7 @@ export default class MobileNumberModal extends React.Component {
   show = (phoneNumber) => {
     this.setState({
       phoneNumber,
-      modalVisibleUpdate: true
+      modalVisibleUpdate: true,
     });
   }
 
@@ -86,7 +86,7 @@ export default class MobileNumberModal extends React.Component {
 
     if (!phoneNumber) {
       this.setState({
-        error: I18n.t('mobileNumberVerification.message')
+        error: I18n.t('mobileNumberVerification.message'),
       });
       return;
     }
@@ -95,7 +95,7 @@ export default class MobileNumberModal extends React.Component {
       const response = await sendPhoneVerificationCode(phoneNumberFull);
       const message = response.message;
 
-      UIUtils.showToastMessage(message);
+      UIUtils.showToastMessage(message, 'success');
       this.setModalVisibleUpdate(false);
       this.setModalVisibleVerify(true);
     } catch (error) {
@@ -112,11 +112,11 @@ export default class MobileNumberModal extends React.Component {
 
     try {
       const response = await verifyPhoneNumber(codeVerify);
-      const message = response.message;
+      const { message } = response;
 
       onMobileNumber();
       this.setModalVisibleVerify(false);
-      UIUtils.showToastMessage(message);
+      UIUtils.showToastMessage(message, 'success');
       this.setState({
         phoneNumber: '',
         codeVerify: '',
@@ -133,21 +133,21 @@ export default class MobileNumberModal extends React.Component {
   _onTextChange = (text) => {
     this.setState({
       phoneNumber: text,
-      error: ''
+      error: '',
     });
   }
 
   _onTextChangeVerify = (text) => {
     this.setState({
       codeVerify: text,
-      error: ''
+      error: '',
     });
   }
 
   render() {
     const { error, modalVisibleUpdate, modalVisibleVerify } = this.state;
     let height = modalHeight;
-    if (!!error) {
+    if (error) {
       height += scale(20);
     }
 
@@ -160,8 +160,9 @@ export default class MobileNumberModal extends React.Component {
             backdropColor={CommonColors.modalBackdropColor}
             backdropOpacity={CommonColors.modalBackdropAlpha}
             onBackButtonPress={() => this.setModalVisibleUpdate(false)}
-            onBackdropPress={() => this.setModalVisibleUpdate(false)}>
-            <View style={[styles.popup, { height: height }]}>
+            onBackdropPress={() => this.setModalVisibleUpdate(false)}
+          >
+            <View style={[styles.popup, { height }]}>
               <View style={{ flex: 1 }}>
                 {this._renderHeader()}
                 {this._renderContent()}
@@ -177,8 +178,9 @@ export default class MobileNumberModal extends React.Component {
             backdropColor={CommonColors.modalBackdropColor}
             backdropOpacity={CommonColors.modalBackdropAlpha}
             onBackButtonPress={() => this.setModalVisibleVerify(false)}
-            onBackdropPress={() => this.setModalVisibleVerify(false)}>
-            <View style={[styles.popup, { height: height }]}>
+            onBackdropPress={() => this.setModalVisibleVerify(false)}
+          >
+            <View style={[styles.popup, { height }]}>
               <View style={{ flex: 1 }}>
                 {this._renderHeader()}
                 {this._renderContentVerify()}
@@ -221,25 +223,27 @@ export default class MobileNumberModal extends React.Component {
               }}
               onChange={value => this.selectCountry(value)}
               translation="eng"
-              filterable={true}
-              showCallingCode={true}
+              filterable
+              showCallingCode
               renderFilter={({ value, onChange, onClose }) => (
                 <View style={styles.searchCountryPicker}>
                   <View style={styles.groupSearchCountryPicker}>
-                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
                     <TextInput
                       placeholder={I18n.t('mobileNumberVerification.searchCountry')}
                       style={styles.inputSearchCountryPicker}
                       onChangeText={onChange}
-                      value={value} />
+                      value={value}
+                    />
                   </View>
                   <TouchableWithoutFeedback onPress={onClose}>
                     <Text style={styles.textCancelCountryPicker}>{I18n.t('mobileNumberVerification.cancel')}</Text>
                   </TouchableWithoutFeedback>
                 </View>
               )}
-              hideAlphabetFilter={true}
-              cca2={cca2}>
+              hideAlphabetFilter
+              cca2={cca2}
+            >
               <View />
             </CountryPicker>
           </View>
@@ -258,7 +262,8 @@ export default class MobileNumberModal extends React.Component {
             underlineColorAndroid="transparent"
             value={phoneNumber}
             onChangeText={this._onTextChange}
-            placeholder={I18n.t('mobileNumberVerification.phoneNumber')} />
+            placeholder={I18n.t('mobileNumberVerification.phoneNumber')}
+          />
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
@@ -277,7 +282,8 @@ export default class MobileNumberModal extends React.Component {
             maxLength={6}
             onChangeText={this._onTextChangeVerify}
             style={codeVerify ? styles.textCodeVerifyEnter : styles.textCodeVerify}
-            placeholder='Enter code' />
+            placeholder="Enter code"
+          />
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
@@ -292,12 +298,14 @@ export default class MobileNumberModal extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this._onUpdatePress}>
+          onPress={this._onUpdatePress}
+        >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
             colors={['#ffdd00', '#fcc203']}
-            style={styles.button}>
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>{I18n.t('mobileNumberVerification.update')}</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -310,12 +318,14 @@ export default class MobileNumberModal extends React.Component {
       <View style={styles.footerVerify}>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this._onUpdatePress}>
+          onPress={this._onUpdatePress}
+        >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
             colors={['#53a1ff', '#1c43b8']}
-            style={styles.button}>
+            style={styles.button}
+          >
             <Text style={[styles.buttonText, styles.buttonTextResend]}>{I18n.t('mobileNumberVerification.resend')}</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -324,12 +334,14 @@ export default class MobileNumberModal extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this._onUpdateVerify}>
+          onPress={this._onUpdateVerify}
+        >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
             colors={['#ffdd00', '#fcc203']}
-            style={styles.button}>
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>{I18n.t('mobileNumberVerification.verify')}</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -355,12 +367,12 @@ const styles = ScaledSheet.create({
   },
   popupHeader: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   popupHeaderText: {
     color: '#1f1f1f',
     fontSize: '20@ms',
-    ...Fonts.Ubuntu_Regular
+    ...Fonts.Ubuntu_Regular,
   },
   content: {
     marginTop: '15@s',
@@ -369,7 +381,7 @@ const styles = ScaledSheet.create({
     color: '#26304d',
     fontSize: '16@ms',
     lineHeight: '21@s',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
   codePhoneNumber: {
     height: '22@s',
@@ -384,7 +396,7 @@ const styles = ScaledSheet.create({
     color: '#1f1f1f',
     fontSize: '16@ms',
     width: '100%',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
   phoneNumber: {
     borderWidth: '1@s',
@@ -393,7 +405,7 @@ const styles = ScaledSheet.create({
     marginTop: '20@s',
     height: '48@s',
     borderRadius: '28@s',
-    borderColor: '#cad1db'
+    borderColor: '#cad1db',
   },
   phoneNumberVerify: {
     borderWidth: '1@s',
@@ -416,19 +428,19 @@ const styles = ScaledSheet.create({
     width: '150@s',
     fontSize: '28@ms',
     textAlign: 'center',
-    ...Fonts.Ubuntu_Medium
+    ...Fonts.Ubuntu_Medium,
   },
   footer: {
     marginTop: '20@s',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   footerVerify: {
     marginTop: '20@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cancelUpdate: {
     justifyContent: 'center',
@@ -443,7 +455,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     height: '40@s',
     borderRadius: '28@s',
-    backgroundColor: '#f5f7fa'
+    backgroundColor: '#f5f7fa',
   },
   cancelButton: {
     marginLeft: '10@s',
@@ -456,7 +468,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   errorMessage: {
-    marginTop: '5@s'
+    marginTop: '5@s',
   },
   flagIcon: {
     width: '0@s',
@@ -477,7 +489,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Bold,
   },
   buttonTextResend: {
-    color: '#fff'
+    color: '#fff',
   },
   searchCountryPicker: {
     flexDirection: 'row',
@@ -509,5 +521,5 @@ const styles = ScaledSheet.create({
   textCancelCountryPicker: {
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular,
-  }
+  },
 });

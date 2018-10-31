@@ -36,7 +36,7 @@ class BackupPassphraseScreen extends Component {
     const { mnemonic } = this.state;
 
     Clipboard.setString(mnemonic);
-    UIUtils.showToastMessage(I18n.t('request.copied'));
+    UIUtils.showToastMessage(I18n.t('request.copied'), 'success');
   }
 
   _renderQrCodeSection = () => {

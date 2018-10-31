@@ -34,9 +34,9 @@ export default class DownloadAndInstallScreen extends Component {
       this._handleNext(responseOtp.data.key);
     } catch (error) {
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message, 'error');
       }
     }
   }
@@ -53,8 +53,13 @@ export default class DownloadAndInstallScreen extends Component {
         </View>
 
         <View style={styles.textBlock}>
-          <Text style={styles.textGuide}>{I18n.t('setting2fa.downloadAndInstall')}
-            <Text style={styles.textLink} onPress={() => Linking.openURL(googleAuthLink)}> {I18n.t('setting2fa.googleAuthenticator')} </Text>
+          <Text style={styles.textGuide}>
+            {I18n.t('setting2fa.downloadAndInstall')}
+            <Text style={styles.textLink} onPress={() => Linking.openURL(googleAuthLink)}>
+              {' '}
+              {I18n.t('setting2fa.googleAuthenticator')}
+              {' '}
+            </Text>
             {I18n.t('setting2fa.onYourPhone')}
           </Text>
         </View>
@@ -108,5 +113,5 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
-  }
+  },
 });

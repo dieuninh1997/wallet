@@ -45,7 +45,7 @@ export default class EnterBackupKeyScreen extends Component {
 
   _handleNext = () => {
     if (!this._validateGoogleOtpKey()) {
-      UIUtils.showToastMessage(I18n.t('setting2fa.EnterBackupKeyIncorrect'));
+      UIUtils.showToastMessage(I18n.t('setting2fa.EnterBackupKeyIncorrect'), 'error');
       return;
     }
 

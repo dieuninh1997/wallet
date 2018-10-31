@@ -4,16 +4,18 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image
+  Image,
 } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import _ from 'lodash';
+import LinearGradient from 'react-native-linear-gradient';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
-import { CommonColors, CommonSize, CommonStyles, Fonts } from '../../utils/CommonStyles';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+  CommonColors, CommonSize, CommonStyles, Fonts,
+} from '../../utils/CommonStyles';
 import { sendVerificationEmail } from '../../api/user/UserRequest';
 
 export default class EmailVerificationModal extends React.Component {
@@ -21,7 +23,7 @@ export default class EmailVerificationModal extends React.Component {
     email: '',
     emailEditable: true,
     modalVisible: false,
-    error: ''
+    error: '',
   };
 
   setModalVisible(visible) {
@@ -46,18 +48,18 @@ export default class EmailVerificationModal extends React.Component {
 
   _onUpdatePress = async () => {
     try {
-      let response = await sendVerificationEmail(this.state.email)
+      const response = await sendVerificationEmail(this.state.email);
       this.setModalVisible(false);
-      UIUtils.showToastMessage(I18n.t('emailVerification.verificationEmailSent'));
+      UIUtils.showToastMessage(I18n.t('emailVerification.verificationEmailSent'), 'success');
     } catch (e) {
       console.log('EmailVerificationModal._onUpdatePress', e);
       if (e.errors && e.errors.email) {
         this.setState({
-          error: e.errors.email[0]
+          error: e.errors.email[0],
         });
       } else {
         this.setState({
-          error: I18n.t('emailVerification.errors.' + e.message)
+          error: I18n.t(`emailVerification.errors.${e.message}`),
         });
       }
     }
@@ -66,14 +68,14 @@ export default class EmailVerificationModal extends React.Component {
   _onTextChange = (text) => {
     this.setState({
       email: text,
-      error: ''
+      error: '',
     });
   }
 
   render() {
     const { error } = this.state;
     let height = modalHeight;
-    if (!!error) {
+    if (error) {
       height += scale(20); // one line message
     }
 
@@ -85,9 +87,10 @@ export default class EmailVerificationModal extends React.Component {
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
-          onBackdropPress={() => this.setModalVisible(false)}>
-          <View style={[styles.popup, {height: height}]}>
-            <View style={{flex: 1}}>
+          onBackdropPress={() => this.setModalVisible(false)}
+        >
+          <View style={[styles.popup, { height }]}>
+            <View style={{ flex: 1 }}>
               {this._renderHeader()}
               {this._renderContent()}
               {this._renderFooter()}
@@ -121,7 +124,8 @@ export default class EmailVerificationModal extends React.Component {
             underlineColorAndroid="transparent"
             value={email}
             onChangeText={this._onTextChange}
-            placeholder={I18n.t('emailVerification.emailAddress')} />
+            placeholder={I18n.t('emailVerification.emailAddress')}
+          />
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
@@ -133,13 +137,15 @@ export default class EmailVerificationModal extends React.Component {
       <View style={styles.footer}>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this._onUpdatePress}>
+          onPress={this._onUpdatePress}
+        >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
             colors={['#53a1ff', '#1c43b8']}
-            style={styles.button}>
-          <Text style={[styles.buttonText, styles.buttonTextResend]}>{I18n.t('emailVerification.resend')}</Text>
+            style={styles.button}
+          >
+            <Text style={[styles.buttonText, styles.buttonTextResend]}>{I18n.t('emailVerification.resend')}</Text>
           </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={this._onCancelPress.bind(this)}>
@@ -147,12 +153,14 @@ export default class EmailVerificationModal extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this._onUpdatePress}>
+          onPress={this._onUpdatePress}
+        >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
             colors={['#ffdd00', '#fcc203']}
-            style={styles.button}>
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>{I18n.t('emailVerification.update')}</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -174,16 +182,16 @@ const styles = ScaledSheet.create({
     paddingTop: '16@s',
     paddingBottom: '16@s',
     alignSelf: 'center',
-    ...UIUtils.generatePopupShadow()
+    ...UIUtils.generatePopupShadow(),
   },
   popupHeader: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   popupHeaderText: {
     color: '#1f1f1f',
     fontSize: '19@ms',
-    ...Fonts.Ubuntu_Regular
+    ...Fonts.Ubuntu_Regular,
   },
 
   content: {
@@ -193,20 +201,20 @@ const styles = ScaledSheet.create({
     color: '#26304d',
     fontSize: '16@ms',
     lineHeight: '21@s',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
   emailIcon: {
     height: '28@s',
     width: '28@s',
     marginLeft: '22@s',
-    marginRight: '10@s'
+    marginRight: '10@s',
   },
   emailTextInput: {
     flex: 1,
     marginRight: '10@s',
     color: '#1f1f1f',
     fontSize: '16@ms',
-    ...Fonts.Ubuntu_Light
+    ...Fonts.Ubuntu_Light,
   },
   email: {
     borderWidth: '1@s',
@@ -215,21 +223,21 @@ const styles = ScaledSheet.create({
     marginTop: '20@s',
     height: '48@s',
     borderRadius: '28@s',
-    borderColor: '#cad1db'
+    borderColor: '#cad1db',
   },
 
   footer: {
     marginTop: '20@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '40@s',
     borderRadius: '28@s',
-    backgroundColor: '#f5f7fa'
+    backgroundColor: '#f5f7fa',
   },
   cancelButton: {
     marginLeft: '10@s',
@@ -239,12 +247,12 @@ const styles = ScaledSheet.create({
     marginRight: '10@s',
     marginLeft: '10@s',
     fontSize: '16@ms',
-    ...Fonts.Ubuntu_Regular
+    ...Fonts.Ubuntu_Regular,
   },
   buttonTextResend: {
-    color: '#fff'
+    color: '#fff',
   },
   errorMessage: {
-    marginTop: '5@s'
-  }
+    marginTop: '5@s',
+  },
 });

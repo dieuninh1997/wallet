@@ -47,9 +47,9 @@ export default class LoginListScreen extends Component {
 
     try {
       await LoginManager.logOut();
-      const loginInfo = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+      const loginInfoFacebook = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
 
-      if (loginInfo.isCancelled) {
+      if (loginInfoFacebook.isCancelled) {
         return;
       }
 
@@ -63,16 +63,23 @@ export default class LoginListScreen extends Component {
 
       window.GlobalSocket.connect();
       Keyboard.dismiss();
-      navigation.navigate('RestoreWalletScreen');
+
+      const loginInfo = {
+        email: '',
+        password: '',
+        loginType: 3,
+        accessToken,
+      };
+      navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (errors) {
       if (errors.error === 'invalid_otp') {
         navigation.navigate('GoogleOtpVerifyScreen', { email, password });
         return;
       }
       if (errors.errors) {
-        UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]]);
+        UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]], 'error');
       } else {
-        UIUtils.showToastMessage(errors.message);
+        UIUtils.showToastMessage(errors.message, 'error');
       }
     }
   }
@@ -88,7 +95,8 @@ export default class LoginListScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.6}
-            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
+            disabled
+            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
             onPress={() => this._handleClickLogin(LoginListScreen.SCREEN.SIGNIN_BY_PHONE)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/phone/phone.png')} />

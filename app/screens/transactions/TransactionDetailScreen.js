@@ -40,7 +40,7 @@ export default class TransactionDetailScreen extends Component {
   _handleCopyTxid = () => {
     const { transaction } = this.state;
     Clipboard.setString(transaction.id);
-    UIUtils.showToastMessage(I18n.t('transactionDetail.copy_txid'));
+    UIUtils.showToastMessage(I18n.t('transactionDetail.copy_txid'), 'success');
   }
 
   _handleCheckExport = () => {
@@ -269,7 +269,7 @@ const styles = ScaledSheet.create({
     marginRight: '9@s',
     marginHorizontal: '5@s',
   },
-  btnText:{
+  btnText: {
     marginLeft: '10@s',
     marginRight: '10@s',
   },

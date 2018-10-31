@@ -61,7 +61,7 @@ export default class LoginUsePinScreen extends Component {
       return;
     }
     this.setState({ isShowError: true });
-    UIUtils.showToastMessage('Error Code Pin!');
+    UIUtils.showToastMessage('Error Code Pin!', 'error');
 
     setTimeout(() => this.setState({ isShowError: false }), 1000);
   }
@@ -102,7 +102,7 @@ export default class LoginUsePinScreen extends Component {
       .catch((error) => {
         console.log(error.code);
         if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {
-          UIUtils.showToastMessage(I18n.t('loginUserPin.touchIdDisabled'));
+          UIUtils.showToastMessage(I18n.t('loginUserPin.touchIdDisabled'), 'warning');
           return;
         }
         if (error.code === 'AUTHENTICATION_CANCELED') {

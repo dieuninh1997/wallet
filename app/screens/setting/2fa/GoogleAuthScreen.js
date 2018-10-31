@@ -61,17 +61,17 @@ export default class GoogleAuthScreen extends Component {
   _validateClient = () => {
     const { password, smsCode, googleOtpCode } = this.state;
     if (!password) {
-      UIUtils.showToastMessage(I18n.t('setting2fa.passwordRequired'));
+      UIUtils.showToastMessage(I18n.t('setting2fa.passwordRequired'), 'error');
       return false;
     }
 
     if (!googleOtpCode) {
-      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequired'));
+      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequired'), 'error');
       return false;
     }
 
     if (!UIUtils.validateNumber(googleOtpCode)) {
-      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequiredNumber'));
+      UIUtils.showToastMessage(I18n.t('setting2fa.googleOtpCodeRequiredNumber'), 'error');
       return false;
     }
 
@@ -93,9 +93,9 @@ export default class GoogleAuthScreen extends Component {
       navigation.navigate('SettingScreen', true);
     } catch (error) {
       if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]]);
+        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message);
+        UIUtils.showToastMessage(error.message, 'error');
       }
     }
   }

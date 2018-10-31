@@ -66,6 +66,7 @@ export default {
     createWaletSuccess: 'Gumawa ng wallet ay tagumpay',
     emailInvalid: 'Mali ang Email',
     passwordMustMatch: 'Ang password na nilagay ay hindi tugma!',
+    requireInfo: 'Please enter full information!',
   },
   createWalletByPassportScreen: {
     title: 'Gumawa ng account gamit ang numero ngpasaporte',

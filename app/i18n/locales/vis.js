@@ -67,6 +67,7 @@ export default {
     readAndCheckTerms: 'Please read and accept terms and conditions!',
     emailInvalid: 'Sayop nga email!',
     passwordMustMatch: 'Ang pasword nga gisulod dili parehas!',
+    requireInfo: 'Please enter full information!',
   },
   createWalletByPassportScreen: {
     title: 'Paghimo og account gamit ang numero sa pasaporte',

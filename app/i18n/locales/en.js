@@ -67,6 +67,7 @@ export default {
     readAndCheckTerms: 'Please read and accept terms and conditions!',
     emailInvalid: 'Email is not valid!',
     passwordMustMatch: 'Password must match password confirmation!',
+    requireInfo: 'Please enter full information!',
   },
   createWalletByPassportScreen: {
     title: 'Create by Passport Number',
@@ -305,7 +306,7 @@ export default {
   PassportNumberVerifyScreen: {
     title: 'Passport Verify',
     enterPassportNumber: 'Enter passport number',
-    instruction: "Please take a clear photo like the sample and upload to verify",
+    instruction: 'Please take a clear photo like the sample and upload to verify',
     selectImage: 'Choose image',
     continue: 'Continue',
     messengerPassport: 'Please enter passport number',

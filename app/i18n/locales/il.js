@@ -67,6 +67,7 @@ export default {
     readAndCheckTerms: 'Basaem ken awatem iti patakaran ken kondision!',
     emailInvalid: 'Saan nga husto iti email!',
     passwordMustMatch: 'Ti inkabil nga password ket saan nga parehas!',
+    requireInfo: 'Please enter full information!',
   },
   createWalletByPassportScreen: {
     title: 'Agaramid iti account mangusar iti numero ti pasaporte',

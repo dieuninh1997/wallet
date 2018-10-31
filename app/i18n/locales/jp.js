@@ -66,6 +66,7 @@ export default {
     readAndCheckTerms: 'Please read and accept terms and conditions!',
     emailInvalid: 'Email is not valid!',
     passwordMustMatch: 'Password must match password confirmation!',
+    requireInfo: 'Please enter full information!',
   },
   dashboard: {
     title: 'ダッシュボード',

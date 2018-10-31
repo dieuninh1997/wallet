@@ -262,6 +262,7 @@ export default {
     pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
     touchIdDisabled: 'Your touch ID is disable in a few minute',
+    errorCodePin: 'Error Code Pin!',
   },
   addPinScreen: {
     title: 'Add New PIN',
@@ -301,6 +302,7 @@ export default {
     verify: 'Verify',
     message: 'Please enter phone number',
     searchCountry: 'Please input Keywords',
+    enterCode: 'Enter code',
   },
   loginListScreen: {
     title: 'Sign In With',

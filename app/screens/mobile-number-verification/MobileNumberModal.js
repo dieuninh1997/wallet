@@ -282,7 +282,7 @@ export default class MobileNumberModal extends React.Component {
             maxLength={6}
             onChangeText={this._onTextChangeVerify}
             style={codeVerify ? styles.textCodeVerifyEnter : styles.textCodeVerify}
-            placeholder="Enter code"
+            placeholder={I18n.t('mobileNumberVerification.enterCode')}
           />
         </View>
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}

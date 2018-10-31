@@ -66,6 +66,7 @@ export default {
     termsAndConditions: ' mga tuntunin at kundisyon',
     createWallet: 'Gumawa ng Wallet',
     createWaletSuccess: 'Gumawa ng wallet ay tagumpay',
+    readAndCheckTerms: 'Please read and accept terms and conditions!',
     emailInvalid: 'Mali ang Email',
     passwordMustMatch: 'Ang password na nilagay ay hindi tugma!',
     requireInfo: 'Please enter full information!',
@@ -129,6 +130,7 @@ export default {
     unconfirmed: 'Hindi kumpirmado',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'Philippines Peso (₱)',
+    passportNumber: 'Passport Number',
   },
   emailVerification: {
     title: 'Pag-verify ng Email',
@@ -260,6 +262,7 @@ export default {
     pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
     touchIdDisabled: 'Your touch ID is disable in a few minute',
+    errorCodePin: 'Error Code Pin!',
   },
   addPinScreen: {
     title: 'Magdagdag ng bagong PIN',
@@ -299,6 +302,7 @@ export default {
     verify: 'I-verify',
     message: 'Please enter phone number',
     searchCountry: 'Please input Keywords',
+    enterCode: 'Enter code',
   },
   loginListScreen: {
     title: 'Mag-sign In Gamit ang',
@@ -307,6 +311,26 @@ export default {
     emailAddress: 'Email Address',
     passportNumber: 'Numero ng pasaporte',
     facebook: 'Facebook',
+  },
+  PassportNumberVerifyScreen: {
+    title: 'Passport Verify',
+    enterPassportNumber: 'Enter passport number',
+    instruction: 'Please take a clear photo like the sample and upload to verify',
+    selectImage: 'Choose image',
+    continue: 'Continue',
+    messengerPassport: 'Please enter passport number',
+    messengerImage: 'Please select image',
+  },
+  uploadPassportNumber: {
+    title: 'Passport Verify',
+    selectImage: 'Choose image',
+    submit: 'Submit',
+    submitSuccess: 'submit success',
+    messengerImage: 'Please select image',
+  },
+  http: {
+    _426: 'Update Required',
+    _503: 'Server Maintenance.',
   },
   mangoHeader: {
     settings: 'Settings',

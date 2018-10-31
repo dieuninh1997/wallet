@@ -38,6 +38,8 @@ export default {
     passportNumber: 'Passport Number',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWallet: {
     signin: 'Sign In',

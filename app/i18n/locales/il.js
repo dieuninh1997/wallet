@@ -38,6 +38,8 @@ export default {
     passportNumber: 'Numero iti Pasaporte',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
+    cancel: 'Cancel',
+    searchCountry: 'Please input Keywords',
   },
   createWallet: {
     signin: 'Mag-sign In',

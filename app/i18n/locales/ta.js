@@ -38,6 +38,8 @@ export default {
     passportNumber: 'Numero ng pasaporte',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
+    cancel: 'キャンセル',
+    searchCountry: 'Please input Keywords',
   },
   createWallet: {
     signin: 'Ma-sign In',

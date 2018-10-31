@@ -34,9 +34,11 @@ export default {
     signInByPhone: 'Sign In With Phone',
     signInByEmail: 'Sign In With Email Address',
     signInByPassport: 'Sign In With Passport',
-    passportNumber: 'Passport Number',
-    phoneNumber: 'Phone Number',
-    emailAddress: 'Email Address',
+    passportNumber: 'パスポート番号',
+    phoneNumber: '電話番号',
+    emailAddress: 'メールアドレス',
+    cancel: 'キャンセル',
+    searchCountry: 'Please input Keywords',
   },
   createWallet: {
     signin: 'サインイン',
@@ -51,7 +53,7 @@ export default {
     iAccept: 'に同意する',
     termsAndConditions: 'サービス規約',
     createWallet: 'ウォレットの作成',
-    cancel: 'Cancel',
+    cancel: 'キャンセル',
     searchCountry: 'Please input Keywords',
   },
   createWalletByEmailScreen: {

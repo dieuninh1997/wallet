@@ -7,6 +7,7 @@ import {
   TextInput,
   Keyboard,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   AsyncStorage,
 } from 'react-native';
 
@@ -175,6 +176,24 @@ class LoginBaseScreen extends Component {
               onChange={value => this.selectCountry(value)}
               translation="eng"
               cca2={this.state.cca2}
+              filterable={true}
+              showCallingCode={true}
+              renderFilter={({ value, onChange, onClose }) => (
+                <View style={styles.searchCountryPicker}>
+                  <View style={styles.groupSearchCountryPicker}>
+                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+                    <TextInput
+                      placeholder={I18n.t('signin.searchCountry')}
+                      style={styles.inputSearchCountryPicker}
+                      onChangeText={onChange}
+                      value={value} />
+                  </View>
+                  <TouchableWithoutFeedback onPress={onClose}>
+                    <Text style={styles.textCancelCountryPicker}>{I18n.t('signin.cancel')}</Text>
+                  </TouchableWithoutFeedback>
+                </View>
+              )}
+              hideAlphabetFilter={true}
             >
               <View />
             </CountryPicker>
@@ -421,4 +440,35 @@ const styles = ScaledSheet.create({
     width: '330@s',
     alignItems: 'center',
   },
+  searchCountryPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '10@s',
+    paddingRight: '10@s',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: '60@s',
+    backgroundColor: CommonColors.screenBgColor,
+  },
+  groupSearchCountryPicker: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: '15@s',
+    backgroundColor: '#fff',
+  },
+  iconSearchCountryPicker: {
+    width: '30@s',
+    height: '30@s',
+  },
+  inputSearchCountryPicker: {
+    height: '40@s',
+    width: '70%',
+    marginLeft: '10@s',
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Light,
+  },
+  textCancelCountryPicker: {
+    fontSize: '16@ms',
+    ...Fonts.Ubuntu_Regular,
+  }
 });

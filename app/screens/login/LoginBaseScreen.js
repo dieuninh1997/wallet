@@ -87,6 +87,7 @@ class LoginBaseScreen extends Component {
     const { email, password } = loginInfo;
 
     try {
+      this._validateForm();
       const responseUser = await login(email, password, otp = '', loginType = this.signinType);
 
       loginInfo.loginType = this.signinType;
@@ -108,6 +109,16 @@ class LoginBaseScreen extends Component {
       } else {
         UIUtils.showToastMessage(error.message);
       }
+    }
+  }
+
+  _validateForm = () => {
+    const { loginInfo } = this.state;
+    if (!loginInfo.email || !loginInfo.password) {
+      throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
+    }
+    if ((this.signinType === '1') && (!UIUtils.validateEmail(loginInfo.email))) {
+      throw new Error(I18n.t('createWalletByEmailScreen.emailInvalid'));
     }
   }
 

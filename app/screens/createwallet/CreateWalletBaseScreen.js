@@ -179,6 +179,12 @@ export default class CreateWalletBaseScreen extends Component {
       throw new Error(I18n.t('createWalletByEmailScreen.readAndCheckTerms'));
     }
 
+    if (!createWalletInfo.email && !createWalletInfo.passport && !createWalletInfo.phone_number) {
+      throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
+    }
+    if (!createWalletInfo.password || !createWalletInfo.passwordConfirm) {
+      throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
+    }
     this._validateUsername();
 
     if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {

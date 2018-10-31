@@ -69,6 +69,7 @@ export default {
     readAndCheckTerms: 'Hãy đọc và chấp nhận điều khoản!',
     emailInvalid: 'Email không đúng',
     passwordMustMatch: 'Xác nhận mật khẩu không đúng!',
+    requireInfo: 'Hãy nhập đầy đủ thông tin!',
   },
   createWalletByPassportScreen: {
     title: 'Tạo ví bắng số hộ chiếu',

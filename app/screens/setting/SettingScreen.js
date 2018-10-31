@@ -299,6 +299,7 @@ export default class SettingScreen extends BaseScreen {
     const { user } = this.state;
     const params = {
       passportNumber: user.passport_number,
+      loginType: user.login_type,
     };
 
     if (!this._isPassportVerify() && (!!user)) {
@@ -358,10 +359,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.email}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  )}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -382,10 +383,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.phone_number}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  ))}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
 
                   {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
                     <MaterialCommunityIcons
@@ -401,15 +402,15 @@ export default class SettingScreen extends BaseScreen {
               <View style={styles.borderEmailMobileNumber}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.passportNumber')}</Text>
                 <View style={styles.activiRightGroup}>
-                  { (passportVerify) ? (
+                  {(passportVerify) ? (
                     <Text style={styles.textVerified}>
                       {user.passport_number}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  )}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    )}
                   {!(passportVerify) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
@@ -477,9 +478,10 @@ export default class SettingScreen extends BaseScreen {
 
   _renderSecurity() {
     const {
-      isSupportedTouchId, isEnableTouchId, userSecuritySettings,
+      isSupportedTouchId, isEnableTouchId, userSecuritySettings, user,
     } = this.state;
     const { navigation } = this.props;
+    const checkTypeLogin = (user.login_type === Consts.LOGIN_TYPES.FACEBOOK);
 
     return (
       <View>
@@ -500,17 +502,19 @@ export default class SettingScreen extends BaseScreen {
             </View>
           </TouchableWithoutFeedback>
           <View style={styles.groupChangePassword}>
-            <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
-              <View style={styles.borderChangePassword}>
-                <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
-                <View style={styles.activiRightGroup}>
-                  <MaterialCommunityIcons
-                    style={styles.iconChevronRight}
-                    name="chevron-right"
-                  />
+            {checkTypeLogin ? (null) :
+              <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
+                <View style={styles.borderChangePassword}>
+                  <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+                  <View style={styles.activiRightGroup}>
+                    <MaterialCommunityIcons
+                      style={styles.iconChevronRight}
+                      name="chevron-right"
+                    />
+                  </View>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            }
 
             <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>
               <View style={styles.borderChangePassword}>
@@ -728,7 +732,6 @@ const styles = ScaledSheet.create({
     borderColor: '#ced4dd',
   },
   groupChangePassword: {
-    height: '82@s',
     borderBottomWidth: '1@s',
     flexDirection: 'column',
     borderColor: '#ced4dd',
@@ -770,6 +773,7 @@ const styles = ScaledSheet.create({
   textVerified: {
     color: '#85ec81',
     fontSize: '14@ms',
+    marginRight: '10@s',
     ...Fonts.Ubuntu_Regular,
   },
   textUnVerified: {

@@ -8,6 +8,7 @@ import MangoGradientButton from '../common/MangoGradientButton';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import ImagePicker from 'react-native-image-picker';
 import UIUtils from '../../utils/UIUtils';
+import Consts from '../../utils/Consts';
 
 export default class PassportNumberVerifyScreen extends BaseScreen {
   static navigationOptions = ({ navigation }) => ({
@@ -26,14 +27,15 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
       avatarSource: null,
       fileNameImage: null,
       passportNumber: params.passportNumber,
+      loginType: params.loginType,
       editPassportNumber: true,
     };
   }
 
   componentDidMount = () => {
-    const { passportNumber } = this.state;
+    const { passportNumber, loginType } = this.state;
 
-    if(passportNumber){
+    if(passportNumber && (loginType === Consts.LOGIN_TYPES.PASSPORT)){
       this.setState({editPassportNumber: false})
     }
   }

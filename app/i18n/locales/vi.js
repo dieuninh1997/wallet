@@ -262,6 +262,7 @@ export default {
     pleaseAgain: 'Hãy thử lại	',
     touchID: 'Touch sensor to open your app',
     touchIdDisabled: 'Your touch ID is disable in a few minute',
+    errorCodePin: 'Error Code Pin!',
   },
   addPinScreen: {
     title: 'Tạo mã PIN',
@@ -301,10 +302,20 @@ export default {
     verify: 'Verify',
     message: 'Please enter phone number',
     searchCountry: 'Please input Keywords',
+    enterCode: 'Enter code',
+  },
+  loginListScreen: {
+    title: 'Sign In With',
+    createWallet: 'Create',
+    phoneNumber: 'Phone number',
+    emailAddress: 'Email Address',
+    passportNumber: 'Passport Number',
+    facebook: 'Facebook',
   },
   PassportNumberVerifyScreen: {
     title: 'Passport Number',
     enterPassportNumber: 'Enter passport number',
+    instruction: 'Please take a clear photo like the sample and upload to verify',
     selectImage: 'Select Image',
     continue: 'Continue',
     messengerPassport: 'Please enter passport number',

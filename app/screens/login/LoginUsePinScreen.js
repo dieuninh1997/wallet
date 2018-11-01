@@ -61,7 +61,7 @@ export default class LoginUsePinScreen extends Component {
       return;
     }
     this.setState({ isShowError: true });
-    UIUtils.showToastMessage('Error Code Pin!', 'error');
+    UIUtils.showToastMessage(I18n.t('loginUserPin.errorCodePin'), 'error');
 
     setTimeout(() => this.setState({ isShowError: false }), 1000);
   }

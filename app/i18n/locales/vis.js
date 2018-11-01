@@ -85,6 +85,9 @@ export default {
     title: 'Dashboard',
     balance: 'Balance',
   },
+  chart: {
+    allTime: 'All time',
+  },
   send: {
     title: 'Send',
     walletAddress: 'Wallet Address',
@@ -127,6 +130,7 @@ export default {
     unconfirmed: 'Dili nakumpirmaha',
     usDollar: 'U.S Dollar ($)',
     philippinesPeso: 'Philippines Peso (₱)',
+    passportNumber: 'Passport Number',
   },
   emailVerification: {
     title: 'Pag-verify sa Email',
@@ -258,6 +262,7 @@ export default {
     pleaseAgain: 'Please try again ',
     touchID: 'Touch sensor to open your app',
     touchIdDisabled: 'Your touch ID is disable in a few minute',
+    errorCodePin: 'Error Code Pin!',
   },
   addPinScreen: {
     title: 'Add New PIN',
@@ -297,6 +302,7 @@ export default {
     verify: 'Pamatud-an',
     message: 'Please enter phone number',
     searchCountry: 'Please input Keywords',
+    enterCode: 'Enter code',
   },
   loginListScreen: {
     title: 'Sign In With',
@@ -309,6 +315,7 @@ export default {
   PassportNumberVerifyScreen: {
     title: 'Passport Number',
     enterPassportNumber: 'Enter passport number',
+    instruction: 'Please take a clear photo like the sample and upload to verify',
     selectImage: 'Select Image',
     continue: 'Continue',
     messengerPassport: 'Please enter passport number',

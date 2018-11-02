@@ -208,6 +208,7 @@ const styles = ScaledSheet.create({
   textBtnRedirectSignin: {
     fontSize: CommonSize.headerFontSize,
     color: '#8d96b1',
+    marginRight: '5@s',
     ...Fonts.Ubuntu_Regular,
   },
 

@@ -42,6 +42,7 @@ class RestoreWalletScreen extends Component {
         mnemonic: null,
       },
       isLoading: false,
+      errorTextInput: false,
     };
   }
 
@@ -65,10 +66,12 @@ class RestoreWalletScreen extends Component {
 
   _handleChangeInput = (typeInput, value) => {
     const { restoreInfo } = this.state;
+    const errorValue = (value && (value.substring(0,1) === value.substring(0,1).toUpperCase()));
 
     restoreInfo[typeInput] = value;
     this.setState({
       restoreInfo,
+      errorTextInput: errorValue,
     });
   }
 
@@ -143,6 +146,8 @@ class RestoreWalletScreen extends Component {
   }
 
   _renderFormRestore() {
+    const { errorTextInput } = this.state;
+
     return (
       <View style={styles.restoreWalletContainer}>
         <Text style={styles.textRestoreWallet}>{I18n.t('restoreWalletScreen.titleForm')}</Text>
@@ -155,6 +160,7 @@ class RestoreWalletScreen extends Component {
             onChangeText={value => this._handleChangeInput(RestoreWalletScreen.RESTORE_INFO.MNEMONIC, value)}
           />
         </View>
+        {errorTextInput ? <Text style={styles.textErrorInput}>{I18n.t('restoreWalletScreen.errors.textInput')}</Text> : null}
       </View>
     );
   }
@@ -228,5 +234,12 @@ const styles = ScaledSheet.create({
     height: '48@s',
     marginBottom: '20@s',
     marginHorizontal: '5@s',
+  },
+  textErrorInput: {
+    color: '#f44030',
+    textAlign: 'center',
+    fontSize: '16@ms',
+    margin: '15@s',
+    ...Fonts.Ubuntu_Light,
   },
 });

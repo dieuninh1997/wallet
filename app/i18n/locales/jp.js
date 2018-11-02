@@ -190,9 +190,9 @@ export default {
     submit: 'Submit',
   },
   resetPassword: {
-    forgotPassword: 'Forgot Password',
-    emailAddress: 'Email Address',
-    resetPassword: 'Reset Password',
+    forgotPassword: 'パスワードを忘れた方',
+    emailAddress: 'メールアドレス',
+    resetPassword: 'パスワードの再設定',
     resetPasswordSuccessMessage: 'Reset password link was sent to your email/phone number. Please follow the instruction to reset password.',
     verifyYourEmail: 'Verify Your Email',
     checkEmailToResetPassword: 'Please check your email to reset',

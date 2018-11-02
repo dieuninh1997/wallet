@@ -350,7 +350,7 @@ export default class MobileNumberModal extends React.Component {
   }
 }
 
-const modalHeight = scale(288);
+const modalHeight = scale(285);
 
 const styles = ScaledSheet.create({
   popup: {

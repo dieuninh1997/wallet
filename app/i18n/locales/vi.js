@@ -242,6 +242,7 @@ export default {
     invalidMnemonic: 'Sai khóa bảo mật.',
     errors: {
       mnemonic_not_found: 'Không tìm thấy wallet trên hệ thống.',
+      textInput: 'This is case sensitive. Please care about uppercase and lowercase',
     },
   },
   terms: {

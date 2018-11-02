@@ -242,6 +242,7 @@ export default {
     invalidMnemonic: 'Invalid backup phrase.',
     errors: {
       mnemonic_not_found: 'Wallet not found.',
+      textInput: 'This is case sensitive. Please care about uppercase and lowercase',
     },
   },
   terms: {

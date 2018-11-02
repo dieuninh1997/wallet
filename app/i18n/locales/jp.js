@@ -70,6 +70,8 @@ export default {
     emailInvalid: 'Email is not valid!',
     passwordMustMatch: 'Password must match password confirmation!',
     requireInfo: 'Please enter full information!',
+    passportInvalid: 'Passport is not valid! Please enter only letters and number',
+    passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
     title: 'Create by Passport Number',

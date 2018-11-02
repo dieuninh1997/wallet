@@ -4,10 +4,10 @@ import {
   Text,
   Image,
   AsyncStorage,
-  SafeAreaView,
   ImageBackground,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 import Modal from 'react-native-modal';
 import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../i18n/i18n';
@@ -15,6 +15,7 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoButton from '../common/MangoButton';
 import { CommonColors, Fonts } from '../../utils/CommonStyles';
 import BaseScreen from '../BaseScreen';
+import UIUtils from '../../utils/UIUtils';
 
 class LandingScreen extends BaseScreen {
   static navigationOptions = () => ({
@@ -40,6 +41,7 @@ class LandingScreen extends BaseScreen {
       languageSelected,
       listLanguage,
       isShowListLanguage: false,
+      sourcePositionTop: 30,
     };
   }
 
@@ -146,7 +148,6 @@ class LandingScreen extends BaseScreen {
         <ImageBackground source={require('../../../assets/modal-bg-high/modalBgHigh.png')} style={styles.imageBackgroundModal} resizeMode="stretch">
           {listLanguage.map((item, index) => this._renderListLanguageItem(item, index))}
         </ImageBackground>
-
       </Modal>
     );
   }
@@ -156,7 +157,7 @@ class LandingScreen extends BaseScreen {
 
     return (
       <TouchableWithoutFeedback
-        onPress={() => this._handleShowListLanguage()}
+        onPress={this._handleShowListLanguage}
       >
         <View style={styles.showLanguageContainer}>
           <View style={styles.showLanguageContent}>
@@ -209,7 +210,7 @@ class LandingScreen extends BaseScreen {
   render() {
     const { isShowListLanguage } = this.state;
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} forceInset={{ bottom: 'never' }}>
         <View style={{ flex: 1, alignItems: 'center' }}>
           { this._renderSelectLanguage() }
           {isShowListLanguage ? this._renderListSelectLanguage() : null}
@@ -231,7 +232,6 @@ export default LandingScreen;
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#f5f7fa',
   },
 
@@ -252,7 +252,7 @@ const styles = ScaledSheet.create({
 
   imageBackgroundModal: {
     position: 'absolute',
-    top: '28@s',
+    top: '20@s',
     left: '60@s',
     width: '220@s',
     height: '330@s',
@@ -306,7 +306,7 @@ const styles = ScaledSheet.create({
 
   btnGroupContainer: {
     alignItems: 'center',
-    paddingTop: '80@s',
+    paddingTop: '90@s',
   },
 
   btnCreateWalletContainer: {
@@ -317,7 +317,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: '2@s',
-    elevation: 4,
+    ...UIUtils.generateShadowStyle(),
   },
 
   btnTextCreateWalletStyle: {
@@ -340,16 +340,6 @@ const styles = ScaledSheet.create({
   btnTextAuthStyle: {
     fontSize: '16@ms',
     color: CommonColors.headerBarBgColor,
-  },
-
-  modalListLanguage: {
-    position: 'absolute',
-    justifyContent: 'center',
-    top: '28@s',
-    left: '105@s',
-    width: '128@s',
-    borderRadius: '8@s',
-    backgroundColor: CommonColors.headerBarBgColor,
   },
 
   imageBackground: {

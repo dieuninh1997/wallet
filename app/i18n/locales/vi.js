@@ -70,6 +70,8 @@ export default {
     emailInvalid: 'Email không đúng',
     passwordMustMatch: 'Xác nhận mật khẩu không đúng!',
     requireInfo: 'Hãy nhập đầy đủ thông tin!',
+    passportInvalid: 'Passport is not valid! Please enter only letters and number',
+    passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
     title: 'Tạo ví bắng số hộ chiếu',

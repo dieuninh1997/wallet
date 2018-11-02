@@ -70,6 +70,8 @@ export default {
     emailInvalid: 'Sayop nga email!',
     passwordMustMatch: 'Ang pasword nga gisulod dili parehas!',
     requireInfo: 'Please enter full information!',
+    passportInvalid: 'Passport is not valid! Please enter only letters and number',
+    passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
     title: 'Paghimo og account gamit ang numero sa pasaporte',

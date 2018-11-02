@@ -186,10 +186,16 @@ export default class CreateWalletBaseScreen extends Component {
     if (!createWalletInfo.password || !createWalletInfo.passwordConfirm) {
       throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
     }
+
+
     this._validateUsername();
 
     if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
       throw new Error(I18n.t('createWalletByEmailScreen.passwordMustMatch'));
+    }
+
+    if (!UIUtils.validatePassword(createWalletInfo.password)) {
+      throw new Error(I18n.t('createWalletByEmailScreen.passwordInvalid'));
     }
   }
 

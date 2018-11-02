@@ -150,6 +150,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-text-input-mask')
     compile project(':react-native-toasty')
     compile project(':react-native-splash-screen')
     compile project(':react-native-device-info')

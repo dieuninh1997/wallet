@@ -26,30 +26,13 @@ import AppPreferences from '../../utils/AppPreferences';
 import { getUserSettings } from '../../api/user/UserRequest';
 import { sendMailTransaction } from '../../api/transaction-history/TransactionRequest';
 import MangoLoading from '../common/MangoLoading';
+import MangoCurrencyInput from '../common/MangoCurrencyInput';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
     RECIEVED_ADDRESS: 'recievedAddress',
     COIN_VALUE: 'coinValue',
   }
-
-  // static LIST_FEE = [
-  //   {
-  //     title: I18n.t('send.titleSlowly'),
-  //     value: 3.0,
-  //     time: I18n.t('send.speedSlowly'),
-  //   },
-  //   {
-  //     title: I18n.t('send.titleRegular'),
-  //     value: 5.0,
-  //     time: I18n.t('send.speedRegular'),
-  //   },
-  //   {
-  //     title: I18n.t('send.titleFast'),
-  //     value: 20.0,
-  //     time: I18n.t('send.speedFast'),
-  //   },
-  // ];
 
   constructor(props) {
     super(props);
@@ -359,7 +342,7 @@ class SendScreen extends BaseScreen {
         <View style={styles.inputCoinValueContainer}>
           <View style={styles.inputCoinValue}>
             <Text style={styles.inputTextLabel}>{coinSelected.name}</Text>
-            <TextInput
+            {/* <TextInput
               editable
               keyboardType="numeric"
               placeholder="0.00"
@@ -367,6 +350,15 @@ class SendScreen extends BaseScreen {
               value={formSendCoin.coinValue.toString()}
               style={styles.inputText}
               onChangeText={value => this._handleChangeCoinValue(value.replace(/[^0-9\.]/g, ''))}
+            /> */}
+            <MangoCurrencyInput
+              value={formSendCoin.coinValue.toString()}
+              precision={8}
+              editable
+              keyboardType="numeric"
+              onChangeText={(formatted, extracted) => this._handleChangeCoinValue(extracted.replace(/[^0-9\.]/g, ''))}
+              style={styles.inputText}
+              underlineColorAndroid="transparent"
             />
           </View>
           <View
@@ -376,12 +368,19 @@ class SendScreen extends BaseScreen {
             ]}
           >
             <Text style={styles.inputTextLabel}>{currency}</Text>
-            <TextInput
+            {/* <TextInput
               editable={false}
               placeholder="0.00"
               value={`${realValueCoin}`}
               underlineColorAndroid="transparent"
               style={styles.inputText}
+            /> */}
+            <MangoCurrencyInput
+              value={`${realValueCoin}`}
+              precision={8}
+              editable={false}
+              style={styles.inputText}
+              underlineColorAndroid="transparent"
             />
           </View>
         </View>
@@ -439,10 +438,6 @@ class SendScreen extends BaseScreen {
         {this._renderFormSend()}
         {isShowMenuSelectFee ? this._renderMenuOptions() : null}
         {this._renderBtnContinue()}
-
-        {/* <ImageBackground source={require('../../../assets/image-button/rectangle.png')} style={styles.btnContinuee}>
-          <Text> adasd</Text>
-        </ImageBackground> */}
       </View>
     );
   }
@@ -607,8 +602,6 @@ const styles = ScaledSheet.create({
 
   // Section button continue
   buttonFixBottom: {
-    // flex: 1,
-    // justifyContent: 'flex-end',
     marginTop: '100@s',
     marginBottom: '10@s',
   },
@@ -621,13 +614,4 @@ const styles = ScaledSheet.create({
     marginBottom: '10@s',
   },
 
-  btnContinuee: {
-    width: '262@s',
-    height: '64@s',
-    borderRadius: '28@s',
-    marginBottom: '130@s',
-    marginHorizontal: '5@s',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });

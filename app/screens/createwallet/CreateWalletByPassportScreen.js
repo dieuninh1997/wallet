@@ -25,6 +25,19 @@ export default class CreateWalletByPassportScreen extends CreateWalletBaseScreen
 
   getLoginType = () => Consts.LOGIN_TYPES.PASSPORT
 
+  validatePassport = (passport) => {
+    const re = /^[0-9a-zA-Z]+$/;
+    return re.test(`${passport}`);
+  }
+
+  _validateUsername = () => {
+    const { createWalletInfo } = this.state;
+
+    if (!this.validatePassport(createWalletInfo.passport)) {
+      throw new Error(I18n.t('createWalletByEmailScreen.passportInvalid'));
+    }
+  }
+
   _renderUsernameInput = () => (
     <View style={[styles.inputContainer]}>
       <Image

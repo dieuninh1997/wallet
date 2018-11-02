@@ -58,6 +58,7 @@
     "react-native-switch": "^1.5.0",
     "react-native-toasty": "0.0.4",
     "react-native-touch-id": "https://github.com/Sotatek-ManhPham/react-native-touch-id.git",
+    "react-native-text-input-mask": "git+https://github.com/sotatek-dev/react-native-text-input-mask.git",
     "react-native-vector-icons": "5.0.0",
     "react-navigation": "2.16.0",
     "readable-stream": "3.0.3",

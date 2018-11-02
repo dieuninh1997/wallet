@@ -70,6 +70,8 @@ export default {
     emailInvalid: 'Saan nga husto iti email!',
     passwordMustMatch: 'Ti inkabil nga password ket saan nga parehas!',
     requireInfo: 'Please enter full information!',
+    passportInvalid: 'Passport is not valid! Please enter only letters and number',
+    passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
     title: 'Agaramid iti account mangusar iti numero ti pasaporte',

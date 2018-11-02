@@ -90,6 +90,14 @@ export default class UIUtils {
     return pattern.test(String(email).toLowerCase());
   }
 
+  static validatePassword(password) {
+    if (!password || !password.length) {
+      return false;
+    }
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
+    return pattern.test(`${password}`);
+  }
+
   static validateNumber(num) {
     const pattern = /^\d+$/;
     return pattern.test(num);

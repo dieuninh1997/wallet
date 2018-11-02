@@ -43,16 +43,16 @@ MainScreen.navigationOptions = ({ navigation }) => {
 
   switch (routeName) {
   case 'RequestScreen':
-    headerTitle = 'Request';
+    headerTitle = I18n.t('request.title');
     break;
   case 'SendScreen':
-    headerTitle = 'Send';
+    headerTitle = I18n.t('send.title');
     break;
   case 'TransactionScreen':
-    headerTitle = 'Transactions';
+    headerTitle = I18n.t('transactions.title');
     break;
   default:
-    headerTitle = 'DashBoard';
+    headerTitle = I18n.t('dashboard.title');
     headerStyle = CommonStyles.header;
     break;
   }

@@ -65,10 +65,10 @@ export default class VerifyYourEmailModal extends React.Component {
         </View>
         <View style={styles.wrapText}>
           <Text style={styles.contentTextUp}>{I18n.t('resetPassword.checkEmailToResetPassword')}</Text>
-          <Text style={styles.contentText}>
+          {/* <Text style={styles.contentText}>
             {I18n.t('genneralText.password').toLowerCase()}
 .
-          </Text>
+          </Text> */}
         </View>
       </View>
     );

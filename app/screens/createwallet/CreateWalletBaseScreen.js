@@ -176,10 +176,6 @@ export default class CreateWalletBaseScreen extends Component {
   _validateForm = () => {
     const { isChecked, createWalletInfo } = this.state;
 
-    if (!isChecked) {
-      throw new Error(I18n.t('createWalletByEmailScreen.readAndCheckTerms'));
-    }
-
     if (!createWalletInfo.email && !createWalletInfo.passport && !createWalletInfo.phone_number) {
       throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
     }
@@ -187,15 +183,18 @@ export default class CreateWalletBaseScreen extends Component {
       throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
     }
 
-
     this._validateUsername();
+
+    if (!UIUtils.validatePassword(createWalletInfo.password)) {
+      throw new Error(I18n.t('createWalletByEmailScreen.passwordInvalid'));
+    }
 
     if (!createWalletInfo.password || (createWalletInfo.password !== createWalletInfo.passwordConfirm)) {
       throw new Error(I18n.t('createWalletByEmailScreen.passwordMustMatch'));
     }
 
-    if (!UIUtils.validatePassword(createWalletInfo.password)) {
-      throw new Error(I18n.t('createWalletByEmailScreen.passwordInvalid'));
+    if (!isChecked) {
+      throw new Error(I18n.t('createWalletByEmailScreen.readAndCheckTerms'));
     }
   }
 

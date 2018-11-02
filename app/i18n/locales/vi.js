@@ -53,7 +53,6 @@ export default {
     title: 'Tạo bằng số điện thoại',
     iAccept: 'Tôi chấp nhận',
     termsAndConditions: ' điều khoản dịch vụ.',
-    createWallet: 'Tạo ví',
     cancel: 'Cancel',
     searchCountry: 'Please input Keywords',
   },
@@ -62,8 +61,6 @@ export default {
     inputEmail: 'Địa chỉ email',
     inputPassword: 'Mật khẩu',
     inputPasswordConfirm: 'Xác nhận mật khẩu',
-    iAccept: 'Tôi chấp nhận',
-    termsAndConditions: ' điều khoản dịch vụ.',
     createWallet: 'Tạo ví',
     createWaletSuccess: 'Tạo ví thành công',
     readAndCheckTerms: 'Hãy đọc và chấp nhận điều khoản!',
@@ -76,12 +73,6 @@ export default {
   createWalletByPassportScreen: {
     title: 'Tạo ví bắng số hộ chiếu',
     inputEmail: 'Số hộ chiếu',
-    inputPassword: 'Mật khẩu',
-    inputPasswordConfirm: 'Xác nhận mật khẩu',
-    iAccept: 'Tôi chấp nhận',
-    termsAndConditions: ' điều khoản dịch vụ.',
-    createWallet: 'Tạo ví',
-    createWaletSuccess: 'Tạo ví thành công',
   },
   dashboard: {
     title: 'Dashboard',
@@ -91,7 +82,7 @@ export default {
     allTime: 'All time',
   },
   send: {
-    title: 'Gửi',
+    title: 'Send',
     walletAddress: 'Địa chỉ ví',
     continue: 'Tiếp tục',
     confirmationTextDefault: 'Nhập 12 từ bí mật để khôi phục tài khoản và giao dịch.',
@@ -125,13 +116,10 @@ export default {
     changePin: 'Đổi PIN',
     useFaceIdAsPin: 'Sử dụng Face ID thay PIN',
     swipeToReceive: 'Trượt để nhận',
-    verified: 'Đã xác thực',
     unverified: 'Chưa xác thực',
     disabled: 'Đã tắt',
     enabled: 'Đã bật',
     unconfirmed: 'Chưa xác nhận',
-    usDollar: 'Tiền Mỹ ($)',
-    philippinesPeso: 'Tiền Philippines (₱)',
     passportNumber: 'Số hộ chiếu',
   },
   emailVerification: {
@@ -179,8 +167,6 @@ export default {
     confirmFail: 'Bạn nhập không đúng',
   },
   genneralText: {
-    back: 'Quay lại',
-    recieved: 'Đã nhận',
     confirmation: 'Xác nhận',
     amount: 'Số lượng',
     status: 'Trạng thái',
@@ -205,6 +191,7 @@ export default {
     transactionDetail: 'Chi tiết giao dịch',
     copy_txid: 'Copy Txid',
     check_export: 'Check Export',
+    copyTxidSuccess: 'Copied Txid successfully.',
   },
   setting2fa: {
     downloadAndInstallTitle: 'Download and Install',
@@ -290,6 +277,7 @@ export default {
     important: 'Đừng làm mất! Bạn không thể khôi phục ví nếu mất nó.',
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',
+    copied: 'Copied passphrase successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

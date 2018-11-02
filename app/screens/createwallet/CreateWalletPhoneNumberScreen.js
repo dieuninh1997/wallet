@@ -106,21 +106,22 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
           onChange={value => this.selectCountry(value)}
           translation="eng"
           cca2={this.state.cca2}
-          filterable={true}
-          showCallingCode={true}
+          filterable
+          showCallingCode
           renderFilter={({ value, onChange, onClose }) => (
             <View style={styles.searchCountryPicker}>
-               <View style={styles.groupSearchCountryPicker}>
-                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
-                    <TextInput
-                      placeholder={I18n.t('createByPhoneNumber.searchCountry')}
-                      style={styles.inputSearchCountryPicker}
-                      onChangeText={onChange}
-                      value={value} />
-                  </View>
-                  <TouchableWithoutFeedback onPress={onClose}>
-                    <Text style={styles.textCancelCountryPicker}>{I18n.t('createByPhoneNumber.cancel')}</Text>
-                  </TouchableWithoutFeedback>
+              <View style={styles.groupSearchCountryPicker}>
+                <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
+                <TextInput
+                  placeholder={I18n.t('createByPhoneNumber.searchCountry')}
+                  style={styles.inputSearchCountryPicker}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </View>
+              <TouchableWithoutFeedback onPress={onClose}>
+                <Text style={styles.textCancelCountryPicker}>{I18n.t('createByPhoneNumber.cancel')}</Text>
+              </TouchableWithoutFeedback>
             </View>
           )}
           hideAlphabetFilter
@@ -275,5 +276,5 @@ const styles = ScaledSheet.create({
   textCancelCountryPicker: {
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular,
-  }
+  },
 });

@@ -40,7 +40,7 @@ export default class TransactionDetailScreen extends Component {
   _handleCopyTxid = () => {
     const { transaction } = this.state;
     Clipboard.setString(transaction.id);
-    UIUtils.showToastMessage(I18n.t('transactionDetail.copy_txid'), 'success');
+    UIUtils.showToastMessage(I18n.t('transactionDetail.copyTxidSuccess'), 'success');
   }
 
   _handleCheckExport = () => {

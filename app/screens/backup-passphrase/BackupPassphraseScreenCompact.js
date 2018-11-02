@@ -56,7 +56,7 @@ class BackupPassphraseScreenCompact extends Component {
     const { mnemonic } = this.state;
 
     Clipboard.setString(mnemonic);
-    UIUtils.showToastMessage(I18n.t('request.copied'), 'success');
+    UIUtils.showToastMessage(I18n.t('backupPassphrase.copied'), 'success');
   }
 
   _onBtnNext = () => {

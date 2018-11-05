@@ -85,8 +85,8 @@ export default class LoginUsePinScreen extends Component {
     const optionalConfigObject = {
       color: '#e00606',
       cancelText: 'Cancel', // Android
-      fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
-      unifiedErrors: false,
+      // fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+      unifiedErrors: true,
     };
 
     TouchID.authenticate(I18n.t('loginUserPin.touchID'), optionalConfigObject)
@@ -101,11 +101,11 @@ export default class LoginUsePinScreen extends Component {
       })
       .catch((error) => {
         console.log(error.code);
-        if (error.code === 'FINGERPRINT_ERROR_LOCKOUT') {
+        if (error.code === 'LOCKOUT') {
           UIUtils.showToastMessage(I18n.t('loginUserPin.touchIdDisabled'), 'warning');
           return;
         }
-        if (error.code === 'AUTHENTICATION_CANCELED') {
+        if (error.code === 'USER_CANCELED') {
           return;
         }
         this._renderLoginByTouchId();

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, Image, RefreshControl, TouchableOpacity
+  View, Text, ScrollView, Dimensions, Image, RefreshControl, TouchableOpacity,
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import SocketIOClient from 'socket.io-client';
@@ -40,11 +40,11 @@ class DashboardScreen extends BaseScreen {
       PHP: '₱',
     };
 
-  // const COINS = ['BTC', 'ETH'];
+    // const COINS = ['BTC', 'ETH'];
     this.COINS = ['ETH'];
     this.WALLET_COIN = 'MGC';
     this.ALL_COINS = [this.WALLET_COIN, ...this.COINS];
-    
+
     this.COIN_COLORS = {
       [this.WALLET_COIN]: '#FFD82F',
       BTC: '#FFA034',
@@ -217,19 +217,19 @@ class DashboardScreen extends BaseScreen {
   _renderPieChart = () => {
     const allCoins = [].concat(this.ALL_COINS).reverse();
 
-    let values = [];
+    const values = [];
     for (const coin of allCoins) {
       values.push(this._getCoinValue(coin));
     }
 
     const isAllValueZero = !Math.max(...values);
 
-    let data = [];
+    const data = [];
     if (isAllValueZero) {
       for (const coin of allCoins) {
         data.push({
           population: 1,
-          color: this.CHART_COLORS[coin]
+          color: this.CHART_COLORS[coin],
         });
       }
     } else {
@@ -237,7 +237,7 @@ class DashboardScreen extends BaseScreen {
         if (values[i] > 0) {
           data.push({
             population: values[i],
-            color: this.CHART_COLORS[allCoins[i]]
+            color: this.CHART_COLORS[allCoins[i]],
           });
         }
       }
@@ -290,7 +290,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _renderItemWallet(coin) {
-    let { currency } = this.state;
+    const { currency } = this.state;
     const isPriceDown = this._getPrecentChange(coin) < 0;
     return (
       <TouchableOpacity key={coin} onPress={() => this._chartModal.show(currency, coin, this)}>

@@ -1,16 +1,14 @@
 import React from 'react';
-import { createBottomTabNavigator, TabNavigator } from 'react-navigation';
-import { View, Image, Text } from 'react-native';
+import { TabNavigator } from 'react-navigation';
+import { View } from 'react-native';
 import TransactionsScreen from '../transactions/TransactionsScreen';
 import RequestScreen from '../request/RequestScreen';
 import SendScreen from '../send/SendScreen';
 import DashboardScreen from '../dashboard/DashboardScreen';
-import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import MangoTabImages from '../common/MangoTabImages';
-import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoHeader from '../common/MangoHeader';
 import MangoTabBar from '../common/MangoTabBar';
 import { CommonStyles } from '../../utils/CommonStyles';
+import I18n from '../../i18n/i18n';
 
 const MainScreen = TabNavigator(
   {

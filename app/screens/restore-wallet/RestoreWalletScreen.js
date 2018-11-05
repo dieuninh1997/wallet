@@ -64,14 +64,19 @@ class RestoreWalletScreen extends Component {
     }
   })
 
+  checkMnemonicInput = (value) => {
+    const re = /^[A-Z]*$/;
+    return re.test(value);
+  }
+
   _handleChangeInput = (typeInput, value) => {
     const { restoreInfo } = this.state;
-    const errorValue = (value && (value.substring(0,1) === value.substring(0,1).toUpperCase()));
+    const errorTextInput = (value && (this.checkMnemonicInput(value.substring(0,1))));
 
     restoreInfo[typeInput] = value;
     this.setState({
       restoreInfo,
-      errorTextInput: errorValue,
+      errorTextInput,
     });
   }
 

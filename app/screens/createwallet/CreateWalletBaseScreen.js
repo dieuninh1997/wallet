@@ -290,12 +290,23 @@ export default class CreateWalletBaseScreen extends Component {
         <TouchableWithoutFeedback
           onPress={() => this._onBtnTerms()}
         >
-          <View
-            style={styles.textTermAndConditions}
-          >
-            <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
-            <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
-          </View>
+          {I18n.locale === 'jp'
+            ? (
+              <View
+                style={styles.textTermAndConditions}
+              >
+                <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
+                <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
+              </View>
+            )
+            : (
+              <View
+                style={styles.textTermAndConditions}
+              >
+                <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
+                <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
+              </View>
+            )}
         </TouchableWithoutFeedback>
       </View>
     );

@@ -156,7 +156,7 @@ class TransactionsScreen extends BaseScreen {
 
     return (
       <View key={transaction.year}>
-        <Text style={styles.textYear}>{ transaction.year }</Text>
+        <Text style={styles.textYear}>{transaction.year}</Text>
         <FlatList
           data={transaction.data}
           renderItem={({ item }) => this._renderTransactonsItem(item, address, coinSelected)}
@@ -196,10 +196,14 @@ class TransactionsScreen extends BaseScreen {
           </Text>
         </View>
         <View style={styles.transactionValueItem}>
-          <Text style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
+          <Text
+            style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
             {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
             {transaction.value}
-            {' '}
+          </Text>
+          <Text style={[styles.textCoinValueName, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}>
             {coinSelected.name}
           </Text>
         </View>
@@ -229,7 +233,7 @@ class TransactionsScreen extends BaseScreen {
           )}
         >
           {transactions && transactions.length ? this._renderTransactonsList() : null}
-          {transactions && transactions.length === 0 ? <Text style={styles.noTransactionAvailable}>{ I18n.t('transactions.noTransactionAvailable') }</Text> : null}
+          {transactions && transactions.length === 0 ? <Text style={styles.noTransactionAvailable}>{I18n.t('transactions.noTransactionAvailable')}</Text> : null}
         </ScrollView>
       </View>
     );
@@ -313,11 +317,20 @@ const styles = ScaledSheet.create({
     backgroundColor: '#F2F5FA',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
     marginLeft: 'auto',
   },
 
   textCoinValue: {
     fontSize: '16@ms',
+    marginLeft: '50@s',
+    ...Fonts.Ubuntu_Medium,
+  },
+
+  textCoinValueName: {
+    fontSize: '16@ms',
+    marginRight: '50@s',
+    marginLeft: '5@s',
     ...Fonts.Ubuntu_Medium,
   },
 

@@ -127,7 +127,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingTop: '10@s',
     paddingBottom: '10@s',
-    //paddingRight: '26@s',
+    paddingRight: '10@s',
     height: '110@s',
     width: '170@s',
     position: 'absolute',

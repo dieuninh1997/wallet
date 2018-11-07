@@ -165,6 +165,7 @@ export default class TransactionDetailScreen extends Component {
           <MangoGradientButton
             btnText={I18n.t('transactionDetail.check_export')}
             btnStyle={styles.btnCheckExport}
+            buttonTextStyle={styles.buttonTextStyle}
             onPress={() => this._handleCheckExport()}
           />
         </View>
@@ -264,10 +265,12 @@ const styles = ScaledSheet.create({
   },
   btnCheckExport: {
     marginBottom: '10@s',
-    width: '149@s',
+    width: '151@s',
     height: '48@s',
     marginRight: '9@s',
     marginHorizontal: '5@s',
+    paddingLeft: '10@s',
+    paddingRight: '10@s',
   },
   btnText: {
     marginLeft: '10@s',
@@ -281,5 +284,8 @@ const styles = ScaledSheet.create({
   },
   blurImage: {
     opacity: 0.3,
+  },
+  buttonTextStyle: {
+    fontSize: '18@ms',
   },
 });

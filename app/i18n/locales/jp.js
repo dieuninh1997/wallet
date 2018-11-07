@@ -224,7 +224,7 @@ export default {
     smsAuthenticator: 'SMS Authenticator',
   },
   restoreWalletScreen: {
-    title: '  アカウントの復元',
+    title: '  アカウントを復元する',
     titleForm: 'スペースで区切り、12個の復元フレーズを入力し、通貨と決済を復元します',
     inputPlaceholder: 'フレーズのバックアップ',
     mnemonicRequired: 'フレーズのバックアップを入力して下さい。',
@@ -324,7 +324,7 @@ export default {
     _503: 'Server Maintenance.',
   },
   mangoHeader: {
-    settings: 'Settings',
-    signout: 'Sign out',
+    settings: '設定',
+    signout: 'サインアウト',
   },
 };

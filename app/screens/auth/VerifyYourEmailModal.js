@@ -91,11 +91,13 @@ const margin = 3;
 const styles = ScaledSheet.create({
   popup: {
     width: '335@s',
-    height: '313@s',
+    height: '290@s',
     backgroundColor: '#FFF',
     borderRadius: '10@s',
     margin: '10@s',
-    padding: '20@s',
+    paddingTop: '20@s',
+    paddingBottom: '20@s',
+    padding: '10@s',
     alignSelf: 'center',
     ...UIUtils.generatePopupShadow(),
   },
@@ -109,17 +111,18 @@ const styles = ScaledSheet.create({
   },
   content: {
     alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   wrapText: {
-    width: '250@s',
     alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: '16.5@s',
   },
   contentTextUp: {
     marginTop: '20@s',
     color: 'rgb(38, 48, 77)',
-    fontSize: '16@ms',
-    alignSelf: 'center',
+    fontSize: '15.5@ms',
     ...Fonts.Ubuntu_Light,
   },
   contentText: {

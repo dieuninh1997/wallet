@@ -89,7 +89,9 @@ class MangoHeader extends React.Component {
         style={styles.modalListCoin}
       >
         <View style={styles.menuGroup}>
-          {menus.map((menu, index) => this._renderItemMenu(menu, index))}
+          <View style={styles.menuGroupItem}>
+            {menus.map((menu, index) => this._renderItemMenu(menu, index))}
+          </View>
         </View>
       </Modal>
     );
@@ -125,9 +127,9 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     paddingTop: '10@s',
     paddingBottom: '10@s',
-    paddingRight: '26@s',
+    //paddingRight: '26@s',
     height: '110@s',
-    width: '160@s',
+    width: '170@s',
     position: 'absolute',
     top: '20@s',
     backgroundColor: '#FFFFFF',
@@ -142,6 +144,10 @@ const styles = ScaledSheet.create({
   imgMenuOption: {
     width: '34@s',
     height: '34@s',
+  },
+  menuGroupItem: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   itemMenuGroup: {
     flex: 1,

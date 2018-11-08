@@ -220,7 +220,7 @@ Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, a
     transaction.transactionUrl = urljoin(Erc20Service.broadcastTransactionUrl, 'tx', transaction.hash);
     return transaction;
   } catch (error) {
-    throw error;
+    throw new Error('Can not send transactions');
   }
 };
 

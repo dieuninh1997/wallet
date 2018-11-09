@@ -80,7 +80,7 @@ export default class GoogleOtpVerifyScreen extends Component {
       AppPreferences.saveToKeychain({
         access_token: responseUser.access_token,
       });
-      window.GlobalSocket.connect();
+      // window.GlobalSocket.connect();
       Keyboard.dismiss();
       const loginInfo = {
         email,
@@ -240,11 +240,13 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: '24@s',
   },
   inputText: {
     width: '240@s',
-    marginTop: '10@s',
+    // marginTop: '10@s',
+    textAlign: 'center',
     fontSize: '26@ms',
     color: 'rgb(38, 48, 77)',
     ...Fonts.Ubuntu_Regular,

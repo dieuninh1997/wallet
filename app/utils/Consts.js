@@ -76,5 +76,5 @@ export default class Consts {
 
   static GOOGLE_AUTHEN_LINK = 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en';
 
-  static FACEBOOK_LOGIN_PERMISSIONS = ['public_profile, email']
+  static FACEBOOK_LOGIN_PERMISSIONS = ['public_profile', 'email']
 }

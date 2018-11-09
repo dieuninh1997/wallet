@@ -7,7 +7,6 @@ import {
   Image,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import _ from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -33,11 +32,15 @@ export default class EmailVerificationModal extends React.Component {
     }
   }
 
-  show = (email, callback) => {
+  show = (email, loginType, callback) => {
+    let emailEditable = true;
+    if (loginType === 1) {
+      emailEditable = false;
+    }
     this.setState({
       email,
       modalVisible: true,
-      // emailEditable: !email
+      emailEditable,
     });
     this.closeCallback = callback;
   }
@@ -47,8 +50,10 @@ export default class EmailVerificationModal extends React.Component {
   }
 
   _onUpdatePress = async () => {
+    const { email } = this.state;
+
     try {
-      const response = await sendVerificationEmail(this.state.email);
+      await sendVerificationEmail(email);
       this.setModalVisible(false);
       UIUtils.showToastMessage(I18n.t('emailVerification.verificationEmailSent'), 'success');
     } catch (e) {
@@ -73,7 +78,7 @@ export default class EmailVerificationModal extends React.Component {
   }
 
   render() {
-    const { error } = this.state;
+    const { error, modalVisible } = this.state;
     let height = modalHeight;
     if (error) {
       height += scale(20); // one line message
@@ -83,7 +88,7 @@ export default class EmailVerificationModal extends React.Component {
       <View>
         <Modal
           animationType="slide"
-          isVisible={this.state.modalVisible}
+          isVisible={modalVisible}
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
           onBackButtonPress={() => this.setModalVisible(false)}
@@ -114,10 +119,10 @@ export default class EmailVerificationModal extends React.Component {
     return (
       <View style={styles.content}>
         <Text style={styles.contentText}>{I18n.t('emailVerification.content')}</Text>
-        <View style={styles.email}>
+        <View style={[styles.email, !emailEditable ? styles.emailTextInputDisable : null]}>
           <Image style={styles.emailIcon} source={require('../../../assets/setting/email.png')} />
           <TextInput
-            style={styles.emailTextInput}
+            style={[styles.emailTextInput]}
             editable={emailEditable}
             keyboardType="email-address"
             autoCapitalize="none"
@@ -133,6 +138,8 @@ export default class EmailVerificationModal extends React.Component {
   }
 
   _renderFooter() {
+    const { emailEditable } = this.state;
+
     return (
       <View style={styles.footer}>
         <TouchableOpacity
@@ -148,9 +155,12 @@ export default class EmailVerificationModal extends React.Component {
             <Text style={[styles.buttonText, styles.buttonTextResend]}>{I18n.t('emailVerification.resend')}</Text>
           </LinearGradient>
         </TouchableOpacity>
+
         <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={this._onCancelPress.bind(this)}>
           <Text style={styles.buttonText}>{I18n.t('emailVerification.cancel')}</Text>
         </TouchableOpacity>
+
+        {/* { !emailEditable ? null : ( */}
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={this._onUpdatePress}
@@ -164,6 +174,8 @@ export default class EmailVerificationModal extends React.Component {
             <Text style={styles.buttonText}>{I18n.t('emailVerification.update')}</Text>
           </LinearGradient>
         </TouchableOpacity>
+        {/* )} */}
+
       </View>
     );
   }
@@ -215,6 +227,9 @@ const styles = ScaledSheet.create({
     color: '#1f1f1f',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Light,
+  },
+  emailTextInputDisable: {
+    backgroundColor: CommonColors.screenBgColor,
   },
   email: {
     borderWidth: '1@s',

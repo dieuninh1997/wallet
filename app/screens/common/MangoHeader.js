@@ -31,7 +31,7 @@ class MangoHeader extends React.Component {
 
     if (routerName === 'LandingScreen') {
       await AppPreferences.removeAccessToken();
-      window.GlobalSocket.disconnect();
+      // window.GlobalSocket.disconnect();
       RNRestart.Restart();
     } else {
       navigation.navigate(routerName);

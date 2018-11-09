@@ -224,7 +224,12 @@ export default class SettingScreen extends BaseScreen {
   }
 
   _showchangePassword = () => {
-    this._changePassword.setModalVisible(true);
+    const { userSecuritySettings } = this.state;
+    if (userSecuritySettings && userSecuritySettings.otp_verified) {
+      this._changePassword.setModalVisible(true, true);
+      return;
+    }
+    this._changePassword.setModalVisible(true, false);
   }
 
   _showSettingGoogleOtp = () => {
@@ -293,7 +298,7 @@ export default class SettingScreen extends BaseScreen {
   _onPressVerifyEmail = () => {
     const { user } = this.state;
     if (!this._isEmailVerified() && this._isUserDataLoaded()) {
-      this._emailModal.show(user.email, () => {
+      this._emailModal.show(user.email, user.login_type, () => {
         this.user = undefined;
         this._loadUserInfo();
       });
@@ -378,10 +383,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.email}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    )}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -402,10 +407,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.phone_number}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    ))}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  ))}
 
                   {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
                     <MaterialCommunityIcons
@@ -426,10 +431,10 @@ export default class SettingScreen extends BaseScreen {
                       {user.passport_number}
                     </Text>
                   ) : (
-                      <Text style={styles.textUnVerified}>
-                        {I18n.t('setting.unverified')}
-                      </Text>
-                    )}
+                    <Text style={styles.textUnVerified}>
+                      {I18n.t('setting.unverified')}
+                    </Text>
+                  )}
                   {!(passportVerify) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
@@ -506,28 +511,15 @@ export default class SettingScreen extends BaseScreen {
       <View>
         <Text style={styles.textSecurity}>{I18n.t('setting.security')}</Text>
         <View style={styles.tableSecurity}>
-          {checkTypeLogin ? null :
-            <TouchableWithoutFeedback onPress={() => this._showSettingGoogleOtp()}>
-              <View style={styles.borderStepVerification}>
-                <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
-                <View style={styles.activiRightGroup}>
-                  <Text style={[userSecuritySettings && userSecuritySettings.otp_verified ? styles.textVerified : styles.textUnVerified]}>
-                    {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.enabled') : I18n.t('setting.disabled')}
-                  </Text>
-                  <MaterialCommunityIcons
-                    style={styles.iconChevronRight}
-                    name="chevron-right"
-                  />
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          }
-          <View style={styles.groupChangePassword}>
-            {checkTypeLogin ? (null) :
-              <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
-                <View style={styles.borderChangePassword}>
-                  <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+          {checkTypeLogin ? null
+            : (
+              <TouchableWithoutFeedback onPress={() => this._showSettingGoogleOtp()}>
+                <View style={styles.borderStepVerification}>
+                  <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
                   <View style={styles.activiRightGroup}>
+                    <Text style={[userSecuritySettings && userSecuritySettings.otp_verified ? styles.textVerified : styles.textUnVerified]}>
+                      {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.enabled') : I18n.t('setting.disabled')}
+                    </Text>
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
                       name="chevron-right"
@@ -535,6 +527,23 @@ export default class SettingScreen extends BaseScreen {
                   </View>
                 </View>
               </TouchableWithoutFeedback>
+            )
+          }
+          <View style={styles.groupChangePassword}>
+            {checkTypeLogin ? (null)
+              : (
+                <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>
+                  <View style={styles.borderChangePassword}>
+                    <Text style={styles.titleSetting}>{I18n.t('setting.changePassword')}</Text>
+                    <View style={styles.activiRightGroup}>
+                      <MaterialCommunityIcons
+                        style={styles.iconChevronRight}
+                        name="chevron-right"
+                      />
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              )
             }
 
             <TouchableWithoutFeedback onPress={this._onPressBackupPassphrase}>

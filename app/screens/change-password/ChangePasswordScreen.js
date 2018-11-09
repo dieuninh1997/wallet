@@ -16,16 +16,19 @@ import {
 class ChangePasswordScreen extends BaseScreen {
   constructor(props) {
     super(props);
+
     this.state = {
       newPassword: null,
       confirmNewPassword: null,
       modalVisible: false,
       error: '',
+      isEnableOtp: false,
+      otp: '',
     };
   }
 
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
+  setModalVisible = (modalVisible, isEnableOtp) => {
+    this.setState({ modalVisible, isEnableOtp });
   }
 
   _onCLickCancel = () => {
@@ -36,7 +39,18 @@ class ChangePasswordScreen extends BaseScreen {
   }
 
   _onClickUpdate = async () => {
-    const { currenPassword, newPassword, confirmNewPassword } = this.state;
+    const {
+      currenPassword, newPassword, confirmNewPassword, otp, isEnableOtp,
+    } = this.state;
+
+    if (isEnableOtp) {
+      if (!otp || (otp && otp.length < 6)) {
+        this.setState({
+          error: I18n.t('changePassword.toastEnterFullInfo'),
+        });
+        return;
+      }
+    }
 
     if (!currenPassword || !newPassword || !confirmNewPassword) {
       this.setState({
@@ -52,7 +66,7 @@ class ChangePasswordScreen extends BaseScreen {
     }
 
     try {
-      await changePassword(currenPassword, newPassword);
+      await changePassword(currenPassword, newPassword, otp);
 
       UIUtils.showToastMessage(I18n.t('changePassword.changeSuccess'), 'success');
       this.setModalVisible(false);
@@ -70,8 +84,11 @@ class ChangePasswordScreen extends BaseScreen {
   }
 
   render() {
-    const { modalVisible, error } = this.state;
+    const { modalVisible, error, isEnableOtp } = this.state;
     let height = modalHeight;
+    if (isEnableOtp) {
+      height += scale(64);
+    }
     if (error) {
       height += scale(20);
     }
@@ -87,11 +104,11 @@ class ChangePasswordScreen extends BaseScreen {
           onBackdropPress={() => this.setModalVisible(false)}
         >
           <View style={[styles.popup, { height }]}>
-            <View style={{ flex: 1 }}>
-              {this._renderHeader()}
-              {this._renderContent()}
-              {this._renderFooter()}
-            </View>
+            {/* <View style={{ flex: 1 }}> */}
+            {this._renderHeader()}
+            {this._renderContent()}
+            {this._renderFooter()}
+            {/* </View> */}
           </View>
         </Modal>
       </View>
@@ -107,7 +124,7 @@ class ChangePasswordScreen extends BaseScreen {
   }
 
   _renderContent() {
-    const { error } = this.state;
+    const { error, isEnableOtp } = this.state;
 
     return (
       <View style={styles.content}>
@@ -143,6 +160,21 @@ class ChangePasswordScreen extends BaseScreen {
             />
           </View>
         </View>
+
+        {isEnableOtp ? (
+          <View style={styles.otpContainer}>
+            <Image style={styles.imageKey} source={require('../../../assets/setting/graphicGauthLogo.png')} />
+            <TextInput
+              style={styles.textCurrenPassword}
+              keyboardType="numeric"
+              editable
+              underlineColorAndroid="transparent"
+              onChangeText={text => this.setState({ otp: text, error: '' })}
+              placeholder={I18n.t('changePassword.otp')}
+            />
+          </View>
+        ) : null}
+
         {!!error && <Text style={[CommonStyles.errorMessage, styles.errorMessage]}>{error}</Text>}
       </View>
     );
@@ -153,7 +185,7 @@ class ChangePasswordScreen extends BaseScreen {
       <View style={styles.footer}>
         <View style={styles.ConfirmGroup}>
           <TouchableOpacity
-            onPress={() => this._onCLickCancel()}
+            onPress={this._onCLickCancel}
             style={styles.cancelContainer}
           >
             <Text style={styles.textCancel}>
@@ -161,8 +193,9 @@ class ChangePasswordScreen extends BaseScreen {
               {I18n.t('changePassword.cancel')}
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={() => this._onClickUpdate()}
+            onPress={this._onClickUpdate}
             style={styles.updateContainer}
           >
             <Text style={styles.textUpdate}>
@@ -223,18 +256,29 @@ const styles = ScaledSheet.create({
     marginLeft: '24@s',
     marginRight: '24@s',
     borderRadius: '24@s',
-    borderColor: '#e4e8ed',
+    borderColor: '#cad1db',
+  },
+
+  otpContainer: {
+    borderWidth: '1@s',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: '48@s',
+    marginLeft: '24@s',
+    marginRight: '24@s',
+    borderRadius: '24@s',
+    borderColor: '#cad1db',
+    marginTop: '16@s',
   },
   imageKey: {
-    height: '30@s',
-    width: '30@s',
-    marginLeft: '10@s',
+    height: '26@s',
+    width: '26@s',
+    marginLeft: '15@s',
   },
   textCurrenPassword: {
     marginLeft: '5@s',
-    fontSize: '14@ms',
+    fontSize: '16@ms',
     width: '100%',
-    color: '#a6a6a6',
     marginRight: '10@s',
     ...Fonts.Ubuntu_Light,
   },
@@ -245,10 +289,10 @@ const styles = ScaledSheet.create({
     marginRight: '24@s',
     height: '96@s',
     borderRadius: '24@s',
-    borderColor: '#e4e8ed',
+    borderColor: '#cad1db',
   },
   newPassword: {
-    borderColor: '#e4e8ed',
+    borderColor: '#cad1db',
     borderBottomWidth: '1@s',
     flexDirection: 'row',
     alignItems: 'center',

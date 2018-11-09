@@ -1,10 +1,5 @@
 import React from 'react';
 import { NavigationActions, StackActions } from 'react-navigation';
-import {
-  View, BackHandler, Alert, Platform, ToastAndroid,
-} from 'react-native';
-import I18n from '../i18n/i18n';
-import Consts from '../utils/Consts';
 
 export default class BaseScreen extends React.Component {
   constructor(props) {
@@ -12,18 +7,22 @@ export default class BaseScreen extends React.Component {
   }
 
   navigate(screen, params) {
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const { navigate } = navigation;
+
     navigate({
       routeName: screen, params, action: null, key: screen,
     });
   }
 
   navigateAndClearStack(screen, params) {
+    const { navigation } = this.props;
+
     const resetAction = StackActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: screen, params })],
     });
-    this.props.navigation.dispatch(resetAction);
+    navigation.dispatch(resetAction);
   }
 
   _onError(err, navigation) {
@@ -37,11 +36,11 @@ export default class BaseScreen extends React.Component {
     if (this.isRootScreen()) {
       window.rootScreen = this;
     }
-    const socketEventHandlers = this.getSocketEventHandlers();
-    for (const event in socketEventHandlers) {
-      const handler = socketEventHandlers[event];
-      window.GlobalSocket.bind(event, handler);
-    }
+    // const socketEventHandlers = this.getSocketEventHandlers();
+    // for (const event in socketEventHandlers) {
+    //   const handler = socketEventHandlers[event];
+    //   window.GlobalSocket.bind(event, handler);
+    // }
 
     const dataEventHandlers = this.getDataEventHandlers();
     for (const event in dataEventHandlers) {
@@ -51,11 +50,11 @@ export default class BaseScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    const socketEventHandlers = this.getSocketEventHandlers();
-    for (const event in socketEventHandlers) {
-      const handler = socketEventHandlers[event];
-      window.GlobalSocket.unbind(event, handler);
-    }
+    // const socketEventHandlers = this.getSocketEventHandlers();
+    // for (const event in socketEventHandlers) {
+    //   const handler = socketEventHandlers[event];
+    //   window.GlobalSocket.unbind(event, handler);
+    // }
 
     const dataEventHandlers = this.getDataEventHandlers();
     for (const event in dataEventHandlers) {
@@ -64,9 +63,9 @@ export default class BaseScreen extends React.Component {
     }
   }
 
-  getSocketEventHandlers() {
-    return {};
-  }
+  // getSocketEventHandlers() {
+  //   return {};
+  // }
 
   getDataEventHandlers() {
     return {};

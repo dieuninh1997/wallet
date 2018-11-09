@@ -133,6 +133,7 @@ export default {
     errors: {
       email_already_verified: 'Your email address has already been verified.',
       email_in_use: 'This email address is already in use.',
+      cannot_change_email: 'This email can not change',
     },
   },
   request: {
@@ -155,6 +156,7 @@ export default {
     toastEnterFullInfo: '必要な情報を入力して下さい。',
     toastConfirmPassword: 'パスワードが一致しません。',
     changeSuccess: '完了しました。',
+    otp: 'Otp Code',
   },
   ChangePinScreen: {
     title: 'PIN変更',

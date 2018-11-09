@@ -4,18 +4,16 @@ import MicroEvent from 'microevent';
 import Screens from './app/screens/Screens';
 import AppPreferences from './app/utils/AppPreferences';
 import I18n from './app/i18n/i18n';
-import GlobalSocket from './app/socket/GlobalSocket';
+// import GlobalSocket from './app/socket/GlobalSocket';
 import EventBus from './app/socket/EventBus';
-// import TransactionsScreen from './app/screens/transactions/TransactionsScreen';
 import AppConfig from './app/utils/AppConfig';
 import Consts from './app/utils/Consts';
 
 
-MicroEvent.mixin(GlobalSocket);
+// MicroEvent.mixin(GlobalSocket);
 MicroEvent.mixin(EventBus);
 
 async function initApp() {
-  // MicroEvent.mixin(TransactionsScreen);
   await initI18n();
   window.EventBus = new EventBus();
   return await initMasterdata();
@@ -36,7 +34,6 @@ async function initMasterdata() {
     console.log('tokenSaved', tokenSaved);
     if (tokenSaved !== 'true') {
       await AppPreferences.removeAccessToken();
-      window.GlobalSocket = new GlobalSocket();
     } else {
       const credentials = await AppPreferences.getGeneric();
 
@@ -49,8 +46,6 @@ async function initMasterdata() {
       AppConfig.ACCESS_TOKEN = parseAccessToken;
       AppConfig.PRIVATE_KEY = parsePrivateKey;
       AppConfig.MNEMONIC = parseMnemonic;
-
-      window.GlobalSocket = new GlobalSocket();
     }
     if (__DEV__) {
       console.log(`API Server: ${AppConfig.getApiServer()}`);

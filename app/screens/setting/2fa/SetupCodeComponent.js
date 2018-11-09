@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
@@ -103,7 +102,7 @@ const styles = ScaledSheet.create({
   btnNext: {
     width: '140@s',
     height: '48@s',
-    marginBottom: '5@s',
+    marginBottom: '10@s',
     marginHorizontal: '5@s',
   },
   skipContainer: {

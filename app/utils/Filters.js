@@ -24,8 +24,11 @@ function getCoinFullName(coin) {
   return I18n.t(`coin.${coin}.fullname`);
 }
 
+const coinBalanceFormatFilter = balance => Numeral(balance).format('0,0.[00000000]');
+
 export {
   formatCoin,
   getCoinName,
   getCoinFullName,
+  coinBalanceFormatFilter,
 };

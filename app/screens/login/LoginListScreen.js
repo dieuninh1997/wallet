@@ -61,7 +61,7 @@ export default class LoginListScreen extends Component {
         access_token: responseUser.access_token,
       });
 
-      window.GlobalSocket.connect();
+      // window.GlobalSocket.connect();
       Keyboard.dismiss();
 
       const loginInfo = {

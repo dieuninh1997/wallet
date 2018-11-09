@@ -69,7 +69,6 @@ class TransactionsScreen extends BaseScreen {
 
   _loadCoinSelected = async () => {
     const indexCoin = await AppPreferences.getCoinSelected();
-    console.log('coinSelected', indexCoin);
     const coinSelected = indexCoin ? Consts.LIST_COIN[parseInt(indexCoin, 10)] : Consts.LIST_COIN[0];
     this.setState({
       coinSelected,
@@ -201,7 +200,8 @@ class TransactionsScreen extends BaseScreen {
           <Text
             style={[styles.textCoinValue, transaction.receiveAddress === address.toLowerCase() ? styles.textRecieved : styles.textSend]}
             ellipsizeMode="tail"
-            numberOfLines={1}>
+            numberOfLines={1}
+          >
             {transaction.receiveAddress === address.toLowerCase() ? '+' : '-'}
             {transaction.value}
           </Text>
@@ -220,11 +220,12 @@ class TransactionsScreen extends BaseScreen {
         <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
-          onContentSizeChange={() =>{
+          onContentSizeChange={() => {
             if (transactionLenght === 5) {
               this._getMoreData();
             }
           }}
+          scrollEventThrottle={0}
           onScroll={(e) => {
             let paddingToBottom = 10;
             paddingToBottom += e.nativeEvent.layoutMeasurement.height;

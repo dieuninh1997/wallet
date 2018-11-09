@@ -67,7 +67,7 @@ export default class UploadPassportNumber extends BaseScreen {
     const { navigation } = this.props;
     const { params } = this.props.navigation.state;
     const { passportSamle, fileName } = this.state;
-    const passportNumber = params.passportNumber;
+    const { passportNumber } = params;
 
     if (!passportSamle) {
       UIUtils.showToastMessage(I18n.t('uploadPassportNumber.messengerImage'), 'error');
@@ -85,7 +85,7 @@ export default class UploadPassportNumber extends BaseScreen {
     };
 
     try {
-      const response = await verifyPassport(passportNumber, image, image2);
+      await verifyPassport(passportNumber, image, image2);
       UIUtils.showToastMessage(I18n.t('uploadPassportNumber.submitSuccess'), 'success');
       navigation.navigate('SettingScreen');
     } catch (error) {
@@ -195,6 +195,8 @@ const styles = ScaledSheet.create({
   viewUpload: {
     marginLeft: '10@s',
     marginRight: '10@s',
+    textAlign: 'center',
+    alignItems: 'center',
   },
 
   txtUpload: {
@@ -202,7 +204,7 @@ const styles = ScaledSheet.create({
     fontSize: '14@ms',
     color: '#000',
     ...Fonts.Ubuntu_Light,
-    padding: '20@s',
+    paddingHorizontal: '20@s',
   },
 
   btnSubmit: {
@@ -211,5 +213,4 @@ const styles = ScaledSheet.create({
     marginBottom: '10@s',
     marginRight: '4@s',
   },
-
 });

@@ -6,6 +6,7 @@ import {
   Image,
   Clipboard,
 } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import I18n from '../../../i18n/i18n';
 import ScaledSheet from '../../../libs/reactSizeMatter/ScaledSheet';
 import {
@@ -14,6 +15,7 @@ import {
 import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import UIUtils from '../../../utils/UIUtils';
+import { scale } from '../../../libs/reactSizeMatter/scalingUtils';
 
 export default class BackupKeyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,7 +34,9 @@ export default class BackupKeyScreen extends Component {
   }
 
   componentDidMount = () => {
-    const { params } = this.props.navigation.state;
+    const { navigation } = this.props;
+    const { params } = navigation.state;
+
     this.setState({
       googleOtpKey: params,
     });
@@ -41,6 +45,7 @@ export default class BackupKeyScreen extends Component {
   _handleNext = () => {
     const { navigation } = this.props;
     const { googleOtpKey } = this.state;
+
     navigation.navigate('EnterBackupKeyScreen', googleOtpKey);
   }
 
@@ -55,12 +60,20 @@ export default class BackupKeyScreen extends Component {
 
     return (
       <View style={styles.BackupKey}>
-        <View style={styles.imageBlock}>
-          <Image
+        {/* <View style={styles.imageBlock}> */}
+        {/* <Image
             source={require('../../../../assets/setting/writeDown.png')}
             style={styles.image}
-          />
+          /> */}
+        <View style={styles.qrCodeContainer}>
+          {!googleOtpKey ? null : (
+            <QRCode
+              value={`otpauth://totp/MangoWallet?secret=${googleOtpKey}`}
+              size={scale(180)}
+            />
+          ) }
         </View>
+        {/* </View> */}
 
         <View style={styles.textBlock}>
           <Text style={styles.textGuide}>{I18n.t('setting2fa.saveKeyOnPaper')}</Text>
@@ -80,12 +93,12 @@ export default class BackupKeyScreen extends Component {
             btnStyle={styles.copyKey}
             buttonTextStyle={styles.btnText}
             colorOptions={['#ffffff', '#ffffff', '#ffffff']}
-            onPress={() => this._handleCopyKey()}
+            onPress={this._handleCopyKey}
           />
           <MangoGradientButton
             btnText={I18n.t('backupPassphrase.btnNext')}
             btnStyle={styles.btnNext}
-            onPress={() => this._handleNext()}
+            onPress={this._handleNext}
           />
         </View>
       </View>
@@ -128,6 +141,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   inputText: {
     width: '265@s',
@@ -147,12 +161,22 @@ const styles = ScaledSheet.create({
     marginHorizontal: '5@s',
   },
   btnText: {
-    marginLeft: '10@s',
-    marginRight: '10@s',
+    marginLeft: '20@s',
+    marginRight: '20@s',
   },
   copyKey: {
     height: '48@s',
     marginBottom: '5@s',
     marginHorizontal: '5@s',
+  },
+  qrCodeContainer: {
+    width: '240@s',
+    height: '240@s',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '8@s',
+    backgroundColor: CommonColors.headerBarBgColor,
+    ...UIUtils.generateShadowStyle(),
+    marginBottom: '10@s',
   },
 });

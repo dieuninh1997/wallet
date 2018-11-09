@@ -133,6 +133,7 @@ export default {
     errors: {
       email_already_verified: 'Your email address has already been verified.',
       email_in_use: 'Daytoy nga email ket us-usaren. Agaramid iti baro nga email.',
+      cannot_change_email: 'This email can not change',
     },
   },
   request: {
@@ -155,6 +156,7 @@ export default {
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Ti inkabil nga password ket saan nga parehas',
     changeSuccess: 'Balligi',
+    otp: 'Otp Code',
   },
   ChangePinScreen: {
     title: 'Sukatan iti PIN',

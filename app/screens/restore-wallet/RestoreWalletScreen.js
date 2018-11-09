@@ -71,7 +71,7 @@ class RestoreWalletScreen extends Component {
 
   _handleChangeInput = (typeInput, value) => {
     const { restoreInfo } = this.state;
-    const errorTextInput = (value && (this.checkMnemonicInput(value.substring(0,1))));
+    const errorTextInput = (value && (this.checkMnemonicInput(value.substring(0, 1))));
 
     restoreInfo[typeInput] = value;
     this.setState({
@@ -127,7 +127,7 @@ class RestoreWalletScreen extends Component {
       AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = restoreAccountInfo.data.accessToken;
 
-      window.GlobalSocket.connect();
+      // window.GlobalSocket.connect();
       Keyboard.dismiss();
 
       await AsyncStorage.setItem('address', wallet.address);

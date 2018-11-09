@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, AsyncStorage } from 'react-native';
 import PINCode, { hasUserSetPinCode } from '@haskkor/react-native-pincode';
 import TouchID from 'react-native-touch-id';
+import SplashScreen from 'react-native-splash-screen';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { CommonSize, CommonStyles } from '../../utils/CommonStyles';
@@ -38,6 +39,7 @@ export default class LoginUsePinScreen extends Component {
   }
 
   async componentDidMount() {
+    SplashScreen.hide();
     const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
 
     await hasUserSetPinCode();

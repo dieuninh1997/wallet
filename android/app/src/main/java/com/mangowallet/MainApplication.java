@@ -3,7 +3,7 @@ package com.mangowallet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.RNTextInputMask.RNTextInputMaskPackage;
+import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
 import ui.toasty.RNToastyPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -11,13 +11,11 @@ import com.react.rnspinkit.RNSpinkitPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
 import cl.json.RNSharePackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.horcrux.svg.SvgPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
-import com.cmcewen.blurview.BlurViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -53,9 +51,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new RNTextInputMaskPackage(),
-            new RNToastyPackage(),
-            new SplashScreenReactPackage(),
+        new RNToastyPackage(),
+        new SplashScreenReactPackage(),
         new RNSpinkitPackage(),
         new RNDeviceInfo(),
         new RNSpinkitPackage(),
@@ -66,7 +63,6 @@ public class MainApplication extends Application implements ReactApplication {
         new KeychainPackage(),
         new SvgPackage(),
         new FingerprintAuthPackage(),
-        new BlurViewPackage(),
         new LinearGradientPackage(),
         new RNI18nPackage(),
         new VectorIconsPackage(),

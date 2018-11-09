@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   Image,
   ImageBackground,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 import { initApp } from '../../App';
 import ScaledSheet from '../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../i18n/i18n';
@@ -50,6 +50,7 @@ export default class SplashScreen extends BaseScreen {
     try {
       if (AppConfig.ACCESS_TOKEN && AppConfig.PRIVATE_KEY) {
         if (isEnableCodePin) {
+          // this.navigateAndClearStack('MainScreen');
           this.navigateAndClearStack('LoginUsePinScreen');
         } else {
           this.navigateAndClearStack('MainScreen');
@@ -71,7 +72,7 @@ export default class SplashScreen extends BaseScreen {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} forceInset={{ bottom: 'never' }}>
         <View style={{ flex: 1, alignItems: 'center' }}>
           { this._renderLogoGroup() }
         </View>

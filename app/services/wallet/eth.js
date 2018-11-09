@@ -147,7 +147,7 @@ EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amo
 
     return transaction;
   } catch (error) {
-    throw error;
+    throw new Error('Can not send transactions');
   }
 };
 

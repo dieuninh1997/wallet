@@ -506,20 +506,22 @@ export default class SettingScreen extends BaseScreen {
       <View>
         <Text style={styles.textSecurity}>{I18n.t('setting.security')}</Text>
         <View style={styles.tableSecurity}>
-          <TouchableWithoutFeedback onPress={() => this._showSettingGoogleOtp()}>
-            <View style={styles.borderStepVerification}>
-              <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
-              <View style={styles.activiRightGroup}>
-                <Text style={[userSecuritySettings && userSecuritySettings.otp_verified ? styles.textVerified : styles.textUnVerified]}>
-                  {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.enabled') : I18n.t('setting.disabled')}
-                </Text>
-                <MaterialCommunityIcons
-                  style={styles.iconChevronRight}
-                  name="chevron-right"
-                />
+          {checkTypeLogin ? null :
+            <TouchableWithoutFeedback onPress={() => this._showSettingGoogleOtp()}>
+              <View style={styles.borderStepVerification}>
+                <Text style={styles.titleSetting}>{I18n.t('setting.verification')}</Text>
+                <View style={styles.activiRightGroup}>
+                  <Text style={[userSecuritySettings && userSecuritySettings.otp_verified ? styles.textVerified : styles.textUnVerified]}>
+                    {userSecuritySettings && userSecuritySettings.otp_verified ? I18n.t('setting.enabled') : I18n.t('setting.disabled')}
+                  </Text>
+                  <MaterialCommunityIcons
+                    style={styles.iconChevronRight}
+                    name="chevron-right"
+                  />
+                </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+          }
           <View style={styles.groupChangePassword}>
             {checkTypeLogin ? (null) :
               <TouchableWithoutFeedback onPress={() => this._showchangePassword()}>

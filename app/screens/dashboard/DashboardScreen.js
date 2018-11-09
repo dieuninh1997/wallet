@@ -258,6 +258,7 @@ class DashboardScreen extends BaseScreen {
             style={styles.pieContainer}
             data={data}
             options={options}
+            monoItemInnerFillColor="#ECEEF3"
             accessorKey="population"
             r={scale(105)}
             R={scale(135)}

@@ -26,6 +26,7 @@ class TransactionsScreen extends BaseScreen {
     super(props);
     this.state = {
       transactions: [],
+      transactionLenght: 0,
       address: '0x5c7738b67a3403f349782244e59e776ddb3581c3',
       page: 1,
       perPage: Consts.PER_PAGE,
@@ -87,12 +88,13 @@ class TransactionsScreen extends BaseScreen {
       console.log('TransactionsScreen.transactions =====>: ', transactions);
       this.setState({
         isProcess: false,
+        transactionLenght: transactions.length,
       });
 
       if (!transactions.length) {
-        this.setState({
-          transactions: [],
-        });
+        // this.setState({
+        //   transactions: [],
+        // });
         return;
       }
 
@@ -212,12 +214,17 @@ class TransactionsScreen extends BaseScreen {
   )
 
   render() {
-    const { transactions, isProcess } = this.state;
+    const { transactions, isProcess, transactionLenght } = this.state;
     return (
       <View style={styles.container}>
         <MangoDropdown />
         <ScrollView
           showsVerticalScrollIndicator={false}
+          onContentSizeChange={() =>{
+            if (transactionLenght === 5) {
+              this._getMoreData();
+            }
+          }}
           onScroll={(e) => {
             let paddingToBottom = 10;
             paddingToBottom += e.nativeEvent.layoutMeasurement.height;

@@ -97,7 +97,7 @@ export default {
     speedSlowly: '30 + Minute',
     speedRegular: '5 + Minute',
     speedFast: '2 + Minute',
-    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
+    notice: 'Notice: This wallet is available on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   setting: {
     title: '設定',
@@ -139,7 +139,7 @@ export default {
     title: 'リクエストする',
     copyAddress: 'コピーする',
     copied: 'コピーをしました。',
-    notice: 'Notice: This wallet is avaiable on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
+    notice: 'Notice: This wallet is available on Ropsten Testnet. Please do not send coin from Mainnet to this address!!!',
   },
   transactions: {
     title: 'トランザクション',

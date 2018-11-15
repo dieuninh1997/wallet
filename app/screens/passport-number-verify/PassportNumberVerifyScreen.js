@@ -63,9 +63,12 @@ export default class PassportNumberVerifyScreen extends BaseScreen {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         const source = { uri: response.uri };
-        const name = response.fileName;
-
-        console.log('linkImage', source);
+        let name = '';
+        if (!response.fileName) {
+          name = response.uri.split('/').pop();
+        } else {
+          name = response.fileName;
+        }
 
         this.setState({
           avatarSource: source,

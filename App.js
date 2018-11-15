@@ -60,6 +60,9 @@ async function initMasterdata() {
 
 const App = createStackNavigator(Screens, {
   headerMode: 'screen',
+  navigationOptions: {
+    gesturesEnabled: false,
+  },
 });
 
 export default App;

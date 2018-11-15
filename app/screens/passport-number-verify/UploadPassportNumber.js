@@ -41,8 +41,6 @@ export default class UploadPassportNumber extends BaseScreen {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled photo picker');
       } else if (response.error) {
@@ -51,9 +49,12 @@ export default class UploadPassportNumber extends BaseScreen {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         const source = { uri: response.uri };
-        const name = response.fileName;
-
-        console.log('linkImage', source);
+        let name = '';
+        if (!response.fileName) {
+          name = response.uri.split('/').pop();
+        } else {
+          name = response.fileName;
+        }
 
         this.setState({
           passportSamle: source,
@@ -65,7 +66,7 @@ export default class UploadPassportNumber extends BaseScreen {
 
   onClickSubmit = async () => {
     const { navigation } = this.props;
-    const { params } = this.props.navigation.state;
+    const { params } = navigation.state;
     const { passportSamle, fileName } = this.state;
     const { passportNumber } = params;
 
@@ -86,6 +87,7 @@ export default class UploadPassportNumber extends BaseScreen {
 
     try {
       await verifyPassport(passportNumber, image, image2);
+
       UIUtils.showToastMessage(I18n.t('uploadPassportNumber.submitSuccess'), 'success');
       navigation.navigate('SettingScreen');
     } catch (error) {

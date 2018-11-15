@@ -3,7 +3,8 @@ import {
   View, Text, ScrollView, Dimensions, Image, RefreshControl, TouchableOpacity,
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
-import SocketIOClient from 'socket.io-client';
+// import SocketIOClient from 'socket.io-client';
+import SplashScreen from 'react-native-splash-screen';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
@@ -21,10 +22,6 @@ import BackPressHandler from '../../utils/BackPressHandler';
 import ChartModal from './ChartModal';
 
 class DashboardScreen extends BaseScreen {
-  static _updateCoinValue = (newValue = []) => {
-    // console.log('DashboardScreen', newValue);
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +37,6 @@ class DashboardScreen extends BaseScreen {
       PHP: '₱',
     };
 
-    // const COINS = ['BTC', 'ETH'];
     this.COINS = ['ETH'];
     this.WALLET_COIN = 'MGC';
     this.ALL_COINS = [this.WALLET_COIN, ...this.COINS];
@@ -70,16 +66,12 @@ class DashboardScreen extends BaseScreen {
 
   async componentDidMount() {
     super.componentDidMount();
+    SplashScreen.hide();
     BackPressHandler.handleBackAction();
 
     await this._loadData();
-    const socket = SocketIOClient('https://streamer.cryptocompare.com/');
-    const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
-    // socket.emit('SubAdd', { subs: subscription });
-    // socket.on('m', (message) => {
-    //   const newValue = message.split('~');
-    //   DashboardScreen._updateCoinValue(newValue);
-    // });
+    // const socket = SocketIOClient('https://streamer.cryptocompare.com/');
+    // const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
   }
 
   getDataEventHandlers() {

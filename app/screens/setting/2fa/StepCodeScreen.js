@@ -43,24 +43,30 @@ export default class StepCodeScreen extends Component {
     return (
       <View style={styles.setupCode}>
         <IndicatorViewPager
-          style={{ height: '100%', width: '100%' }}
+          style={{ height: '100%' }}
           indicator={this._renderDotIndicator()}
         >
-          <SetupCodeComponent
-            imageStep={Consts.MANGO_STEP_OVAL.first}
-            textGuide={textGuideFirst}
-            nextScreen={this._handleNext}
-          />
-          <SetupCodeComponent
-            imageStep={Consts.MANGO_STEP_OVAL.second}
-            textGuide={textGuideSecond}
-            nextScreen={this._handleNext}
-          />
-          <SetupCodeComponent
-            imageStep={Consts.MANGO_STEP_OVAL.last}
-            textGuide={textGuideLast}
-            nextScreen={this._handleNext}
-          />
+          <View>
+            <SetupCodeComponent
+              imageStep={Consts.MANGO_STEP_OVAL.first}
+              textGuide={textGuideFirst}
+              nextScreen={this._handleNext}
+            />
+          </View>
+          <View>
+            <SetupCodeComponent
+              imageStep={Consts.MANGO_STEP_OVAL.second}
+              textGuide={textGuideSecond}
+              nextScreen={this._handleNext}
+            />
+          </View>
+          <View>
+            <SetupCodeComponent
+              imageStep={Consts.MANGO_STEP_OVAL.last}
+              textGuide={textGuideLast}
+              nextScreen={this._handleNext}
+            />
+          </View>
         </IndicatorViewPager>
       </View>
     );
@@ -69,8 +75,7 @@ export default class StepCodeScreen extends Component {
 
 const styles = ScaledSheet.create({
   setupCode: {
-    flex: 1,
-    alignItems: 'center',
+    backgroundColor: 'rgb(245, 247, 250)',
   },
   indicator: {
     bottom: scale(17),

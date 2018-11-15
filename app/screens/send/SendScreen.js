@@ -26,7 +26,8 @@ import AppPreferences from '../../utils/AppPreferences';
 import { getUserSettings } from '../../api/user/UserRequest';
 import { sendMailTransaction } from '../../api/transaction-history/TransactionRequest';
 import MangoLoading from '../common/MangoLoading';
-import MangoCurrencyInput from '../common/MangoCurrencyInput';
+import { coinBalanceFormatFilter } from '../../utils/Filters';
+import Numeral from '../../libs/numeral';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
@@ -63,6 +64,7 @@ class SendScreen extends BaseScreen {
         recievedAddress: '',
         coinValue: '0',
         feeValue: feeSelected.value,
+        coinValueShow: '0',
       },
       isShowMenuSelectFee: false,
       feeSelected,
@@ -72,6 +74,7 @@ class SendScreen extends BaseScreen {
       prices: {},
       realValueCoin: 0,
       isLoading: false,
+      datetime: '',
     };
   }
 
@@ -86,7 +89,6 @@ class SendScreen extends BaseScreen {
         fee.value = currentGasPrices[fee.symbol];
         return fee;
       });
-      console.log('<-----------listFeeNew----------->', listFeeNew);
       formSendCoin.feeValue = listFeeNew[0].value;
       this.setState({
         listFee: listFeeNew,
@@ -112,17 +114,26 @@ class SendScreen extends BaseScreen {
   }
 
   async _loadPrices() {
-    const { coinSelected, formSendCoin } = this.state;
-    const prices = await getPrices(coinSelected.name);
-
-    this.setState({ prices });
-    this._setRealValueCoin(formSendCoin.coinValue);
+    try {
+      const { coinSelected, formSendCoin } = this.state;
+      const prices = await getPrices(coinSelected.name);
+      if (!prices) {
+        return;
+      }
+      this.setState({ prices });
+      this._setRealValueCoin(formSendCoin.coinValue, prices);
+    } catch (error) {
+      console.log('Error load prices: ', error);
+    }
   }
 
-  _setRealValueCoin = (value) => {
+  _setRealValueCoin = (value, prices) => {
     try {
-      const { coinSelected, prices, currency } = this.state;
+      console.log('Pricesssss', prices);
+      console.log('Valueeeee', value);
+      const { coinSelected, currency } = this.state;
       const newPrice = prices.RAW[coinSelected.name][currency].PRICE;
+
       this.setState({
         realValueCoin: parseFloat(value * newPrice).toFixed(2),
       });
@@ -179,13 +190,35 @@ class SendScreen extends BaseScreen {
   }
 
   _handleChangeCoinValue = (value) => {
-    const { formSendCoin } = this.state;
-    formSendCoin.coinValue = value;
+    console.log('====================================');
+    console.log('Value new ', value);
+    console.log('====================================');
+    if (value.length === 1 && (value < '0' || value > '9')) {
+      console.log('====================================');
+      console.log('Vao say');
+      console.log('====================================');
 
-    this._setRealValueCoin(value);
-    this.setState({
-      formSendCoin,
-    });
+      this.setState(prevState => ({
+        formSendCoin: { ...prevState.formSendCoin, coinValue: '0', coinValueShow: '0.' },
+      }), () => {
+        const { prices } = this.state;
+        this._setRealValueCoin(0, prices);
+      });
+      return;
+    }
+
+    this.setState(prevState => ({
+      formSendCoin: { ...prevState.formSendCoin, coinValue: value },
+    }));
+
+    setTimeout(() => {
+      this.setState(prevState => ({
+        formSendCoin: { ...prevState.formSendCoin, coinValue: Numeral(value.replace(/[^0-9\.]/g, ''))._value, coinValueShow: coinBalanceFormatFilter(value.replace(/[^0-9\.]/g, '')) },
+      }));
+    }, 100);
+
+    const { prices } = this.state;
+    this._setRealValueCoin(Numeral(value.replace(/[^0-9\.]/g, ''))._value, prices);
   }
 
   _validateSendCoin = (formSendCoin = {}) => {
@@ -322,6 +355,7 @@ class SendScreen extends BaseScreen {
     const {
       formSendCoin, feeSelected, coinSelected, currency, realValueCoin,
     } = this.state;
+
     return (
       <View style={styles.formSendContainer}>
         <View style={styles.inputAddressContainer}>
@@ -337,28 +371,20 @@ class SendScreen extends BaseScreen {
             value={formSendCoin.recievedAddress.toString()}
             onChangeText={value => this._handleChangeTextInput(SendScreen.FORM_SEND.RECIEVED_ADDRESS, value)}
           />
+
         </View>
 
         <View style={styles.inputCoinValueContainer}>
           <View style={styles.inputCoinValue}>
             <Text style={styles.inputTextLabel}>{coinSelected.name}</Text>
-            {/* <TextInput
+            <TextInput
               editable
               keyboardType="numeric"
               placeholder="0.00"
               underlineColorAndroid="transparent"
-              value={formSendCoin.coinValue.toString()}
+              value={formSendCoin.coinValueShow}
               style={styles.inputText}
-              onChangeText={value => this._handleChangeCoinValue(value.replace(/[^0-9\.]/g, ''))}
-            /> */}
-            <MangoCurrencyInput
-              value={formSendCoin.coinValue.toString()}
-              precision={8}
-              editable
-              keyboardType="numeric"
-              onChangeText={(formatted, extracted) => this._handleChangeCoinValue(extracted.replace(/[^0-9\.]/g, ''))}
-              style={styles.inputText}
-              underlineColorAndroid="transparent"
+              onChangeText={value => this._handleChangeCoinValue(value)}
             />
           </View>
           <View
@@ -368,16 +394,8 @@ class SendScreen extends BaseScreen {
             ]}
           >
             <Text style={styles.inputTextLabel}>{currency}</Text>
-            {/* <TextInput
-              editable={false}
-              placeholder="0.00"
+            <TextInput
               value={`${realValueCoin}`}
-              underlineColorAndroid="transparent"
-              style={styles.inputText}
-            /> */}
-            <MangoCurrencyInput
-              value={`${realValueCoin}`}
-              precision={8}
               editable={false}
               style={styles.inputText}
               underlineColorAndroid="transparent"
@@ -425,7 +443,6 @@ class SendScreen extends BaseScreen {
     const {
       isShowMenuSelectFee, formSendCoin, coinSelected, isLoading,
     } = this.state;
-
     return (
       <View style={[styles.container]}>
         {isLoading ? <MangoLoading /> : null}
@@ -483,7 +500,7 @@ const styles = ScaledSheet.create({
 
   inputText: {
     width: '100@s',
-    paddingBottom: '8@s',
+    // paddingBottom: '8@s',
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Light,
   },

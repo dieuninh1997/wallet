@@ -211,6 +211,8 @@ const styles = ScaledSheet.create({
   viewUpload: {
     marginLeft: '10@s',
     marginRight: '10@s',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   txtUpload: {
@@ -218,7 +220,7 @@ const styles = ScaledSheet.create({
     fontSize: '14@ms',
     color: '#000',
     ...Fonts.Ubuntu_Light,
-    padding: '20@s',
+    paddingHorizontal: '20@s',
   },
 
   txtNote: {

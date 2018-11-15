@@ -133,6 +133,7 @@ export default {
     errors: {
       email_already_verified: 'Your email address has already been verified.',
       email_in_use: 'Gigamit nimo ang imong email address. Paghimo og bag-ong email address.',
+      cannot_change_email: 'This email can not change',
     },
   },
   request: {
@@ -155,6 +156,7 @@ export default {
     toastEnterFullInfo: 'Please enter full information',
     toastConfirmPassword: 'Ang password na nilagay ay hindi tugma',
     changeSuccess: 'Malampuson',
+    otp: 'Otp Code',
   },
   ChangePinScreen: {
     title: 'Bag-oha ang PIN',

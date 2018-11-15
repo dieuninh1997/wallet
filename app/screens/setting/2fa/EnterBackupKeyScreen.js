@@ -118,6 +118,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Light,
   },
   inputBlock: {
+    textAlign: 'center',
     width: '295@s',
     height: '52@s',
     backgroundColor: CommonColors.headerBarBgColor,
@@ -125,10 +126,12 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: 'rgb(209, 209, 219)',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   inputText: {
     width: '265@s',
     fontSize: '20@ms',
+    textAlign: 'center',
     color: 'rgb(38, 48, 77)',
     ...Fonts.Ubuntu_Light,
   },

@@ -133,6 +133,7 @@ export default {
     errors: {
       email_already_verified: 'Địa chỉ email của bạn đã được xác thực.',
       email_in_use: 'Email đã được sử dụng.',
+      cannot_change_email: 'Không thể thay đổi email',
     },
   },
   request: {
@@ -155,6 +156,7 @@ export default {
     toastEnterFullInfo: 'Hãy điền đầy đủ thông tin',
     toastConfirmPassword: 'Mật khẩu xác nhận không đúng',
     changeSuccess: 'Thay đổi mật khẩu thành công',
+    otp: 'Mã Otp',
   },
   ChangePinScreen: {
     title: 'Đổi mã PIN',

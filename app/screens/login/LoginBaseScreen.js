@@ -96,7 +96,7 @@ class LoginBaseScreen extends Component {
         access_token: responseUser.access_token,
       });
 
-      window.GlobalSocket.connect();
+      // window.GlobalSocket.connect();
       Keyboard.dismiss();
       navigation.navigate('RestoreWalletScreen', { loginInfo });
     } catch (error) {
@@ -187,24 +187,25 @@ class LoginBaseScreen extends Component {
               onChange={value => this.selectCountry(value)}
               translation="eng"
               cca2={this.state.cca2}
-              filterable={true}
-              showCallingCode={true}
+              filterable
+              showCallingCode
               renderFilter={({ value, onChange, onClose }) => (
                 <View style={styles.searchCountryPicker}>
                   <View style={styles.groupSearchCountryPicker}>
-                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')}></Image>
+                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
                     <TextInput
                       placeholder={I18n.t('signin.searchCountry')}
                       style={styles.inputSearchCountryPicker}
                       onChangeText={onChange}
-                      value={value} />
+                      value={value}
+                    />
                   </View>
                   <TouchableWithoutFeedback onPress={onClose}>
                     <Text style={styles.textCancelCountryPicker}>{I18n.t('signin.cancel')}</Text>
                   </TouchableWithoutFeedback>
                 </View>
               )}
-              hideAlphabetFilter={true}
+              hideAlphabetFilter
             >
               <View />
             </CountryPicker>
@@ -482,5 +483,5 @@ const styles = ScaledSheet.create({
   textCancelCountryPicker: {
     fontSize: '16@ms',
     ...Fonts.Ubuntu_Regular,
-  }
+  },
 });

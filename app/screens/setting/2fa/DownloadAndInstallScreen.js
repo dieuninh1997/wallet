@@ -25,6 +25,7 @@ export default class DownloadAndInstallScreen extends Component {
 
   _handleNext = (googleOtpKey) => {
     const { navigation } = this.props;
+
     navigation.navigate('BackupKeyScreen', googleOtpKey);
   }
 

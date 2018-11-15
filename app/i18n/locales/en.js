@@ -133,6 +133,7 @@ export default {
     errors: {
       email_already_verified: 'Your email address has already been verified.',
       email_in_use: 'This email address is already in use.',
+      cannot_change_email: 'This email can not change',
     },
   },
   request: {
@@ -155,6 +156,7 @@ export default {
     toastEnterFullInfo: 'Please input required information.',
     toastConfirmPassword: 'Confirm password is incorrect',
     changeSuccess: 'Change password success',
+    otp: 'Otp Code',
   },
   ChangePinScreen: {
     title: 'Change PIN',
@@ -327,4 +329,5 @@ export default {
     settings: 'Settings',
     signout: 'Sign out',
   },
+
 };

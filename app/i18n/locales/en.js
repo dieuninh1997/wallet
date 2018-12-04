@@ -329,5 +329,9 @@ export default {
     settings: 'Settings',
     signout: 'Sign out',
   },
-
+  mangoConnectionLost: {
+    titleMessage: 'No Internet Connection',
+    contentMessageFirst: 'You are not connected to the internet.',
+    contentMessageSecond: 'Make sure Wi-Fi is on, Airplane Mode is off and try again.',
+  },
 };

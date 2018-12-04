@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -84,9 +84,6 @@ class MangoDropdown extends BaseScreen {
       coinSelected,
     });
     await AppPreferences.saveCoinSelected(`${index}`);
-    const a = await AppPreferences.getCoinSelected();
-    console.log('a------------------->', a);
-
     this._handleChangeCoinSelected();
   }
 

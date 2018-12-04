@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  AppState, View, Text, Dimensions, WebView,
+  AppState, View, WebView,
 } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import RNRestart from 'react-native-restart';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
-import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import { getServerStatus } from '../../api/common/MiscRequest';
-import { CommonStyles, Fonts } from '../../utils/CommonStyles';
-import Consts from '../../utils/Consts';
+import { CommonStyles } from '../../utils/CommonStyles';
 import AppConfig from '../../utils/AppConfig';
 import BaseScreen from '../BaseScreen';
 

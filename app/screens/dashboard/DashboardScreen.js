@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View, Text, ScrollView, Dimensions, Image, RefreshControl, TouchableOpacity,
+  View, Text, ScrollView, Image, RefreshControl, TouchableOpacity,
 } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
-// import SocketIOClient from 'socket.io-client';
 import SplashScreen from 'react-native-splash-screen';
+import { withNetworkConnectivity } from 'react-native-offline';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
@@ -20,6 +20,7 @@ import WalletService from '../../services/wallet';
 import BaseScreen from '../BaseScreen';
 import BackPressHandler from '../../utils/BackPressHandler';
 import ChartModal from './ChartModal';
+import MangoConnectionLost from '../common/MangoConnectionLost';
 
 class DashboardScreen extends BaseScreen {
   constructor(props) {
@@ -68,19 +69,16 @@ class DashboardScreen extends BaseScreen {
     super.componentDidMount();
     SplashScreen.hide();
     BackPressHandler.handleBackAction();
-
-    await this._loadData();
-    // const socket = SocketIOClient('https://streamer.cryptocompare.com/');
-    // const subscription = ['2~Poloniex~BTC~USD', '2~Poloniex~ETH~USD'];
+    this._loadData();
   }
 
   getDataEventHandlers() {
     return {
-      [Events.USER_SETTINGS_UPDATED]: this._loadData.bind(this),
+      [Events.USER_SETTINGS_UPDATED]: this._loadData,
     };
   }
 
-  async _loadData() {
+  _loadData = async () => {
     await this._loadUserSettings();
     await Promise.all([
       this._loadPrices(),
@@ -88,7 +86,7 @@ class DashboardScreen extends BaseScreen {
     ]);
   }
 
-  async _loadUserSettings() {
+  _loadUserSettings = async () => {
     try {
       const response = await getUserSettings();
       const settings = response.data;
@@ -103,13 +101,13 @@ class DashboardScreen extends BaseScreen {
     }
   }
 
-  async _loadPrices() {
+  _loadPrices = async () => {
     const coinList = this.COINS.reduce((a, b) => `${a},${b}`);
     const prices = await getPrices(coinList);
     this.setState({ prices });
   }
 
-  async _loadBalances() {
+  _loadBalances = async () => {
     try {
       const address = await AppPreferences.getEthAddress();
       console.log('address', address);
@@ -144,12 +142,16 @@ class DashboardScreen extends BaseScreen {
   }
 
   _getDisplayPrice(coin) {
-    const { currency } = this.state;
-    const price = this._getPrice(coin);
-    if (price) {
-      return `${this._getCurrencySymbol()} ${formatCoin(price, currency)}`;
+    try {
+      const { currency } = this.state;
+      const price = this._getPrice(coin);
+      if (price) {
+        return `${this._getCurrencySymbol()} ${formatCoin(price, currency)}`;
+      }
+      return price;
+    } catch (error) {
+      console.log('error', error);
     }
-    return price;
   }
 
   _getDisplayPC(coin) {
@@ -347,8 +349,17 @@ class DashboardScreen extends BaseScreen {
     );
   }
 
+  _renderChart = () => (
+    <ChartModal ref={ref => this._chartModal = ref} />
+  )
+
   render() {
     const { refreshing } = this.state;
+    const { isConnected } = this.props;
+
+    if (!isConnected) {
+      return <MangoConnectionLost />;
+    }
     return (
       <View>
         <ScrollView
@@ -357,7 +368,7 @@ class DashboardScreen extends BaseScreen {
           refreshControl={(
             <RefreshControl
               refreshing={refreshing}
-              onRefresh={() => this._onRefresh()}
+              onRefresh={this._onRefresh}
             />
           )}
         >
@@ -370,15 +381,9 @@ class DashboardScreen extends BaseScreen {
       </View>
     );
   }
-
-  _renderChart() {
-    return (
-      <ChartModal ref={ref => this._chartModal = ref} />
-    );
-  }
 }
 
-export default DashboardScreen;
+export default withNetworkConnectivity()(DashboardScreen);
 
 const styles = ScaledSheet.create({
   dashboardScreen: {

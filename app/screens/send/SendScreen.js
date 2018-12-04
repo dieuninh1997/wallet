@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { withNavigationFocus } from 'react-navigation';
+import { withNetworkConnectivity } from 'react-native-offline';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -28,6 +28,7 @@ import { sendMailTransaction } from '../../api/transaction-history/TransactionRe
 import MangoLoading from '../common/MangoLoading';
 import { coinBalanceFormatFilter } from '../../utils/Filters';
 import Numeral from '../../libs/numeral';
+import MangoConnectionLost from '../common/MangoConnectionLost';
 
 class SendScreen extends BaseScreen {
   static FORM_SEND = {
@@ -95,17 +96,11 @@ class SendScreen extends BaseScreen {
         feeSelected: listFeeNew[0],
         formSendCoin,
       });
-      await this._loadData();
+      this._loadData();
     } catch (error) {
       console.log('SendScreen.componentDidMount._error: ', error);
     }
   }
-
-  // componentDidUpdate(previousProps) {
-  //   if (this.props.isFocused && !previousProps.isFocused) {
-  //     this._resetFormSendCoin();
-  //   }
-  // }
 
   async _loadData() {
     await this._loadCoinSelected();
@@ -190,14 +185,7 @@ class SendScreen extends BaseScreen {
   }
 
   _handleChangeCoinValue = (value) => {
-    console.log('====================================');
-    console.log('Value new ', value);
-    console.log('====================================');
     if (value.length === 1 && (value < '0' || value > '9')) {
-      console.log('====================================');
-      console.log('Vao say');
-      console.log('====================================');
-
       this.setState(prevState => ({
         formSendCoin: { ...prevState.formSendCoin, coinValue: '0', coinValueShow: '0.' },
       }), () => {
@@ -443,6 +431,10 @@ class SendScreen extends BaseScreen {
     const {
       isShowMenuSelectFee, formSendCoin, coinSelected, isLoading,
     } = this.state;
+    const { isConnected } = this.props;
+    if (!isConnected) {
+      return <MangoConnectionLost />;
+    }
     return (
       <View style={[styles.container]}>
         {isLoading ? <MangoLoading /> : null}
@@ -460,7 +452,7 @@ class SendScreen extends BaseScreen {
   }
 }
 
-export default withNavigationFocus(SendScreen);
+export default withNetworkConnectivity()(SendScreen);
 
 const styles = ScaledSheet.create({
   container: {

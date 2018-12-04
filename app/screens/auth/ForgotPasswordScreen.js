@@ -55,7 +55,7 @@ export default class ForgotPasswordScreen extends Component {
       return;
     }
     try {
-      const responseUser = await ressetPassword(email);
+      await ressetPassword(email);
 
       this.emailAddress.clear();
       this.setState({
@@ -92,7 +92,7 @@ export default class ForgotPasswordScreen extends Component {
         <MangoGradientButton
           btnText={I18n.t('resetPassword.resetPassword')}
           btnStyle={styles.btnResetPassword}
-          onPress={() => this._handleResetPassword()}
+          onPress={this._handleResetPassword}
         />
       </View>
     );

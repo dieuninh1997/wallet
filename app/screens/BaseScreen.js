@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationActions, StackActions } from 'react-navigation';
 
-export default class BaseScreen extends React.Component {
+class BaseScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -75,3 +75,5 @@ export default class BaseScreen extends React.Component {
     window.EventBus.notify(event, data);
   }
 }
+
+export default BaseScreen;

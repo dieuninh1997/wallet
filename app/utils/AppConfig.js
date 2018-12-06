@@ -1,4 +1,3 @@
-
 import {
   DEV,
   API_SERVER as DEV_API_SERVER,
@@ -9,14 +8,14 @@ import {
 } from 'react-native-dotenv';
 
 export default class AppConfig {
-  static API_SERVER = 'http://137.116.131.5';
+  static API_SERVER = 'https://www.mango-wallet.com';
   // static API_SERVER = 'http://mango.sotatek.com';
 
   static API_VERSION = 'v1';
 
   static SOCKET_SERVER = 'wss://socket.bitkoex.com:6001';
 
-  static ASSET_SERVER = 'http://137.116.131.5';
+  static ASSET_SERVER = 'https://www.mango-wallet.com';
   // static ASSET_SERVER = 'http://mango.sotatek.com';
 
   static CLIENT_ID='1';
@@ -61,9 +60,5 @@ export default class AppConfig {
 
   static getAssetServer() {
     return AppConfig.dev() ? DEV_ASSET_SERVER : AppConfig.ASSET_SERVER;
-  }
-
-  static getSignUpURL() {
-    return this.getAssetServer() + AppConfig.SIGN_UP_URL;
   }
 }

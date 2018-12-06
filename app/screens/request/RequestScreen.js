@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
+import { withNetworkConnectivity } from 'react-native-offline';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoGradientButton from '../common/MangoGradientButton';
@@ -17,6 +18,7 @@ import { CommonColors, Fonts } from '../../utils/CommonStyles';
 import MangoDropdown from '../common/MangoDropdown';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
 import UIUtils from '../../utils/UIUtils';
+import MangoConnectionLost from '../common/MangoConnectionLost';
 
 class RequestScreen extends Component {
   constructor(props) {
@@ -96,6 +98,10 @@ class RequestScreen extends Component {
   )
 
   render() {
+    const { isConnected } = this.props;
+    if (!isConnected) {
+      return <MangoConnectionLost />;
+    }
     return (
       <View style={styles.container}>
         <MangoDropdown />
@@ -112,7 +118,7 @@ class RequestScreen extends Component {
     );
   }
 }
-export default RequestScreen;
+export default withNetworkConnectivity()(RequestScreen);
 
 const styles = ScaledSheet.create({
   container: {

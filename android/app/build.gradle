@@ -150,6 +150,7 @@ android {
 }
 
 dependencies {
+    compile project(':lottie-react-native')
     compile project(':nodejs-mobile-react-native')
     compile project(':react-native-toasty')
     compile project(':react-native-splash-screen')

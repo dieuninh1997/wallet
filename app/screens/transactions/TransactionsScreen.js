@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import Moment from 'moment';
+import { withNetworkConnectivity } from 'react-native-offline';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import { CommonColors, Fonts, CommonSize } from '../../utils/CommonStyles';
@@ -20,6 +21,7 @@ import Events from '../../utils/Events';
 import BaseScreen from '../BaseScreen';
 import Consts from '../../utils/Consts';
 import AppPreferences from '../../utils/AppPreferences';
+import MangoConnectionLost from '../common/MangoConnectionLost';
 
 class TransactionsScreen extends BaseScreen {
   constructor(props) {
@@ -215,6 +217,10 @@ class TransactionsScreen extends BaseScreen {
 
   render() {
     const { transactions, isProcess, transactionLenght } = this.state;
+    const { isConnected } = this.props;
+    if (!isConnected) {
+      return <MangoConnectionLost />;
+    }
     return (
       <View style={styles.container}>
         <MangoDropdown />
@@ -248,7 +254,7 @@ class TransactionsScreen extends BaseScreen {
   }
 }
 
-export default TransactionsScreen;
+export default withNetworkConnectivity()(TransactionsScreen);
 
 const styles = ScaledSheet.create({
   container: {

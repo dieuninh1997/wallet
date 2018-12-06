@@ -96,7 +96,6 @@ ConfirmationModal.defaultProps = {
   btnConfirmName: I18n.t('genneralText.ok'),
 };
 
-const margin = 3;
 const styles = ScaledSheet.create({
   popup: {
     width: CommonSize.popupWidth,

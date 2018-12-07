@@ -62,8 +62,6 @@ export default class SettingScreen extends BaseScreen {
   componentDidMount = async () => {
     try {
       const isEnableTouchId = await AsyncStorage.getItem('isEnableTouchId');
-      console.log('isEnableTouchId', isEnableTouchId);
-
       TouchID.isSupported({ unifiedErrors: false })
         .then((biometryType) => {
           console.log('TouchID.isSupported: ', biometryType);
@@ -114,7 +112,7 @@ export default class SettingScreen extends BaseScreen {
   _loadData = async () => {
     try {
       await Promise.all([
-        this._loadEthAddress(),
+        // this._loadEthAddress(),
         this._loadUserInfo(),
         this._loadUserSettings(),
         this._loadUserSecuritySettings(),
@@ -138,8 +136,27 @@ export default class SettingScreen extends BaseScreen {
   _loadUserInfo = async () => {
     try {
       const response = await getCurrentUser(false);
+      let walletId = '';
+      switch (response.data.login_type) {
+      case Consts.LOGIN_TYPES.EMAIL:
+        walletId = response.data.email;
+        break;
+      case Consts.LOGIN_TYPES.PHONE_NUMBER:
+        walletId = response.data.phone_number;
+        break;
+      case Consts.LOGIN_TYPES.PASSPORT:
+        walletId = response.data.passport_number;
+        break;
+      case Consts.LOGIN_TYPES.FACEBOOK:
+        walletId = response.data.facebook_id;
+        break;
+      default:
+        walletId = '';
+        break;
+      }
       this.setState({
         user: response.data,
+        walletId,
       });
     } catch (error) {
       console.log('SettingScreen._loadUserInfo', error);
@@ -309,7 +326,6 @@ export default class SettingScreen extends BaseScreen {
     const { user } = this.state;
     if (!this._isMobileVerify() && (!!user)) {
       this._MobleNumberModal.setModalVisibleUpdate(true);
-      // this._MobleNumberModal.show(user.phone_number.substr(3));
     }
   }
 
@@ -584,7 +600,7 @@ export default class SettingScreen extends BaseScreen {
                     value={isEnableTouchId}
                     innerCircleStyle={styles.innerCircle}
                     changeValueImmediately
-                    onValueChange={() => this._handleChangeUseTouchId()}
+                    onValueChange={this._handleChangeUseTouchId}
                   />
                 </View>
               </View>
@@ -620,7 +636,7 @@ export default class SettingScreen extends BaseScreen {
           refreshControl={(
             <RefreshControl
               refreshing={refreshing}
-              onRefresh={() => this._onRefresh()}
+              onRefresh={this._onRefresh}
             />
           )}
         >
@@ -717,6 +733,8 @@ const styles = ScaledSheet.create({
     height: '47@s',
     justifyContent: 'space-between',
     backgroundColor: '#e6ebf2',
+    borderBottomLeftRadius: '12@s',
+    borderBottomRightRadius: '12@s',
   },
   textPerferences: {
     fontSize: '13@ms',

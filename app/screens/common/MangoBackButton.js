@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
   View,
+  Image,
   TouchableOpacity,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 
 class MangoBackButton extends Component {
@@ -18,12 +18,16 @@ class MangoBackButton extends Component {
         onPress={() => this._onBack()}
       >
         <View style={styles.btnContainer}>
-          <View style={styles.container}>
-            <MaterialCommunityIcons
+          {/* <View style={styles.container}> */}
+          {/* <MaterialCommunityIcons
               name="chevron-left"
               style={styles.btnIcon}
-            />
-          </View>
+            /> */}
+          <Image
+            source={require('../../../assets/arrow-left/left-arrow.png')}
+            style={styles.container}
+          />
+          {/* </View> */}
         </View>
       </TouchableOpacity>
     );
@@ -39,14 +43,9 @@ const styles = ScaledSheet.create({
   },
 
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '26@s',
-    height: '26@s',
-    borderWidth: '2@s',
-    borderColor: '#000000',
-    borderRadius: '13@s',
-    marginLeft: '14@s',
+    width: '28@s',
+    height: '28@s',
+    marginLeft: '10@s',
   },
 
   btnIcon: {

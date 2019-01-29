@@ -148,7 +148,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#fcd800',
     height: CommonSize.headerHeight,
     elevation: 0,
-    borderBottomColor: '#E7E7E9',
+    borderBottomColor: '#fcd800',
   },
   container: {
     flex: 1,

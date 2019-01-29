@@ -11,6 +11,10 @@ rn_bridge.channel.on('message', async (message) => {
   rn_bridge.channel.send(await handleMessage(message));
 });
 
+rn_bridge.channel.on('generateKeystore', async (message) => {
+  rn_bridge.channel.post('generateKeystore', await handleMessage(message));
+});
+
 async function handleMessage(message) {
   const { action, data } = JSON.parse(message);
 
@@ -35,8 +39,6 @@ function generateWallet() {
 async function importWalletFromMnemonic(mnemonic) {
   try {
     const wallet = await ethers.Wallet.fromMnemonic(mnemonic);
-    console.log('Wallet', wallet.signingKey);
-
     return JSON.stringify(wallet.signingKey);
   } catch (error) {
     throw new Error('Invalid mnemonic');
@@ -44,13 +46,12 @@ async function importWalletFromMnemonic(mnemonic) {
 }
 
 function generateKeystore(data) {
-  return data;
-  const { privateKey: userPrivateKey, password } = data;
+  const { privateKey: userPrivateKey, password } = JSON.parse(data);
   const wallet = EthereumjsWallet.fromPrivateKey(Buffer.from(userPrivateKey, 'hex'));
   const keystore = wallet.toV3String(password);
 
-  return {
+  return JSON.stringify({
     privateKey: userPrivateKey,
     keystore,
-  };
+  });
 }

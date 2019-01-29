@@ -47,7 +47,11 @@ export default class CreateWalletScreen extends Component {
   }
 
   componentDidMount = async () => {
-    await this._generateWallet();
+    try {
+      await this._generateWallet();
+    } catch (error) {
+      console.log('componentDidMount._error: ', error);
+    }
   }
 
   _generateWallet = () => new Promise((resolve, reject) => {
@@ -56,7 +60,6 @@ export default class CreateWalletScreen extends Component {
       nodejs.channel.addListener(
         'message',
         (message) => {
-          console.log(`Wallet created: ${message}`);
           this.walletInfo = JSON.parse(message);
           resolve(JSON.parse(message));
         },

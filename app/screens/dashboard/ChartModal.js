@@ -54,15 +54,14 @@ export default class ChartModal extends React.Component {
   }
 
   render() {
-    const { coin } = this.state;
+    const { coin, modalVisible } = this.state;
     const allCoins = this._parent ? this._parent.ALL_COINS : [];
     const page = allCoins.indexOf(coin);
-
     return (
       <View>
         <Modal
           animationType="slide"
-          isVisible={this.state.modalVisible}
+          isVisible={modalVisible}
           style={styles.modal}
           backdropColor={CommonColors.modalBackdropColor}
           backdropOpacity={CommonColors.modalBackdropAlpha}
@@ -85,7 +84,7 @@ export default class ChartModal extends React.Component {
             style={styles.viewPager}
             indicator={this._renderDotIndicator()}
           >
-            {allCoins.map(coin => this._renderPage(coin))}
+            {allCoins.map(coins => this._renderPage(coins))}
           </IndicatorViewPager>
         </Modal>
       </View>
@@ -172,11 +171,14 @@ export default class ChartModal extends React.Component {
   }
 
   _getChartUrl(coin) {
-    const { currency, timeRange } = this.state;
-    const range = this.TIME_RANGS[timeRange];
-    const params = `coin=${coin}&currency=${currency}&range=${range}`;
-
-    return `${AppConfig.getAssetServer()}/chart?${params}`;
+    try {
+      const { currency, timeRange } = this.state;
+      const range = this.TIME_RANGS[timeRange];
+      const params = `coin=${coin}&currency=${currency}&range=${range}`;
+      return `${AppConfig.getAssetServer()}/chart?${params}`;
+    } catch (error) {
+      console.log('_getChartUrl', error);
+    }
   }
 
   _renderTimeRanges() {

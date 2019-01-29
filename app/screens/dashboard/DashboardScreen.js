@@ -5,6 +5,7 @@ import {
 import { Pie } from 'react-native-pathjs-charts';
 import SplashScreen from 'react-native-splash-screen';
 import { withNetworkConnectivity } from 'react-native-offline';
+import LinearGradient from 'react-native-linear-gradient';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import I18n from '../../i18n/i18n';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
@@ -43,9 +44,9 @@ class DashboardScreen extends BaseScreen {
     this.ALL_COINS = [this.WALLET_COIN, ...this.COINS];
 
     this.COIN_COLORS = {
-      [this.WALLET_COIN]: '#FFD82F',
+      [this.WALLET_COIN]: ['#ffdd00', '#fcc203'],
       BTC: '#FFA034',
-      ETH: '#2650BF',
+      ETH: ['#3c78dd', '#2f64d1'],
     };
 
     this.CHART_COLORS = {
@@ -238,27 +239,30 @@ class DashboardScreen extends BaseScreen {
     }
 
     const options = {
-      width: scale(335),
-      height: scale(335),
+      width: scale(270),
+      height: scale(270),
       animate: {
         enabled: false,
+      },
+      color: 'red',
+      margin: {
+        top: 0, left: 0, right: 0, bottom: 0,
       },
     };
 
     return (
       <View style={{ flex: 1 }}>
+        {this._renderSumSerires()}
         <View style={styles.container}>
           <Pie
-            style={styles.pieContainer}
             data={data}
             options={options}
             monoItemInnerFillColor="#ECEEF3"
             accessorKey="population"
             r={scale(105)}
-            R={scale(135)}
+            R={scale(134)}
           />
         </View>
-        {this._renderSumSerires()}
       </View>
     );
   }
@@ -273,7 +277,13 @@ class DashboardScreen extends BaseScreen {
 
     return (
       <View style={styles.itemGroup} key={coin}>
-        <View style={[{ backgroundColor: this.COIN_COLORS[coin] }, styles.itemColor]} />
+        {/* <View style={[{ backgroundColor: this.COIN_COLORS[coin] }, styles.itemColor]} /> */}
+        <LinearGradient
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 0 }}
+          colors={this.COIN_COLORS[coin]}
+          style={styles.itemColor}
+        />
         <Text style={styles.itemCount}>{amount}</Text>
         <Text style={styles.itemCountCoin}>
           {formatCoin(balance, coin, 0)}
@@ -365,6 +375,7 @@ class DashboardScreen extends BaseScreen {
         <ScrollView
           contentContainerStyle={styles.dashboardScreen}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           refreshControl={(
             <RefreshControl
               refreshing={refreshing}
@@ -394,7 +405,16 @@ const styles = ScaledSheet.create({
     backgroundColor: '#ECEEF3',
   },
   container: {
-    marginTop: '2@s',
+    marginTop: '20@s',
+    borderRadius: '135@s',
+    shadowColor: '#0530b0',
+    shadowOpacity: 0.05,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    marginBottom: '30@s',
+    backgroundColor: '#ffffff',
   },
   sumSeriresGroup: {
     alignSelf: 'center',
@@ -402,7 +422,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     position: 'absolute',
     marginTop: '132@s',
-    zIndex: 3,
+    zIndex: 10000,
   },
   sumSerires: {
     color: '#000',
@@ -456,9 +476,16 @@ const styles = ScaledSheet.create({
     marginLeft: '20@s',
     marginRight: '20@s',
     marginTop: '20@s',
+    marginBottom: '5@s',
     justifyContent: 'space-between',
     backgroundColor: '#FFF',
     elevation: 1,
+    shadowColor: '#0530b0',
+    shadowOpacity: 0.05,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
   },
   walletGroup: {
     flexDirection: 'column',

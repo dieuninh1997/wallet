@@ -41,6 +41,7 @@ export function register(registerInfo = {}) {
     login_type: registerInfo.login_type,
     eth_address: registerInfo.eth_address,
     facebook_access_token: registerInfo.facebook_access_token,
+    keystore: registerInfo.keystore,
   };
   console.log('params', params);
 

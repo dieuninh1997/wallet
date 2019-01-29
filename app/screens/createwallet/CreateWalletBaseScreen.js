@@ -26,6 +26,10 @@ import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import MangoLoading from '../common/MangoLoading';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import WalletService from '../../services/wallet';
+import Erc20Service from '../../services/wallet/erc20';
+
+const stripHexPrefix = require('strip-hex-prefix');
 
 export default class CreateWalletBaseScreen extends Component {
   static WALLET_INFO = {
@@ -48,7 +52,6 @@ export default class CreateWalletBaseScreen extends Component {
         passwordConfirm: null,
         phoneNumber: null,
       },
-      cca2: 'vn',
       isLoading: false,
     };
     this.walletInfo = null;
@@ -64,7 +67,6 @@ export default class CreateWalletBaseScreen extends Component {
       nodejs.channel.addListener(
         'message',
         (message) => {
-          console.log(`Wallet created: ${message}`);
           this.walletInfo = JSON.parse(message);
         },
       );
@@ -131,14 +133,12 @@ export default class CreateWalletBaseScreen extends Component {
       });
 
       const { privateKey, address, mnemonic } = this.walletInfo;
-
-      // const mnemonicHash = crypto.createHmac('sha256', mnemonic)
-      //   .update(AppConfig.getClientSecret())
-      //   .digest('hex');
-
       const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
       const registerInfo = this._getRegisterInfo(mnemonicHash, address);
+      const keyStore = await Erc20Service.generateKeystore(stripHexPrefix(privateKey), registerInfo.password);
+      registerInfo.keystore = keyStore.keystore;
+
       const response = await register(registerInfo);
       const loginInfo = response.data;
 
@@ -151,6 +151,7 @@ export default class CreateWalletBaseScreen extends Component {
       AppConfig.PRIVATE_KEY = privateKey;
       AppConfig.MNEMONIC = mnemonic;
       AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
+      AppConfig.KEYSTORE = JSON.parse(keyStore.keystore);
 
       Keyboard.dismiss();
 
@@ -205,7 +206,6 @@ export default class CreateWalletBaseScreen extends Component {
   _getRegisterInfo = (mnemonicHash, address) => {
     const { createWalletInfo } = this.state;
     const loginType = this.getLoginType();
-
     const registerInfo = {
       password: createWalletInfo.password,
       password_confirmation: createWalletInfo.passwordConfirm,

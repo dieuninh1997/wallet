@@ -28,7 +28,7 @@ class BackupPassphraseScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mnemonic: AppConfig.MNEMONIC ? AppConfig.MNEMONIC : null,
+      mnemonic: AppConfig.MNEMONIC ? AppConfig.MNEMONIC : AppConfig.PRIVATE_KEY,
     };
   }
 
@@ -41,7 +41,6 @@ class BackupPassphraseScreen extends Component {
 
   _renderQrCodeSection = () => {
     const { mnemonic } = this.state;
-    console.log('Mnemonic: ', mnemonic);
 
     return (
       <View style={styles.qrCodeSectionContainer}>
@@ -80,7 +79,7 @@ class BackupPassphraseScreen extends Component {
       <MangoGradientButton
         btnText={I18n.t('backupPassphrase.btnCopy')}
         btnStyle={styles.btnCopyAddress}
-        onPress={() => this._handleCopyAddress()}
+        onPress={this._handleCopyAddress}
       />
     </View>
   )
@@ -113,7 +112,6 @@ const styles = ScaledSheet.create({
     padding: '10@s',
   },
 
-  // Section qrCode
   qrCodeSectionContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -152,7 +150,6 @@ const styles = ScaledSheet.create({
     marginBottom: '10@s',
   },
 
-  // Section button
   groupBtnContainer: {
     flexDirection: 'row',
     marginTop: '20@s',

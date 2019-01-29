@@ -26,8 +26,6 @@ import AppConfig from '../../utils/AppConfig';
 import Consts from '../../utils/Consts';
 import MangoLoading from '../common/MangoLoading';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
-import WalletService from '../../services/wallet';
-import Erc20Service from '../../services/wallet/erc20';
 
 const stripHexPrefix = require('strip-hex-prefix');
 
@@ -75,6 +73,25 @@ export default class CreateWalletBaseScreen extends Component {
       console.log('CreateByEmailScreen._generateWallet: ', error);
     }
   }
+
+  _generateKeystore = data => new Promise((resolve, reject) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'generateKeystore',
+        (message) => {
+          resolve(JSON.parse(message));
+        },
+      );
+      nodejs.channel.post('generateKeystore', JSON.stringify({
+        action: 'generateKeystore',
+        data: JSON.stringify(data),
+      }));
+    } catch (error) {
+      console.log('CreateByEmailScreen._generateKeystore._error: ', error);
+      reject(error);
+    }
+  })
 
   getLoginType = () => {
     throw new Error('Please override this method in sub-class');
@@ -136,7 +153,12 @@ export default class CreateWalletBaseScreen extends Component {
       const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
       const registerInfo = this._getRegisterInfo(mnemonicHash, address);
-      const keyStore = await Erc20Service.generateKeystore(stripHexPrefix(privateKey), registerInfo.password);
+      const dataGenKeystore = {
+        privateKey: stripHexPrefix(privateKey),
+        password: registerInfo.password,
+      };
+
+      const keyStore = await this._generateKeystore(dataGenKeystore);
       registerInfo.keystore = keyStore.keystore;
 
       const response = await register(registerInfo);

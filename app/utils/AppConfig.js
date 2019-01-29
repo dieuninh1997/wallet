@@ -1,3 +1,4 @@
+
 import {
   DEV,
   API_SERVER as DEV_API_SERVER,
@@ -22,13 +23,15 @@ export default class AppConfig {
 
   static CLIENT_SECRET = 'StlCjFYGWaqV6A1z3Rd01K2aEM2bsD5cVCBK7xhF';
 
-  static ACCESS_TOKEN = '';
-
   static SIGN_UP_URL = '/webview/sign_up';
+
+  static ACCESS_TOKEN = '';
 
   static PRIVATE_KEY = '';
 
   static MNEMONIC = '';
+
+  static KEYSTORE = '';
 
   static dev() {
     return __DEV__ && JSON.parse(DEV);

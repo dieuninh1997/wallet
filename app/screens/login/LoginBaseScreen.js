@@ -23,6 +23,8 @@ import {
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
+import Erc20Service from '../../services/wallet/erc20';
+import AppConfig from '../../utils/AppConfig';
 
 class LoginBaseScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -91,14 +93,20 @@ class LoginBaseScreen extends Component {
       const responseUser = await login(email, password, otp = '', loginType = this.signinType);
 
       loginInfo.loginType = this.signinType;
+      const keystore = JSON.parse(responseUser.keystore);
 
-      AppPreferences.saveToKeychain({
-        access_token: responseUser.access_token,
-      });
-
-      // window.GlobalSocket.connect();
+      const walletInfo = await Erc20Service.importWalletFromKeystore(keystore, password);
       Keyboard.dismiss();
-      navigation.navigate('RestoreWalletScreen', { loginInfo });
+      await AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token,
+        private_key: walletInfo.privateKey,
+      });
+      AppConfig.PRIVATE_KEY = walletInfo.privateKey;
+      AppConfig.ACCESS_TOKEN = responseUser.access_token;
+      AppConfig.KEYSTORE = keystore;
+
+      await AsyncStorage.setItem('address', walletInfo.address);
+      navigation.navigate('AddPinScreen');
     } catch (error) {
       if (error.error === 'invalid_otp') {
         navigation.navigate('GoogleOtpVerifyScreen', { email, password, loginType: this.signinType });

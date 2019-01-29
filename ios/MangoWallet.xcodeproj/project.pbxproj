@@ -1345,7 +1345,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9P8682W6JR;
+						DevelopmentTeam = Y66JFK5Q4Z;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -2303,7 +2303,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9P8682W6JR;
+				DEVELOPMENT_TEAM = Y66JFK5Q4Z;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"../node_modules/nodejs-mobile-react-native/ios\"/**",
@@ -2356,7 +2356,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9P8682W6JR;
+				DEVELOPMENT_TEAM = Y66JFK5Q4Z;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"../node_modules/nodejs-mobile-react-native/ios\"/**",

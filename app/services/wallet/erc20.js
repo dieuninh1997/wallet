@@ -76,7 +76,6 @@ Erc20Service.generateKeystore = (userPrivateKey, password) => {
 Erc20Service.importWalletFromKeystore = (keystore, password) => {
   try {
     const wallet = EthereumjsWallet.fromV3(keystore, password);
-
     return {
       privateKey: wallet.getPrivateKey().toString('hex'),
       address: `0x${wallet.getAddress().toString('hex')}`,

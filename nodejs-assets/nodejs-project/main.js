@@ -15,6 +15,10 @@ rn_bridge.channel.on('generateKeystore', async (message) => {
   rn_bridge.channel.post('generateKeystore', await handleMessage(message));
 });
 
+rn_bridge.channel.on('importWalletFromKeystore', async (message) => {
+  rn_bridge.channel.post('importWalletFromKeystore', await handleMessage(message));
+});
+
 async function handleMessage(message) {
   const { action, data } = JSON.parse(message);
 
@@ -25,6 +29,8 @@ async function handleMessage(message) {
     return await importWalletFromMnemonic(data);
   case 'generateKeystore':
     return await generateKeystore(data);
+    case 'importWalletFromKeystore':
+    return await importWalletFromKeystore(data);
   default:
     return true;
   }
@@ -55,3 +61,19 @@ function generateKeystore(data) {
     keystore,
   });
 }
+
+function importWalletFromKeystore(data) {
+  const { keystore, password } = JSON.parse(data);
+  try {
+    const wallet = EthereumjsWallet.fromV3(keystore, password);
+    return JSON.stringify({
+      privateKey: wallet.getPrivateKey().toString('hex'),
+      address: `0x${wallet.getAddress().toString('hex')}`,
+    });
+  } catch (error) {
+    if (_.includes(error.message, 'wrong passphrase')) {
+      throw new Error(Errors.INVALID_PASSWORD);
+    }
+    throw new Error(Errors.INVALID_KEYSTORE);
+  }
+};

@@ -69,12 +69,13 @@ export function getCurrentUser(useCache = true, params) {
   });
 }
 
-export function changePassword(password, newPassword, otp = '') {
+export function changePassword(password, newPassword, otp = '', keystore) {
   const url = '/change-password';
   const params = {
     password,
     new_password: newPassword,
     otp,
+    keystore,
   };
   return put(url, params);
 }

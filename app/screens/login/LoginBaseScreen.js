@@ -23,8 +23,9 @@ import {
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import UIUtils from '../../utils/UIUtils';
-import Erc20Service from '../../services/wallet/erc20';
 import AppConfig from '../../utils/AppConfig';
+import nodejs from 'nodejs-mobile-react-native';
+import MangoLoading from '../common/MangoLoading';
 
 class LoginBaseScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -79,9 +80,29 @@ class LoginBaseScreen extends Component {
         email: null,
         password: null,
       },
+      isLoading: false,
     };
     this.signinType = signinType;
   }
+
+  _importWalletFromKeystore = data => new Promise((resolve, reject) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'importWalletFromKeystore',
+        (message) => {
+          resolve(JSON.parse(message));
+        },
+      );
+      nodejs.channel.post('importWalletFromKeystore', JSON.stringify({
+        action: 'importWalletFromKeystore',
+        data: JSON.stringify(data),
+      }));
+    } catch (error) {
+      console.log('LoginBaseScreen._importWalletFromKeystore._error: ', error);
+      reject(error);
+    }
+  })
 
   _handleClickLogin = async () => {
     const { loginInfo } = this.state;
@@ -90,12 +111,20 @@ class LoginBaseScreen extends Component {
 
     try {
       this._validateForm();
+      this.setState({
+        isLoading: true,
+      });
       const responseUser = await login(email, password, otp = '', loginType = this.signinType);
 
       loginInfo.loginType = this.signinType;
       const keystore = JSON.parse(responseUser.keystore);
 
-      const walletInfo = await Erc20Service.importWalletFromKeystore(keystore, password);
+      const dataGenInfoWallet = {
+        keystore,
+        password,
+      };
+
+      const walletInfo = await this._importWalletFromKeystore(dataGenInfoWallet)
       Keyboard.dismiss();
       await AppPreferences.saveToKeychain({
         access_token: responseUser.access_token,
@@ -106,8 +135,14 @@ class LoginBaseScreen extends Component {
       AppConfig.KEYSTORE = keystore;
 
       await AsyncStorage.setItem('address', walletInfo.address);
+      this.setState({
+        isLoading: false,
+      });
       navigation.navigate('AddPinScreen');
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
       if (error.error === 'invalid_otp') {
         navigation.navigate('GoogleOtpVerifyScreen', { email, password, loginType: this.signinType });
         return;
@@ -315,12 +350,15 @@ class LoginBaseScreen extends Component {
   )
 
   render() {
+    const { isLoading } = this.state;
+
     return (
       <View style={styles.container}>
+      { isLoading ? <MangoLoading /> : null}
         <ScrollView>
           {this._renderFormLogin()}
           {this._renderBtnLogin()}
-          {this._renderBtnForgotPassword()}
+          {/*this._renderBtnForgotPassword()*/}
         </ScrollView>
 
       </View>

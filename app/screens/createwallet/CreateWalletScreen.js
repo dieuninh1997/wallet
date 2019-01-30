@@ -174,7 +174,7 @@ export default class CreateWalletScreen extends Component {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.6}
             style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
             onPress={() => this._handleClickCreateWalletByFacebook()}
@@ -183,7 +183,7 @@ export default class CreateWalletScreen extends Component {
             <Text style={styles.textCreateEnable}>
               {I18n.t('createWallet.facebook')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -227,6 +227,7 @@ const styles = ScaledSheet.create({
 
   groupBtnContainer: {
     flex: 1,
+    justifyContent: 'center',
   },
 
   btnCreateWalletContainer: {

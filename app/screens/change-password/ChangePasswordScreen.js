@@ -12,6 +12,11 @@ import UIUtils from '../../utils/UIUtils';
 import {
   CommonColors, CommonSize, CommonStyles, Fonts,
 } from '../../utils/CommonStyles';
+import AppConfig from '../../utils/AppConfig';
+import nodejs from 'nodejs-mobile-react-native';
+import MangoLoading from '../common/MangoLoading';
+
+const stripHexPrefix = require('strip-hex-prefix');
 
 class ChangePasswordScreen extends BaseScreen {
   constructor(props) {
@@ -24,6 +29,8 @@ class ChangePasswordScreen extends BaseScreen {
       error: '',
       isEnableOtp: false,
       otp: '',
+      privateKey: AppConfig.PRIVATE_KEY,
+      isLoading: false,
     };
   }
 
@@ -38,9 +45,28 @@ class ChangePasswordScreen extends BaseScreen {
     });
   }
 
+  _generateKeystore = data => new Promise((resolve, reject) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'generateKeystore',
+        (message) => {
+          resolve(JSON.parse(message));
+        },
+      );
+      nodejs.channel.post('generateKeystore', JSON.stringify({
+        action: 'generateKeystore',
+        data: JSON.stringify(data),
+      }));
+    } catch (error) {
+      console.log('CreateByEmailScreen._generateKeystore._error: ', error);
+      reject(error);
+    }
+  })
+
   _onClickUpdate = async () => {
     const {
-      currenPassword, newPassword, confirmNewPassword, otp, isEnableOtp,
+      currenPassword, newPassword, confirmNewPassword, otp, isEnableOtp, privateKey,
     } = this.state;
 
     if (isEnableOtp) {
@@ -65,12 +91,29 @@ class ChangePasswordScreen extends BaseScreen {
       return;
     }
 
+    const dataGenKeystore = {
+      privateKey: stripHexPrefix(privateKey),
+      password: newPassword,
+    };
+
     try {
-      await changePassword(currenPassword, newPassword, otp);
+      this.setState({
+        isLoading: true,
+      })
+  
+      const keyStore = await this._generateKeystore(dataGenKeystore);
+      AppConfig.KEYSTORE = JSON.parse(keyStore.keystore);
+      await changePassword(currenPassword, newPassword, otp, keyStore.keystore);
 
       UIUtils.showToastMessage(I18n.t('changePassword.changeSuccess'), 'success');
+      this.setState({
+        isLoading: false,
+      })
       this.setModalVisible(false);
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      })
       if (error.errors) {
         this.setState({
           error: error.errors[Object.keys(error.errors)[0]][0],
@@ -84,7 +127,7 @@ class ChangePasswordScreen extends BaseScreen {
   }
 
   render() {
-    const { modalVisible, error, isEnableOtp } = this.state;
+    const { modalVisible, error, isEnableOtp, isLoading } = this.state;
     let height = modalHeight;
     if (isEnableOtp) {
       height += scale(64);
@@ -105,6 +148,7 @@ class ChangePasswordScreen extends BaseScreen {
         >
           <View style={[styles.popup, { height }]}>
             {/* <View style={{ flex: 1 }}> */}
+            {isLoading ? <MangoLoading/> : null}
             {this._renderHeader()}
             {this._renderContent()}
             {this._renderFooter()}

@@ -5,6 +5,7 @@ import {
   TextInput,
   Keyboard,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import I18n from '../../i18n/i18n';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
@@ -17,6 +18,9 @@ import UIUtils from '../../utils/UIUtils';
 import { login } from '../../api/user/UserRequest';
 import AppPreferences from '../../utils/AppPreferences';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils';
+import nodejs from 'nodejs-mobile-react-native';
+import MangoLoading from '../common/MangoLoading';
+import AppConfig from '../../utils/AppConfig';
 
 export default class GoogleOtpVerifyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,6 +39,7 @@ export default class GoogleOtpVerifyScreen extends Component {
       email: null,
       password: null,
       loginType: null,
+      isLoading: false,
     };
   }
 
@@ -65,6 +70,25 @@ export default class GoogleOtpVerifyScreen extends Component {
     });
   }
 
+  _importWalletFromKeystore = data => new Promise((resolve, reject) => {
+    try {
+      nodejs.start('main.js');
+      nodejs.channel.addListener(
+        'importWalletFromKeystore',
+        (message) => {
+          resolve(JSON.parse(message));
+        },
+      );
+      nodejs.channel.post('importWalletFromKeystore', JSON.stringify({
+        action: 'importWalletFromKeystore',
+        data: JSON.stringify(data),
+      }));
+    } catch (error) {
+      console.log('LoginBaseScreen._importWalletFromKeystore._error: ', error);
+      reject(error);
+    }
+  })
+
   _handleSubmit = async () => {
     const {
       email, password, authenticatorCode, loginType,
@@ -76,20 +100,37 @@ export default class GoogleOtpVerifyScreen extends Component {
     }
 
     try {
-      const responseUser = await login(email, password, authenticatorCode, loginType);
-      AppPreferences.saveToKeychain({
-        access_token: responseUser.access_token,
+      this.setState({
+        isLoading: true,
       });
-      // window.GlobalSocket.connect();
-      Keyboard.dismiss();
-      const loginInfo = {
-        email,
+      const responseUser = await login(email, password, authenticatorCode, loginType);
+      const keystore = JSON.parse(responseUser.keystore);
+
+      const dataGenInfoWallet = {
+        keystore,
         password,
-        loginType,
       };
 
-      navigation.navigate('RestoreWalletScreen', { loginInfo });
+      const walletInfo = await this._importWalletFromKeystore(dataGenInfoWallet)
+      // window.GlobalSocket.connect();
+      Keyboard.dismiss();
+      await AppPreferences.saveToKeychain({
+        access_token: responseUser.access_token,
+        private_key: walletInfo.privateKey,
+      });
+      AppConfig.PRIVATE_KEY = walletInfo.privateKey;
+      AppConfig.ACCESS_TOKEN = responseUser.access_token;
+      AppConfig.KEYSTORE = keystore;
+
+      await AsyncStorage.setItem('address', walletInfo.address);
+      this.setState({
+        isLoading: false,
+      });
+      navigation.navigate('AddPinScreen');
     } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
@@ -153,10 +194,11 @@ export default class GoogleOtpVerifyScreen extends Component {
   }
 
   render() {
-    const { isGoogleOtp, authenticatorCode } = this.state;
+    const { isGoogleOtp, authenticatorCode, isLoading } = this.state;
 
     return (
       <View style={styles.googleOtpVerifyScreen}>
+        { isLoading ? <MangoLoading /> : null }
         <View style={styles.navigatorBlock}>
           <TouchableOpacity onPress={() => this._navigateTab(true)}>
             <View style={styles.googleAuthen}>

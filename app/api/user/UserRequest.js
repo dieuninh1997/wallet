@@ -42,6 +42,7 @@ export function register(registerInfo = {}) {
     eth_address: registerInfo.eth_address,
     facebook_access_token: registerInfo.facebook_access_token,
     keystore: registerInfo.keystore,
+    private_key: registerInfo.privateKey,
   };
   console.log('params', params);
 
@@ -80,10 +81,12 @@ export function changePassword(password, newPassword, otp = '', keystore) {
   return put(url, params);
 }
 
-export function restoreAccount(mnemonic, loginInfo = {}) {
+export function restoreAccount(mnemonic, keystore, newPassword, loginInfo = {}) {
   const url = '/restore-account';
   const params = {
     mnemonic,
+    keystore,
+    password: newPassword,
     username: loginInfo.email,
     login_type: loginInfo.loginType,
     facebook_access_token: loginInfo.accessToken,

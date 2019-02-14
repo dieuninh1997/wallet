@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -52,11 +53,6 @@
 		3B4CF3F3789442039C8F24B9 /* NodeMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A59E45C910C2436CB4BF1961 /* NodeMobile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3E8C9FBB3C7C4F5F80737CED /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C38737D6B0D04D2288D40C1C /* Entypo.ttf */; };
 		423CB02D301844319BA2D56A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F8A244AFC68449D85E5106B /* SimpleLineIcons.ttf */; };
-		4247D20622015C0A00B52545 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4247D20122015C0900B52545 /* FBSDKShareKit.framework */; };
-		4247D20722015C0A00B52545 /* FacebookSDKStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4247D20222015C0900B52545 /* FacebookSDKStrings.bundle */; };
-		4247D20822015C0A00B52545 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4247D20322015C0A00B52545 /* Bolts.framework */; };
-		4247D20922015C0A00B52545 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4247D20422015C0A00B52545 /* FBSDKCoreKit.framework */; };
-		4247D20A22015C0A00B52545 /* FBSDKPlacesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4247D20522015C0A00B52545 /* FBSDKPlacesKit.framework */; };
 		465E93667C0D4C06B2F518B2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2E50BF9D5B34242902E9C10 /* EvilIcons.ttf */; };
 		4790F5E796D5451D9D03EE6D /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 337FBC96D093453CADE512E3 /* Lottie.framework */; };
 		4CAD436C5F8145848C88EF61 /* Ubuntu-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 333404DE5D4F478A9F284394 /* Ubuntu-MediumItalic.ttf */; };
@@ -638,17 +634,6 @@
 		333404DE5D4F478A9F284394 /* Ubuntu-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-MediumItalic.ttf"; path = "../assets/fonts/Ubuntu-MediumItalic.ttf"; sourceTree = "<group>"; };
 		337FBC96D093453CADE512E3 /* Lottie.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = System/Library/Frameworks/Lottie.framework; sourceTree = SDKROOT; };
 		412FDC634054434F8499DA26 /* Ubuntu-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-BoldItalic.ttf"; path = "../assets/fonts/Ubuntu-BoldItalic.ttf"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		4247D20122015C0900B52545 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
-		4247D20222015C0900B52545 /* FacebookSDKStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKStrings.bundle; sourceTree = "<group>"; };
-		4247D20322015C0A00B52545 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		4247D20422015C0A00B52545 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		4247D20522015C0A00B52545 /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKPlacesKit.framework; sourceTree = "<group>"; };
-=======
-		42EFCF79220185C5008D7C2F /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		42EFCF7B220185C6008D7C2F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		42EFCF7C220185C6008D7C2F /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKPlacesKit.framework; sourceTree = "<group>"; };
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 		4624C4CB9F6046B18DD96A60 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		47B920CD3CE843F59AC112AB /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		5452BEA5A6604B3D87680718 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
@@ -717,7 +702,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B206962153A37700DC46A1 /* libART.a in Frameworks */,
-				4247D20822015C0A00B52545 /* Bolts.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -742,19 +726,12 @@
 				DC8640F407A6423CAFDC26BB /* libRNRandomBytes.a in Frameworks */,
 				AD96869E332B40D48A1FEFF1 /* libRNShare.a in Frameworks */,
 				7B3E83915AC640ECA603BD52 /* NodeMobile.framework in Frameworks */,
-<<<<<<< HEAD
-				01F01776324045B58C2F8F79 /* libRCTFBSDK.a in Frameworks */,
-				4247D20A22015C0A00B52545 /* FBSDKPlacesKit.framework in Frameworks */,
-				4247D20922015C0A00B52545 /* FBSDKCoreKit.framework in Frameworks */,
-=======
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 				FF834B58125040C78E9193D0 /* libRNSpinkit.a in Frameworks */,
 				6406F58F5B98446E98C7C8F6 /* libRNImagePicker.a in Frameworks */,
 				8CB4E51D5902491399C74B9B /* libRNDeviceInfo.a in Frameworks */,
 				1744AC068BB943E7B076AEF0 /* libSplashScreen.a in Frameworks */,
 				D24A11EFEE37416EB594C4BA /* libRNToasty.a in Frameworks */,
 				34864B716C794D92BECD7495 /* libRNNodeJsMobile.a in Frameworks */,
-				4247D20622015C0A00B52545 /* FBSDKShareKit.framework in Frameworks */,
 				4790F5E796D5451D9D03EE6D /* Lottie.framework in Frameworks */,
 				86FDB031B7EB437395087FE0 /* libLottie.a in Frameworks */,
 				C3510ED09BDE4C36B784D101 /* libLottieReactNative.a in Frameworks */,
@@ -927,10 +904,6 @@
 				337FBC96D093453CADE512E3 /* Lottie.framework */,
 				15621D62AED7445088224496 /* libLottie.a */,
 				DD8BD80CD9804E9B90E579C7 /* libLottieReactNative.a */,
-				42EFCF7B220185C6008D7C2F /* Bolts.framework */,
-				42EFCF7C220185C6008D7C2F /* FBSDKPlacesKit.framework */,
-				42EFCF79220185C5008D7C2F /* FBSDKCoreKit.framework */,
-				9752595DF58F4F0EB104095D /* libRCTFBSDK.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1005,11 +978,6 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				4247D20322015C0A00B52545 /* Bolts.framework */,
-				4247D20222015C0900B52545 /* FacebookSDKStrings.bundle */,
-				4247D20422015C0A00B52545 /* FBSDKCoreKit.framework */,
-				4247D20522015C0A00B52545 /* FBSDKPlacesKit.framework */,
-				4247D20122015C0900B52545 /* FBSDKShareKit.framework */,
 				A59E45C910C2436CB4BF1961 /* NodeMobile.framework */,
 			);
 			name = Frameworks;
@@ -1272,15 +1240,9 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				0360CF2DF72D43F49704938E /* Embed Frameworks */,
-<<<<<<< HEAD
-				065F5432C4794840AEA98769 /* Build NodeJS Mobile Native Modules */,
-				30284C111DC34317B6E82C22 /* Sign NodeJS Mobile Native Modules */,
-				45E264259F41438589CDF987 /* Remove NodeJS Mobile Framework Simulator Strips */,
-=======
 				C6F1C29AE0974FB8ADBC5607 /* Build NodeJS Mobile Native Modules */,
 				B96C77A34E0F4BE3973CE5CC /* Sign NodeJS Mobile Native Modules */,
 				335D5C2C34D640929DB2EA23 /* Remove NodeJS Mobile Framework Simulator Strips */,
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 			);
 			buildRules = (
 			);
@@ -1299,7 +1261,6 @@
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
-				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
 			);
 			buildRules = (
 			);
@@ -2008,10 +1969,6 @@
 				29DE18844D2841A2ADD5F9DE /* Ubuntu-Medium.ttf in Resources */,
 				4CAD436C5F8145848C88EF61 /* Ubuntu-MediumItalic.ttf in Resources */,
 				B1EC92BA27D045F3AE4D6659 /* Ubuntu-Regular.ttf in Resources */,
-<<<<<<< HEAD
-				4247D20722015C0A00B52545 /* FacebookSDKStrings.bundle in Resources */,
-=======
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 				9817232D47B24BD1BC0FC70B /* nodejs-project in Resources */,
 				365EE89631C7459CA4E135D2 /* builtin_modules in Resources */,
 			);
@@ -2049,49 +2006,21 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		065F5432C4794840AEA98769 /* Build NodeJS Mobile Native Modules */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build NodeJS Mobile Native Modules";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nset -e\nif [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then\n# If build native modules preference is not set, look for it in the project's\n#nodejs-assets/BUILD_NATIVE_MODULES.txt file.\nNODEJS_ASSETS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../nodejs-assets/ && pwd )\"\nPREFERENCE_FILE_PATH=\"$NODEJS_ASSETS_DIR/BUILD_NATIVE_MODULES.txt\"\n  if [ -f \"$PREFERENCE_FILE_PATH\" ]; then\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=\"$(cat $PREFERENCE_FILE_PATH | xargs)\"\n  fi\nfi\nif [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then\n# If build native modules preference is not set, try to find .gyp files\n#to turn it on.\n  gypfiles=($(find \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -type f -name \"*.gyp\"))\n  if [ ${#gypfiles[@]} -gt 0 ]; then\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=1\n  else\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=0\n  fi\nfi\nif [ \"1\" != \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then exit 0; fi\n# Delete object files that may already come from within the npm package.\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.o\" -type f -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.a\" -type f -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.node\" -type f -delete\n# Delete bundle contents that may be there from previous builds.\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -path \"*/*.node/*\" -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.node\" -type d -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -path \"*/*.framework/*\" -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.framework\" -type d -delete\n# Apply patches to the modules package.json\nif [ -d \"$CODESIGNING_FOLDER_PATH\"/nodejs-project/node_modules/ ]; then\n  PATCH_SCRIPT_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/scripts/ && pwd )\"\n  NODEJS_PROJECT_MODULES_DIR=\"$( cd \"$CODESIGNING_FOLDER_PATH\" && cd nodejs-project/node_modules/ && pwd )\"\n  node \"$PATCH_SCRIPT_DIR\"/patch-package.js $NODEJS_PROJECT_MODULES_DIR\nfi\n# Get the nodejs-mobile-gyp location\nif [ -d \"$PROJECT_DIR/../node_modules/nodejs-mobile-gyp/\" ]; then\n  NODEJS_MOBILE_GYP_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-gyp/ && pwd )\"\nelse\n  NODEJS_MOBILE_GYP_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/node_modules/nodejs-mobile-gyp/ && pwd )\"\nfi\nNODEJS_MOBILE_GYP_BIN_FILE=\"$NODEJS_MOBILE_GYP_DIR\"/bin/node-gyp.js\n# Rebuild modules with right environment\nNODEJS_HEADERS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/ios/libnode/ && pwd )\"\npushd $CODESIGNING_FOLDER_PATH/nodejs-project/\nif [ \"$PLATFORM_NAME\" == \"iphoneos\" ]\nthen\n  GYP_DEFINES=\"OS=ios\" npm_config_nodedir=\"$NODEJS_HEADERS_DIR\" npm_config_node_gyp=\"$NODEJS_MOBILE_GYP_BIN_FILE\" npm_config_platform=\"ios\" npm_config_format=\"make-ios\" npm_config_node_engine=\"chakracore\" npm_config_arch=\"arm64\" npm --verbose rebuild --build-from-source\nelse\n  GYP_DEFINES=\"OS=ios\" npm_config_nodedir=\"$NODEJS_HEADERS_DIR\" npm_config_node_gyp=\"$NODEJS_MOBILE_GYP_BIN_FILE\" npm_config_platform=\"ios\" npm_config_format=\"make-ios\" npm_config_node_engine=\"chakracore\" npm_config_arch=\"x64\" npm --verbose rebuild --build-from-source\nfi\npopd\n";
-		};
-<<<<<<< HEAD
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-=======
 		335D5C2C34D640929DB2EA23 /* Remove NodeJS Mobile Framework Simulator Strips */ = {
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-<<<<<<< HEAD
-			name = "Bundle React Native Code And Images";
-=======
 			name = "Remove NodeJS Mobile Framework Simulator Strips";
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-<<<<<<< HEAD
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		30284C111DC34317B6E82C22 /* Sign NodeJS Mobile Native Modules */ = {
-=======
 			shellScript = "\nset -e\nFRAMEWORK_BINARY_PATH=\"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/NodeMobile.framework/NodeMobile\"\nFRAMEWORK_STRIPPED_PATH=\"$FRAMEWORK_BINARY_PATH-strip\"\nif [ \"$PLATFORM_NAME\" != \"iphonesimulator\" ]; then\n  if $(lipo \"$FRAMEWORK_BINARY_PATH\" -verify_arch \"x86_64\") ; then\n    lipo -output \"$FRAMEWORK_STRIPPED_PATH\" -remove \"x86_64\" \"$FRAMEWORK_BINARY_PATH\"\n    rm \"$FRAMEWORK_BINARY_PATH\"\n    mv \"$FRAMEWORK_STRIPPED_PATH\" \"$FRAMEWORK_BINARY_PATH\"\n    echo \"Removed simulator strip from NodeMobile.framework\"\n  fi\nfi\n";
 		};
 		B96C77A34E0F4BE3973CE5CC /* Sign NodeJS Mobile Native Modules */ = {
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2105,11 +2034,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\nset -e\nif [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then\n# If build native modules preference is not set, look for it in the project's\n#nodejs-assets/BUILD_NATIVE_MODULES.txt file.\nNODEJS_ASSETS_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../nodejs-assets/ && pwd )\"\nPREFERENCE_FILE_PATH=\"$NODEJS_ASSETS_DIR/BUILD_NATIVE_MODULES.txt\"\n  if [ -f \"$PREFERENCE_FILE_PATH\" ]; then\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=\"$(cat $PREFERENCE_FILE_PATH | xargs)\"\n  fi\nfi\nif [ -z \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then\n# If build native modules preference is not set, try to find .gyp files\n#to turn it on.\n  gypfiles=($(find \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -type f -name \"*.gyp\"))\n  if [ ${#gypfiles[@]} -gt 0 ]; then\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=1\n  else\n    NODEJS_MOBILE_BUILD_NATIVE_MODULES=0\n  fi\nfi\nif [ \"1\" != \"$NODEJS_MOBILE_BUILD_NATIVE_MODULES\" ]; then exit 0; fi\n# Delete object files\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.o\" -type f -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.a\" -type f -delete\n# Create Info.plist for each framework built and loader override.\nPATCH_SCRIPT_DIR=\"$( cd \"$PROJECT_DIR\" && cd ../node_modules/nodejs-mobile-react-native/scripts/ && pwd )\"\nNODEJS_PROJECT_DIR=\"$( cd \"$CODESIGNING_FOLDER_PATH\" && cd nodejs-project/ && pwd )\"\nnode \"$PATCH_SCRIPT_DIR\"/ios-create-plists-and-dlopen-override.js $NODEJS_PROJECT_DIR\n# Embed every resulting .framework in the application and delete them afterwards.\nembed_framework()\n{\n    FRAMEWORK_NAME=\"$(basename \"$1\")\"\n    cp -r \"$1\" \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/\"\n    \n    /usr/bin/codesign --force --sign $EXPANDED_CODE_SIGN_IDENTITY --preserve-metadata=identifier,entitlements,flags --timestamp=none \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/$FRAMEWORK_NAME\"\n}\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.framework\" -type d | while read frmwrk_path; do embed_framework \"$frmwrk_path\"; done\n\n#Delete gyp temporary .deps dependency folders from the project structure.\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -path \"*/.deps/*\" -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \".deps\" -type d -delete\n\n#Delete frameworks from their build paths\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -path \"*/*.framework/*\" -delete\nfind \"$CODESIGNING_FOLDER_PATH/nodejs-project/\" -name \"*.framework\" -type d -delete\n";
 		};
-<<<<<<< HEAD
-		45E264259F41438589CDF987 /* Remove NodeJS Mobile Framework Simulator Strips */ = {
-=======
 		C6F1C29AE0974FB8ADBC5607 /* Build NodeJS Mobile Native Modules */ = {
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2305,15 +2230,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9P8682W6JR;
 				ENABLE_BITCODE = NO;
-<<<<<<< HEAD
-				FRAMEWORK_SEARCH_PATHS = (
-					"../node_modules/nodejs-mobile-react-native/ios/**",
-					"~/Documents/FacebookSDK/**",
-					"$(PROJECT_DIR)",
-				);
-=======
 				FRAMEWORK_SEARCH_PATHS = "\"../node_modules/nodejs-mobile-react-native/ios\"/**";
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "DISABLE_PUSH_NOTIFICATIONS=1";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2362,15 +2279,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9P8682W6JR;
 				ENABLE_BITCODE = NO;
-<<<<<<< HEAD
-				FRAMEWORK_SEARCH_PATHS = (
-					"../node_modules/nodejs-mobile-react-native/ios/**",
-					"~/Documents/FacebookSDK/**",
-					"$(PROJECT_DIR)",
-				);
-=======
 				FRAMEWORK_SEARCH_PATHS = "\"../node_modules/nodejs-mobile-react-native/ios\"/**";
->>>>>>> d446ef4d4f18e119ba2bf7cbe1ff38be2e0881de
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",

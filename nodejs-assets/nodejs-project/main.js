@@ -19,6 +19,10 @@ rn_bridge.channel.on('importWalletFromKeystore', async (message) => {
   rn_bridge.channel.post('importWalletFromKeystore', await handleMessage(message));
 });
 
+rn_bridge.channel.on('importWalletFromPrivateKey', async (message) => {
+  rn_bridge.channel.post('importWalletFromPrivateKey', await handleMessage(message));
+});
+
 async function handleMessage(message) {
   const { action, data } = JSON.parse(message);
 
@@ -29,8 +33,10 @@ async function handleMessage(message) {
     return await importWalletFromMnemonic(data);
   case 'generateKeystore':
     return await generateKeystore(data);
-    case 'importWalletFromKeystore':
+  case 'importWalletFromKeystore':
     return await importWalletFromKeystore(data);
+  case 'importWalletFromPrivateKey':
+    return await importWalletFromPrivateKey(data);
   default:
     return true;
   }
@@ -77,3 +83,13 @@ function importWalletFromKeystore(data) {
     throw new Error(Errors.INVALID_KEYSTORE);
   }
 };
+
+function importWalletFromPrivateKey(data){
+  const { privateKey } = JSON.parse(data);
+  const wallet = new ethers.Wallet(Buffer.from(privateKey, 'hex'), new ethers.providers.EtherscanProvider('ropsten'));
+
+  return JSON.stringify({
+    privateKey,
+    address: wallet.address,
+  });
+}

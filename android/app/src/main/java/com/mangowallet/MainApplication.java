@@ -119,7 +119,6 @@ public class MainApplication extends Application implements ReactApplication {
         new SplashScreenReactPackage(),
         new RNSpinkitPackage(),
         new RNDeviceInfo(),
-        new FBSDKPackage(mCallbackManager),
         new RNNodeJsMobilePackage(),
         new RNSharePackage(),
         new RandomBytesPackage(),

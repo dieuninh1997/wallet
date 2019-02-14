@@ -151,6 +151,7 @@ export default class CreateWalletBaseScreen extends Component {
 
       const { privateKey, address, mnemonic } = this.walletInfo;
       const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
+      const privateKeyHash = CryptoJS.SHA256(privateKey).toString();
 
       const registerInfo = this._getRegisterInfo(mnemonicHash, address);
       const dataGenKeystore = {
@@ -160,6 +161,7 @@ export default class CreateWalletBaseScreen extends Component {
 
       const keyStore = await this._generateKeystore(dataGenKeystore);
       registerInfo.keystore = keyStore.keystore;
+      registerInfo.privateKey = privateKeyHash;
 
       const response = await register(registerInfo);
       const loginInfo = response.data;

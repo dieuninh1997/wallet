@@ -9,7 +9,6 @@ import ui.toasty.RNToastyPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.react.rnspinkit.RNSpinkitPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import cl.json.RNSharePackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.oblador.keychain.KeychainPackage;
@@ -120,7 +119,6 @@ public class MainApplication extends Application implements ReactApplication {
         new SplashScreenReactPackage(),
         new RNSpinkitPackage(),
         new RNDeviceInfo(),
-        new FBSDKPackage(mCallbackManager),
         new RNNodeJsMobilePackage(),
         new RNSharePackage(),
         new RandomBytesPackage(),

@@ -7,6 +7,7 @@ module.exports = {
     return blacklist([
       /nodejs-assets\/.*/,
       /android\/.*/,
+      /ios\/.*/,
     ]);
   },
 };

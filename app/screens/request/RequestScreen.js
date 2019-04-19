@@ -70,9 +70,9 @@ class RequestScreen extends Component {
           <Text style={styles.addressText}>{walletAddress}</Text>
         </View>
 
-        <View style={styles.textNoticeContainer}>
+        {/* <View style={styles.textNoticeContainer}>
           <Text style={styles.textNotice}>{I18n.t('request.notice')}</Text>
-        </View>
+        </View> */}
       </View>
     );
   }

@@ -11,10 +11,10 @@ const coinList = {
 
     // Addiction info,
     decimals: 10 ** 8,
-    apiUrl: 'https://api-ropsten.etherscan.io',
-    broadcastTransactionUrl: 'https://ropsten.etherscan.io',
-    provider: 'ropsten',
-    providerUrl: 'http://ropsten.infura.io',
+    apiUrl: 'https://api.etherscan.io',
+    broadcastTransactionUrl: 'https://etherscan.io',
+    provider: 'mainnet',
+    providerUrl: 'http://infura.io',
     transactionFee: 0.0005,
   },
 };

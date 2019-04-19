@@ -408,9 +408,9 @@ class SendScreen extends BaseScreen {
           </View>
         </TouchableWithoutFeedback>
 
-        <View style={styles.textNoticeContainer}>
+        {/* <View style={styles.textNoticeContainer}>
           <Text style={styles.textNotice}>{I18n.t('send.notice')}</Text>
-        </View>
+        </View> */}
       </View>
     );
   }

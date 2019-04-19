@@ -8,9 +8,9 @@ const EthUtil = require('ethereumjs-util');
 const ethers = require('ethers');
 
 const EthService = {
-  network: 'ropsten',
-  providerUrl: 'http://ropsten.infura.io',
-  broadcastTransactionUrl: 'https://ropsten.etherscan.io',
+  network: 'mainnet',
+  providerUrl: 'http://infura.io',
+  broadcastTransactionUrl: 'https://etherscan.io',
 };
 
 export const web3 = new Web3(new Web3.providers.HttpProvider(EthService.providerUrl));

@@ -10,14 +10,14 @@ const Erc20ABI = require('./erc20.abi');
 const Errors = require('./errors');
 
 const Erc20Service = {
-  network: 'ropsten',
-  broadcastTransactionUrl: 'https://ropsten.etherscan.io',
+  network: 'mainnet',
+  broadcastTransactionUrl: 'https://etherscan.io',
   tokens: {
     mgc4: {
-      symbol: 'mgc4',
-      name: 'MGC004',
+      symbol: 'mgc',
+      name: 'MGC',
       decimal: 18,
-      address: '0xebf0c068cc1dd9b343e92bc2cc09a2ca272d6511',
+      address: '0x919a9efce90bc7cc7427bd52162d67b686c760e7',
       transactionFee: 0.1,
     },
   },

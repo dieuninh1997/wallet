@@ -19,7 +19,7 @@ import AppConfig from '../../utils/AppConfig';
 class BackupPassphraseScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('backupPassphrase.title'),
+    title: AppConfig.MNEMONIC ? I18n.t('backupPassphrase.title') : I18n.t('backupPassphrase.titlePrivatekey'),
     headerTitleStyle: CommonStyles.headerTitle,
     headerStyle: CommonStyles.header,
     headerRight: <View />,

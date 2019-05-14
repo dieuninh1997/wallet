@@ -112,7 +112,7 @@ export default {
     security: 'SECURITY',
     verification: '2-step Verification',
     changePassword: 'Change Password',
-    recoveryPhrase: 'Recovery Phrase',
+    recoveryPhrase: 'Recovery Wallet',
     changePin: 'Change PIN',
     useFaceIdAsPin: 'Use Face ID as PIN',
     swipeToReceive: 'Swipe to Receive',
@@ -275,6 +275,7 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
+    titlePrivatekey: 'Backup your Privatekey',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Do not lose it! It cannot be recovered if you lose it.',
     btnCopy: 'Copy',

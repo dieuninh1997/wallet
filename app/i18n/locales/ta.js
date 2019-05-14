@@ -275,6 +275,7 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
+    titlePrivatekey: 'Backup your Privatekey',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Huwag iwala dahil hindi na maibabalik.',
     btnCopy: 'Kopyahin',

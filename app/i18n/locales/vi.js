@@ -275,6 +275,7 @@ export default {
   },
   backupPassphrase: {
     title: 'Sao lưu khóa bảo mật',
+    titlePrivatekey: 'Sao lưu khóa bảo mật',
     note: 'Hãy sao lưu các từ bên dưới theo thứ tự. Những từ này sẽ cho phép bạn khôi phục ví.\n',
     important: 'Đừng làm mất! Bạn không thể khôi phục ví nếu mất nó.',
     btnCopy: 'Sao chép',

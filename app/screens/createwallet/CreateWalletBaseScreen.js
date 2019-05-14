@@ -129,7 +129,6 @@ export default class CreateWalletBaseScreen extends Component {
 
   _handleChangeInput = (typeInput, value) => {
     const { createWalletInfo } = this.state;
-
     createWalletInfo[typeInput] = value;
     this.setState({
       createWalletInfo,
@@ -201,7 +200,7 @@ export default class CreateWalletBaseScreen extends Component {
   _validateForm = () => {
     const { isChecked, createWalletInfo } = this.state;
 
-    if (!createWalletInfo.email && !createWalletInfo.passport && !createWalletInfo.phone_number) {
+    if (!createWalletInfo.email && !createWalletInfo.passport && !createWalletInfo.phoneNumber) {
       throw new Error(I18n.t('createWalletByEmailScreen.requireInfo'));
     }
     if (!createWalletInfo.password || !createWalletInfo.passwordConfirm) {

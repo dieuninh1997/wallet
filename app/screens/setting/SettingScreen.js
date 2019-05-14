@@ -414,7 +414,7 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback disabled onPress={this._onPressMobileVerify}>
+            <TouchableWithoutFeedback onPress={this._onPressMobileVerify}>
               <View style={styles.borderDisableItem}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
                 <View style={styles.activiRightGroup}>
@@ -463,7 +463,7 @@ export default class SettingScreen extends BaseScreen {
 
           </View>
 
-          <View style={styles.borderLogintoWeb}>
+          {/* <View style={styles.borderLogintoWeb}>
             <Text style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
@@ -471,7 +471,7 @@ export default class SettingScreen extends BaseScreen {
                 name="chevron-right"
               />
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
     );
@@ -704,9 +704,11 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   groupEmail: {
-    borderBottomWidth: '1@s',
+    //borderBottomWidth: '1@s',
     flexDirection: 'column',
     borderColor: '#ced4dd',
+    borderBottomLeftRadius: '12@s',
+    borderBottomRightRadius: '12@s',
   },
   borderEmailMobileNumber: {
     justifyContent: 'space-between',
@@ -715,6 +717,8 @@ const styles = ScaledSheet.create({
     height: '36@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
+    borderBottomLeftRadius: '12@s',
+    borderBottomRightRadius: '12@s',
   },
   borderDisableItem: {
     justifyContent: 'space-between',
@@ -723,7 +727,7 @@ const styles = ScaledSheet.create({
     height: '36@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
-    backgroundColor: '#e6ebf2',
+   // backgroundColor: '#e6ebf2',
   },
   borderLogintoWeb: {
     paddingLeft: '14@s',

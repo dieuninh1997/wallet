@@ -39,6 +39,7 @@ export default class SettingScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
+    const params = this.props.navigation.state;
     this.state = {
       payload: {
         swipeReceive: false,
@@ -324,6 +325,7 @@ export default class SettingScreen extends BaseScreen {
 
   _onPressMobileVerify = () => {
     const { user } = this.state;
+    console.log("=========", user);
     if (!this._isMobileVerify() && (!!user)) {
       this._MobleNumberModal.setModalVisibleUpdate(true);
     }
@@ -336,7 +338,7 @@ export default class SettingScreen extends BaseScreen {
       loginType: user.login_type,
     };
 
-    if (!this._isPassportVerify() && (!!user)) {
+    if ((this._isPassportVerify() === 0 || this._isPassportVerify() === 3) && (!!user)) {
       this.navigate('PassportNumberVerifyScreen', params);
     }
   }
@@ -372,7 +374,8 @@ export default class SettingScreen extends BaseScreen {
   _renderProfile = () => {
     const { walletId, user, userSecuritySettings } = this.state;
     const emailVerified = userSecuritySettings && userSecuritySettings.email_verified;
-    const passportVerify = userSecuritySettings && userSecuritySettings.passport_verified;
+    const passportVerifyData = userSecuritySettings && userSecuritySettings.passport_verified;
+    const passportVerify = (passportVerifyData === 1 || passportVerifyData === 2)
 
     return (
       <View>

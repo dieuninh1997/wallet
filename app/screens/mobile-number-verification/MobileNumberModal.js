@@ -56,10 +56,10 @@ export default class MobileNumberModal extends React.Component {
     });
   }
 
-  show = (phoneNumber) => {
+  show = (phoneNumber, visible) => {
     this.setState({
       phoneNumber,
-      modalVisibleUpdate: true,
+      modalVisibleUpdate: visible,
     });
   }
 
@@ -478,7 +478,6 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     padding: '0@s',
     margin: '0@s',
-    marginTop: '5@s',
   },
   iconExpandMore: {
     fontSize: '25@ms',

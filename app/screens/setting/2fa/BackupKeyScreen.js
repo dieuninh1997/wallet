@@ -90,20 +90,14 @@ export default class BackupKeyScreen extends Component {
 
     return (
       <View style={styles.BackupKey}>
-        {/* <View style={styles.imageBlock}> */}
-        {/* <Image
-            source={require('../../../../assets/setting/writeDown.png')}
-            style={styles.image}
-          /> */}
         <View style={styles.qrCodeContainer}>
           {!googleOtpKey ? null : (
             <QRCode
-              value={`otpauth://totp/MangoWallet (${walletAddress})?secret=${googleOtpKey}`}
+              value={`otpauth://totp/MangoWallet(${walletAddress})?secret=${googleOtpKey}`}
               size={scale(180)}
             />
           )}
         </View>
-        {/* </View> */}
 
         <View style={styles.textBlock}>
           <Text style={styles.textGuide}>{I18n.t('setting2fa.saveKeyOnPaper')}</Text>

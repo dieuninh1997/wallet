@@ -121,6 +121,7 @@ export default {
     enabled: 'Enabled',
     unconfirmed: 'Hindi kumpirmado',
     passportNumber: 'Passport Number',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Pag-verify ng Email',
@@ -275,12 +276,13 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
-    titlePrivatekey: 'Backup your Privatekey',
+    titlePrivatekey: 'Backup your Private Key',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Huwag iwala dahil hindi na maibabalik.',
     btnCopy: 'Kopyahin',
     btnNext: 'Susunod',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

@@ -103,7 +103,7 @@ class DashboardScreen extends BaseScreen {
   }
 
   _loadPrices = async () => {
-    const coinList = this.COINS.reduce((a, b) => `${a},${b}`);
+    const coinList = this.ALL_COINS.reduce((a, b) => `${a},${b}`);
     const prices = await getPrices(coinList);
     this.setState({ prices });
   }
@@ -131,21 +131,27 @@ class DashboardScreen extends BaseScreen {
 
   _hasData() {
     const { prices } = this.state;
-
-    return !!prices.RAW;
+    return prices.ETH_PRICE !== undefined;
   }
 
   _getDisplayObject(coin) {
     const { currency, prices } = this.state;
-    if (!prices.DISPLAY) return {};
-    if (!prices.DISPLAY[coin]) return {};
-    return prices.DISPLAY[coin][currency] || {};
+    
+    if (prices.ETH_PRICE === undefined) return {};
+    const priceData = (coin ==="ETH") ? prices.ETH_PRICE : prices.MGC_PRICE;
+   
+    return priceData.DISPLAY[coin][currency] || {};
   }
 
   _getDisplayPrice(coin) {
     try {
       const { currency } = this.state;
+      const priceDisplay = this._getPriceDisplay(coin);
       const price = this._getPrice(coin);
+      
+      if (priceDisplay === '-') {
+        return `${this._getCurrencySymbol()} ${price}`;
+      }
       if (price) {
         return `${this._getCurrencySymbol()} ${formatCoin(price, currency)}`;
       }
@@ -156,39 +162,26 @@ class DashboardScreen extends BaseScreen {
   }
 
   _getDisplayPC(coin) {
-    if (coin === this.WALLET_COIN) {
-      const pcChange = this._getPrecentChange(coin);
-      if (pcChange) {
-        return formatCoin(pcChange, 'USD', 0);
-      }
-      return pcChange;
-    }
     return this._getDisplayObject(coin).CHANGEPCT24HOUR || '';
   }
 
   _getPrecentChange(coin) {
-    if (coin === this.WALLET_COIN) {
-      return (this._getPrecentChange('BTC') || 0) * 1.3;
-    }
     return this._getRawObject(coin).CHANGEPCT24HOUR;
   }
 
   _getRawObject(coin) {
     const { currency, prices } = this.state;
-    if (!prices.RAW) return {};
-    if (!prices.RAW[coin]) return {};
-    return prices.RAW[coin][currency] || {};
+    if (prices.ETH_PRICE === undefined) return {};
+    const priceData = (coin ==="ETH") ? prices.ETH_PRICE : prices.MGC_PRICE;
+    return priceData.RAW[coin][currency] || {};
   }
 
   _getPrice(coin) {
-    if (coin === this.WALLET_COIN) {
-      const ethPrice = this._getPrice('ETH');
-      if (ethPrice) {
-        return ethPrice * 0.023;
-      }
-      return ethPrice;
-    }
     return this._getRawObject(coin).PRICE;
+  }
+
+  _getPriceDisplay(coin) {
+    return this._getDisplayObject(coin).PRICE;
   }
 
   _getCurrencySymbol() {

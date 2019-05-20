@@ -111,7 +111,9 @@ class SendScreen extends BaseScreen {
   async _loadPrices() {
     try {
       const { coinSelected, formSendCoin } = this.state;
-      const prices = await getPrices(coinSelected.name);
+      const pricesData = await getPrices(coinSelected.name);
+      const prices = (coinSelected.name === 'ETH') ? pricesData.ETH_PRICE : pricesData.MGC_PRICE;
+      
       if (!prices) {
         return;
       }

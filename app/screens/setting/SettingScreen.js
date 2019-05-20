@@ -325,7 +325,6 @@ export default class SettingScreen extends BaseScreen {
 
   _onPressMobileVerify = () => {
     const { user } = this.state;
-    console.log("=========", user);
     if (!this._isMobileVerify() && (!!user)) {
       this._MobleNumberModal.setModalVisibleUpdate(true);
     }
@@ -447,11 +446,11 @@ export default class SettingScreen extends BaseScreen {
                 <View style={styles.activiRightGroup}>
                   {(passportVerify) ? (
                     <Text style={styles.textVerified}>
-                      {user.passport_number}
+                      {(passportVerifyData === 1) ? user.passport_number : I18n.t('setting.waitingForReview')}
                     </Text>
                   ) : (
                     <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
+                      {(passportVerifyData === 3) ? I18n.t('setting.rejected') : I18n.t('setting.unverified')}
                     </Text>
                   )}
                   {!(passportVerify) && (

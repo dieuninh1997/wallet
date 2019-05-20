@@ -112,7 +112,7 @@ export default {
     security: 'SECURITY',
     verification: '2-step Verification',
     changePassword: 'Change Password',
-    recoveryPhrase: 'Recovery Wallet',
+    recoveryPhrase: 'Recovery Phrase/Private Key',
     changePin: 'Change PIN',
     useFaceIdAsPin: 'Use Face ID as PIN',
     swipeToReceive: 'Swipe to Receive',
@@ -121,6 +121,8 @@ export default {
     enabled: 'Enabled',
     unconfirmed: 'Unconfirmed',
     passportNumber: 'Passport Number',
+    waitingForReview: 'Waiting for review',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -275,12 +277,13 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
-    titlePrivatekey: 'Backup your Privatekey',
+    titlePrivatekey: 'Backup your Private Key',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Do not lose it! It cannot be recovered if you lose it.',
     btnCopy: 'Copy',
     btnNext: 'Next',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

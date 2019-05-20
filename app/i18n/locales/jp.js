@@ -121,6 +121,7 @@ export default {
     enabled: '有効',
     unconfirmed: '未確認',
     passportNumber: 'パスポート番号',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -281,6 +282,7 @@ export default {
     btnCopy: 'コピーする',
     btnNext: '続ける',
     copied: 'コピーをしました。',
+    copiedPrivateKey: 'コピーをしました。',
   },
   exit: {
     content: 'Please click BACK again to exit',

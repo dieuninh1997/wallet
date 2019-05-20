@@ -82,7 +82,6 @@ export default class MobileNumberModal extends React.Component {
 
   _onUpdatePress = async () => {
     const { phoneNumber, codePhoneCountry } = this.state;
-    const phoneNumberFull = codePhoneCountry + phoneNumber;
 
     if (!phoneNumber) {
       this.setState({
@@ -92,12 +91,12 @@ export default class MobileNumberModal extends React.Component {
     }
 
     try {
-      const response = await sendPhoneVerificationCode(phoneNumberFull);
+      const response = await sendPhoneVerificationCode(codePhoneCountry, phoneNumber);
       const message = response.message;
 
       UIUtils.showToastMessage(message, 'success');
       this.setModalVisibleUpdate(false);
-      this.setModalVisibleVerify(true);
+      setTimeout(() => this.setModalVisibleVerify(true), 1000);
     } catch (error) {
       this.setState({
         error: error.message,
@@ -207,46 +206,49 @@ export default class MobileNumberModal extends React.Component {
       <View style={styles.content}>
         <Text style={styles.contentText}>{I18n.t('mobileNumberVerification.contentUpdate')}</Text>
         <View style={styles.phoneNumber}>
-          <View style={styles.codePhoneNumber}>
-            <PhoneInput
-              ref={(ref) => { this.phone = ref; }}
-              onPressFlag={this._handlePressFlag}
-              initialCountry="vn"
-              flagStyle={styles.flagIcon}
-              style={styles.phoneInput}
-              textStyle={styles.textCodePhone}
-              offset={0}
-            />
-            <CountryPicker
-              ref={(ref) => {
-                this.countryPicker = ref;
-              }}
-              onChange={value => this.selectCountry(value)}
-              translation="eng"
-              filterable
-              showCallingCode
-              renderFilter={({ value, onChange, onClose }) => (
-                <View style={styles.searchCountryPicker}>
-                  <View style={styles.groupSearchCountryPicker}>
-                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
-                    <TextInput
-                      placeholder={I18n.t('mobileNumberVerification.searchCountry')}
-                      style={styles.inputSearchCountryPicker}
-                      onChangeText={onChange}
-                      value={value}
-                    />
+          <TouchableWithoutFeedback onPress={() => this.countryPicker.openModal()}>
+            <View style={styles.codePhoneNumber}>
+              <PhoneInput
+                ref={(ref) => { this.phone = ref; }}
+                onPressFlag={this._handlePressFlag}
+                initialCountry="vn"
+                disabled
+                flagStyle={styles.flagIcon}
+                style={styles.phoneInput}
+                textStyle={styles.textCodePhone}
+                offset={0}
+              />
+              <CountryPicker
+                ref={(ref) => {
+                  this.countryPicker = ref;
+                }}
+                onChange={value => this.selectCountry(value)}
+                translation="eng"
+                filterable
+                showCallingCode
+                renderFilter={({ value, onChange, onClose }) => (
+                  <View style={styles.searchCountryPicker}>
+                    <View style={styles.groupSearchCountryPicker}>
+                      <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
+                      <TextInput
+                        placeholder={I18n.t('mobileNumberVerification.searchCountry')}
+                        style={styles.inputSearchCountryPicker}
+                        onChangeText={onChange}
+                        value={value}
+                      />
+                    </View>
+                    <TouchableWithoutFeedback onPress={onClose}>
+                      <Text style={styles.textCancelCountryPicker}>{I18n.t('mobileNumberVerification.cancel')}</Text>
+                    </TouchableWithoutFeedback>
                   </View>
-                  <TouchableWithoutFeedback onPress={onClose}>
-                    <Text style={styles.textCancelCountryPicker}>{I18n.t('mobileNumberVerification.cancel')}</Text>
-                  </TouchableWithoutFeedback>
-                </View>
-              )}
-              hideAlphabetFilter
-              cca2={cca2}
-            >
-              <View />
-            </CountryPicker>
-          </View>
+                )}
+                hideAlphabetFilter
+                cca2={cca2}
+              >
+                <View />
+              </CountryPicker>
+            </View>
+          </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => this.countryPicker.openModal()}>
             <MaterialCommunityIcons
               style={styles.iconExpandMore}
@@ -415,7 +417,6 @@ const styles = ScaledSheet.create({
     height: '48@s',
     borderRadius: '28@s',
     borderColor: '#cad1db',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   textCodeVerify: {
@@ -426,7 +427,7 @@ const styles = ScaledSheet.create({
   },
   textCodeVerifyEnter: {
     width: '150@s',
-    fontSize: '28@ms',
+    fontSize: '25@ms',
     textAlign: 'center',
     ...Fonts.Ubuntu_Medium,
   },
@@ -485,6 +486,7 @@ const styles = ScaledSheet.create({
   },
   textCodePhone: {
     fontSize: '16@ms',
+    color: '#000000',
     ...Fonts.Ubuntu_Bold,
   },
   buttonTextResend: {

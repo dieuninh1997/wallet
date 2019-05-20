@@ -121,6 +121,7 @@ export default {
     enabled: 'Đã bật',
     unconfirmed: 'Chưa xác nhận',
     passportNumber: 'Số hộ chiếu',
+    rejected: 'Đã từ chối',
   },
   emailVerification: {
     title: 'Kiểm tra Email',
@@ -281,6 +282,7 @@ export default {
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

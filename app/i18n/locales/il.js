@@ -121,6 +121,7 @@ export default {
     enabled: 'Enabled',
     unconfirmed: 'Saan nga nakumpirma',
     passportNumber: 'Passport Number',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Pag-verify iti Email',
@@ -275,11 +276,13 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
+    titlePrivatekey: 'Backup your Private Key',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Saan nga iawan gapu nga saan nga maisubli.',
     btnCopy: 'Kopiaen',
     btnNext: 'Sumaruno',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

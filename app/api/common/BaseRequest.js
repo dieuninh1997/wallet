@@ -145,9 +145,10 @@ function _logResponse(responseCode, data) {
 
 export async function getPrices(coin) {
   try {
-    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${coin}&tsyms=USD,JPY,PHP`;
+    const urlData = '/prices';
+    const url = _getFullUrl(urlData);
     const response = await axios.get(url);
-    const coinList = response.data;
+    const coinList = response.data.data;
     console.log('data:', coinList);
     return coinList;
   } catch (error) {

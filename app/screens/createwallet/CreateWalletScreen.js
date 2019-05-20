@@ -141,8 +141,7 @@ export default class CreateWalletScreen extends Component {
         <View style={styles.groupBtnContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
-            disabled
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
             onPress={() => this._handleClickCreateWallet(CreateWalletScreen.SCREEN.CREATE_BY_PHONE)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/createwalet/phone.png')} />

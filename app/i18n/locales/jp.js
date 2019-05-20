@@ -121,6 +121,7 @@ export default {
     enabled: '有効',
     unconfirmed: '未確認',
     passportNumber: 'パスポート番号',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Email Verification',
@@ -275,11 +276,13 @@ export default {
   },
   backupPassphrase: {
     title: 'パスフレーズのバックアップ',
+    titlePrivatekey: 'Backup your Private Key',
     note: 'ここで12語のウォレット復元パスフレーズを正確に記録しておきましょう。紙に書いておくのが保存方法としてはベストですが、書き写す際のスペルミスには注意してください。ここで誤って記録してしまうとログアウト後に資金を失うことになります。\n',
     important: '※紛失注意！※ 紛失した場合、復元できません。',
     btnCopy: 'コピーする',
     btnNext: '続ける',
     copied: 'コピーをしました。',
+    copiedPrivateKey: 'コピーをしました。',
   },
   exit: {
     content: 'Please click BACK again to exit',

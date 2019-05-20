@@ -121,6 +121,7 @@ export default {
     enabled: 'Đã bật',
     unconfirmed: 'Chưa xác nhận',
     passportNumber: 'Số hộ chiếu',
+    rejected: 'Đã từ chối',
   },
   emailVerification: {
     title: 'Kiểm tra Email',
@@ -275,11 +276,13 @@ export default {
   },
   backupPassphrase: {
     title: 'Sao lưu khóa bảo mật',
+    titlePrivatekey: 'Sao lưu khóa bảo mật',
     note: 'Hãy sao lưu các từ bên dưới theo thứ tự. Những từ này sẽ cho phép bạn khôi phục ví.\n',
     important: 'Đừng làm mất! Bạn không thể khôi phục ví nếu mất nó.',
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

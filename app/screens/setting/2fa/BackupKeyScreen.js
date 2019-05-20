@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   View,
-  Image,
   Clipboard,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
@@ -16,6 +15,8 @@ import MangoBackButton from '../../common/MangoBackButton';
 import MangoGradientButton from '../../common/MangoGradientButton';
 import UIUtils from '../../../utils/UIUtils';
 import { scale } from '../../../libs/reactSizeMatter/scalingUtils';
+import { getCurrentUser } from '../../../api/user/UserRequest';
+import Consts from '../../../utils/Consts';
 
 export default class BackupKeyScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,16 +31,45 @@ export default class BackupKeyScreen extends Component {
     super(props);
     this.state = {
       googleOtpKey: '',
+      walletAddress: '',
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { navigation } = this.props;
     const { params } = navigation.state;
 
     this.setState({
       googleOtpKey: params,
     });
+
+    await this._loadUserInfo();
+  }
+
+  _loadUserInfo = async () => {
+    try {
+      const response = await getCurrentUser(false);
+      let walletAddress = '';
+      switch (response.data.login_type) {
+        case Consts.LOGIN_TYPES.EMAIL:
+          walletAddress = response.data.email;
+          break;
+        case Consts.LOGIN_TYPES.PHONE_NUMBER:
+          walletAddress = response.data.phone_number;
+          break;
+        case Consts.LOGIN_TYPES.PASSPORT:
+          walletAddress = response.data.passport_number;
+          break;
+        default:
+          walletAddress = '';
+          break;
+      }
+      this.setState({
+        walletAddress,
+      });
+    } catch (error) {
+      console.log('SettingScreen._loadUserInfo', error);
+    }
   }
 
   _handleNext = () => {
@@ -56,24 +86,18 @@ export default class BackupKeyScreen extends Component {
   }
 
   render() {
-    const { googleOtpKey } = this.state;
+    const { googleOtpKey, walletAddress } = this.state;
 
     return (
       <View style={styles.BackupKey}>
-        {/* <View style={styles.imageBlock}> */}
-        {/* <Image
-            source={require('../../../../assets/setting/writeDown.png')}
-            style={styles.image}
-          /> */}
         <View style={styles.qrCodeContainer}>
           {!googleOtpKey ? null : (
             <QRCode
-              value={`otpauth://totp/MangoWallet?secret=${googleOtpKey}`}
+              value={`otpauth://totp/MangoWallet(${walletAddress})?secret=${googleOtpKey}`}
               size={scale(180)}
             />
-          ) }
+          )}
         </View>
-        {/* </View> */}
 
         <View style={styles.textBlock}>
           <Text style={styles.textGuide}>{I18n.t('setting2fa.saveKeyOnPaper')}</Text>

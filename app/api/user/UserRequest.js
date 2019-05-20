@@ -138,15 +138,15 @@ export function disableGoogleOtp(password, smsCode, otp) {
   return post(url, params);
 }
 
-export function sendPhoneVerificationCode(phone_number) {
-  const url = '/send-phone-verification';
-  params = { phone_number };
+export function sendPhoneVerificationCode(country_code, phone_number) {
+  const url = '/send-sms-code-verify';
+  params = { country_code, phone_number };
   return post(url, params);
 }
 
-export function verifyPhoneNumber(otp) {
-  const url = '/verify-phone-number';
-  params = { otp };
+export function verifyPhoneNumber(code_verify) {
+  const url = '/authentication-phone-number';
+  params = { code_verify };
   return post(url, params);
 }
 

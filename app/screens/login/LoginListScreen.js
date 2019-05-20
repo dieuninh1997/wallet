@@ -95,8 +95,7 @@ export default class LoginListScreen extends Component {
 
           <TouchableOpacity
             activeOpacity={0.6}
-            disabled
-            style={[styles.btnCreateWalletContainer, styles.btnCreateDisable]}
+            style={[styles.btnCreateWalletContainer, styles.btnCreateActive]}
             onPress={() => this._handleClickLogin(LoginListScreen.SCREEN.SIGNIN_BY_PHONE)}
           >
             <Image style={styles.iconCreateWallet} source={require('../../../assets/phone/phone.png')} />

@@ -87,9 +87,15 @@ export default class UploadPassportNumber extends BaseScreen {
 
     try {
       await verifyPassport(passportNumber, image, image2);
-
+      const params = { 
+        email_verified: 0,
+        phone_verified: 1,
+        bank_account_verified: 0,
+        identity_verified: 0,
+        otp_verified: 0, 
+      };
       UIUtils.showToastMessage(I18n.t('uploadPassportNumber.submitSuccess'), 'success');
-      navigation.navigate('SettingScreen');
+      navigation.navigate('SettingScreen', params);
     } catch (error) {
       UIUtils.showToastMessage(error.message, 'error');
       console.log('uploadpassportverify', error.message);

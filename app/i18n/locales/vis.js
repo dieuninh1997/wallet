@@ -121,6 +121,7 @@ export default {
     enabled: 'Enabled',
     unconfirmed: 'Dili nakumpirmaha',
     passportNumber: 'Passport Number',
+    rejected: 'Rejected',
   },
   emailVerification: {
     title: 'Pag-verify sa Email',
@@ -275,11 +276,13 @@ export default {
   },
   backupPassphrase: {
     title: 'Backup your Passphrase',
+    titlePrivatekey: 'Backup your Private Key',
     note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
     important: 'Ayaw kini kapildi tungod kay kini dili mapasig-uli.',
     btnCopy: 'Kopyahon',
     btnNext: 'Sunod',
     copied: 'Copied passphrase successfully.',
+    copiedPrivateKey: 'Copied private key successfully.',
   },
   exit: {
     content: 'Please click BACK again to exit',

@@ -39,6 +39,7 @@ export default class SettingScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
+    const params = this.props.navigation.state;
     this.state = {
       payload: {
         swipeReceive: false,
@@ -336,7 +337,7 @@ export default class SettingScreen extends BaseScreen {
       loginType: user.login_type,
     };
 
-    if (!this._isPassportVerify() && (!!user)) {
+    if ((this._isPassportVerify() === 0 || this._isPassportVerify() === 3) && (!!user)) {
       this.navigate('PassportNumberVerifyScreen', params);
     }
   }
@@ -372,7 +373,8 @@ export default class SettingScreen extends BaseScreen {
   _renderProfile = () => {
     const { walletId, user, userSecuritySettings } = this.state;
     const emailVerified = userSecuritySettings && userSecuritySettings.email_verified;
-    const passportVerify = userSecuritySettings && userSecuritySettings.passport_verified;
+    const passportVerifyData = userSecuritySettings && userSecuritySettings.passport_verified;
+    const passportVerify = (passportVerifyData === 1 || passportVerifyData === 2)
 
     return (
       <View>
@@ -414,7 +416,7 @@ export default class SettingScreen extends BaseScreen {
               </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback disabled onPress={this._onPressMobileVerify}>
+            <TouchableWithoutFeedback onPress={this._onPressMobileVerify}>
               <View style={styles.borderDisableItem}>
                 <Text style={styles.titleSetting}>{I18n.t('setting.mobileNumber')}</Text>
                 <View style={styles.activiRightGroup}>
@@ -444,11 +446,11 @@ export default class SettingScreen extends BaseScreen {
                 <View style={styles.activiRightGroup}>
                   {(passportVerify) ? (
                     <Text style={styles.textVerified}>
-                      {user.passport_number}
+                      {(passportVerifyData === 1) ? user.passport_number : I18n.t('setting.waitingForReview')}
                     </Text>
                   ) : (
                     <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
+                      {(passportVerifyData === 3) ? I18n.t('setting.rejected') : I18n.t('setting.unverified')}
                     </Text>
                   )}
                   {!(passportVerify) && (
@@ -463,7 +465,7 @@ export default class SettingScreen extends BaseScreen {
 
           </View>
 
-          <View style={styles.borderLogintoWeb}>
+          {/* <View style={styles.borderLogintoWeb}>
             <Text style={styles.titleSetting}>{I18n.t('setting.logIntoWebWallet')}</Text>
             <View style={styles.activiRightGroup}>
               <MaterialCommunityIcons
@@ -471,7 +473,7 @@ export default class SettingScreen extends BaseScreen {
                 name="chevron-right"
               />
             </View>
-          </View>
+          </View> */}
         </View>
       </View>
     );
@@ -704,9 +706,11 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   groupEmail: {
-    borderBottomWidth: '1@s',
+    //borderBottomWidth: '1@s',
     flexDirection: 'column',
     borderColor: '#ced4dd',
+    borderBottomLeftRadius: '12@s',
+    borderBottomRightRadius: '12@s',
   },
   borderEmailMobileNumber: {
     justifyContent: 'space-between',
@@ -715,6 +719,8 @@ const styles = ScaledSheet.create({
     height: '36@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
+    borderBottomLeftRadius: '12@s',
+    borderBottomRightRadius: '12@s',
   },
   borderDisableItem: {
     justifyContent: 'space-between',
@@ -723,7 +729,7 @@ const styles = ScaledSheet.create({
     height: '36@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
-    backgroundColor: '#e6ebf2',
+   // backgroundColor: '#e6ebf2',
   },
   borderLogintoWeb: {
     paddingLeft: '14@s',

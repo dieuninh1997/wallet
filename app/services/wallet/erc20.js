@@ -198,23 +198,20 @@ Erc20Service.getContractABI = async (contractAddress) => {
 Erc20Service.sendTransaction = async (sendAddress, receiveAddress, privateKey, amount, fee, coin) => {
   try {
     const options = {
-      gasLimit: 1000000,
       gasPrice: ethers.utils.parseUnits(`${fee}`, 'gwei'),
     };
 
-    // privateKey = Buffer.from(privateKey, 'hex');
-
-    const wallet = new ethers.Wallet(privateKey, new ethers.providers.EtherscanProvider(Erc20Service.network));
+    const wallet = new ethers.Wallet(privateKey, ethers.getDefaultProvider());
 
     const contractAddress = Erc20Service.tokens[coin].address;
     const contractAbiFragment = await Erc20Service.getContractABI(contractAddress);
 
-    const contract = new ethers.Contract(contractAddress, contractAbiFragment, new ethers.providers.EtherscanProvider(Erc20Service.network));
+    const contract = new ethers.Contract(contractAddress, contractAbiFragment, ethers.getDefaultProvider());
     const contractWithSigner = contract.connect(wallet);
 
     const decimals = Erc20Service.tokens[coin].decimal;
     const numberOfTokens = ethers.utils.parseUnits(amount.toString(), decimals);
-
+   
     const transaction = await contractWithSigner.transfer(receiveAddress, numberOfTokens, options);
     transaction.transactionUrl = urljoin(Erc20Service.broadcastTransactionUrl, 'tx', transaction.hash);
     return transaction;

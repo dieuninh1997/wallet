@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, TouchableOpacity, TextInput, Image, TouchableWithoutFeedback, Text,
+  View, TouchableOpacity, TextInput, Image, TouchableWithoutFeedback, Text, Platform,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -48,12 +48,12 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
 
   _initialCountry = () => {
     switch (I18n.locale) {
-    case 'vi': return 'vn';
-    case 'jp': return 'jp';
-    case 'ta': return 'ph';
-    case 'vis': return 'ph';
-    case 'il': return 'ph';
-    case 'en': return 'gb';
+      case 'vi': return 'vn';
+      case 'jp': return 'jp';
+      case 'ta': return 'ph';
+      case 'vis': return 'ph';
+      case 'il': return 'ph';
+      case 'en': return 'gb';
     }
   }
 
@@ -84,13 +84,17 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
     <View style={styles.inputTextNumber}>
       <View style={styles.country}>
         <View style={styles.inputDialCode}>
-          <PhoneInput
-            initialCountry={this._initialCountry()}
-            ref={ref => this.phone = ref}
-            style={styles.dialCode}
-            textStyle={styles.dialCodeText}
-            flagStyle={{ display: 'none' }}
-          />
+          <TouchableOpacity
+            onPress={this._handlePressFlag}>
+            <PhoneInput
+              initialCountry={this._initialCountry()}
+              ref={ref => this.phone = ref}
+              style={styles.dialCode}
+              disabled
+              textStyle={styles.dialCodeText}
+              flagStyle={{ display: 'none' }}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={this._handlePressFlag}
             style={{ marginLeft: 3 }}
@@ -132,7 +136,7 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputText}
-          keyboardType="phone-pad"
+          keyboardType={Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"}
           underlineColorAndroid="transparent"
           placeholder={I18n.t('createWallet.phoneNumber')}
           onChangeText={value => this._handleChangeInput(CreateWalletPhoneNumberScreen.WALLET_INFO.PHONE, value)}
@@ -243,8 +247,9 @@ const styles = ScaledSheet.create({
   dialCodeText: {
     height: '50@s',
     textAlign: 'center',
+    color: '#000000',
     fontSize: CommonSize.inputFontSize,
-    ...Fonts.Ubuntu_Light,
+    ...Fonts.Ubuntu_Bold,
   },
   searchCountryPicker: {
     flexDirection: 'row',

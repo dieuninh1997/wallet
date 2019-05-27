@@ -9,7 +9,7 @@ const ethers = require('ethers');
 
 const EthService = {
   network: 'mainnet',
-  providerUrl: 'http://infura.io',
+  providerUrl: 'https://infura.io',
   broadcastTransactionUrl: 'https://etherscan.io',
 };
 
@@ -126,7 +126,7 @@ EthService.getAddressBalance = async (address) => {
 
 EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amount, fee) => {
   try {
-    const wallet = new ethers.Wallet(privateKey, new ethers.providers.EtherscanProvider(EthService.network));
+    const wallet = new ethers.Wallet(privateKey, ethers.getDefaultProvider());
     console.log('wallet', wallet);
 
     const nonce = await wallet.getTransactionCount();
@@ -137,11 +137,9 @@ EthService.sendTransaction = async (sendAddress, receiveAddress, privateKey, amo
       gasLimit: web3.utils.toHex(100000), // prevent known transaction
       gasPrice: ethers.utils.parseUnits(`${fee}`, 'gwei'),
       to: receiveAddress,
-      from: sendAddress,
       value: web3.utils.toHex(web3.utils.toWei(amount.toString(), 'ether')),
     };
 
-    const transactionGas = await wallet.estimateGas(transactionInfo);
     const transaction = await wallet.sendTransaction(transactionInfo);
     transaction.transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
 

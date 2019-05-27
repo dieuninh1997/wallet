@@ -18,6 +18,7 @@ import BackupPassphraseScreenCompact from './backup-passphrase/BackupPassphraseS
 import TransactionDetailScreen from './transactions/TransactionDetailScreen';
 import LocalCurrencyScreen from './localCurrency/LocalCurrencyScreen';
 import TermsConditionScreen from './terms/TermsConditionScreen';
+import ListofAccep from './terms/ListofAccep';
 import AddPinScreen from './pin/AddPinScreen';
 import BackupKeyScreen from './setting/2fa/BackupKeyScreen';
 import DownloadAndInstallScreen from './setting/2fa/DownloadAndInstallScreen';
@@ -50,6 +51,7 @@ export default {
   TransactionDetailScreen: { screen: TransactionDetailScreen },
   LocalCurrencyScreen: { screen: LocalCurrencyScreen },
   TermsConditionScreen: { screen: TermsConditionScreen },
+  ListofAccep: { screen: ListofAccep },
   AddPinScreen: { screen: AddPinScreen },
   BackupKeyScreen: { screen: BackupKeyScreen },
   DownloadAndInstallScreen: { screen: DownloadAndInstallScreen },

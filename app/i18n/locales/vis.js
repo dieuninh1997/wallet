@@ -55,6 +55,7 @@ export default {
     termsAndConditions: ' patakaran ug kondisyon',
     cancel: 'Cancel',
     searchCountry: 'Please input Keywords',
+    ListofAcceptableIdentificationCards: 'List of Acceptable Identification Cards',
   },
   createWalletByEmailScreen: {
     title: 'Paghimo og account gamita ang email address',
@@ -112,7 +113,7 @@ export default {
     security: 'Seguridad',
     verification: 'Duha ka lakang aron pamatud-an',
     changePassword: 'Bag-oha ang password',
-    recoveryPhrase: 'Ibalik',
+    recoveryPhrase: 'Recovery Private Key',
     changePin: 'Usba ang PIN',
     useFaceIdAsPin: 'Gamita ang Face ID as PIN',
     swipeToReceive: 'I-swipe para madawat',
@@ -120,7 +121,7 @@ export default {
     disabled: 'Disabled',
     enabled: 'Enabled',
     unconfirmed: 'Dili nakumpirmaha',
-    passportNumber: 'Passport Number',
+    passportNumber: 'ID Number',
     rejected: 'Rejected',
   },
   emailVerification: {
@@ -277,8 +278,8 @@ export default {
   backupPassphrase: {
     title: 'Backup your Passphrase',
     titlePrivatekey: 'Backup your Private Key',
-    note: 'Please save these words in order. These words will allow you to recover your wallet.\n',
-    important: 'Ayaw kini kapildi tungod kay kini dili mapasig-uli.',
+    note: 'Please save your Private Key.  This will allow you to recover your wallet.\n',
+    important: 'Do not share it or use it on on a malicious/phishing site.\nMake a paper and soft backup.',
     btnCopy: 'Kopyahon',
     btnNext: 'Sunod',
     copied: 'Copied passphrase successfully.',
@@ -336,5 +337,13 @@ export default {
     titleMessage: 'No Internet Connection',
     contentMessageFirst: 'You are not connected to the internet.',
     contentMessageSecond: 'Make sure Wi-Fi is on, Airplane Mode is off and try again.',
+  },
+  ListofAccep: {
+    title: 'List of Acceptable Identification Cards',
+    content: ' a. For Filipino citizens: Those issued by any of the following official authorities: \n   i. Government of the Republic of the Philippines, including its political subdivisions, agencies, and instrumentalities; \n      • Passport\n      • Driver is License (including Student Permits with official receipt)\n      • Professional Regulation Commission (PRC) ID\n      • Postal ID (old postal IDs must have a photo of both front and back)\n      • Unified Multi-Purpose ID (UMID)\n      • National Bureau of Investigation (NBI) Clearance\n      • Armed Forces of the Philippines (AFP) ID\n      • Philippine National Police (PNP) ID\n      • Bureau of Fire Protection ID\n      • Certification from the National Council for the Welfare of Disabled Persons (NCWDP)\n      • Department of Social Welfare and Development (DSWD) Certification\n      • OFW ID\n      • Overseas Workers Welfare Administration (OWWA) ID\n      • Police Clearance Certificate or Police Clearance Card\n      • Seaman’s Books\n      • National Integrated Bar of the Philippines ID\n    ii. Government-Owned or -Controlled Corporations (GOCCs);\n      • Government Service Insurance System (GSIS) e-Card\n      • Social Security System (SSS) Card (date of birth must be visible on the ID)\n   iii. Covered persons registered with and supervised or regulated by the Bangko Sentral, SEC or Insurance Commission (IC);\n   iv. Philippine Statistics Authority (PSA) under the Philippine Identification System (PhilSys)',
+    contentB: ' b. For foreign nationals: Passport or Alien Certificate of Registration; ',
+    contentC: ' c. For Filipino students: School ID signed by the school principal or head of the educational institution; ',
+    contentD: ' d. For low risk customers: Any document or information reduced in writing which the covered person deems sufficient to establish the client’s identity; ',
+    contentE: ' e. Other identification documents that can be verified using reliable, independent source documents, data or information.',
   },
 };

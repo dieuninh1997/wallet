@@ -145,8 +145,8 @@ const styles = ScaledSheet.create({
   },
 
   viewMnemonic: {
-    marginLeft: '20@s',
-    marginRight: '20@s',
+    marginLeft: '10@s',
+    marginRight: '10@s',
     marginBottom: '10@s',
   },
 

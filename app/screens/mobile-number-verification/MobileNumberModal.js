@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import PhoneInput from 'react-native-phone-input';
@@ -259,7 +260,7 @@ export default class MobileNumberModal extends React.Component {
           <TextInput
             style={styles.numberPhoneTextInput}
             editable
-            keyboardType="numeric"
+            keyboardType={Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"}
             autoCapitalize="none"
             underlineColorAndroid="transparent"
             value={phoneNumber}
@@ -279,7 +280,7 @@ export default class MobileNumberModal extends React.Component {
         <Text style={styles.contentText}>{I18n.t('mobileNumberVerification.contentVerify')}</Text>
         <View style={styles.phoneNumberVerify}>
           <TextInput
-            keyboardType="numeric"
+            keyboardType={Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"}
             value={codeVerify}
             maxLength={6}
             onChangeText={this._onTextChangeVerify}

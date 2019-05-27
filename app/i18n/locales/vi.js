@@ -55,6 +55,7 @@ export default {
     termsAndConditions: ' điều khoản dịch vụ.',
     cancel: 'Cancel',
     searchCountry: 'Please input Keywords',
+    ListofAcceptableIdentificationCards: 'Danh sách các thẻ nhận dạng được chấp nhận',
   },
   createWalletByEmailScreen: {
     title: 'Tạo ví bằng email',
@@ -114,13 +115,13 @@ export default {
     changePassword: 'Đổi mật khẩu',
     recoveryPhrase: 'Khóa khôi phục',
     changePin: 'Đổi PIN',
-    useFaceIdAsPin: 'Sử dụng Face ID thay PIN',
+    useFaceIdAsPin: 'Bật Touch ID hoặc Face ID',
     swipeToReceive: 'Trượt để nhận',
     unverified: 'Chưa xác thực',
     disabled: 'Đã tắt',
     enabled: 'Đã bật',
     unconfirmed: 'Chưa xác nhận',
-    passportNumber: 'Số hộ chiếu',
+    passportNumber: 'Số ID',
     rejected: 'Đã từ chối',
   },
   emailVerification: {
@@ -277,8 +278,8 @@ export default {
   backupPassphrase: {
     title: 'Sao lưu khóa bảo mật',
     titlePrivatekey: 'Sao lưu khóa bảo mật',
-    note: 'Hãy sao lưu các từ bên dưới theo thứ tự. Những từ này sẽ cho phép bạn khôi phục ví.\n',
-    important: 'Đừng làm mất! Bạn không thể khôi phục ví nếu mất nó.',
+    note: 'Vui lòng lưu Khóa riêng của bạn. Điều này sẽ cho phép bạn phục hồi ví của bạn.\n',
+    important: 'Không chia sẻ hoặc sử dụng nó trên trang web độc hại / lừa đảo. \nTạo một bản sao lưu mềm trên giấy',
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',
     copied: 'Copied passphrase successfully.',
@@ -336,5 +337,13 @@ export default {
     titleMessage: 'No Internet Connection',
     contentMessageFirst: 'You are not connected to the internet.',
     contentMessageSecond: 'Make sure Wi-Fi is on, Airplane Mode is off and try again.',
+  },
+  ListofAccep: {
+    title: 'List of Acceptable Identification Cards',
+    content: ' a. For Filipino citizens: Those issued by any of the following official authorities: \n   i. Government of the Republic of the Philippines, including its political subdivisions, agencies, and instrumentalities; \n      • Passport\n      • Driver is License (including Student Permits with official receipt)\n      • Professional Regulation Commission (PRC) ID\n      • Postal ID (old postal IDs must have a photo of both front and back)\n      • Unified Multi-Purpose ID (UMID)\n      • National Bureau of Investigation (NBI) Clearance\n      • Armed Forces of the Philippines (AFP) ID\n      • Philippine National Police (PNP) ID\n      • Bureau of Fire Protection ID\n      • Certification from the National Council for the Welfare of Disabled Persons (NCWDP)\n      • Department of Social Welfare and Development (DSWD) Certification\n      • OFW ID\n      • Overseas Workers Welfare Administration (OWWA) ID\n      • Police Clearance Certificate or Police Clearance Card\n      • Seaman’s Books\n      • National Integrated Bar of the Philippines ID\n    ii. Government-Owned or -Controlled Corporations (GOCCs);\n      • Government Service Insurance System (GSIS) e-Card\n      • Social Security System (SSS) Card (date of birth must be visible on the ID)\n   iii. Covered persons registered with and supervised or regulated by the Bangko Sentral, SEC or Insurance Commission (IC);\n   iv. Philippine Statistics Authority (PSA) under the Philippine Identification System (PhilSys)',
+    contentB: ' b. For foreign nationals: Passport or Alien Certificate of Registration; ',
+    contentC: ' c. For Filipino students: School ID signed by the school principal or head of the educational institution; ',
+    contentD: ' d. For low risk customers: Any document or information reduced in writing which the covered person deems sufficient to establish the client’s identity; ',
+    contentE: ' e. Other identification documents that can be verified using reliable, independent source documents, data or information.',
   },
 };

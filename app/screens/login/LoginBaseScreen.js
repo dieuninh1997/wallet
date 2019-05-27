@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   AsyncStorage,
+  Platform,
 } from 'react-native';
 
 import PhoneInput from 'react-native-phone-input';
@@ -32,15 +33,15 @@ class LoginBaseScreen extends Component {
     const { params } = navigation.state;
     let titleShow = '';
     switch (params.screen) {
-    case 'phone':
-      titleShow = I18n.t('signin.signInByPhone');
-      break;
-    case 'passport':
-      titleShow = I18n.t('signin.signInByPassport');
-      break;
-    default:
-      titleShow = I18n.t('signin.signInByEmail');
-      break;
+      case 'phone':
+        titleShow = I18n.t('signin.signInByPhone');
+        break;
+      case 'passport':
+        titleShow = I18n.t('signin.signInByPassport');
+        break;
+      default:
+        titleShow = I18n.t('signin.signInByEmail');
+        break;
     }
 
     return {
@@ -63,15 +64,15 @@ class LoginBaseScreen extends Component {
     const { params } = navigation.state;
     let signinType = '0';
     switch (params.screen) {
-    case 'email':
-      signinType = '1';
-      break;
-    case 'passport':
-      signinType = '2';
-      break;
-    default:
-      signinType = '0';
-      break;
+      case 'email':
+        signinType = '1';
+        break;
+      case 'passport':
+        signinType = '2';
+        break;
+      default:
+        signinType = '0';
+        break;
     }
 
     this.state = {
@@ -177,12 +178,12 @@ class LoginBaseScreen extends Component {
 
   _initialCountry = () => {
     switch (I18n.locale) {
-    case 'vi': return 'vn';
-    case 'jp': return 'jp';
-    case 'en': return 'gb';
-    case 'ta': return 'ph';
-    case 'il': return 'ph';
-    case 'vis': return 'ph';
+      case 'vi': return 'vn';
+      case 'jp': return 'jp';
+      case 'en': return 'gb';
+      case 'ta': return 'ph';
+      case 'il': return 'ph';
+      case 'vis': return 'ph';
     }
   }
 
@@ -203,104 +204,108 @@ class LoginBaseScreen extends Component {
   _renderFormInput = () => {
     let imageShow = null;
     switch (this.signinType) {
-    case '0':
-      imageShow = (
-        <View style={[styles.inputTextNumber, styles.inputWalletIdContainer]}>
-          <View style={styles.country}>
-            <View style={styles.inputDialCode}>
-              <PhoneInput
-                ref={ref => this.phone = ref}
-                style={styles.dialCode}
-                textStyle={styles.dialCodeText}
-                flagStyle={{ display: 'none' }}
-                initialCountry={this._initialCountry()}
-              />
-              <TouchableOpacity
-                onPress={this._handlePressFlag}
-                style={{ marginLeft: 3 }}
-              >
-                <Image
-                  source={require('../../../assets/arrow-down/down-arrow.png')}
-                  style={styles.arrow}
-                />
-              </TouchableOpacity>
-            </View>
-            <CountryPicker
-              ref={ref => this.countryPicker = ref}
-              onChange={value => this.selectCountry(value)}
-              translation="eng"
-              cca2={this.state.cca2}
-              filterable
-              showCallingCode
-              renderFilter={({ value, onChange, onClose }) => (
-                <View style={styles.searchCountryPicker}>
-                  <View style={styles.groupSearchCountryPicker}>
-                    <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
-                    <TextInput
-                      placeholder={I18n.t('signin.searchCountry')}
-                      style={styles.inputSearchCountryPicker}
-                      onChangeText={onChange}
-                      value={value}
-                    />
+      case '0':
+        imageShow = (
+          <View style={[styles.inputTextNumber, styles.inputWalletIdContainer]}>
+            <View style={styles.country}>
+              <View style={styles.inputDialCode}>
+                <TouchableOpacity
+                  onPress={this._handlePressFlag}>
+                  <PhoneInput
+                    ref={ref => this.phone = ref}
+                    style={styles.dialCode}
+                    disabled
+                    textStyle={styles.dialCodeText}
+                    flagStyle={{ display: 'none' }}
+                    initialCountry={this._initialCountry()}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this._handlePressFlag}
+                  style={{ marginLeft: 3 }}
+                >
+                  <Image
+                    source={require('../../../assets/arrow-down/down-arrow.png')}
+                    style={styles.arrow}
+                  />
+                </TouchableOpacity>
+              </View>
+              <CountryPicker
+                ref={ref => this.countryPicker = ref}
+                onChange={value => this.selectCountry(value)}
+                translation="eng"
+                cca2={this.state.cca2}
+                filterable
+                showCallingCode
+                renderFilter={({ value, onChange, onClose }) => (
+                  <View style={styles.searchCountryPicker}>
+                    <View style={styles.groupSearchCountryPicker}>
+                      <Image style={styles.iconSearchCountryPicker} source={require('../../../assets/mobile-number-verify/searchCountryPicker.png')} />
+                      <TextInput
+                        placeholder={I18n.t('signin.searchCountry')}
+                        style={styles.inputSearchCountryPicker}
+                        onChangeText={onChange}
+                        value={value}
+                      />
+                    </View>
+                    <TouchableWithoutFeedback onPress={onClose}>
+                      <Text style={styles.textCancelCountryPicker}>{I18n.t('signin.cancel')}</Text>
+                    </TouchableWithoutFeedback>
                   </View>
-                  <TouchableWithoutFeedback onPress={onClose}>
-                    <Text style={styles.textCancelCountryPicker}>{I18n.t('signin.cancel')}</Text>
-                  </TouchableWithoutFeedback>
-                </View>
-              )}
-              hideAlphabetFilter
-            >
-              <View />
-            </CountryPicker>
+                )}
+                hideAlphabetFilter
+              >
+                <View />
+              </CountryPicker>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputText}
+                keyboardType={Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"}
+                underlineColorAndroid="transparent"
+                placeholder={I18n.t('createWallet.phoneNumber')}
+                onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, this.phone.state.formattedNumber + value)}
+              />
+            </View>
           </View>
-          <View style={styles.inputContainer}>
+        );
+        break;
+      case '1':
+        imageShow = (
+          <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
+            <Image
+              source={require('../../../assets/email/email.png')}
+              style={styles.inputImageIcon}
+            />
             <TextInput
-              style={styles.inputText}
-              keyboardType="phone-pad"
+              placeholder={I18n.t('signin.emailAddress')}
+              editable
               underlineColorAndroid="transparent"
-              placeholder={I18n.t('createWallet.phoneNumber')}
-              onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, this.phone.state.formattedNumber + value)}
+              style={styles.inputText}
+              onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
             />
           </View>
-        </View>
-      );
-      break;
-    case '1':
-      imageShow = (
-        <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
-          <Image
-            source={require('../../../assets/email/email.png')}
-            style={styles.inputImageIcon}
-          />
-          <TextInput
-            placeholder={I18n.t('signin.emailAddress')}
-            editable
-            underlineColorAndroid="transparent"
-            style={styles.inputText}
-            onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
-          />
-        </View>
-      );
-      break;
-    case '2':
-      imageShow = (
-        <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
-          <Image
-            source={require('../../../assets/passport/passport.png')}
-            style={styles.inputImageIcon}
-          />
-          <TextInput
-            placeholder={I18n.t('signin.passportNumber')}
-            editable
-            underlineColorAndroid="transparent"
-            style={styles.inputText}
-            onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
-          />
-        </View>
-      );
-      break;
-    default:
-      break;
+        );
+        break;
+      case '2':
+        imageShow = (
+          <View style={[styles.inputContainer, styles.inputWalletIdContainer]}>
+            <Image
+              source={require('../../../assets/passport/passport.png')}
+              style={styles.inputImageIcon}
+            />
+            <TextInput
+              placeholder={I18n.t('signin.passportNumber')}
+              editable
+              underlineColorAndroid="transparent"
+              style={styles.inputText}
+              onChangeText={value => this._handleChangeInput(LoginBaseScreen.LOGIN_INFO.EMAIL, value)}
+            />
+          </View>
+        );
+        break;
+      default:
+        break;
     }
     return imageShow;
   }
@@ -354,7 +359,7 @@ class LoginBaseScreen extends Component {
 
     return (
       <View style={styles.container}>
-      { isLoading ? <MangoLoading /> : null}
+        {isLoading ? <MangoLoading /> : null}
         <ScrollView>
           {this._renderFormLogin()}
           {this._renderBtnLogin()}
@@ -483,7 +488,8 @@ const styles = ScaledSheet.create({
   dialCodeText: {
     textAlign: 'center',
     fontSize: '18@ms',
-    ...Fonts.Ubuntu_Light,
+    color: '#000000',
+    ...Fonts.Ubuntu_Bold,
   },
   country: {
     borderRightWidth: '1@s',

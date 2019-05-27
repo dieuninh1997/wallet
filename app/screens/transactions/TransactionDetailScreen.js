@@ -125,7 +125,7 @@ export default class TransactionDetailScreen extends Component {
                 </Text>
               </View>
               <View style={styles.right}>
-                <Text style={styles.valueContent} numberOfLines={1} ellipsizeMode="middle">{ transaction.sendAddress }</Text>
+                <Text style={styles.valueContent} numberOfLines={2} ellipsizeMode="middle">{ transaction.sendAddress }</Text>
               </View>
             </View>
             <View style={styles.amount}>
@@ -136,7 +136,7 @@ export default class TransactionDetailScreen extends Component {
                 </Text>
               </View>
               <View style={styles.right}>
-                <Text style={styles.valueContent} numberOfLines={1} ellipsizeMode="middle">{ transaction.id }</Text>
+                <Text style={styles.valueContent} numberOfLines={3} ellipsizeMode="middle">{ transaction.id }</Text>
               </View>
             </View>
             <View style={styles.amount}>
@@ -216,11 +216,11 @@ const styles = ScaledSheet.create({
     marginLeft: '16@s',
   },
   left: {
-    width: '35%',
+    width: '25%',
   },
   right: {
     flexDirection: 'row',
-    width: '65%',
+    width: '75%',
     justifyContent: 'flex-end',
   },
   label: {
@@ -229,7 +229,7 @@ const styles = ScaledSheet.create({
     ...Fonts.Ubuntu_Regular,
   },
   valueContent: {
-    fontSize: '16@ms',
+    fontSize: '15@ms',
     color: 'rgb(47, 100, 209)',
     marginRight: '16@s',
     ...Fonts.Ubuntu_Regular,
@@ -271,6 +271,8 @@ const styles = ScaledSheet.create({
     marginHorizontal: '5@s',
     paddingLeft: '10@s',
     paddingRight: '10@s',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   btnText: {
     marginLeft: '10@s',
@@ -286,6 +288,6 @@ const styles = ScaledSheet.create({
     opacity: 0.3,
   },
   buttonTextStyle: {
-    fontSize: '18@ms',
+    fontSize: '16@ms',
   },
 });

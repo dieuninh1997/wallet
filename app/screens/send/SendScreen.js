@@ -6,6 +6,7 @@ import {
   TextInput,
   AsyncStorage,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { withNetworkConnectivity } from 'react-native-offline';
@@ -76,6 +77,7 @@ class SendScreen extends BaseScreen {
       realValueCoin: 0,
       isLoading: false,
       datetime: '',
+      isMgcShow: false,
     };
   }
 
@@ -90,10 +92,10 @@ class SendScreen extends BaseScreen {
         fee.value = currentGasPrices[fee.symbol];
         return fee;
       });
-      formSendCoin.feeValue = listFeeNew[0].value;
+      formSendCoin.feeValue = listFeeNew[1].value;
       this.setState({
         listFee: listFeeNew,
-        feeSelected: listFeeNew[0],
+        feeSelected: listFeeNew[1],
         formSendCoin,
       });
       this._loadData();
@@ -130,6 +132,10 @@ class SendScreen extends BaseScreen {
       console.log('Valueeeee', value);
       const { coinSelected, currency } = this.state;
       const newPrice = prices.RAW[coinSelected.name][currency].PRICE;
+      const isMgcShow = !(newPrice === '-');
+      this.setState({
+        isMgcShow
+      });
 
       this.setState({
         realValueCoin: parseFloat(value * newPrice).toFixed(2),
@@ -245,18 +251,13 @@ class SendScreen extends BaseScreen {
 
   _handleSendCoin = async () => {
     try {
-      this.setState({
-        isLoading: true,
-      });
-
       const { formSendCoin, coinSelected } = this.state;
-
+      setTimeout(() => this.setState({ isLoading: true }), 400);
       const walletAddress = await AsyncStorage.getItem('address');
       const privateKey = AppConfig.PRIVATE_KEY;
 
       const transaction = await WalletService.sendTransaction(coinSelected.symbol, walletAddress, formSendCoin.recievedAddress, privateKey, formSendCoin.coinValue, formSendCoin.feeValue);
       console.log('SendScreen.transaction: ', transaction);
-
 
       const params = {
         destination_address: walletAddress,
@@ -343,7 +344,7 @@ class SendScreen extends BaseScreen {
 
   _renderFormSend = () => {
     const {
-      formSendCoin, feeSelected, coinSelected, currency, realValueCoin,
+      formSendCoin, feeSelected, coinSelected, currency, realValueCoin, isMgcShow,
     } = this.state;
 
     return (
@@ -365,11 +366,11 @@ class SendScreen extends BaseScreen {
         </View>
 
         <View style={styles.inputCoinValueContainer}>
-          <View style={styles.inputCoinValue}>
+          <View style={isMgcShow ? styles.inputCoinValue : styles.inputAddressContainer }>
             <Text style={styles.inputTextLabel}>{coinSelected.name}</Text>
             <TextInput
               editable
-              keyboardType="numeric"
+              keyboardType={Platform.OS === "ios" ? "numbers-and-punctuation" : "numeric"}
               placeholder="0.00"
               underlineColorAndroid="transparent"
               value={formSendCoin.coinValueShow}
@@ -377,6 +378,7 @@ class SendScreen extends BaseScreen {
               onChangeText={value => this._handleChangeCoinValue(value)}
             />
           </View>
+          {!isMgcShow ? null :
           <View
             style={[
               styles.inputCoinValue,
@@ -391,6 +393,7 @@ class SendScreen extends BaseScreen {
               underlineColorAndroid="transparent"
             />
           </View>
+          }
         </View>
 
         <TouchableWithoutFeedback

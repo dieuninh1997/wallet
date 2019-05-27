@@ -51,12 +51,14 @@ export default class CreateWalletBaseScreen extends Component {
         phoneNumber: null,
       },
       isLoading: false,
+      isCreateIdNumber: false,
     };
     this.walletInfo = null;
   }
 
   componentDidMount = async () => {
     this._generateWallet();
+    this.getUsername();
   }
 
   _generateWallet = () => {
@@ -102,14 +104,17 @@ export default class CreateWalletBaseScreen extends Component {
 
     const loginType = this.getLoginType();
     switch (loginType) {
-    case Consts.LOGIN_TYPES.EMAIL:
-      return createWalletInfo.email;
-    case Consts.LOGIN_TYPES.PASSPORT:
-      return createWalletInfo.passport;
-    case Consts.LOGIN_TYPES.PHONE_NUMBER:
-      return createWalletInfo.phone_number;
-    default:
-      throw new Error(`Unknown login type: ${loginType}`);
+      case Consts.LOGIN_TYPES.EMAIL:
+        return createWalletInfo.email;
+      case Consts.LOGIN_TYPES.PASSPORT:
+        this.setState({
+          isCreateIdNumber: true,
+        });
+        return createWalletInfo.passport;
+      case Consts.LOGIN_TYPES.PHONE_NUMBER:
+        return createWalletInfo.phone_number;
+      default:
+        throw new Error(`Unknown login type: ${loginType}`);
     }
   }
 
@@ -125,6 +130,12 @@ export default class CreateWalletBaseScreen extends Component {
     const { navigation } = this.props;
 
     navigation.navigate('TermsConditionScreen');
+  }
+
+  _onBtnListAccep = () => {
+    const { navigation } = this.props;
+
+    navigation.navigate('ListofAccep');
   }
 
   _handleChangeInput = (typeInput, value) => {
@@ -239,17 +250,17 @@ export default class CreateWalletBaseScreen extends Component {
 
     const username = this.getUsername();
     switch (loginType) {
-    case Consts.LOGIN_TYPES.EMAIL:
-      registerInfo.email = username;
-      break;
-    case Consts.LOGIN_TYPES.PASSPORT:
-      registerInfo.passport_number = username;
-      break;
-    case Consts.LOGIN_TYPES.PHONE_NUMBER:
-      registerInfo.phone_number = username;
-      break;
-    default:
-      throw new Error(`Unknown login type: ${loginType}`);
+      case Consts.LOGIN_TYPES.EMAIL:
+        registerInfo.email = username;
+        break;
+      case Consts.LOGIN_TYPES.PASSPORT:
+        registerInfo.passport_number = username;
+        break;
+      case Consts.LOGIN_TYPES.PHONE_NUMBER:
+        registerInfo.phone_number = username;
+        break;
+      default:
+        throw new Error(`Unknown login type: ${loginType}`);
     }
 
     return registerInfo;
@@ -297,40 +308,50 @@ export default class CreateWalletBaseScreen extends Component {
   )
 
   _renderTermsAndConditions = () => {
-    const { isChecked } = this.state;
+    const { isChecked, isCreateIdNumber } = this.state;
 
     return (
-      <View style={styles.termAndConditionContainer}>
-        <CheckBox
-          containerStyle={styles.checkboxContainer}
-          checked={isChecked}
-          size={scale(20)}
-          checkedIcon="check-square"
-          uncheckedIcon="square"
-          checkedColor="#1c43b8"
-          onPress={() => this._handleToggleCheckBox()}
-        />
-        <TouchableWithoutFeedback
-          onPress={() => this._onBtnTerms()}
-        >
-          {I18n.locale === 'jp'
-            ? (
-              <View
-                style={styles.textTermAndConditions}
-              >
-                <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
-                <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
-              </View>
-            )
-            : (
-              <View
-                style={styles.textTermAndConditions}
-              >
-                <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
-                <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
-              </View>
-            )}
-        </TouchableWithoutFeedback>
+      <View style={styles.termContainer}>
+        {!isCreateIdNumber ? null :
+          <TouchableWithoutFeedback onPress={() => this._onBtnListAccep()}>
+            <View style={styles.textTermAndConditions}>
+              <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.ListofAcceptableIdentificationCards')}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        }
+        <View style={styles.termAndConditionContainer}>
+          <CheckBox
+            containerStyle={styles.checkboxContainer}
+            checked={isChecked}
+            size={scale(20)}
+            checkedIcon="check-square"
+            uncheckedIcon="square"
+            checkedColor="#1c43b8"
+            onPress={() => this._handleToggleCheckBox()}
+          />
+
+          <TouchableWithoutFeedback
+            onPress={() => this._onBtnTerms()}
+          >
+            {I18n.locale === 'jp'
+              ? (
+                <View
+                  style={styles.textTermAndConditions}
+                >
+                  <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
+                  <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
+                </View>
+              )
+              : (
+                <View
+                  style={styles.textTermAndConditions}
+                >
+                  <Text style={styles.textAccept}>{I18n.t('createByPhoneNumber.iAccept')}</Text>
+                  <Text style={styles.textTerms}>{I18n.t('createByPhoneNumber.termsAndConditions')}</Text>
+                </View>
+              )}
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     );
   }
@@ -349,7 +370,7 @@ export default class CreateWalletBaseScreen extends Component {
 
     return (
       <View style={styles.container}>
-        { isLoading ? <MangoLoading /> : null}
+        {isLoading ? <MangoLoading /> : null}
         <ScrollView>
           {this._renderRegisterFrom()}
           {this._renderTermsAndConditions()}
@@ -372,7 +393,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginTop: '10@s',
+    marginTop: '5@s',
   },
 
   checkboxContainer: {
@@ -449,5 +470,10 @@ const styles = ScaledSheet.create({
   textBtnCreateWalletContainer: {
     fontSize: '20@ms',
     ...Fonts.Ubuntu_Regular,
+  },
+
+  termContainer: {
+    flexDirection: 'column',
+    marginTop: '15@s',
   },
 });

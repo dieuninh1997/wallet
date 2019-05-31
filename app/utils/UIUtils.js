@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { RNToasty } from 'react-native-toasty';
 import { scale } from '../libs/reactSizeMatter/scalingUtils';
+import Toast from 'react-native-root-toast';
 
 export default class UIUtils {
   static isIphoneX() {
@@ -66,22 +67,42 @@ export default class UIUtils {
       duration,
     };
 
+    let toast = Toast.show(message, {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.CENTER,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+
     switch (type) {
-    case 'success':
-      RNToasty.Success(options);
-      break;
-    case 'info':
-      RNToasty.Info(options);
-      break;
-    case 'warning':
-      RNToasty.Warn(options);
-      break;
-    case 'error':
-      RNToasty.Error(options);
-      break;
-    default:
-      RNToasty.Normal(options);
-      break;
+      case 'success':
+        setTimeout(function () {
+          Toast.hide(toast);
+      }, 1000);
+        break;
+      case 'info':
+        setTimeout(function () {
+          Toast.hide(toast);
+      }, 1000);
+        break;
+      case 'warning':
+        setTimeout(function () {
+          Toast.hide(toast);
+      }, 1000);
+        break;
+      case 'error':
+        //RNToasty.Error(options);
+        setTimeout(function () {
+          Toast.hide(toast);
+        }, 1000);
+        break;
+      default:
+        setTimeout(function () {
+          Toast.hide(toast);
+      }, 1000);
+        break;
     }
   }
 

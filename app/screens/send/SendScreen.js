@@ -260,7 +260,7 @@ class SendScreen extends BaseScreen {
       console.log('SendScreen.transaction: ', transaction);
 
       const params = {
-        destination_address: walletAddress,
+        destination_address: formSendCoin.recievedAddress,
         amount: formSendCoin.coinValue,
         transaction_url: transaction.transactionUrl,
         coin_name: coinSelected.name,

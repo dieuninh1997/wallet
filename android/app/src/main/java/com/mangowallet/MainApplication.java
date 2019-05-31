@@ -3,8 +3,8 @@ package com.mangowallet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.airbnb.android.react.lottie.LottiePackage;
 import com.janeasystems.rn_nodejs_mobile.RNNodeJsMobilePackage;
+import com.airbnb.android.react.lottie.LottiePackage;
 import ui.toasty.RNToastyPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;

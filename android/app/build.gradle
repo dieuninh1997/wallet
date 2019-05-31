@@ -101,8 +101,8 @@ android {
         applicationId "com.mangowallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "1.5"
+        versionCode 18
+        versionName "1.13"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -150,8 +150,8 @@ android {
 }
 
 dependencies {
-    compile project(':lottie-react-native')
     compile project(':nodejs-mobile-react-native')
+    compile project(':lottie-react-native')
     compile project(':react-native-toasty')
     compile project(':react-native-splash-screen')
     compile project(':react-native-device-info')

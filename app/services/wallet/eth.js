@@ -3,6 +3,7 @@ import axios from 'axios';
 import urljoin from 'url-join';
 import _ from 'lodash';
 import moment from 'moment';
+import fromExponential from 'from-exponential';
 
 const EthUtil = require('ethereumjs-util');
 const ethers = require('ethers');
@@ -79,7 +80,7 @@ EthService.getTransactions = async (address, page, perPage) => {
       const transactionId = transaction.hash;
       const sendAddress = transaction.from;
       const receiveAddress = transaction.to;
-      const value = Number(transaction.value) / (10 ** 18);
+      const value = fromExponential(Number(transaction.value) / (10 ** 18));
       const transactionUrl = urljoin(EthService.broadcastTransactionUrl, 'tx', transaction.hash);
       const transactionTime = moment(Number(transaction.timeStamp) * 1000).format('lll');
       const confirmations = Number(transaction.confirmations);

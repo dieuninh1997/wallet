@@ -22,6 +22,7 @@ import BaseScreen from '../BaseScreen';
 import Consts from '../../utils/Consts';
 import AppPreferences from '../../utils/AppPreferences';
 import MangoConnectionLost from '../common/MangoConnectionLost';
+import fromExponential from 'from-exponential';
 
 class TransactionsScreen extends BaseScreen {
   constructor(props) {
@@ -85,7 +86,8 @@ class TransactionsScreen extends BaseScreen {
 
   _getTransactions = async (coin, address, page, perPage, isFirst = true) => {
     try {
-      const transactions = await WalletService.getTransactions(coin, address, page, perPage);
+      const transactionData = await WalletService.getTransactions(coin, address, page, perPage);
+      const transactions = transactionData.filter(item =>{ return item.value !== fromExponential(0) });
       console.log('TransactionsScreen.transactions =====>: ', transactions);
       this.setState({
         isProcess: false,
@@ -227,7 +229,7 @@ class TransactionsScreen extends BaseScreen {
         <ScrollView
           showsVerticalScrollIndicator={false}
           onContentSizeChange={() => {
-            if (transactionLenght === 5) {
+            if (transactionLenght < 5) {
               this._getMoreData();
             }
           }}

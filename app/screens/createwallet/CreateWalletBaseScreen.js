@@ -40,6 +40,7 @@ export default class CreateWalletBaseScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.clickCreate = true;
     this.state = {
       isChecked: false,
       createWalletInfo: {
@@ -147,6 +148,10 @@ export default class CreateWalletBaseScreen extends Component {
   }
 
   _handleClickCreateWallet = async () => {
+    if (!this.clickCreate) {
+      return;
+    }
+
     if (!this.walletInfo) {
       return;
     }
@@ -159,6 +164,7 @@ export default class CreateWalletBaseScreen extends Component {
         isLoading: true,
       });
 
+      this.clickCreate = false;
       const { privateKey, address, mnemonic } = this.walletInfo;
       const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
       const privateKeyHash = CryptoJS.SHA256(privateKey).toString();
@@ -199,6 +205,7 @@ export default class CreateWalletBaseScreen extends Component {
       this.setState({
         isLoading: false,
       });
+      this.clickCreate = true;
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {

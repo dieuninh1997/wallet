@@ -21,6 +21,8 @@ import UIUtils from '../../utils/UIUtils';
 import { CommonColors, CommonStyles, Fonts } from '../../utils/CommonStyles';
 import { sendPhoneVerificationCode, verifyPhoneNumber } from '../../api/user/UserRequest';
 
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+
 export default class MobileNumberModal extends React.Component {
   constructor(props) {
     super(props);
@@ -81,6 +83,39 @@ export default class MobileNumberModal extends React.Component {
     });
   }
 
+  parse(number, iso2) {
+    try {
+      return phoneUtil.parse(number, iso2);
+    } catch (err) {
+      console.log(`Exception was thrown: ${err.toString()}`);
+      return null;
+    }
+  }
+
+  isValidNumber = async () => {
+    const { phoneNumber, codePhoneCountry } = this.state;
+    const phoneNumberFull = codePhoneCountry + phoneNumber;
+    const phoneInfo = this.parse(phoneNumberFull, this.state.cca2);
+    const phoneNUmberValidate = phoneInfo.values_[2] + "";
+    await this.setState({
+      phoneNumber: phoneNUmberValidate,
+      loadNumber: true,
+    });
+    console.log(this.state.phoneNumber, phoneNUmberValidate);
+
+    if (phoneInfo) {
+      return phoneUtil.isValidNumber(phoneInfo);
+    }
+
+    return false;
+  }
+
+  _validatePhoneNumber = async () => {
+    if (!(await this.isValidNumber())) {
+      throw new Error('Phone number is not valid');
+    }
+  }
+
   _onUpdatePress = async () => {
     const { phoneNumber, codePhoneCountry } = this.state;
 
@@ -92,7 +127,8 @@ export default class MobileNumberModal extends React.Component {
     }
 
     try {
-      const response = await sendPhoneVerificationCode(codePhoneCountry, phoneNumber);
+      await this._validatePhoneNumber();
+      const response = await sendPhoneVerificationCode(codePhoneCountry, this.state.phoneNumber);
       const message = response.message;
 
       UIUtils.showToastMessage(message, 'success');

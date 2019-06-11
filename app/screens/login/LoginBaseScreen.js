@@ -151,7 +151,11 @@ class LoginBaseScreen extends Component {
       if (error.errors) {
         UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
       } else {
-        UIUtils.showToastMessage(error.message, 'error');
+        if (error.message) {
+          UIUtils.showToastMessage(error.message, 'error');
+        } else {
+          UIUtils.showToastMessage(error, 'error');
+        }
       }
     }
   }

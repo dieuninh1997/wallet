@@ -34,7 +34,7 @@ export default {
     loginFacebook: 'Login With Facebook',
     signInByPhone: 'Sign In With Phone Number',
     signInByEmail: 'Sign In With Email Address',
-    signInByPassport: 'Sign In With Passport',
+    signInByPassport: 'Sign In With ID Number',
     passportNumber: 'ID Number',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
@@ -72,7 +72,7 @@ export default {
     passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
-    title: 'Create by Passport',
+    title: 'Create by ID Number',
     inputEmail: 'ID Number',
   },
   dashboard: {

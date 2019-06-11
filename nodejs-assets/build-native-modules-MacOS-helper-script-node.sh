@@ -1,5 +1,5 @@
 #!/bin/bash
       # Helper script for Gradle to call node on macOS in case it is not found
-      export PATH=$PATH:/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/sotatek/mango-wallet/node_modules/nodejs-mobile-react-native/node_modules/.bin:/Users/sotatek/mango-wallet/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+      export PATH=$PATH:/var/folders/25/r1q9v7px2997hy5gymrymsvw0000gn/T/yarn--1559190402170-0.21046737999459553:/Users/sotatek/Documents/sotatek/mango-wallet/node_modules/nodejs-mobile-react-native/node_modules/.bin:/Users/sotatek/.config/yarn/link/node_modules/.bin:/Users/sotatek/Documents/sotatek/mango-wallet/node_modules/nodejs-mobile-react-native/node_modules/.bin:/Users/sotatek/.config/yarn/link/node_modules/.bin:/usr/local/Cellar/node/11.8.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/Cellar/node/11.8.0/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/Cellar/node/11.8.0/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/Cellar/node/11.8.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
       node $@
     

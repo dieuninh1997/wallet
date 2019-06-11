@@ -34,7 +34,7 @@ export default {
     loginFacebook: 'Login With Facebook',
     signInByPhone: 'Sign In With Phone',
     signInByEmail: 'Sign In With Email Address',
-    signInByPassport: 'Sign In With Passport',
+    signInByPassport: 'Sign In With ID Number',
     passportNumber: 'パスポート番号',
     phoneNumber: '電話番号',
     emailAddress: 'メールアドレス',
@@ -72,7 +72,7 @@ export default {
     passwordInvalid: 'パスワードは最低8文字で、大文字、小文字、数字を含める必要があります。',
   },
   createWalletByPassportScreen: {
-    title: 'パスポート番号で作成',
+    title: 'ID番号で作成',
     inputEmail: 'パスポート番号',
   },
   dashboard: {

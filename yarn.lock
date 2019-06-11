@@ -3424,22 +3424,6 @@ ethereumjs-wallet@0.6.2:
     utf8 "^3.0.0"
     uuid "^3.3.2"
 
-ethers@3.0.29:
-  version "3.0.29"
-  resolved "https://registry.yarnpkg.com/ethers/-/ethers-3.0.29.tgz#ce8139955b4ed44456eb6764b089bb117c86775d"
-  integrity sha512-OGyA5pW5xFC5o/ZV5MfIoVp/EdA1QMg2bMJFf7Kznsz8m7IzzbgsPHTCjzSfKQDs/XDphGyRcA7A6bkIeJL4gw==
-  dependencies:
-    aes-js "3.0.0"
-    bn.js "^4.4.0"
-    elliptic "6.3.3"
-    hash.js "^1.0.0"
-    inherits "2.0.1"
-    js-sha3 "0.5.7"
-    scrypt-js "2.0.3"
-    setimmediate "1.0.4"
-    uuid "2.0.1"
-    xmlhttprequest "1.8.0"
-
 ethers@4.0.0-beta.1:
   version "4.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.0-beta.1.tgz#0648268b83e0e91a961b1af971c662cdf8cbab6d"
@@ -3452,6 +3436,22 @@ ethers@4.0.0-beta.1:
     hash.js "1.1.3"
     js-sha3 "0.5.7"
     scrypt-js "2.0.3"
+    setimmediate "1.0.4"
+    uuid "2.0.1"
+    xmlhttprequest "1.8.0"
+
+ethers@^4.0.27:
+  version "4.0.27"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.27.tgz#e570b0da9d805ad65c83d81919abe02b2264c6bf"
+  integrity sha512-+DXZLP/tyFnXWxqr2fXLT67KlGUfLuvDkHSOtSC9TUVG9OIj6yrG5JPeXRMYo15xkOYwnjgdMKrXp5V94rtjJA==
+  dependencies:
+    "@types/node" "^10.3.2"
+    aes-js "3.0.0"
+    bn.js "^4.4.0"
+    elliptic "6.3.3"
+    hash.js "1.1.3"
+    js-sha3 "0.5.7"
+    scrypt-js "2.0.4"
     setimmediate "1.0.4"
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
@@ -3949,6 +3949,11 @@ fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
+
+from-exponential@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/from-exponential/-/from-exponential-1.0.0.tgz#feea3f96dc6861dca784599e391c24bdb48d28f2"
+  integrity sha512-lr7d141V95FOV+W9B2f4D5gNM2Tm6Qk5GOBGwr6ZukwhpWHldqJw30xI+UkVBYi1cQu3afLQQD9QEgxpehT9wg==
 
 fs-constants@^1.0.0:
   version "1.0.0"
@@ -6043,7 +6048,7 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
-minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
+minimatch@^3.0.3, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -6321,32 +6326,31 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
-nodejs-mobile-gyp@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/nodejs-mobile-gyp/-/nodejs-mobile-gyp-0.2.0.tgz#5e33ce32fbf560d1b64bea0e62df85ee61a694cf"
-  integrity sha512-zdeI4UhZUaDbwfOSS7ZgtKzagNb7nUiqV/Es67LKixiSIMSE1+9fwoVu9TVpCPFgizsoxRSxaxtSmZlL0yRmYA==
+nodejs-mobile-gyp@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/nodejs-mobile-gyp/-/nodejs-mobile-gyp-0.3.0.tgz#ba4ec48966cd5ca34283cf81fb2c7546f318cd1c"
+  integrity sha512-yulbKn9bmy5kxcggG1yhmr/D6u8i+KTGaIBRi6jm8Uorv8G3wSCvi7yM+mlqGaorETU0A9m+wnzdDResTFw4DA==
   dependencies:
     glob "^7.0.3"
     graceful-fs "^4.1.2"
-    minimatch "^3.0.2"
     mkdirp "^0.5.0"
     nopt "2 || 3"
     npmlog "0 || 1 || 2 || 3 || 4"
     osenv "0"
-    request "2"
+    request "^2.87.0"
     rimraf "2"
     semver "~5.3.0"
     tar "^3.1.3"
     which "1"
 
-nodejs-mobile-react-native@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/nodejs-mobile-react-native/-/nodejs-mobile-react-native-0.3.0.tgz#0310e5f213f168cfcdf8275b2b91cdd14b5b3069"
-  integrity sha512-cY0tF27Mf3VbIGA8xz/c6j7WlP1b8sapYfb+SZUbjYxztYH1YFGdjymAQ/s4vtvK0rXf2h1WXMRjRw6nu4jjKA==
+nodejs-mobile-react-native@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/nodejs-mobile-react-native/-/nodejs-mobile-react-native-0.4.1.tgz#0d41e0e581e140ae8c8a985c172291e4c2bd418d"
+  integrity sha512-nz9wGJUkOCXBj8E8gi4994Onbhu1+i9w50D5Y1C0v/yE9GJAdReT9zgnY2lpTlO2fdLcNp88uaW1tx0/0lEwLg==
   dependencies:
     mkdirp "^0.5.1"
     ncp "^2.0.0"
-    nodejs-mobile-gyp "^0.2.0"
+    nodejs-mobile-gyp "^0.3.0"
     xcode "^0.9.3"
 
 "nopt@2 || 3":
@@ -7435,6 +7439,22 @@ react-native-restart@0.0.7:
   resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.7.tgz#e2ec764dcb0a82918a301c8664c30df75225f7e3"
   integrity sha512-/7TdL3pHM7H0Cut6U6SK1jd6fVYvLlQq0O4inJ7j4YD0w9BtAAFqLkLnBDOA0jL4oLw/89yR8HhLOzNFGvVsfw==
 
+react-native-root-siblings@^3.0.0:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-3.2.1.tgz#06bd8722babe8a30e914b73eae4beffa3218ec57"
+  integrity sha512-WNNhLRFpyK8R00OOdMhQVepeBV+khMTi+Yk3QcPRetMLvao8kLkCP5SObiXpbTFPZlkuSfHo/0jtEKyUA8qWpw==
+  dependencies:
+    prop-types "^15.6.2"
+    static-container "^1.0.0"
+
+react-native-root-toast@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-root-toast/-/react-native-root-toast-3.0.2.tgz#85c0c50d300c895a35ea98587b4ad4c9540297ee"
+  integrity sha512-I3yJkfFP7yEBRBiJAToQgPtxZwf+8j60KDPN3nOYSg9Nfqldq6VwIC4Pgq6Wt8XgqpSuIBtwGYfpc5JS8TxFeg==
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-root-siblings "^3.0.0"
+
 react-native-safe-area-view@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.11.0.tgz#4f3dda43c2bace37965e7c6aef5fc83d4f19d174"
@@ -7466,10 +7486,10 @@ react-native-share@^1.1.2:
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.1.3.tgz#513ea61075e2bb945d33cfda120e12592916299e"
   integrity sha512-vKAJqgkEt7HjsF0HUwgom+E0FbmFNVZNncHwby1+O8/mXlKugh+Ym6rvv+A2ASHmD5TXKohJMYT2+jYofzPORA==
 
-react-native-spinkit@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.1.1.tgz#3ae512f3978bc750b7c02639911e1710750d8539"
-  integrity sha1-OuUS85eLx1C3wCY5kR4XEHUNhTk=
+react-native-spinkit@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.2.0.tgz#bc3eb2cf44f0233928721b53f3eb1d6bfb1322e4"
+  integrity sha512-q+o0LcoF6x0cr9rByA9QUaykTra5jwkuQnwzS1thaHF1aNSQ0LD4DuIu/qkvaO+zXtz5U9MPszghjVTcqn2ENA==
   dependencies:
     prop-types "^15.5.8"
 
@@ -7902,7 +7922,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@2, request@^2.79.0, request@^2.87.0:
+request@^2.79.0, request@^2.87.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -8113,6 +8133,11 @@ scrypt-js@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-2.0.3.tgz#bb0040be03043da9a012a2cea9fc9f852cfc87d4"
   integrity sha1-uwBAvgMEPamgEqLOqfyfhSz8h9Q=
+
+scrypt-js@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-2.0.4.tgz#32f8c5149f0797672e551c07e230f834b6af5f16"
+  integrity sha512-4KsaGcPnuhtCZQCxFxN3GVYIhKFPTdLd8PLC552XwbMndtD0cjRFAhDuuydXQ0h08ZfPgzqe6EKHozpuH74iDw==
 
 scrypt.js@0.2.0, scrypt.js@^0.2.0:
   version "0.2.0"
@@ -8521,6 +8546,11 @@ stacktrace-parser@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/stacktrace-parser/-/stacktrace-parser-0.1.4.tgz#01397922e5f62ecf30845522c95c4fe1d25e7d4e"
   integrity sha1-ATl5IuX2Ls8whFUiyVxP4dJefU4=
+
+static-container@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/static-container/-/static-container-1.3.0.tgz#e4f7b4be4e42954e3d1955ab7b3974a78b7bad87"
+  integrity sha512-OJnvgv6tq9T5QbFUMioEK4WP48pMn/X4qdcrWAhop6boMMz6pMmWPWXgjimn1wKqcClZ6Ff0iSKViRXzwx111w==
 
 static-extend@^0.1.1:
   version "0.1.2"

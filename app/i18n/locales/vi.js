@@ -34,7 +34,7 @@ export default {
     loginFacebook: 'Login With Facebook',
     signInByPhone: 'Sign In With Phone',
     signInByEmail: 'Sign In With Email Address',
-    signInByPassport: 'Sign In With Passport',
+    signInByPassport: 'Sign In With ID Number',
     passportNumber: 'Passport Number',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',

@@ -279,6 +279,7 @@ export default {
     title: 'パスフレーズのバックアップ',
     titlePrivatekey: 'Backup your Private Key',
     note: '秘密鍵を保存してください。 これで財布を取り戻すことができます。\n',
+    notePass: '順番にこれらの単語を保存してください。 これらの言葉はあなたがあなたの財布を取り戻すことを可能にするでしょう。',
     important: '悪意のある/フィッシングサイトで共有したり、使用したりしないでください。\n紙とソフトバックアップを作成します。',
     btnCopy: 'コピーする',
     btnNext: '続ける',

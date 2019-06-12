@@ -279,6 +279,7 @@ export default {
     title: 'Sao lưu khóa bảo mật',
     titlePrivatekey: 'Sao lưu khóa bảo mật',
     note: 'Vui lòng lưu Khóa riêng của bạn. Điều này sẽ cho phép bạn phục hồi ví của bạn.\n',
+    notePass: 'Hãy lưu những từ này theo thứ tự. Những từ này sẽ cho phép bạn phục hồi ví của bạn.',
     important: 'Không chia sẻ hoặc sử dụng nó trên trang web độc hại / lừa đảo. \nTạo một bản sao lưu mềm trên giấy',
     btnCopy: 'Sao chép',
     btnNext: 'Tiếp',

@@ -60,12 +60,14 @@ export default class CreateWalletPhoneNumberScreen extends CreateWalletBaseScree
   isValidNumber = () => {
     const { createWalletInfo } = this.state;
     const phoneNumber = this.phone.state.formattedNumber + createWalletInfo.phoneNumber;
-    createWalletInfo.phone_number = phoneNumber;
+    const phoneInfo = this.parse(phoneNumber, this.state.cca2);
+    const phoneNumberValidate = this.phone.state.formattedNumber + phoneInfo.values_[2];
+    createWalletInfo.phone_number = phoneNumberValidate;
+    createWalletInfo.phoneNumber = phoneInfo.values_[2];
     this.setState({
       createWalletInfo,
     });
     console.log(this.state.createWalletInfo);
-    const phoneInfo = this.parse(phoneNumber, this.state.cca2);
 
     if (phoneInfo) {
       return phoneUtil.isValidNumber(phoneInfo);

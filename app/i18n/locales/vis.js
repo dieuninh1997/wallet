@@ -46,7 +46,7 @@ export default {
     title: 'Paghimo og wallet',
     phoneNumber: 'Phone Number',
     emailAddress: 'Email Address',
-    passportNumber: 'Passport Number',
+    passportNumber: 'ID Number',
     facebook: 'Facebook',
   },
   createByPhoneNumber: {
@@ -68,7 +68,7 @@ export default {
     emailInvalid: 'Sayop nga email!',
     passwordMustMatch: 'Ang pasword nga gisulod dili parehas!',
     requireInfo: 'Please enter full information!',
-    passportInvalid: 'Passport is not valid! Please enter only letters and number',
+    passportInvalid: 'ID number is not valid! Please enter only letters and number',
     passwordInvalid: 'Password must include uppercase and lowercase letters, numbers and at least 8 characters',
   },
   createWalletByPassportScreen: {
@@ -310,16 +310,16 @@ export default {
     facebook: 'Facebook',
   },
   PassportNumberVerifyScreen: {
-    title: 'Passport Number',
-    enterPassportNumber: 'Enter passport number',
+    title: 'ID Number Verify',
+    enterPassportNumber: 'Enter ID number',
     instruction: 'Please take a clear photo like the sample and upload to verify',
     selectImage: 'Select Image',
     continue: 'Continue',
-    messengerPassport: 'Please enter passport number',
+    messengerPassport: 'Please enter ID number',
     messengerImage: 'Please select image',
   },
   uploadPassportNumber: {
-    title: 'Passport Number',
+    title: 'ID Number Verify',
     selectImage: 'Select Image',
     submit: 'Submit',
     submitSuccess: 'submit success',

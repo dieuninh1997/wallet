@@ -46,7 +46,7 @@ class BackupPassphraseScreen extends Component {
       <View style={styles.qrCodeSectionContainer}>
         <View style={styles.viewMnemonic}>
           <Text style={[styles.txtNote, { color: '#000000' }]}>
-            {I18n.t('backupPassphrase.note')}
+            {AppConfig.MNEMONIC ? I18n.t('backupPassphrase.notePass') : I18n.t('backupPassphrase.note')}
           </Text>
         </View>
 

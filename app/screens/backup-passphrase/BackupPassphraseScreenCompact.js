@@ -72,7 +72,7 @@ class BackupPassphraseScreenCompact extends Component {
       <View style={styles.qrCodeSectionContainer}>
         <View style={styles.viewMnemonic}>
           <Text style={[styles.txtNote, { color: '#000000' }]}>
-            {I18n.t('backupPassphrase.note')}
+            {I18n.t('backupPassphrase.notePass')}
           </Text>
         </View>
 

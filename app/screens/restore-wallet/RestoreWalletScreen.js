@@ -157,7 +157,7 @@ class RestoreWalletScreen extends Component {
       return;
     }
     try {
-      const { params } = navigation.state;
+      let { params } = navigation.state;
 
       this.setState({
         isLoading: true,
@@ -218,7 +218,11 @@ class RestoreWalletScreen extends Component {
         isLoading: false,
       });
 
-      navigation.navigate('AddPinScreen');
+      params = {
+        backScreen: true,
+      }
+
+      navigation.navigate('AddPinScreen', params);
     } catch (error) {
       this.setState({
         isLoading: false,

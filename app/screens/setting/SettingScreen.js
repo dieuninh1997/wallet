@@ -371,23 +371,29 @@ export default class SettingScreen extends BaseScreen {
   }
 
   hidePassport = (passport) => {
-    let passportHide = passport.substring(0, 1);
-    for (let i = 0; i < passport.length - 1; i++) {
-      passportHide += '*';
+    if (passport !== undefined && passport !== '') {
+      let passportHide = passport.substring(0, 1);
+      for (let i = 0; i < passport.length - 1; i++) {
+        passportHide += '*';
+      }
+      return passportHide;
     }
-    return passportHide;
+    return '';
   }
 
   hideNumberPhone = (phoneNumber) => {
-    let phoneNumberHide = phoneNumber.substring(0, 3);
-    for (let i = 0; i < phoneNumber.length - 3; i++) {
-      phoneNumberHide += '*';
+    if (phoneNumber !== undefined && phoneNumber !== '') {
+      let phoneNumberHide = phoneNumber.substring(0, 3);
+      for (let i = 0; i < phoneNumber.length - 3; i++) {
+        phoneNumberHide += '*';
+      }
+      return phoneNumberHide;
     }
-    return phoneNumberHide;
+    return '';
   }
 
   hideGmail = (gmail) => {
-    if (gmail !== undefined && gmail !== null) {
+    if (gmail !== undefined && gmail !== '') {
       let gmailHide = gmail.split('@');
       let nameMail = gmailHide[0].substring(0, 1);
       let mailEnd = "";

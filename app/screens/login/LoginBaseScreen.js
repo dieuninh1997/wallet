@@ -139,7 +139,10 @@ class LoginBaseScreen extends Component {
       this.setState({
         isLoading: false,
       });
-      navigation.navigate('AddPinScreen');
+      const params = {
+        backScreen: true,
+      }
+      navigation.navigate('AddPinScreen', params);
     } catch (error) {
       this.setState({
         isLoading: false,

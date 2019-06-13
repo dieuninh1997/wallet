@@ -139,21 +139,21 @@ export default class SettingScreen extends BaseScreen {
       const response = await getCurrentUser(false);
       let walletId = '';
       switch (response.data.login_type) {
-      case Consts.LOGIN_TYPES.EMAIL:
-        walletId = response.data.email;
-        break;
-      case Consts.LOGIN_TYPES.PHONE_NUMBER:
-        walletId = response.data.phone_number;
-        break;
-      case Consts.LOGIN_TYPES.PASSPORT:
-        walletId = response.data.passport_number;
-        break;
-      case Consts.LOGIN_TYPES.FACEBOOK:
-        walletId = response.data.facebook_id;
-        break;
-      default:
-        walletId = '';
-        break;
+        case Consts.LOGIN_TYPES.EMAIL:
+          walletId = this.hideGmail(response.data.email);
+          break;
+        case Consts.LOGIN_TYPES.PHONE_NUMBER:
+          walletId = this.hideNumberPhone(response.data.phone_number);
+          break;
+        case Consts.LOGIN_TYPES.PASSPORT:
+          walletId = this.hidePassport(response.data.passport_number);
+          break;
+        case Consts.LOGIN_TYPES.FACEBOOK:
+          walletId = response.data.facebook_id;
+          break;
+        default:
+          walletId = '';
+          break;
       }
       this.setState({
         user: response.data,
@@ -370,6 +370,38 @@ export default class SettingScreen extends BaseScreen {
     }
   }
 
+  hidePassport = (passport) => {
+    let passportHide = passport.substring(0, 1);
+    for (let i = 0; i < passport.length - 1; i++) {
+      passportHide += '*';
+    }
+    return passportHide;
+  }
+
+  hideNumberPhone = (phoneNumber) => {
+    let phoneNumberHide = phoneNumber.substring(0, 3);
+    for (let i = 0; i < phoneNumber.length - 3; i++) {
+      phoneNumberHide += '*';
+    }
+    return phoneNumberHide;
+  }
+
+  hideGmail = (gmail) => {
+    if (gmail !== undefined && gmail !== null) {
+      let gmailHide = gmail.split('@');
+      let nameMail = gmailHide[0].substring(0, 1);
+      let mailEnd = "";
+      for (let i = 0; i < gmailHide[0].length - 1; i++) {
+        nameMail += "*";
+      }
+      for (let i = 0; i < gmailHide[1].length; i++) {
+        mailEnd += "*";
+      }
+      return nameMail + '@' + mailEnd;
+    }
+    return '';
+  }
+
   _renderProfile = () => {
     const { walletId, user, userSecuritySettings } = this.state;
     const emailVerified = userSecuritySettings && userSecuritySettings.email_verified;
@@ -398,13 +430,13 @@ export default class SettingScreen extends BaseScreen {
                 <View style={styles.activiRightGroup}>
                   {emailVerified ? (
                     <Text style={styles.textVerified}>
-                      {user.email}
+                      {this.hideGmail(user.email)}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  )}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    )}
 
                   {!emailVerified && (
                     <MaterialCommunityIcons
@@ -422,13 +454,13 @@ export default class SettingScreen extends BaseScreen {
                 <View style={styles.activiRightGroup}>
                   {userSecuritySettings && (userSecuritySettings.phone_verified ? (
                     <Text style={styles.textVerified}>
-                      {user.phone_number}
+                      {this.hideNumberPhone(user.phone_number)}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {I18n.t('setting.unverified')}
-                    </Text>
-                  ))}
+                      <Text style={styles.textUnVerified}>
+                        {I18n.t('setting.unverified')}
+                      </Text>
+                    ))}
 
                   {!(userSecuritySettings && userSecuritySettings.phone_verified) && (
                     <MaterialCommunityIcons
@@ -446,13 +478,13 @@ export default class SettingScreen extends BaseScreen {
                 <View style={styles.activiRightGroup}>
                   {(passportVerify) ? (
                     <Text style={styles.textVerified}>
-                      {(passportVerifyData === 1) ? user.passport_number : I18n.t('setting.waitingForReview')}
+                      {(passportVerifyData === 1) ? this.hidePassport(user.passport_number) : I18n.t('setting.waitingForReview')}
                     </Text>
                   ) : (
-                    <Text style={styles.textUnVerified}>
-                      {(passportVerifyData === 3) ? I18n.t('setting.rejected') : I18n.t('setting.unverified')}
-                    </Text>
-                  )}
+                      <Text style={styles.textUnVerified}>
+                        {(passportVerifyData === 3) ? I18n.t('setting.rejected') : I18n.t('setting.unverified')}
+                      </Text>
+                    )}
                   {!(passportVerify) && (
                     <MaterialCommunityIcons
                       style={styles.iconChevronRight}
@@ -729,7 +761,7 @@ const styles = ScaledSheet.create({
     height: '36@s',
     paddingLeft: '14@s',
     paddingRight: '12@s',
-   // backgroundColor: '#e6ebf2',
+    // backgroundColor: '#e6ebf2',
   },
   borderLogintoWeb: {
     paddingLeft: '14@s',

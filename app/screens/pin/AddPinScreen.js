@@ -10,13 +10,26 @@ import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import MangoBackButton from '../common/MangoBackButton';
 
 export default class AddPinScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerLeft: <MangoBackButton navigation={navigation} />,
-    title: I18n.t('addPinScreen.title'),
-    headerTitleStyle: CommonStyles.headerTitle,
-    headerStyle: CommonStyles.header,
-    headerRight: <View />,
-  });
+  static navigationOptions = ({ navigation }) => {
+    const { params } = navigation.state;
+    if (params && params.backScreen) {
+      return {
+        headerLeft: <View/>,
+        title: I18n.t('addPinScreen.title'),
+        headerTitleStyle: CommonStyles.headerTitle,
+        headerStyle: CommonStyles.header,
+        headerRight: <View />,
+      }
+    }
+    return {
+      headerLeft: <MangoBackButton navigation={navigation} />,
+      title: I18n.t('addPinScreen.title'),
+      headerTitleStyle: CommonStyles.headerTitle,
+      headerStyle: CommonStyles.header,
+      headerRight: <View />,
+    }
+
+  };
 
   state = {
     codePin: null,

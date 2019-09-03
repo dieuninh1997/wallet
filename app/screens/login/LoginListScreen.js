@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   View, Text, Image, TouchableOpacity, Keyboard,
 } from 'react-native';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+// import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 import I18n from '../../i18n/i18n';
 import MangoBackButton from '../common/MangoBackButton';
@@ -42,47 +42,47 @@ export default class LoginListScreen extends Component {
     navigation.navigate('LoginBaseScreen', { screen });
   }
 
-  _handleLoginByFacebook = async () => {
-    const { navigation } = this.props;
+  // _handleLoginByFacebook = async () => {
+  //   const { navigation } = this.props;
 
-    try {
-      await LoginManager.logOut();
-      const loginInfoFacebook = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+  //   try {
+  //     await LoginManager.logOut();
+  //     const loginInfoFacebook = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
 
-      if (loginInfoFacebook.isCancelled) {
-        return;
-      }
+  //     if (loginInfoFacebook.isCancelled) {
+  //       return;
+  //     }
 
-      const accessTokenRaw = await AccessToken.getCurrentAccessToken();
-      const { accessToken } = accessTokenRaw;
-      const responseUser = await login('', '', '', 3, accessToken);
+  //     const accessTokenRaw = await AccessToken.getCurrentAccessToken();
+  //     const { accessToken } = accessTokenRaw;
+  //     const responseUser = await login('', '', '', 3, accessToken);
 
-      AppPreferences.saveToKeychain({
-        access_token: responseUser.access_token,
-      });
+  //     AppPreferences.saveToKeychain({
+  //       access_token: responseUser.access_token,
+  //     });
 
-      // window.GlobalSocket.connect();
-      Keyboard.dismiss();
+  //     // window.GlobalSocket.connect();
+  //     Keyboard.dismiss();
 
-      const loginInfo = {
-        email: '',
-        password: '',
-        loginType: 3,
-        accessToken,
-      };
-      navigation.navigate('RestoreWalletScreen', { loginInfo });
-    } catch (errors) {
-      if (errors.error === 'invalid_otp') {
-        navigation.navigate('GoogleOtpVerifyScreen', { email, password });
-        return;
-      }
-      if (errors.errors) {
-        UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]], 'error');
-      } else {
-        UIUtils.showToastMessage(errors.message, 'error');
-      }
-    }
-  }
+  //     const loginInfo = {
+  //       email: '',
+  //       password: '',
+  //       loginType: 3,
+  //       accessToken,
+  //     };
+  //     navigation.navigate('RestoreWalletScreen', { loginInfo });
+  //   } catch (errors) {
+  //     if (errors.error === 'invalid_otp') {
+  //       navigation.navigate('GoogleOtpVerifyScreen', { email, password });
+  //       return;
+  //     }
+  //     if (errors.errors) {
+  //       UIUtils.showToastMessage(errors.errors[Object.keys(errors.errors)[0]], 'error');
+  //     } else {
+  //       UIUtils.showToastMessage(errors.message, 'error');
+  //     }
+  //   }
+  // }
 
   render() {
     return (

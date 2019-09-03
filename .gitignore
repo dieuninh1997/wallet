@@ -56,3 +56,4 @@ buck-out/
 app/services/wallet/test.js
 .vscode/
 .env
+ios/Pods/

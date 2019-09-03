@@ -8,15 +8,16 @@ import {
   ASSET_SERVER as DEV_ASSET_SERVER,
 } from 'react-native-dotenv';
 
+
 export default class AppConfig {
-  static API_SERVER = 'https://www.mango-wallet.com';
+  static API_SERVER = 'http://localhost:8000';
   // static API_SERVER = 'http://mango.sotatek.com';
 
   static API_VERSION = 'v1';
 
   static SOCKET_SERVER = 'wss://socket.bitkoex.com:6001';
 
-  static ASSET_SERVER = 'https://www.mango-wallet.com';
+  static ASSET_SERVER = 'http://localhost:8000';
   // static ASSET_SERVER = 'http://mango.sotatek.com';
 
   static CLIENT_ID='1';

@@ -3,7 +3,7 @@ import {
   View, Text, Image, TouchableOpacity, AsyncStorage,
 } from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+// import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import CryptoJS from 'crypto-js';
 
 import I18n from '../../i18n/i18n';
@@ -77,59 +77,59 @@ export default class CreateWalletScreen extends Component {
     navigation.navigate(screen);
   }
 
-  _handleClickCreateWalletByFacebook = async () => {
-    if (!this.walletInfo) {
-      return;
-    }
-    const { navigation } = this.props;
+  // _handleClickCreateWalletByFacebook = async () => {
+  //   if (!this.walletInfo) {
+  //     return;
+  //   }
+  //   const { navigation } = this.props;
 
-    try {
-      await LoginManager.logOut();
-      const loginInfoFace = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
+  //   try {
+  //     await LoginManager.logOut();
+  //     const loginInfoFace = await LoginManager.logInWithReadPermissions(Consts.FACEBOOK_LOGIN_PERMISSIONS);
 
-      if (loginInfoFace.isCancelled) {
-        return;
-      }
+  //     if (loginInfoFace.isCancelled) {
+  //       return;
+  //     }
 
-      const accessTokenFacebook = await AccessToken.getCurrentAccessToken();
+  //     const accessTokenFacebook = await AccessToken.getCurrentAccessToken();
 
-      const { privateKey, address, mnemonic } = this.walletInfo;
+  //     const { privateKey, address, mnemonic } = this.walletInfo;
 
-      const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
+  //     const mnemonicHash = CryptoJS.SHA256(mnemonic).toString();
 
-      const registerInfo = {
-        mnemonic: mnemonicHash,
-        login_type: Consts.LOGIN_TYPES.FACEBOOK,
-        eth_address: address,
-        facebook_access_token: accessTokenFacebook.accessToken,
-      };
+  //     const registerInfo = {
+  //       mnemonic: mnemonicHash,
+  //       login_type: Consts.LOGIN_TYPES.FACEBOOK,
+  //       eth_address: address,
+  //       facebook_access_token: accessTokenFacebook.accessToken,
+  //     };
 
-      const response = await register(registerInfo);
-      const loginInfo = response.data;
+  //     const response = await register(registerInfo);
+  //     const loginInfo = response.data;
 
-      await AppPreferences.saveToKeychain({
-        access_token: loginInfo.accessToken,
-        private_key: privateKey,
-        mnemonic,
-      });
+  //     await AppPreferences.saveToKeychain({
+  //       access_token: loginInfo.accessToken,
+  //       private_key: privateKey,
+  //       mnemonic,
+  //     });
 
-      AppConfig.PRIVATE_KEY = privateKey;
-      AppConfig.MNEMONIC = mnemonic;
-      AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
+  //     AppConfig.PRIVATE_KEY = privateKey;
+  //     AppConfig.MNEMONIC = mnemonic;
+  //     AppConfig.ACCESS_TOKEN = loginInfo.accessToken;
 
-      await AsyncStorage.setItem('address', address);
+  //     await AsyncStorage.setItem('address', address);
 
-      UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'), 'success');
-      navigation.navigate('BackupPassphraseScreenCompact');
-    } catch (error) {
-      if (error.errors) {
-        UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
-      } else {
-        UIUtils.showToastMessage(error.message, 'error');
-      }
-      console.log(error);
-    }
-  }
+  //     UIUtils.showToastMessage(I18n.t('createWalletByEmailScreen.createWaletSuccess'), 'success');
+  //     navigation.navigate('BackupPassphraseScreenCompact');
+  //   } catch (error) {
+  //     if (error.errors) {
+  //       UIUtils.showToastMessage(error.errors[Object.keys(error.errors)[0]][0], 'error');
+  //     } else {
+  //       UIUtils.showToastMessage(error.message, 'error');
+  //     }
+  //     console.log(error);
+  //   }
+  // }
 
   render() {
     return (

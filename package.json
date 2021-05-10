@@ -34,7 +34,7 @@
     "from-exponential": "^1.0.0",
     "google-libphonenumber": "^3.1.15",
     "laravel-echo": "^1.4.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.21",
     "lottie-react-native": "2.5.10",
     "microevent": "^1.0.0",
     "moment": "2.22.2",
